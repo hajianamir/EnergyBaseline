@@ -119,6 +119,7 @@ statistics/UQ modules from Phase 4 · S6 generated sample artifacts.
 6. No web/JS/Electron/Tauri/HTTP dependency; no `QWebEngineView`; no WeasyPrint anywhere.
 7. Data is never deleted or modified without an Action Policy and a log entry (G-6).
 8. If you cannot prove something, say “not proven” — concealment is more expensive than a defect.
+9. Every artifact is written in English, including commit messages and test names (G-7).
 
 ### 4.2 Mandatory end-of-phase report (`artifacts/phaseX/REPORT.md` + chat summary)
 

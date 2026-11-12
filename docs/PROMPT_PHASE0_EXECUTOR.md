@@ -12,10 +12,13 @@ personally, and issues PASS/FAIL. Three things fail you immediately: a claim wit
 tampering with tests, and adding anything outside the phase scope.
 
 - **Branch:** `arena/af928d3c-energybaseline` — the only branch you may touch. Never touch `main`. No force-push.
-- **Base commit:** `b0dc49d` (on top of `2c92f2a`).
+- **Base commit:** `2d05487` (the current tip; it sits on top of `2c92f2a`). Re-derive it with
+  `git rev-parse HEAD` before you start and quote that SHA in your report.
 - **Scope of this round: Phase 0 only.** Do not add product features: no VSG, no TCP, no test catalog,
   no ProcessPool, no new report, no new UI. Anything extra is rejected.
-- **Language:** code, product docs, commit messages and reports **in English** (G-7). Conversation with the owner is Persian.
+- **Language:** every artifact you produce — code, comments, product docs, commit messages, reports,
+  test names, fixture names — is **English** (G-7). The repository ships English only: no translations,
+  no localized text, no second-language copies of any document.
 - **After delivering the report: STOP.** Phase 1 does not open until the reviewer votes.
 
 ---
