@@ -1,0 +1,23 @@
+name: R Reference Nightly (Skeleton)
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  r-reference-skeleton:
+    name: R Reference Validation Skeleton (D4=B)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify Phase 0 R reference specification skeleton
+        run: |
+          test -f tests/reference/README.md
+          echo "R reference workflow skeleton active (D4=B)."
+          echo "Statistical test scripts (tests/reference/*.R) and divergence issue automation land in Phase 4."

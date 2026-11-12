@@ -1,0 +1,263 @@
+<!-- generated — do not edit (source: docs/requirements.yaml; regenerate with: python scripts/gen_matrix.py) -->
+# EnergyBaseline v6 — Requirements Traceability Matrix
+
+> **generated — do not edit** — single source of truth: `docs/requirements.yaml`. Run `python scripts/gen_matrix.py` to update and `python scripts/gen_matrix.py --check` to validate.
+
+## Summary
+
+- **Total tracked IDs:** 249 (Priorities: `[M]`=243, `[S]`=4, `[O]`=2)
+- **Status breakdown:** `done`=10 · `in_progress`=16 · `planned`=223 · `deferred`=0
+
+## Matrix
+
+| ID | Priority | Phase | Status | Description | Code Refs | Test IDs |
+|---|---|---|---|---|---|---|
+| `D0.1` | `M` | `0` | `done` | Remove vestigial web-stack files and scrub web/env references from README, USER_GUIDE, and install.bat. | `README.md`, `docs/USER_GUIDE.md`, `install.bat` | `tests/gates/test_guard_web_free.py::test_repo_is_web_free`, `tests/gates/test_guard_web_free.py::test_rejects_tracked_web_stack_file` |
+| `D0.2` | `M` | `0` | `done` | Pin exact runtime/dev dependencies, compile SHA-256 requirements.lock, remove WeasyPrint, and publish SUPPORT_MATRIX. | `requirements.in`, `requirements.txt`, `requirements-dev.txt`, `requirements.lock`, `docs/SUPPORT_MATRIX.md`, `energybaseline/core/report.py` | `tests/gates/test_phase0_contracts.py::test_manifests_exact_pins_and_hashes`, `tests/gates/test_guard_web_free.py::test_rejects_banned_import_ast` |
+| `D0.3` | `M` | `0` | `done` | Implement guard_web_free, guard_env_readers, and guard_tests_integrity gates with negative tests. | `scripts/gates/guard_web_free.py`, `scripts/gates/guard_env_readers.py`, `scripts/gates/guard_tests_integrity.py`, `tests/.baseline.sha256` | `tests/gates/test_guard_web_free.py::test_rejects_banned_import_ast`, `tests/gates/test_guard_env_readers.py::test_rejects_unauthorized_env_reader`, `tests/gates/test_guard_tests_integrity.py::test_rejects_one_byte_test_tampering` |
+| `D0.4` | `M` | `0` | `done` | Configure Windows + Ubuntu GitHub Actions CI pipeline and R reference nightly workflow skeleton. | `.github/workflows/ci.yml`, `.github/workflows/r-reference.yml` | `tests/gates/test_phase0_contracts.py::test_ci_workflows_structure` |
+| `D0.5` | `M` | `0` | `done` | Establish docs/requirements.yaml source of truth and scripts/gen_matrix.py (--check) generator. | `docs/requirements.yaml`, `scripts/gen_matrix.py` | `tests/gates/test_gen_matrix.py::test_matrix_check_passes_on_repo`, `tests/gates/test_gen_matrix.py::test_rejects_done_without_tests` |
+| `D0.6` | `M` | `0` | `done` | Author deviations, assumptions, not_implemented, SECURITY, THIRD_PARTY_NOTICES, SUPPORT_MATRIX, CHANGELOG, and sign script. | `docs/deviations.md`, `docs/assumptions.md`, `docs/not_implemented.md`, `SECURITY.md`, `THIRD_PARTY_NOTICES.md`, `CHANGELOG.md`, `scripts/sign/sign_artifacts.ps1` | `tests/gates/test_phase0_contracts.py::test_process_documents_present_and_english` |
+| `D0.7` | `M` | `0` | `done` | Harden .gitignore and .gitattributes and purge untracked caches/artifacts. | `.gitignore`, `.gitattributes` | `tests/gates/test_phase0_contracts.py::test_gitignore_and_repo_hygiene` |
+| `D0.8` | `M` | `0` | `done` | Restore green baseline test suite via deterministic session .xlsx fixture and parametrized MLP/LSTM small-data contract. | `tests/conftest.py`, `tests/test_pipeline.py` | `tests/test_pipeline.py::test_daily_multitarget_independent`, `tests/test_pipeline.py::test_nn_explicitly_rejected_for_small_data` |
+| `D0.9` | `M` | `0` | `done` | Seed tests/gui QApplication smoke test, tests/reference/README.md JSON format, and tests/fixtures/synthetic.py. | `tests/gui/test_qapp_smoke.py`, `tests/reference/README.md`, `tests/fixtures/synthetic.py` | `tests/gui/test_qapp_smoke.py::test_qapplication_smoke`, `tests/test_pipeline.py::test_daily_multitarget_independent` |
+| `D0.10` | `M` | `0` | `done` | Produce complete Phase 0 verification evidence bundle and CycloneDX SBOM under artifacts/phase0/. | `pyproject.toml`, `requirements.lock` | `tests/gates/test_phase0_contracts.py::test_evidence_bundle_and_license_intact` |
+| `AC-01` | `M` | `0/1` | `in_progress` | Zero-config offline startup on fresh Windows creating local SQLite DB without env vars or cloud services. | `energybaseline/config/settings.py`, `energybaseline/db/session.py` | `tests/test_config_db.py::test_default_sqlite_when_no_env` |
+| `AC-02` | `M` | `1` | `planned` | Single-instance lock focuses existing desktop window and cleans stale lock on crash. | — | — |
+| `AC-03` | `M` | `1` | `planned` | Credentials encrypted via Windows DPAPI or PBKDF2-Fernet with zero plaintext secrets on disk or logs. | — | — |
+| `AC-04` | `M` | `1/6` | `planned` | Zero pickle.loads in model store; artifacts persisted via joblib with verified SHA-256 manifest. | — | — |
+| `AC-05` | `M` | `0/1` | `in_progress` | Zero web servers, listening ports, browser views, or outbound telemetry calls. | `scripts/gates/guard_web_free.py` | `tests/gates/test_guard_web_free.py::test_repo_is_web_free` |
+| `AC-06` | `M` | `2` | `planned` | Read-only SQL connector rejects DDL/DML/multi-statement queries via sqlglot AST and driver read-only mode. | — | — |
+| `AC-07` | `M` | `2` | `planned` | Variable Selection Gate runs pre-modeling and logs per-driver decisions with user override audit. | — | — |
+| `AC-08` | `M` | `3` | `planned` | Target Characterization Profile computes all 14 dimensions and persists JSON prior to candidate generation. | — | — |
+| `AC-09` | `M` | `3` | `planned` | Every Auto decision logs rule, inputs, outputs, and rationale in AutoDecisionLog. | — | — |
+| `AC-10` | `M` | `4` | `planned` | Statistical Test Catalog T1..T14 returns typed TestResult objects with assumption checks and fallbacks. | — | — |
+| `AC-11` | `M` | `4` | `planned` | Benjamini-Hochberg FDR adjustment applied per family reporting both p_raw and p_adj. | — | — |
+| `AC-12` | `M` | `4` | `planned` | Custom statistical tests match R reference JSON fixtures within declared tolerances. | — | — |
+| `AC-13` | `M` | `5` | `planned` | Model registry evaluates F1..F10 families gated by TCP and sample-size minimums with explicit status register. | — | — |
+| `AC-14` | `M` | `5` | `planned` | Strict temporal split and nested walk-forward CV prevent future data leakage in scaling, imputation, and lags. | — | — |
+| `AC-15` | `M` | `6` | `planned` | Transparent composite score combines normalized CV-RMSE, R2, MAPE, AICc/BIC, and diagnostic penalties. | — | — |
+| `AC-16` | `M` | `6` | `planned` | Uncertainty quantification calibrates 80%/95% prediction intervals via MAPIE EnbPI/ACI within +/-5 pp coverage. | — | — |
+| `AC-17` | `M` | `6` | `planned` | Diebold-Mariano (HLN) and Model Confidence Set identify statistically indistinguishable top baselines. | — | — |
+| `AC-18` | `M` | `6` | `planned` | Physical plausibility checks flag counter-physical driver signs and boundary violations. | — | — |
+| `AC-19` | `M` | `7` | `planned` | Post-baseline CUSUM, EWMA, and rolling drift monitors compute savings with propagated uncertainty. | — | — |
+| `AC-20` | `M` | `7` | `planned` | Multi-target runs isolate pipelines per target with independent VSG, TCP, models, and failure containment. | — | — |
+| `AC-21` | `M` | `7/0` | `in_progress` | Byte-deterministic numerical reproducibility for identical dataset, config, and seed. | `energybaseline/core/pipeline.py` | `tests/test_pipeline.py::test_hourly_pipeline_end_to_end_and_reproducible` |
+| `AC-22` | `M` | `1/9` | `in_progress` | In-flight Cancel terminates worker processes cleanly within 2 seconds without corrupting SQLite state. | `energybaseline/gui/main_window.py` | — |
+| `AC-23` | `M` | `7` | `planned` | Performance budgets met on D2 reference machine across 1k, 10k, and 100k row synthetic benchmarks. | — | — |
+| `AC-24` | `M` | `8` | `planned` | Desktop UX satisfies wizard flow, keyboard accessibility, WCAG AA contrast, and 100%/125%/150% DPI scaling. | — | — |
+| `AC-25` | `M` | `8` | `planned` | ISO 50006 report exports deterministic ReportLab PDF and self-contained offline HTML. | — | — |
+| `AC-26` | `M` | `9` | `planned` | Clean-VM packaged EnergyBaseline.exe passes E3 end-to-end smoke test without Python installed. | — | — |
+| `AC-27` | `M` | `1` | `planned` | Alembic migrations run exclusively at startup with automatic pre-migration SQLite backup. | — | — |
+| `AC-28` | `M` | `2` | `planned` | Ingestion handles CSV/TSV/Excel encodings, DST transitions, duplicate timestamps, and unit metadata. | — | — |
+| `AC-29` | `M` | `3` | `planned` | Structural break detection (Chow, Quandt-Andrews, Pettitt, Bai-Perron/PELT) integrated into TCP. | — | — |
+| `AC-30` | `M` | `5` | `planned` | Degree-day / 3P-4P-5P ASHRAE Guideline 14 change-point models fitted with knot uncertainty. | — | — |
+| `AC-31` | `M` | `6` | `planned` | SHAP and standardized coefficient attributions exported consistently for selected baseline. | — | — |
+| `AC-32` | `M` | `7` | `planned` | Drift detector triggers re-baselining advisories on covariate shift (PSI/KS) and residual regime shift. | — | — |
+| `AC-33` | `M` | `8` | `planned` | Audit bundle export packages config, AutoDecisionLog, TestResult catalog, and SHA-256 manifest. | — | — |
+| `AC-34` | `M` | `9` | `planned` | Release artifacts include SHA256SUMS, CycloneDX SBOM, and verified signing pipeline output. | — | — |
+| `AC-35` | `M` | `0/9` | `in_progress` | 100% English-only UI, reports, logs, comments, tests, and documentation across the repository. | `docs/requirements.yaml` | `tests/gates/test_phase0_contracts.py::test_process_documents_present_and_english` |
+| `G-1` | `M` | `0` | `in_progress` | Offline native Windows desktop architecture; zero web frameworks or localhost servers. | `scripts/gates/guard_web_free.py` | `tests/gates/test_guard_web_free.py::test_repo_is_web_free` |
+| `G-2` | `M` | `0` | `in_progress` | Zero-config default SQLite storage under user appdata or portable folder. | `energybaseline/config/settings.py` | `tests/test_config_db.py::test_default_sqlite_when_no_env` |
+| `G-3` | `M` | `1` | `planned` | Strict core/GUI separation: energybaseline/core never imports Qt widgets. | — | — |
+| `G-4` | `M` | `0` | `in_progress` | No fake stubs, silent fallbacks, or dead controls; explicit status for optional features. | `docs/not_implemented.md` | `tests/gates/test_phase0_contracts.py::test_process_documents_present_and_english` |
+| `G-5` | `M` | `4` | `planned` | Every statistical test checks assumptions first and switches to documented non-parametric fallback. | — | — |
+| `G-6` | `M` | `3` | `planned` | Every Auto decision is deterministic, auditable, and overridable by the engineer. | — | — |
+| `G-7` | `M` | `0` | `in_progress` | English-only codebase, GUI, reports, logs, commit history, and documentation. | `docs/assumptions.md` | `tests/gates/test_phase0_contracts.py::test_process_documents_present_and_english` |
+| `G-8` | `M` | `7` | `planned` | End-to-end deterministic reproducibility given dataset hash, configuration, and seed. | — | — |
+| `G-9` | `M` | `6` | `planned` | Safe serialization only (JSON, SQLite, joblib with SHA-256 verification; no pickle). | — | — |
+| `G-10` | `M` | `0` | `in_progress` | Phase gate discipline with immutable baseline test hashes and negative gate tests. | `scripts/gates/guard_tests_integrity.py` | `tests/gates/test_guard_tests_integrity.py::test_rejects_one_byte_test_tampering` |
+| `G-11` | `M` | `0` | `in_progress` | Supply-chain hygiene: exact pins, SHA-256 lockfile, pip-audit, and CycloneDX SBOM. | `requirements.lock`, `.github/workflows/ci.yml` | `tests/gates/test_phase0_contracts.py::test_manifests_exact_pins_and_hashes` |
+| `PIPE-1` | `M` | `2` | `planned` | Typed stage contract connecting Ingest -> VSG -> TCP -> Candidate Gen -> Fit/CV -> Score -> UQ -> Report. | — | — |
+| `PIPE-2` | `M` | `3` | `planned` | Immutable stage artifacts with dataset SHA-256 provenance across pipeline stages. | — | — |
+| `PIPE-3` | `M` | `7` | `planned` | Per-target pipeline isolation ensuring failure on one EnPI target never aborts sibling targets. | — | — |
+| `DB-1` | `M` | `1` | `in_progress` | Default SQLite database under %LOCALAPPDATA%\EnergyBaseline\data or portable mode without env vars. | `energybaseline/config/settings.py`, `energybaseline/db/session.py` | `tests/test_config_db.py::test_default_sqlite_when_no_env` |
+| `DB-2` | `M` | `1` | `planned` | SQLite pragmas enforced on every connection: WAL journal_mode, foreign_keys=ON, busy_timeout=5000, synchronous=NORMAL. | — | — |
+| `DB-3` | `M` | `1` | `planned` | Exclusive Alembic migration execution at startup (Base.metadata.create_all removed from production startup). | — | — |
+| `DB-4` | `M` | `1` | `planned` | Automatic timestamped SQLite backup prior to applying pending Alembic schema migrations. | — | — |
+| `DB-5` | `M` | `1` | `planned` | Schema version table verification and clean downgrade/restore on migration failure. | — | — |
+| `DB-6` | `M` | `1` | `planned` | Normalized tables for projects, datasets, runs, targets, VSG logs, TCP profiles, model registers, and monitors. | — | — |
+| `DB-7` | `M` | `1` | `planned` | Transactional unit-of-work writes ensuring cancelled or failed runs leave zero partial orphan rows. | — | — |
+| `DB-8` | `M` | `1` | `planned` | Portable project bundle (.ebproj) export/import with schema compatibility check. | — | — |
+| `DB-9` | `M` | `1` | `planned` | Database integrity check command (PRAGMA integrity_check) exposed in diagnostics. | — | — |
+| `DB-10` | `S` | `1` | `planned` | Bounded database growth via artifact pruning and VACUUM maintenance utility. | — | — |
+| `DB-11` | `M` | `1` | `planned` | Single canonical environment variable reader restricted to energybaseline/config/settings.py. | — | — |
+| `SHL-1` | `M` | `1` | `planned` | Native PySide6 QMainWindow desktop shell with zero QtWebEngine or embedded browser dependencies. | — | — |
+| `SHL-2` | `M` | `1` | `planned` | Step-by-step navigation rail covering Project, Data, VSG/Quality, Baseline Run, Results, Monitoring, and Reports. | — | — |
+| `SHL-3` | `M` | `1` | `planned` | Responsive non-blocking UI main thread (< 50 ms event loop latency during background computation). | — | — |
+| `SHL-4` | `M` | `1` | `planned` | True Cancel button wired to worker process termination within 2 seconds. | — | — |
+| `SHL-5` | `M` | `1` | `planned` | Structured progress bar, stage indicator, elapsed timer, and live log drawer. | — | — |
+| `SHL-6` | `M` | `1` | `planned` | Global unhandled exception hook writing crash diagnostics locally and presenting actionable recovery dialog. | — | — |
+| `SHL-7` | `M` | `1` | `planned` | Persistent user preferences (recent projects, default confidence level, worker count) in local config. | — | — |
+| `SHL-8` | `O` | `8` | `planned` | Optional secondary visual theme switcher (explicitly documented in docs/not_implemented.md). | — | — |
+| `SHL-9` | `M` | `1` | `planned` | Application Help/About dialog displaying exact version, commit SHA, Python runtime, and license notices. | — | — |
+| `IPC-1` | `M` | `1` | `planned` | ProcessPoolExecutor worker execution using explicit spawn multiprocessing context on all platforms. | — | — |
+| `IPC-2` | `M` | `1` | `planned` | Typed serializable job request and result envelopes across process boundaries (no Qt objects in workers). | — | — |
+| `IPC-3` | `M` | `1` | `planned` | Streaming progress, stage transition, and warning events from child process to GUI via queue/pipe. | — | — |
+| `IPC-4` | `M` | `1` | `planned` | Hard worker process tree termination on user Cancel or timeout within 2 seconds. | — | — |
+| `IPC-5` | `M` | `1` | `planned` | Crash isolation: child worker segfault or MemoryError surfaces structured error without killing GUI. | — | — |
+| `IPC-6` | `M` | `1` | `planned` | Deterministic worker RNG seeding and single-threaded BLAS/OpenMP pinning inside spawned workers. | — | — |
+| `IPC-7` | `M` | `1` | `planned` | Temporary IPC shared files cleaned deterministically on completion, cancellation, or crash. | — | — |
+| `LIF-1` | `M` | `1` | `planned` | Single-instance application lock using OS file lock + local socket/named-pipe activation handshake. | — | — |
+| `LIF-2` | `M` | `1` | `planned` | Stale lockfile detection and automatic recovery after an unclean process termination. | — | — |
+| `LIF-3` | `M` | `1` | `planned` | Graceful shutdown prompt when closing window during an active analysis run, terminating workers cleanly. | — | — |
+| `LIF-4` | `O` | `1` | `planned` | Optional system tray minimize/notification integration (documented as unimplemented in docs/not_implemented.md). | — | — |
+| `LIF-5` | `M` | `1` | `planned` | Rotating UTF-8 file logger under user logs directory with secret redaction filter. | — | — |
+| `SCR-1` | `M` | `1` | `planned` | Primary credential storage on Windows using Win32 DPAPI (CryptProtectData) bound to current user. | — | — |
+| `SCR-2` | `M` | `1` | `planned` | Cross-platform / fallback credential encryption using PBKDF2-HMAC-SHA256 (>= 600k iterations) + Fernet. | — | — |
+| `SCR-3` | `M` | `1` | `planned` | Zero unencrypted secret keys or plaintext connection passwords written to disk, SQLite, or config files. | — | — |
+| `SCR-4` | `M` | `1` | `planned` | Automatic secret redaction in logs, tracebacks, AutoDecisionLog, and exported audit bundles. | — | — |
+| `SCR-5` | `M` | `1` | `planned` | Explicit credential deletion (Forget Password) wiping stored secret from DPAPI/keyring/vault. | — | — |
+| `SCR-6` | `M` | `1` | `planned` | TLS/SSL connection options (require SSL, custom CA bundle path) for external SQL connectors. | — | — |
+| `SCR-7` | `M` | `1` | `planned` | In-memory secret handling minimizing lifetime of plaintext password strings during SQL connection setup. | — | — |
+| `DAT-1` | `M` | `2` | `planned` | CSV, TSV, and Excel (.xlsx) ingestion with encoding, delimiter, decimal, and sheet auto-detection. | — | — |
+| `DAT-2` | `M` | `2` | `planned` | Timestamp parsing supporting ISO-8601, locale formats, explicit timezone/DST handling, and monotonicity sort. | — | — |
+| `DAT-3` | `M` | `2` | `planned` | Duplicate timestamp, irregular interval, and gap classification (short gap vs extended shutdown). | — | — |
+| `DAT-4` | `M` | `2` | `planned` | Column role assignment (timestamp, EnPI target(s), weather/production drivers, static factors, exclusions). | — | — |
+| `DAT-5` | `M` | `2` | `planned` | Leak-free missing-value policy (bounded linear/time interpolation for short gaps, MICE/flagging for drivers, never imputing targets across long shutdowns). | — | — |
+| `DAT-6` | `M` | `2` | `planned` | Physical unit metadata registry and deterministic energy/temperature unit conversion. | — | — |
+| `DAT-7` | `M` | `2` | `planned` | Read-only external SQL ingestion validated by sqlglot AST (SELECT/WITH only), row limit, and query timeout. | — | — |
+| `DAT-8` | `M` | `2` | `planned` | SHA-256 raw dataset fingerprinting and immutable ingestion summary persisted with run metadata. | — | — |
+| `VSG-1` | `M` | `2` | `planned` | Pre-modeling Variable Selection Gate screening candidate drivers before feature engineering and fitting. | — | — |
+| `VSG-2` | `M` | `2` | `planned` | Driver missingness threshold gate rejecting or flagging columns exceeding maximum missing fraction. | — | — |
+| `VSG-3` | `M` | `2` | `planned` | Zero and near-zero variance (constant / quasi-constant) driver rejection. | — | — |
+| `VSG-4` | `M` | `2` | `planned` | Bivariate linear (Pearson) and monotonic (Spearman) relevance screening against target. | — | — |
+| `VSG-5` | `M` | `2` | `planned` | Multicollinearity screening via iterative Variance Inflation Factor (VIF) pruning with domain priority. | — | — |
+| `VSG-6` | `M` | `2` | `planned` | Target leakage / identity detector catching scaled/lag-zero copies of the EnPI target. | — | — |
+| `VSG-7` | `M` | `2` | `planned` | Non-linear mutual information relevance check preserving degree-day / threshold drivers. | — | — |
+| `VSG-8` | `M` | `2` | `planned` | Consensus driver disposition (keep, drop, collinear-grouped) with structured plain-English reason. | — | — |
+| `VSG-9` | `M` | `2` | `planned` | Interactive engineer override of VSG decisions recorded with mandatory audit trail. | — | — |
+| `AUTO-1` | `M` | `3` | `planned` | Every automatic parameter supports Auto \| Manual override in both API config and desktop UI. | — | — |
+| `AUTO-2` | `M` | `3` | `planned` | Structured AutoDecisionEntry recording parameter, chosen value, candidate space, rule, metric evidence, and timestamp. | — | — |
+| `AUTO-3` | `M` | `3` | `planned` | Deterministic Auto rule evaluation depending solely on training-window statistics and TCP. | — | — |
+| `AUTO-4` | `M` | `3` | `planned` | Granularity, aggregation rule (sum vs mean), and seasonal period auto-detection with confidence score. | — | — |
+| `AUTO-5` | `M` | `3` | `planned` | Automatic degree-day base temperature grid search and change-point knot initialization on training fold. | — | — |
+| `AUTO-6` | `M` | `3` | `planned` | Complete AutoDecisionLog rendered in GUI results inspector and ISO 50006 PDF/HTML reports. | — | — |
+| `TCP-1` | `M` | `3` | `planned` | TCP Dimension 1: Effective sample size, temporal span, and dominant sampling granularity. | — | — |
+| `TCP-2` | `M` | `3` | `planned` | TCP Dimension 2: Missingness fraction, gap-length distribution, and MCAR/MAR indicator. | — | — |
+| `TCP-3` | `M` | `3` | `planned` | TCP Dimension 3: Marginal distribution shape (skewness, kurtosis, zero-inflation, positivity bounds). | — | — |
+| `TCP-4` | `M` | `3` | `planned` | TCP Dimension 4: Outlier and extreme-event prevalence (robust MAD / IQR / STL residual spikes). | — | — |
+| `TCP-5` | `M` | `3` | `planned` | TCP Dimension 5: Trend strength and deterministic vs stochastic unit-root profile (ADF + KPSS joint matrix). | — | — |
+| `TCP-6` | `M` | `3` | `planned` | TCP Dimension 6: Single and multiple seasonality periods and spectral/STL seasonal strength. | — | — |
+| `TCP-7` | `M` | `3` | `planned` | TCP Dimension 7: Autocorrelation and partial autocorrelation memory horizon (ACF/PACF/Ljung-Box). | — | — |
+| `TCP-8` | `M` | `3` | `planned` | TCP Dimension 8: Conditional heteroscedasticity and variance non-stationarity (ARCH-LM / Breusch-Pagan). | — | — |
+| `TCP-9` | `M` | `3` | `planned` | TCP Dimension 9: Structural breaks and regime shifts (Chow, Quandt-Andrews, Pettitt, PELT). | — | — |
+| `TCP-10` | `M` | `3` | `planned` | TCP Dimension 10: Driver-response nonlinearity and piecewise change-point signal (3P/4P/5P suitability). | — | — |
+| `TCP-11` | `M` | `3` | `planned` | TCP Dimension 11: Exogenous driver availability, lag cross-correlation, and Granger predictive content. | — | — |
+| `TCP-12` | `M` | `3` | `planned` | TCP Dimension 12: Operational modes / multimodal clustering (baseload vs production vs shutdown regimes). | — | — |
+| `TCP-13` | `M` | `3` | `planned` | TCP Dimension 13: Signal-to-noise ratio and forecastability / entropy bound. | — | — |
+| `TCP-14` | `M` | `3` | `planned` | TCP Dimension 14: Persisted JSON Target Characterization Profile gating candidate model families and CV strategy. | — | — |
+| `T1` | `M` | `4` | `planned` | Missingness mechanism test: Little's MCAR chi-square test with missingness-pattern correlation fallback. | — | — |
+| `T2` | `M` | `4` | `planned` | Normality test suite: Shapiro-Wilk (n <= 5000), D'Agostino-Pearson K2, and Anderson-Darling. | — | — |
+| `T3` | `M` | `4` | `planned` | Two-group location comparison: Welch t-test with Mann-Whitney U and Brunner-Munzel non-parametric fallbacks. | — | — |
+| `T4` | `M` | `4` | `planned` | Multi-group comparison: One-way ANOVA / Welch ANOVA with Kruskal-Wallis and Dunn/Nemenyi post-hoc tests. | — | — |
+| `T5` | `M` | `4` | `planned` | Structural break tests: Known-date Chow F-test, unknown-date Quandt-Andrews sup-F, and non-parametric Pettitt test. | — | — |
+| `T6` | `M` | `4` | `planned` | Unit root and stationarity suite: Joint Augmented Dickey-Fuller (ADF) and KPSS 2x2 regime classification. | — | — |
+| `T7` | `M` | `4` | `planned` | Serial correlation suite: Ljung-Box Q test across multiple lags and Durbin-Watson statistic. | — | — |
+| `T8` | `M` | `4` | `planned` | Homoscedasticity and conditional variance suite: Breusch-Pagan, White, and Engle ARCH-LM tests. | — | — |
+| `T9` | `M` | `4` | `planned` | Seasonality significance suite: Kruskal-Wallis seasonal test, QS test, and STL seasonal strength threshold. | — | — |
+| `T10` | `M` | `4` | `planned` | Nonlinearity and functional form suite: Ramsey RESET test and Harvey-Collier / piecewise F-test. | — | — |
+| `T11` | `M` | `4` | `planned` | Multicollinearity diagnostic suite: Variance Inflation Factor (VIF) and design-matrix condition number. | — | — |
+| `T12` | `M` | `4` | `planned` | Outlier and influential observation suite: Studentized residuals with Bonferroni bound, Cook's distance, and Grubbs/ESD. | — | — |
+| `T13` | `M` | `4` | `planned` | Forecast accuracy equivalence suite: Harvey-Leybourne-Newbold Diebold-Mariano test and Model Confidence Set (MCS). | — | — |
+| `T14` | `M` | `4` | `planned` | Lead-lag causality suite: Lagged cross-correlation significance and bivariate Granger causality F-test. | — | — |
+| `TC-1` | `M` | `4` | `planned` | Unified immutable TestResult schema (test_id, name, statistic, df, p_raw, p_adj, alpha, decision, effect_size, assumptions_met, fallback_used, interpretation). | — | — |
+| `TC-2` | `M` | `4` | `planned` | Minimum sample size and degeneracy pre-checks returning structured skipped/insufficient-data TestResult instead of NaN/exception. | — | — |
+| `TC-3` | `M` | `4` | `planned` | Automatic assumption verification before parametric tests with transparent switch to documented non-parametric fallback. | — | — |
+| `TC-4` | `M` | `4` | `planned` | Benjamini-Hochberg False Discovery Rate (BH-FDR) multiplicity adjustment per hypothesis family preserving both p_raw and p_adj. | — | — |
+| `TC-5` | `M` | `4` | `planned` | Standardized effect size and confidence interval reporting alongside every hypothesis test p-value. | — | — |
+| `TC-6` | `M` | `4` | `planned` | Plain-English engineering interpretation generated deterministically from every TestResult. | — | — |
+| `TC-7` | `M` | `4` | `planned` | R reference validation harness comparing T1..T14 outputs against versioned JSON fixtures in tests/reference/. | — | — |
+| `TC-8` | `M` | `4` | `planned` | PR staleness gate (test_reference_staleness.py) verifying SHA-256 parity between each .R script and its .json fixture. | — | — |
+| `CI-1` | `M` | `0` | `in_progress` | Two-OS GitHub Actions matrix (windows-latest, ubuntu-latest) executing hashed lockfile install, linters, gates, coverage, and GUI smoke. | `.github/workflows/ci.yml` | `tests/gates/test_phase0_contracts.py::test_ci_workflows_structure` |
+| `CI-2` | `M` | `0` | `in_progress` | Automated supply-chain checks on every CI run: pip-audit vulnerability scan and reproducible CycloneDX SBOM upload. | `.github/workflows/ci.yml`, `requirements.lock` | `tests/gates/test_phase0_contracts.py::test_manifests_exact_pins_and_hashes` |
+| `CI-3` | `M` | `4` | `planned` | Nightly R reference workflow executing tests/reference/*.R in clean R and opening issue on numerical divergence. | — | — |
+| `CI-4` | `M` | `9` | `planned` | Automated Windows PyInstaller packaging workflow producing Full/Lite bundles, SHA256SUMS, and self-signed verification receipt. | — | — |
+| `F1` | `M` | `5` | `planned` | Ordinary Least Squares, Weighted Least Squares, and HAC (Newey-West) linear energy baseline models. | — | — |
+| `F2` | `M` | `5` | `planned` | ASHRAE Guideline 14 / ISO 50006 piecewise change-point models (2P, 3P-cooling, 3P-heating, 4P, 5P) and variable-base HDD/CDD. | — | — |
+| `F3` | `M` | `5` | `planned` | Regularized and robust linear models: Ridge, Lasso, ElasticNet, HuberRegressor, and Quantile Regression. | — | — |
+| `F4` | `M` | `5` | `planned` | Polynomial, spline / GAM-like basis regressions, and interaction-term linear baselines. | — | — |
+| `F5` | `M` | `5` | `planned` | Tree and gradient-boosted ensembles: RandomForest, ExtraTrees, XGBoost, LightGBM, and CatBoost with monotonic constraints. | — | — |
+| `F6` | `M` | `5` | `planned` | Neural baselines: scikit-learn MLPRegressor (always available) and PyTorch CPU LSTM (Full profile; clean skip in Lite) gated by sample size. | — | — |
+| `F7` | `M` | `5` | `planned` | Dynamic regression and classical time-series models: SARIMAX / ARIMAX with exogenous drivers and ETS/Holt-Winters. | — | — |
+| `F8` | `M` | `5` | `planned` | Regime-switching / operational-mode segmented baselines stratified by plant state or calendar regime. | — | — |
+| `F9` | `S` | `5` | `planned` | Decomposition + regression hybrid baselines (STL/Fourier + regressor; optional Prophet adapter when installed). | — | — |
+| `F10` | `M` | `5` | `planned` | Constrained convex stacking / weighted ensemble of top diverse candidate families. | — | — |
+| `VAL-1` | `M` | `5` | `planned` | Strict chronological train/validation/holdout splitting (random k-fold shuffling forbidden on time series). | — | — |
+| `VAL-2` | `M` | `5` | `planned` | Expanding and rolling walk-forward cross-validation with configurable horizon and embargo/gap matching max lag. | — | — |
+| `VAL-3` | `M` | `5` | `planned` | Nested hyperparameter tuning (Optuna bounded trials) strictly inside inner walk-forward folds. | — | — |
+| `VAL-4` | `M` | `5` | `planned` | Pipeline-encapsulated preprocessing (imputation, scaling, degree-day knots, target lags) fitted exclusively per fold. | — | — |
+| `VAL-5` | `M` | `5` | `planned` | Automated data-leakage canary test verifying future target perturbations never alter historical fold predictions. | — | — |
+| `VAL-6` | `M` | `5` | `planned` | ASHRAE Guideline 14 compliance metrics computed out-of-sample: CV(RMSE), NMBE, R2, MAE, MAPE, sMAPE, WAPE. | — | — |
+| `VAL-7` | `M` | `5` | `planned` | Complete Model Evaluation Register logging every candidate's metrics, fit duration, status, and rejection/skip reason. | — | — |
+| `SC-1` | `M` | `6` | `planned` | Multi-criteria composite baseline score with documented, user-inspectable weights across accuracy, bias, parsimony, and diagnostics. | — | — |
+| `SC-2` | `M` | `6` | `planned` | Hard eligibility gates (ASHRAE Guideline 14 / user thresholds on NMBE and CV(RMSE)) applied prior to composite ranking. | — | — |
+| `SC-3` | `M` | `6` | `planned` | Residual diagnostic penalty terms incorporating autocorrelation (T7), heteroscedasticity (T8), and extreme bias. | — | — |
+| `SC-4` | `M` | `6` | `planned` | Parsimony and interpretability tie-breaking favoring simpler physical/linear baselines within the Model Confidence Set (T13). | — | — |
+| `SC-5` | `M` | `6` | `planned` | Physical plausibility verifier checking expected driver signs (e.g. HDD/CDD/production >= 0) and extrapolation stability. | — | — |
+| `SC-6` | `M` | `6` | `planned` | Global and local driver attribution (analytical coefficients + CI for linear/CP; TreeSHAP/KernelSHAP for nonlinear models). | — | — |
+| `SC-7` | `M` | `6` | `planned` | Manual engineer baseline override requiring documented justification stored in audit log. | — | — |
+| `SC-8` | `M` | `6` | `planned` | Side-by-side candidate comparison matrix exporting fold-by-fold metrics and Diebold-Mariano p-values. | — | — |
+| `SC-9` | `M` | `6` | `planned` | Baseline validity domain envelope recording min/max/convex-hull quantiles of training drivers for extrapolation warnings. | — | — |
+| `SC-10` | `M` | `6` | `planned` | Pickle-free model artifact persistence using joblib + JSON metadata + verified SHA-256 digest before load. | — | — |
+| `UQ-1` | `M` | `6` | `planned` | Distribution-free conformal prediction intervals for time series via MAPIE EnbPI / Adaptive Conformal Inference (ACI). | — | — |
+| `UQ-2` | `M` | `6` | `planned` | Parametric OLS/HAC prediction intervals and quantile-regression intervals cross-checked against conformal bounds. | — | — |
+| `UQ-3` | `M` | `6` | `planned` | Empirical holdout coverage calibration diagnostics verifying 80% and 95% nominal intervals within +/-5 percentage points. | — | — |
+| `UQ-4` | `M` | `6` | `planned` | Cumulative energy savings uncertainty propagation accounting for serial correlation across reporting periods (ASHRAE/IPMVP). | — | — |
+| `UQ-5` | `M` | `6` | `planned` | Fractional Savings Uncertainty (FSU) calculation at user-selected confidence level (default 90% / 95%). | — | — |
+| `PM-1` | `M` | `7` | `planned` | Reporting-period data ingestion validated against baseline column schema, units, and granularity. | — | — |
+| `PM-2` | `M` | `7` | `planned` | Adjusted baseline energy calculation E_adj(X_reporting) + routine and non-routine static factor adjustments. | — | — |
+| `PM-3` | `M` | `7` | `planned` | Period-by-period and cumulative EnPI ratio, absolute savings (E_adj - E_actual), and propagated confidence bands. | — | — |
+| `PM-4` | `M` | `7` | `planned` | Tabular CUSUM of energy residuals with V-mask / decision-interval alarm thresholds. | — | — |
+| `PM-5` | `M` | `7` | `planned` | EWMA control chart of standardized residuals with asymptotic and exact control limits. | — | — |
+| `PM-6` | `M` | `7` | `planned` | Driver validity-domain check flagging reporting rows that extrapolate beyond baseline training range. | — | — |
+| `PM-7` | `M` | `7` | `planned` | Incremental monitoring batch append persisting audit history per reporting period. | — | — |
+| `DR-1` | `M` | `7` | `planned` | Covariate distribution drift monitoring on drivers using Population Stability Index (PSI) and two-sample KS/Wasserstein tests. | — | — |
+| `DR-2` | `M` | `7` | `planned` | Residual mean/variance regime-shift detection via rolling window Page-Hinkley / Pettitt / CUSUM tests. | — | — |
+| `DR-3` | `M` | `7` | `planned` | Conformal interval miscoverage monitor tracking rolling empirical coverage degradation. | — | — |
+| `DR-4` | `M` | `7` | `planned` | Distinction between genuine efficiency improvement (sustained negative consumption residual inside valid driver domain) and model breakdown. | — | — |
+| `DR-5` | `M` | `7` | `planned` | Structured ISO 50006 re-baselining advisory summarizing triggered drift indicators and recommended engineering action. | — | — |
+| `MT-1` | `M` | `7` | `planned` | Simultaneous selection and execution of multiple EnPI target columns (e.g. Electricity_kWh, NaturalGas_Nm3, Steam_t) in one project. | — | — |
+| `MT-2` | `M` | `7` | `planned` | Independent per-target VSG, TCP, candidate model evaluation, and selected baseline persistence. | — | — |
+| `MT-3` | `M` | `7` | `planned` | Fault isolation: data or convergence failure on one target records target-scoped error while remaining targets complete. | — | — |
+| `MT-4` | `S` | `7` | `planned` | Site-level Rollup summary converting multi-carrier baselines and savings into unified energy/cost/CO2e totals where factors are provided. | — | — |
+| `MT-5` | `M` | `7` | `planned` | Per-target and combined portfolio sections in GUI results explorer and exported ISO 50006 reports. | — | — |
+| `PER-1` | `M` | `7` | `planned` | Cold desktop startup to interactive main window <= 3.0 s on D2 reference machine. | — | — |
+| `PER-2` | `M` | `7` | `planned` | 1,000-row daily/monthly full pipeline completion <= 15 s on D2 reference machine. | — | — |
+| `PER-3` | `M` | `7` | `planned` | 10,000-row hourly full pipeline completion <= 90 s on D2 reference machine. | — | — |
+| `PER-4` | `M` | `7` | `planned` | 100,000-row sub-hourly/hourly pipeline completion <= 10 min with peak RSS <= 4 GB on D2 reference machine. | — | — |
+| `PER-5` | `M` | `7` | `planned` | UI main-thread frame responsiveness maintained (no frozen window > 100 ms) throughout heavy runs. | — | — |
+| `PER-6` | `M` | `7` | `planned` | Automated benchmark suite recording wall-clock timing and peak memory against PER-1..5 budgets. | — | — |
+| `REP-1` | `M` | `7` | `planned` | Deterministic seed derivation from dataset SHA-256 + target + explicit user seed propagated to NumPy, scikit-learn, GBDTs, Optuna, and PyTorch. | — | — |
+| `REP-2` | `M` | `7` | `planned` | Bitwise/numerical repeatability within <= 1e-12 across repeated runs on the same OS/Python environment. | — | — |
+| `REP-3` | `M` | `7` | `planned` | Complete provenance manifest per run recording package versions, OS, CPU count, dataset SHA-256, config JSON, and commit SHA. | — | — |
+| `REP-4` | `M` | `7` | `planned` | One-click audit archive export (.zip) containing config, AutoDecisionLog, TestResult catalog, metrics, and SHA256SUMS. | — | — |
+| `REP-5` | `M` | `7` | `planned` | Audit archive verifier re-validating file hashes and reproducing report tables from persisted run state. | — | — |
+| `RPT-1` | `M` | `8` | `planned` | Pure-Python ISO 50006 / IPMVP PDF report renderer built exclusively on ReportLab Platypus (D5=A; zero GTK/WeasyPrint). | — | — |
+| `RPT-2` | `M` | `8` | `planned` | Self-contained single-file offline HTML report with embedded base64/SVG charts and zero external CDN links. | — | — |
+| `RPT-3` | `M` | `8` | `planned` | Mandatory report sections: Executive Summary, Data & VSG Audit, TCP, Statistical Test Catalog (p_raw & p_adj), Model Register, Selected Baseline & UQ, Monitoring/CUSUM, and AutoDecisionLog. | — | — |
+| `RPT-4` | `M` | `8` | `planned` | Publication-grade vector/high-DPI matplotlib diagnostic charts (Actual vs Predicted, Residual ACF/QQ, CUSUM, Driver Partial Response, Prediction Intervals). | — | — |
+| `RPT-5` | `M` | `8` | `planned` | Deterministic PDF generation (fixed ReportLab creation timestamp/ID metadata in reproducible mode for regression testing). | — | — |
+| `RPT-6` | `M` | `8` | `planned` | Machine-readable CSV/Excel/JSON companion export of predictions, intervals, residuals, and CUSUM series. | — | — |
+| `RPT-7` | `M` | `8` | `planned` | Explicit disclosure banner in every report listing any manual overrides, skipped model families, or assumption fallbacks. | — | — |
+| `UX-1` | `M` | `8` | `planned` | Guided workflow wizard with clear prerequisite gating so users cannot run modeling before valid target/time selection. | — | — |
+| `UX-2` | `M` | `8` | `planned` | Interactive data preview table with column types, missingness badges, unit selectors, and summary sparklines. | — | — |
+| `UX-3` | `M` | `8` | `planned` | Dedicated VSG & Data Quality review screen allowing sorting, filtering, and audited manual override of driver screening. | — | — |
+| `UX-4` | `M` | `8` | `planned` | Interactive Matplotlib QtAgg canvas panels with zoom/pan toolbar, hover readouts, and PNG/SVG export. | — | — |
+| `UX-5` | `M` | `8` | `planned` | Model Evaluation Register table displaying every candidate family, metrics, composite score, MCS membership, and status badge. | — | — |
+| `UX-6` | `M` | `8` | `planned` | Statistical Test Catalog explorer showing statistic, p_raw, p_adj (BH-FDR), assumption status, and plain-English interpretation. | — | — |
+| `UX-7` | `M` | `8` | `planned` | AutoDecisionLog inspector allowing filter/search across all automatic rules and one-click switch to Manual override. | — | — |
+| `UX-8` | `M` | `8` | `planned` | Full keyboard tab order, shortcuts for primary actions, and accessible labels on inputs and tables. | — | — |
+| `UX-9` | `M` | `8` | `planned` | WCAG 2.1 AA color contrast (>= 4.5:1 text) and colorblind-safe chart palettes (Okabe-Ito / Viridis). | — | — |
+| `UX-10` | `M` | `8` | `planned` | Actionable plain-English error dialogs (what happened, why, and how to fix) replacing raw Python tracebacks. | — | — |
+| `UX-11` | `M` | `8` | `planned` | Clean HiDPI layout rendering verified at 100%, 125%, and 150% Windows display scaling without clipped text. | — | — |
+| `UX-12` | `M` | `8` | `planned` | Automated pytest-qt widget test suite covering navigation, validation states, cancel flow, and results views. | — | — |
+| `DOM-1` | `M` | `6` | `planned` | ISO 50006 terminology and workflow alignment: EnB (Energy Baseline), EnPI, relevant variables, static factors, and baseline period vs reporting period. | — | — |
+| `DOM-2` | `M` | `6` | `planned` | ASHRAE Guideline 14-2014 / IPMVP Option C statistical acceptance criteria checks (monthly CV(RMSE) <= 15%, NMBE within +/-5%; hourly CV(RMSE) <= 30%, NMBE within +/-10%). | — | — |
+| `DOM-3` | `M` | `7` | `planned` | Explicit separation of routine adjustments (weather/production model) and documented non-routine adjustments (static factor events). | — | — |
+| `PKG-1` | `M` | `9` | `planned` | Reproducible one-folder Windows PyInstaller build (scripts/build_exe.py --profile full\|lite) producing EnergyBaseline.exe + _internal/. | — | — |
+| `PKG-2` | `M` | `9` | `planned` | Clean Windows 10/11 VM execution (E3) with zero pre-installed Python, VC++ surprises, or network access. | — | — |
+| `PKG-3` | `S` | `9` | `in_progress` | Authenticode signing pipeline (scripts/sign/sign_artifacts.ps1); reclassified [S] per D1=B with mandatory production cert trigger before external distribution. | `scripts/sign/sign_artifacts.ps1`, `docs/deviations.md` | `tests/gates/test_phase0_contracts.py::test_process_documents_present_and_english` |
+| `PKG-4` | `M` | `9` | `planned` | Installer / portable archive packaging including LICENSE, THIRD_PARTY_NOTICES.md, USER_GUIDE.md, and sample generator. | — | — |
+| `PKG-5` | `M` | `9` | `planned` | Release SHA256SUMS manifest covering all distributable binaries, archives, and SBOM. | — | — |
+| `PKG-6` | `M` | `0/9` | `in_progress` | CycloneDX SBOM generation (sbom.json) and zero unaddressed critical CVEs in pip-audit. | `requirements.lock`, `.github/workflows/ci.yml` | `tests/gates/test_phase0_contracts.py::test_manifests_exact_pins_and_hashes` |

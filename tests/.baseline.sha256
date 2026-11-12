@@ -1,0 +1,5 @@
+# SHA-256 baseline test integrity manifest (Phase 0 D0.3)
+3c3fe42536837e3f7e7d609c5b6e0009f4831e45de2473100c879b2030384c46  tests/conftest.py
+1a683b80842a75d9dc836bc2650955b069325a6489919bcadb70fbe9cb98c1ff  tests/test_config_db.py
+bd9d202fe3f6d0c9985cabfd762403dd77fabd198921e9f5074598514f348f02  tests/test_core.py
+679b66f1f9dfbd5f5f9514c379c05899f12f1d87edd6f276048cc5d054bc9aef  tests/test_pipeline.py
