@@ -1,0 +1,3 @@
+$ python scripts/gen_matrix.py --check
+OK [gen_matrix] verified 249 requirement IDs (10 done)
+exit_code=0

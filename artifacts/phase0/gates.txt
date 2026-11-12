@@ -1,0 +1,33 @@
+$ python scripts/gates/guard_web_free.py
+OK [guard_web_free] clean (/home/user/EnergyBaseline)
+exit_code=0
+
+$ python scripts/gates/guard_env_readers.py
+OK [guard_env_readers] clean (/home/user/EnergyBaseline)
+exit_code=0
+
+$ python scripts/gates/guard_tests_integrity.py
+OK [guard_tests_integrity] verified 4 baseline test files
+exit_code=0
+
+$ python -m pytest -q tests/gates
+.....................                                                    [100%]
+21 passed in 2.66s
+exit_code=0
+
+$ python -m ruff check . && python -m ruff format --check .
+All checks passed!
+33 files already formatted
+exit_code=0
+
+$ python -m pyflakes energybaseline
+exit_code=0
+
+$ test -z "$(git ls-files | grep -Ei 'package.json|tsconfig|\.tsx?$|next\.config|drizzle|eslint|postcss')"
+exit_code=0
+
+$ test -z "$(git ls-files | grep -E '__pycache__|\.pyc$')"
+exit_code=0
+
+$ test -z "$(grep -rn 'weasyprint' energybaseline scripts requirements.txt requirements.in requirements.lock)"
+exit_code=0

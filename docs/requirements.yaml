@@ -118,7 +118,8 @@ requirements:
   status: done
   title: Produce complete Phase 0 verification evidence bundle and CycloneDX SBOM under artifacts/phase0/.
   code_refs:
-  - pyproject.toml
+  - artifacts/phase0/REPORT.md
+  - artifacts/phase0/sbom.json
   - requirements.lock
   test_ids:
   - tests/gates/test_phase0_contracts.py::test_evidence_bundle_and_license_intact

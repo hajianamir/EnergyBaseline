@@ -1,0 +1,35 @@
+$ python -m pytest -q --cov=energybaseline/core --cov-fail-under=60
+..........................................                               [100%]
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.11.2-final-0 ________________
+
+Name                                     Stmts   Miss  Cover
+------------------------------------------------------------
+energybaseline/core/auto.py                 67      7    90%
+energybaseline/core/eda.py                 106     32    70%
+energybaseline/core/features.py            251     39    84%
+energybaseline/core/ingest.py              149     85    43%
+energybaseline/core/mining.py              264     47    82%
+energybaseline/core/models.py              515     79    85%
+energybaseline/core/monitor.py             121     25    79%
+energybaseline/core/nn.py                  250     28    89%
+energybaseline/core/pipeline.py            331     35    89%
+energybaseline/core/quality.py             264     62    77%
+energybaseline/core/report.py              329     65    80%
+energybaseline/core/report_template.py       1      0   100%
+energybaseline/core/schema.py               18      1    94%
+energybaseline/core/scoring.py             149     17    89%
+energybaseline/core/secrets.py              71     32    55%
+energybaseline/core/sqlsource.py           154     65    58%
+energybaseline/core/store.py               134     21    84%
+energybaseline/core/temporal.py            166     34    80%
+------------------------------------------------------------
+TOTAL                                     3340    674    80%
+Required test coverage of 60% reached. Total coverage: 79.82%
+42 passed in 77.60s (0:01:17)
+exit_code=0
+
+$ [torch-absent venv] python -m pytest -q
+..........................................                               [100%]
+42 passed in 45.25s
+exit_code=0
