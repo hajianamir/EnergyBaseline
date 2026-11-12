@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   verify:
-    name: Phase 0 Gate (${{ matrix.os }})
+    name: Phase 1 Gate G1 (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -55,18 +55,24 @@ jobs:
         run: |
           python -m pyflakes energybaseline
 
-      - name: Architecture and integrity gates
+      - name: Gate G1 architecture, integrity, and traceability checks
         run: |
           python scripts/gates/guard_web_free.py
           python scripts/gates/guard_env_readers.py
           python scripts/gates/guard_tests_integrity.py
+          python scripts/gates/guard_no_qthread_compute.py
+          python -c "assert 'DATABASE_URL' not in open('energybaseline/launcher.py', encoding='utf-8').read()"
           python scripts/gen_matrix.py --check
 
-      - name: Gate negative tests
+      - name: Gate G1 Alembic reversible migration cycle
         run: |
-          python -m pytest -q tests/gates
+          python -c "import os, subprocess, sys, tempfile; d = tempfile.mkdtemp(prefix='eb_ci_alembic_'); env = {**os.environ, 'EB_HOME': d}; [subprocess.check_call([sys.executable, '-m', 'alembic', *cmd], env=env) for cmd in (('upgrade', 'head'), ('downgrade', 'base'), ('upgrade', 'head'))]"
 
-      - name: Core test suite and coverage gate (S5 >= 60%)
+      - name: Gate G1 unit tests (gates + DB config)
+        run: |
+          python -m pytest -q tests/gates/ tests/test_config_db.py
+
+      - name: Full test suite and coverage gate (S5 >= 60%)
         run: |
           python -m pytest -q --junitxml=pytest-core.xml --cov=energybaseline/core --cov-report=xml:coverage.xml --cov-report=term --cov-fail-under=60
 
@@ -75,9 +81,22 @@ jobs:
         run: |
           python scripts/ci_junit_annotations.py pytest-core.xml
 
-      - name: GUI QApplication smoke test (pytest-qt)
+      - name: GUI smoke & Phase 1 shell tests (pytest-qt)
         run: |
           python -m pytest -q tests/gui -p no:cacheprovider
+
+      - name: Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: |
+          pwsh -NoProfile -File scripts/evidence/installer_smoke.ps1 -Profile lite -PythonExe (Get-Command python).Source
+          pwsh -NoProfile -File scripts/evidence/lif_orphans.ps1 -PythonExe (Get-Command python).Source
+          pwsh -NoProfile -File scripts/evidence/startup_time.ps1 -PythonExe (Get-Command python).Source
+          pwsh -NoProfile -File scripts/evidence/dpi_matrix.ps1 -PythonExe (Get-Command python).Source
+          Get-ChildItem artifacts\phase1\evidence\*.json | ForEach-Object {
+            $h = (Get-FileHash -Algorithm SHA256 $_.FullName).Hash.ToLowerInvariant()
+            Write-Host "EVIDENCE_SHA256 $($_.Name) $h"
+          }
 
       - name: Self-signed Authenticode signing smoke test (D1=B, Windows)
         if: matrix.os == 'windows-latest'
@@ -93,7 +112,7 @@ jobs:
         run: |
           cyclonedx-py requirements requirements.lock --pyproject pyproject.toml --output-reproducible -o sbom.json
 
-      - name: Upload SBOM, coverage, and evidence artifacts
+      - name: Upload SBOM, coverage, and Phase 1 evidence artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:

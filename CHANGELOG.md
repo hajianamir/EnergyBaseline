@@ -3,7 +3,23 @@
 All notable changes to EnergyBaseline are documented in this file.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased] — Phase 0: Truth & Rails (2026-11-12)
+## [Unreleased] — Phase 1: Lifecycle & Skeleton (2026-11-12)
+
+### Added
+- Process-pool execution adapter (`energybaseline/core/pool.py`) running `run_analysis` inside `ProcessPoolExecutor(max_workers=min(CPU//2, tasks), mp_context="spawn")` with `multiprocessing.Queue` return channel, `> 1 MiB` SHA-256-verified `{path, sha256, rows}` file-backed payload staging under `APP_HOME/cache/`, readiness/protocol-version handshake (`30 s` cold / `10 s` warm), stage/fold/test/epoch/trial cancellation tokens, `10 s` unresponsive-worker hard-kill, `_EB_IN_WORKER=1` SQLite worker isolation guard, and Windows Job Object (`JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE`) (`P1.1`, `P1.2`).
+- Deterministic shutdown chain (`energybaseline/gui/app.py::perform_clean_shutdown`) bound to `QApplication.aboutToQuit`: `cancel -> join (5 s) -> hard stop -> WAL checkpoint -> DB close` (`P1.2`).
+- `QLocalServer` / `QLocalSocket` single-instance application guard (`energybaseline/gui/single_instance.py`) activating the primary desktop window and exiting secondary instances cleanly (`P1.3`).
+- Normalized path guard (`energybaseline/io/paths.py`) resolving `APP_HOME`, picked files, cache, and temp directories while rejecting `..` traversal, UNC paths, symlinks/reparse points, and paths outside allowed roots (`P1.4`).
+- Compile-time static command allowlist (`energybaseline/gui/commands.py` + `WORKER_COMMAND_REGISTRY`) resolved and validated at startup with zero `eval`, `exec`, or dynamic `getattr` dispatch (`P1.5`).
+- SQLite Online Backup API pre-migration snapshot, SHA-256 manifest, and validated restore (`energybaseline/db/backup.py`) plus full DB fallback ladder (`%LOCALAPPDATA%` / `portable.flag` / `EB_HOME` -> `%TEMP%` warning banner -> `:memory:` critical red banner), 3 s external DB probe with audit log, and full SQLite PRAGMAs (`WAL`, `synchronous=NORMAL`, `foreign_keys=ON`, `busy_timeout=5000`, `temp_store=MEMORY`) (`P1.6`).
+- Live operational `StatusPage` (`energybaseline/gui/page_status.py`) and top-of-window `FallbackBanner` (`energybaseline/gui/main_window.py`) (`P1.7`).
+- AST gate `scripts/gates/guard_no_qthread_compute.py`, Phase 1 gate/GUI test suites (`tests/gates/test_phase1_*.py`, `tests/gui/test_phase1_gui.py`), and JSON-emitting Windows evidence scripts (`scripts/evidence/{lif_orphans,startup_time,installer_smoke,dpi_matrix}.ps1`) (`P1.9`, `P1.10`).
+
+### Changed
+- Removed `os.environ["DATABASE_URL"]` override from `energybaseline/launcher.py` while keeping `./data` creation and adding `multiprocessing.freeze_support()` (`P1.6`, `DB-2`).
+- Updated `scripts/build_exe.py` (`--profile full|lite` unchanged) to default to PyInstaller `--onedir`, create `.lnk` shortcuts, emit reproducible CycloneDX `sbom.cdx.json` + `SHA256SUMS.txt`, and compile a per-user Inno Setup / NSIS installer (`--installer`) (`P1.8`).
+
+## [Phase 0] — Truth & Rails (2026-11-12)
 
 ### Added
 - Exact-pinned dependency manifests (`requirements.in`, `requirements.txt`, `requirements-dev.txt`) and cross-platform SHA-256 hashed lockfile (`requirements.lock`) targeting Python `3.11.9` (`pyproject.toml`), including `reportlab==5.1.0`, `mapie==1.6.0`, `arch==9.0.0`, `sqlglot==30.31.0`, `joblib==1.6.0`, `pydantic==2.14.3`, `hypothesis==6.170.15`, `pytest-qt==4.5.0`, `ruff==0.17.5`, `cyclonedx-bom==8.0.1`, and `pip-audit==2.10.1` (`D0.2`).

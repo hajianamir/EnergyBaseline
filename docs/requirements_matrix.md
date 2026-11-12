@@ -6,7 +6,7 @@
 ## Summary
 
 - **Total tracked IDs:** 249 (Priorities: `[M]`=243, `[S]`=4, `[O]`=2)
-- **Status breakdown:** `done`=10 · `in_progress`=16 · `planned`=223 · `deferred`=0
+- **Status breakdown:** `done`=38 · `in_progress`=15 · `planned`=195 · `deferred`=1
 
 ## Matrix
 
@@ -23,10 +23,10 @@
 | `D0.9` | `M` | `0` | `done` | Seed tests/gui QApplication smoke test, tests/reference/README.md JSON format, and tests/fixtures/synthetic.py. | `tests/gui/test_qapp_smoke.py`, `tests/reference/README.md`, `tests/fixtures/synthetic.py` | `tests/gui/test_qapp_smoke.py::test_qapplication_smoke`, `tests/test_pipeline.py::test_daily_multitarget_independent` |
 | `D0.10` | `M` | `0` | `done` | Produce complete Phase 0 verification evidence bundle and CycloneDX SBOM under artifacts/phase0/. | `artifacts/phase0/REPORT.md`, `artifacts/phase0/sbom.json`, `requirements.lock` | `tests/gates/test_phase0_contracts.py::test_evidence_bundle_and_license_intact` |
 | `AC-01` | `M` | `0/1` | `in_progress` | Zero-config offline startup on fresh Windows creating local SQLite DB without env vars or cloud services. | `energybaseline/config/settings.py`, `energybaseline/db/session.py` | `tests/test_config_db.py::test_default_sqlite_when_no_env` |
-| `AC-02` | `M` | `1` | `planned` | Single-instance lock focuses existing desktop window and cleans stale lock on crash. | — | — |
+| `AC-02` | `M` | `1` | `done` | Single-instance lock focuses existing desktop window and cleans stale lock on crash. | `energybaseline/gui/single_instance.py`, `energybaseline/gui/app.py` | `tests/gui/test_phase1_gui.py::test_single_instance_guard_activates_primary_and_rejects_second` |
 | `AC-03` | `M` | `1` | `planned` | Credentials encrypted via Windows DPAPI or PBKDF2-Fernet with zero plaintext secrets on disk or logs. | — | — |
 | `AC-04` | `M` | `1/6` | `planned` | Zero pickle.loads in model store; artifacts persisted via joblib with verified SHA-256 manifest. | — | — |
-| `AC-05` | `M` | `0/1` | `in_progress` | Zero web servers, listening ports, browser views, or outbound telemetry calls. | `scripts/gates/guard_web_free.py` | `tests/gates/test_guard_web_free.py::test_repo_is_web_free` |
+| `AC-05` | `M` | `0/1` | `done` | Zero web servers, listening ports, browser views, or outbound telemetry calls. | `scripts/gates/guard_web_free.py`, `energybaseline/core/pool.py`, `energybaseline/db/session.py` | `tests/gates/test_guard_web_free.py::test_repo_is_web_free`, `tests/gates/test_phase1_db_ladder.py::test_db_matrix_unwritable_app_home_falls_back_to_temp_rung`, `tests/gates/test_phase1_db_ladder.py::test_db_matrix_unwritable_app_home_and_temp_falls_back_to_in_memory_red_banner` |
 | `AC-06` | `M` | `2` | `planned` | Read-only SQL connector rejects DDL/DML/multi-statement queries via sqlglot AST and driver read-only mode. | — | — |
 | `AC-07` | `M` | `2` | `planned` | Variable Selection Gate runs pre-modeling and logs per-driver decisions with user override audit. | — | — |
 | `AC-08` | `M` | `3` | `planned` | Target Characterization Profile computes all 14 dimensions and persists JSON prior to candidate generation. | — | — |
@@ -48,7 +48,7 @@
 | `AC-24` | `M` | `8` | `planned` | Desktop UX satisfies wizard flow, keyboard accessibility, WCAG AA contrast, and 100%/125%/150% DPI scaling. | — | — |
 | `AC-25` | `M` | `8` | `planned` | ISO 50006 report exports deterministic ReportLab PDF and self-contained offline HTML. | — | — |
 | `AC-26` | `M` | `9` | `planned` | Clean-VM packaged EnergyBaseline.exe passes E3 end-to-end smoke test without Python installed. | — | — |
-| `AC-27` | `M` | `1` | `planned` | Alembic migrations run exclusively at startup with automatic pre-migration SQLite backup. | — | — |
+| `AC-27` | `M` | `1` | `done` | Alembic migrations run exclusively at startup with automatic pre-migration SQLite backup. | `energybaseline/db/session.py`, `energybaseline/db/backup.py`, `energybaseline/db/migrate.py` | `tests/gates/test_phase1_db_ladder.py::test_pre_migration_online_backup_and_validated_restore_on_failure` |
 | `AC-28` | `M` | `2` | `planned` | Ingestion handles CSV/TSV/Excel encodings, DST transitions, duplicate timestamps, and unit metadata. | — | — |
 | `AC-29` | `M` | `3` | `planned` | Structural break detection (Chow, Quandt-Andrews, Pettitt, Bai-Perron/PELT) integrated into TCP. | — | — |
 | `AC-30` | `M` | `5` | `planned` | Degree-day / 3P-4P-5P ASHRAE Guideline 14 change-point models fitted with knot uncertainty. | — | — |
@@ -59,7 +59,7 @@
 | `AC-35` | `M` | `0/9` | `in_progress` | 100% English-only UI, reports, logs, comments, tests, and documentation across the repository. | `docs/requirements.yaml` | `tests/gates/test_phase0_contracts.py::test_process_documents_present_and_english` |
 | `G-1` | `M` | `0` | `in_progress` | Offline native Windows desktop architecture; zero web frameworks or localhost servers. | `scripts/gates/guard_web_free.py` | `tests/gates/test_guard_web_free.py::test_repo_is_web_free` |
 | `G-2` | `M` | `0` | `in_progress` | Zero-config default SQLite storage under user appdata or portable folder. | `energybaseline/config/settings.py` | `tests/test_config_db.py::test_default_sqlite_when_no_env` |
-| `G-3` | `M` | `1` | `planned` | Strict core/GUI separation: energybaseline/core never imports Qt widgets. | — | — |
+| `G-3` | `M` | `1` | `done` | Strict core/GUI separation: energybaseline/core never imports Qt widgets. | `scripts/gates/guard_no_qthread_compute.py`, `energybaseline/core/pool.py` | `tests/gates/test_phase1_paths_and_commands.py::test_guard_no_qthread_compute_passes_repo_and_catches_synthetic` |
 | `G-4` | `M` | `0` | `in_progress` | No fake stubs, silent fallbacks, or dead controls; explicit status for optional features. | `docs/not_implemented.md` | `tests/gates/test_phase0_contracts.py::test_process_documents_present_and_english` |
 | `G-5` | `M` | `4` | `planned` | Every statistical test checks assumptions first and switches to documented non-parametric fallback. | — | — |
 | `G-6` | `M` | `3` | `planned` | Every Auto decision is deterministic, auditable, and overridable by the engineer. | — | — |
@@ -71,45 +71,45 @@
 | `PIPE-1` | `M` | `2` | `planned` | Typed stage contract connecting Ingest -> VSG -> TCP -> Candidate Gen -> Fit/CV -> Score -> UQ -> Report. | — | — |
 | `PIPE-2` | `M` | `3` | `planned` | Immutable stage artifacts with dataset SHA-256 provenance across pipeline stages. | — | — |
 | `PIPE-3` | `M` | `7` | `planned` | Per-target pipeline isolation ensuring failure on one EnPI target never aborts sibling targets. | — | — |
-| `DB-1` | `M` | `1` | `in_progress` | Default SQLite database under %LOCALAPPDATA%\EnergyBaseline\data or portable mode without env vars. | `energybaseline/config/settings.py`, `energybaseline/db/session.py` | `tests/test_config_db.py::test_default_sqlite_when_no_env` |
-| `DB-2` | `M` | `1` | `planned` | SQLite pragmas enforced on every connection: WAL journal_mode, foreign_keys=ON, busy_timeout=5000, synchronous=NORMAL. | — | — |
+| `DB-1` | `M` | `1` | `done` | Default SQLite database under %LOCALAPPDATA%\EnergyBaseline\data or portable mode without env vars. | `energybaseline/config/settings.py`, `energybaseline/db/session.py`, `energybaseline/io/paths.py` | `tests/gates/test_phase1_db_ladder.py::test_db_matrix_no_env_and_whitespace_env_and_pragmas`, `tests/gates/test_phase1_paths_and_commands.py::test_resolve_app_home_precedence` |
+| `DB-2` | `M` | `1` | `done` | SQLite pragmas enforced on every connection: WAL journal_mode, foreign_keys=ON, busy_timeout=5000, synchronous=NORMAL. | `energybaseline/db/session.py`, `energybaseline/launcher.py` | `tests/gates/test_phase1_db_ladder.py::test_db_matrix_no_env_and_whitespace_env_and_pragmas`, `tests/gates/test_phase1_db_ladder.py::test_launcher_does_not_override_database_url` |
 | `DB-3` | `M` | `1` | `planned` | Exclusive Alembic migration execution at startup (Base.metadata.create_all removed from production startup). | — | — |
-| `DB-4` | `M` | `1` | `planned` | Automatic timestamped SQLite backup prior to applying pending Alembic schema migrations. | — | — |
-| `DB-5` | `M` | `1` | `planned` | Schema version table verification and clean downgrade/restore on migration failure. | — | — |
+| `DB-4` | `M` | `1` | `done` | Automatic timestamped SQLite backup prior to applying pending Alembic schema migrations. | `energybaseline/db/backup.py`, `energybaseline/db/session.py` | `tests/gates/test_phase1_db_ladder.py::test_pre_migration_online_backup_and_validated_restore_on_failure` |
+| `DB-5` | `M` | `1` | `done` | Schema version table verification and clean downgrade/restore on migration failure. | `energybaseline/db/backup.py`, `energybaseline/db/session.py`, `alembic/env.py` | `tests/gates/test_phase1_db_ladder.py::test_pre_migration_online_backup_and_validated_restore_on_failure` |
 | `DB-6` | `M` | `1` | `planned` | Normalized tables for projects, datasets, runs, targets, VSG logs, TCP profiles, model registers, and monitors. | — | — |
 | `DB-7` | `M` | `1` | `planned` | Transactional unit-of-work writes ensuring cancelled or failed runs leave zero partial orphan rows. | — | — |
 | `DB-8` | `M` | `1` | `planned` | Portable project bundle (.ebproj) export/import with schema compatibility check. | — | — |
-| `DB-9` | `M` | `1` | `planned` | Database integrity check command (PRAGMA integrity_check) exposed in diagnostics. | — | — |
+| `DB-9` | `M` | `1` | `done` | Database integrity check command (PRAGMA integrity_check) exposed in diagnostics. | `energybaseline/db/backup.py`, `energybaseline/db/session.py`, `energybaseline/gui/page_status.py` | `tests/gui/test_phase1_gui.py::test_main_window_commands_path_guard_status_page_and_banners` |
 | `DB-10` | `S` | `1` | `planned` | Bounded database growth via artifact pruning and VACUUM maintenance utility. | — | — |
-| `DB-11` | `M` | `1` | `planned` | Single canonical environment variable reader restricted to energybaseline/config/settings.py. | — | — |
-| `SHL-1` | `M` | `1` | `planned` | Native PySide6 QMainWindow desktop shell with zero QtWebEngine or embedded browser dependencies. | — | — |
+| `DB-11` | `M` | `1` | `done` | Single canonical environment variable reader restricted to energybaseline/config/settings.py. | `energybaseline/config/settings.py`, `scripts/gates/guard_env_readers.py` | `tests/gates/test_guard_env_readers.py::test_repo_env_readers_clean`, `tests/gates/test_guard_env_readers.py::test_rejects_unauthorized_env_reader` |
+| `SHL-1` | `M` | `1` | `done` | Native PySide6 QMainWindow desktop shell with zero QtWebEngine or embedded browser dependencies. | `energybaseline/gui/main_window.py`, `energybaseline/gui/single_instance.py` | `tests/gui/test_phase1_gui.py::test_single_instance_guard_activates_primary_and_rejects_second` |
 | `SHL-2` | `M` | `1` | `planned` | Step-by-step navigation rail covering Project, Data, VSG/Quality, Baseline Run, Results, Monitoring, and Reports. | — | — |
-| `SHL-3` | `M` | `1` | `planned` | Responsive non-blocking UI main thread (< 50 ms event loop latency during background computation). | — | — |
-| `SHL-4` | `M` | `1` | `planned` | True Cancel button wired to worker process termination within 2 seconds. | — | — |
-| `SHL-5` | `M` | `1` | `planned` | Structured progress bar, stage indicator, elapsed timer, and live log drawer. | — | — |
-| `SHL-6` | `M` | `1` | `planned` | Global unhandled exception hook writing crash diagnostics locally and presenting actionable recovery dialog. | — | — |
+| `SHL-3` | `M` | `1` | `done` | Responsive non-blocking UI main thread (< 50 ms event loop latency during background computation). | `energybaseline/gui/pages_setup.py`, `energybaseline/io/paths.py` | `tests/gates/test_phase1_paths_and_commands.py::test_validate_path_rejects_traversal_and_unc`, `tests/gui/test_phase1_gui.py::test_main_window_commands_path_guard_status_page_and_banners` |
+| `SHL-4` | `M` | `1` | `done` | True Cancel button wired to worker process termination within 2 seconds. | `energybaseline/core/pool.py`, `energybaseline/io/paths.py` | `tests/gates/test_phase1_pool_and_lifecycle.py::test_pool_handshake_shl5_worker_db_guard_and_hard_kill`, `tests/gates/test_phase1_paths_and_commands.py::test_validate_path_rejects_leaf_and_intermediate_symlinks` |
+| `SHL-5` | `M` | `1` | `done` | Structured progress bar, stage indicator, elapsed timer, and live log drawer. | `energybaseline/core/pool.py`, `energybaseline/db/session.py`, `energybaseline/gui/pages_setup.py` | `tests/gates/test_phase1_pool_and_lifecycle.py::test_pool_handshake_shl5_worker_db_guard_and_hard_kill` |
+| `SHL-6` | `M` | `1` | `done` | Global unhandled exception hook writing crash diagnostics locally and presenting actionable recovery dialog. | `energybaseline/gui/app.py` | `tests/gui/test_phase1_gui.py::test_main_window_commands_path_guard_status_page_and_banners` |
 | `SHL-7` | `M` | `1` | `planned` | Persistent user preferences (recent projects, default confidence level, worker count) in local config. | — | — |
 | `SHL-8` | `O` | `8` | `planned` | Optional secondary visual theme switcher (explicitly documented in docs/not_implemented.md). | — | — |
-| `SHL-9` | `M` | `1` | `planned` | Application Help/About dialog displaying exact version, commit SHA, Python runtime, and license notices. | — | — |
-| `IPC-1` | `M` | `1` | `planned` | ProcessPoolExecutor worker execution using explicit spawn multiprocessing context on all platforms. | — | — |
-| `IPC-2` | `M` | `1` | `planned` | Typed serializable job request and result envelopes across process boundaries (no Qt objects in workers). | — | — |
-| `IPC-3` | `M` | `1` | `planned` | Streaming progress, stage transition, and warning events from child process to GUI via queue/pipe. | — | — |
-| `IPC-4` | `M` | `1` | `planned` | Hard worker process tree termination on user Cancel or timeout within 2 seconds. | — | — |
-| `IPC-5` | `M` | `1` | `planned` | Crash isolation: child worker segfault or MemoryError surfaces structured error without killing GUI. | — | — |
-| `IPC-6` | `M` | `1` | `planned` | Deterministic worker RNG seeding and single-threaded BLAS/OpenMP pinning inside spawned workers. | — | — |
-| `IPC-7` | `M` | `1` | `planned` | Temporary IPC shared files cleaned deterministically on completion, cancellation, or crash. | — | — |
-| `LIF-1` | `M` | `1` | `planned` | Single-instance application lock using OS file lock + local socket/named-pipe activation handshake. | — | — |
-| `LIF-2` | `M` | `1` | `planned` | Stale lockfile detection and automatic recovery after an unclean process termination. | — | — |
+| `SHL-9` | `M` | `1` | `done` | Application Help/About dialog displaying exact version, commit SHA, Python runtime, and license notices. | `energybaseline/gui/main_window.py`, `energybaseline/gui/page_status.py` | `tests/gui/test_phase1_gui.py::test_main_window_commands_path_guard_status_page_and_banners` |
+| `IPC-1` | `M` | `1` | `done` | ProcessPoolExecutor worker execution using explicit spawn multiprocessing context on all platforms. | `energybaseline/core/pool.py`, `energybaseline/launcher.py` | `tests/gates/test_phase1_pool_and_lifecycle.py::test_compute_max_workers_formula`, `tests/gates/test_phase1_pool_and_lifecycle.py::test_run_in_pool_executes_analysis_end_to_end_and_clean_shutdown` |
+| `IPC-2` | `M` | `1` | `done` | Typed serializable job request and result envelopes across process boundaries (no Qt objects in workers). | `energybaseline/core/pool.py` | `tests/gates/test_phase1_pool_and_lifecycle.py::test_payload_over_1mib_uses_cache_file_ref_and_checks_sha256` |
+| `IPC-3` | `M` | `1` | `done` | Streaming progress, stage transition, and warning events from child process to GUI via queue/pipe. | `energybaseline/core/pool.py`, `energybaseline/gui/pages_setup.py` | `tests/gates/test_phase1_pool_and_lifecycle.py::test_run_in_pool_executes_analysis_end_to_end_and_clean_shutdown` |
+| `IPC-4` | `M` | `1` | `done` | Hard worker process tree termination on user Cancel or timeout within 2 seconds. | `energybaseline/core/pool.py` | `tests/gates/test_phase1_pool_and_lifecycle.py::test_cancel_token_callbacks_raise_interrupted_error`, `tests/gates/test_phase1_pool_and_lifecycle.py::test_pool_handshake_shl5_worker_db_guard_and_hard_kill` |
+| `IPC-5` | `M` | `1` | `done` | Crash isolation: child worker segfault or MemoryError surfaces structured error without killing GUI. | `energybaseline/core/pool.py` | `tests/gates/test_phase1_pool_and_lifecycle.py::test_pool_handshake_shl5_worker_db_guard_and_hard_kill` |
+| `IPC-6` | `M` | `1` | `done` | Deterministic worker RNG seeding and single-threaded BLAS/OpenMP pinning inside spawned workers. | `energybaseline/core/pool.py` | `tests/gates/test_phase1_pool_and_lifecycle.py::test_payload_over_1mib_uses_cache_file_ref_and_checks_sha256` |
+| `IPC-7` | `M` | `1` | `done` | Temporary IPC shared files cleaned deterministically on completion, cancellation, or crash. | `energybaseline/core/pool.py` | `tests/gates/test_phase1_pool_and_lifecycle.py::test_run_in_pool_executes_analysis_end_to_end_and_clean_shutdown` |
+| `LIF-1` | `M` | `1` | `done` | Single-instance application lock using OS file lock + local socket/named-pipe activation handshake. | `energybaseline/gui/single_instance.py`, `energybaseline/gui/app.py`, `scripts/evidence/lif_orphans.ps1` | `tests/gui/test_phase1_gui.py::test_single_instance_guard_activates_primary_and_rejects_second` |
+| `LIF-2` | `M` | `1` | `done` | Stale lockfile detection and automatic recovery after an unclean process termination. | `energybaseline/core/pool.py`, `energybaseline/gui/single_instance.py`, `scripts/evidence/lif_orphans.ps1` | `tests/gates/test_phase1_pool_and_lifecycle.py::test_pool_handshake_shl5_worker_db_guard_and_hard_kill` |
 | `LIF-3` | `M` | `1` | `planned` | Graceful shutdown prompt when closing window during an active analysis run, terminating workers cleanly. | — | — |
-| `LIF-4` | `O` | `1` | `planned` | Optional system tray minimize/notification integration (documented as unimplemented in docs/not_implemented.md). | — | — |
-| `LIF-5` | `M` | `1` | `planned` | Rotating UTF-8 file logger under user logs directory with secret redaction filter. | — | — |
+| `LIF-4` | `O` | `1` | `deferred` | Optional system tray minimize/notification integration (documented as unimplemented in docs/not_implemented.md). | `docs/not_implemented.md` | — |
+| `LIF-5` | `M` | `1` | `done` | Rotating UTF-8 file logger under user logs directory with secret redaction filter. | `energybaseline/config/settings.py` | `tests/gates/test_phase1_db_ladder.py::test_db_matrix_unreachable_postgres_probe_audits_and_warns` |
 | `SCR-1` | `M` | `1` | `planned` | Primary credential storage on Windows using Win32 DPAPI (CryptProtectData) bound to current user. | — | — |
 | `SCR-2` | `M` | `1` | `planned` | Cross-platform / fallback credential encryption using PBKDF2-HMAC-SHA256 (>= 600k iterations) + Fernet. | — | — |
 | `SCR-3` | `M` | `1` | `planned` | Zero unencrypted secret keys or plaintext connection passwords written to disk, SQLite, or config files. | — | — |
 | `SCR-4` | `M` | `1` | `planned` | Automatic secret redaction in logs, tracebacks, AutoDecisionLog, and exported audit bundles. | — | — |
 | `SCR-5` | `M` | `1` | `planned` | Explicit credential deletion (Forget Password) wiping stored secret from DPAPI/keyring/vault. | — | — |
 | `SCR-6` | `M` | `1` | `planned` | TLS/SSL connection options (require SSL, custom CA bundle path) for external SQL connectors. | — | — |
-| `SCR-7` | `M` | `1` | `planned` | In-memory secret handling minimizing lifetime of plaintext password strings during SQL connection setup. | — | — |
+| `SCR-7` | `M` | `1` | `done` | In-memory secret handling minimizing lifetime of plaintext password strings during SQL connection setup. | `energybaseline/gui/commands.py`, `energybaseline/core/pool.py` | `tests/gates/test_phase1_paths_and_commands.py::test_command_registries_are_compile_time_immutable_and_reject_unknown`, `tests/gates/test_phase1_paths_and_commands.py::test_no_eval_exec_or_getattr_in_command_dispatchers` |
 | `DAT-1` | `M` | `2` | `planned` | CSV, TSV, and Excel (.xlsx) ingestion with encoding, delimiter, decimal, and sheet auto-detection. | — | — |
 | `DAT-2` | `M` | `2` | `planned` | Timestamp parsing supporting ISO-8601, locale formats, explicit timezone/DST handling, and monotonicity sort. | — | — |
 | `DAT-3` | `M` | `2` | `planned` | Duplicate timestamp, irregular interval, and gap classification (short gap vs extended shutdown). | — | — |
@@ -255,9 +255,9 @@
 | `DOM-1` | `M` | `6` | `planned` | ISO 50006 terminology and workflow alignment: EnB (Energy Baseline), EnPI, relevant variables, static factors, and baseline period vs reporting period. | — | — |
 | `DOM-2` | `M` | `6` | `planned` | ASHRAE Guideline 14-2014 / IPMVP Option C statistical acceptance criteria checks (monthly CV(RMSE) <= 15%, NMBE within +/-5%; hourly CV(RMSE) <= 30%, NMBE within +/-10%). | — | — |
 | `DOM-3` | `M` | `7` | `planned` | Explicit separation of routine adjustments (weather/production model) and documented non-routine adjustments (static factor events). | — | — |
-| `PKG-1` | `M` | `9` | `planned` | Reproducible one-folder Windows PyInstaller build (scripts/build_exe.py --profile full\|lite) producing EnergyBaseline.exe + _internal/. | — | — |
-| `PKG-2` | `M` | `9` | `planned` | Clean Windows 10/11 VM execution (E3) with zero pre-installed Python, VC++ surprises, or network access. | — | — |
+| `PKG-1` | `M` | `9` | `in_progress` | Reproducible one-folder Windows PyInstaller build (scripts/build_exe.py --profile full\|lite) producing EnergyBaseline.exe + _internal/. | `scripts/build_exe.py`, `scripts/evidence/installer_smoke.ps1` | `tests/gates/test_phase1_paths_and_commands.py::test_cyclonedx_sbom_generation` |
+| `PKG-2` | `M` | `9` | `in_progress` | Clean Windows 10/11 VM execution (E3) with zero pre-installed Python, VC++ surprises, or network access. | `scripts/build_exe.py`, `scripts/evidence/installer_smoke.ps1` | `tests/gates/test_phase1_paths_and_commands.py::test_cyclonedx_sbom_generation` |
 | `PKG-3` | `S` | `9` | `in_progress` | Authenticode signing pipeline (scripts/sign/sign_artifacts.ps1); reclassified [S] per D1=B with mandatory production cert trigger before external distribution. | `scripts/sign/sign_artifacts.ps1`, `docs/deviations.md` | `tests/gates/test_phase0_contracts.py::test_process_documents_present_and_english` |
 | `PKG-4` | `M` | `9` | `planned` | Installer / portable archive packaging including LICENSE, THIRD_PARTY_NOTICES.md, USER_GUIDE.md, and sample generator. | — | — |
 | `PKG-5` | `M` | `9` | `planned` | Release SHA256SUMS manifest covering all distributable binaries, archives, and SBOM. | — | — |
-| `PKG-6` | `M` | `0/9` | `in_progress` | CycloneDX SBOM generation (sbom.json) and zero unaddressed critical CVEs in pip-audit. | `requirements.lock`, `.github/workflows/ci.yml` | `tests/gates/test_phase0_contracts.py::test_manifests_exact_pins_and_hashes` |
+| `PKG-6` | `M` | `0/9` | `done` | CycloneDX SBOM generation (sbom.json) and zero unaddressed critical CVEs in pip-audit. | `scripts/build_exe.py`, `requirements.lock`, `.github/workflows/ci.yml` | `tests/gates/test_phase0_contracts.py::test_manifests_exact_pins_and_hashes`, `tests/gates/test_phase1_paths_and_commands.py::test_cyclonedx_sbom_generation` |
