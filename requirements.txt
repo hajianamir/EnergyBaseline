@@ -1,0 +1,36 @@
+# EnergyBaseline v3 - runtime requirements (Python 3.11+, Windows 10/11 64-bit)
+PySide6>=6.6
+numpy>=1.26
+pandas>=2.1
+scipy>=1.11
+statsmodels>=0.14
+scikit-learn>=1.4
+sqlalchemy>=2.0
+alembic>=1.13
+matplotlib>=3.8
+jinja2>=3.1
+openpyxl>=3.1
+pillow>=10
+cryptography>=42
+keyring>=24
+# advanced ML / data mining (each is optional at runtime: missing packages are reported as "skipped" in the report)
+xgboost>=2.0
+lightgbm>=4.3
+catboost>=1.2
+optuna>=3.5
+shap>=0.45
+mlxtend>=0.23
+ruptures>=1.1
+umap-learn>=0.5
+holidays>=0.45
+# neural networks (CPU build is fine; a CUDA build is used automatically when present)
+torch>=2.2
+# reporting (PDF falls back to the built-in Qt / matplotlib writers if WeasyPrint's GTK runtime is missing)
+weasyprint>=61
+# optional external SQL drivers for the Prediction module
+pymysql>=1.1
+psycopg2-binary>=2.9
+pyodbc>=5.0
+# packaging
+pyinstaller>=6.5
+# optional: prophet>=1.1

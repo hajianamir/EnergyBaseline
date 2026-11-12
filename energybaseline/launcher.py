@@ -1,0 +1,71 @@
+"""Entry point used by EnergyBaseline.exe (PyInstaller) and ``python -m energybaseline``.
+
+Launcher contract: create ./data, export DATABASE_URL=sqlite:///./data/app.db BEFORE the ORM is
+initialised, apply migrations (done in gui.app via db.init_database), then open the GUI.
+"""
+from __future__ import annotations
+
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+
+def _base() -> Path:
+    from .config import get_base_dir
+    return get_base_dir()
+
+
+def make_shortcuts(force: bool = False) -> list[str]:
+    """Create EnergyBaseline.lnk (custom .ico) on the Desktop and in the application folder (Windows only)."""
+    if sys.platform != "win32":
+        return []
+    base = _base()
+    exe = base / "EnergyBaseline.exe"
+    if getattr(sys, "frozen", False):
+        target, args = str(Path(sys.executable)), ""
+    elif exe.exists():
+        target, args = str(exe), ""
+    else:
+        pyw = Path(sys.executable).with_name("pythonw.exe")
+        target, args = str(pyw if pyw.exists() else sys.executable), "-m energybaseline"
+    ico = None
+    for cand in (base / "assets" / "energybaseline.ico", base / "_internal" / "assets" / "energybaseline.ico"):
+        if cand.exists():
+            ico = cand
+            break
+    desktop = Path(os.path.expanduser("~")) / "Desktop"
+    made = []
+    for folder in (desktop, base):
+        lnk = folder / "EnergyBaseline.lnk"
+        if lnk.exists() and not force:
+            continue
+        ps = ("$s=(New-Object -ComObject WScript.Shell).CreateShortcut('%s');$s.TargetPath='%s';$s.Arguments='%s';$s.WorkingDirectory='%s';%s$s.Save()"
+              % (lnk, target, args, base, f"$s.IconLocation='{ico}';" if ico else ""))
+        try:
+            subprocess.run(["powershell", "-NoProfile", "-WindowStyle", "Hidden", "-Command", ps], timeout=25, check=True,
+                           creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+            made.append(str(lnk))
+        except Exception:
+            pass
+    return made
+
+
+def main() -> None:
+    base = _base()
+    base.mkdir(parents=True, exist_ok=True)
+    os.chdir(base)
+    (base / "data").mkdir(exist_ok=True)
+    (base / "logs").mkdir(exist_ok=True)
+    os.environ["DATABASE_URL"] = "sqlite:///./data/app.db"  # launcher contract (SQLite-only runtime)
+    os.environ.setdefault("QT_API", "pyside6")
+    try:
+        make_shortcuts()
+    except Exception:
+        pass
+    from .gui.app import main as gui_main
+    sys.exit(gui_main())
+
+
+if __name__ == "__main__":
+    main()
