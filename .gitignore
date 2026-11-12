@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+
+# Application data (never commit user data or generated artifacts)
+data/
+logs/
+artifacts/**/*.db
+artifacts/**/*.sqlite
+*.joblib
+*.ebproj
+
+# Build output
+build/
+dist/
+*.spec
+EnergyBaseline.exe
+_internal/

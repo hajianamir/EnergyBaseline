@@ -1,0 +1,31 @@
+# Baseline code audit — commit 2c92f2a06f6fb04cd3aed584ba82639144bfbfa1
+# scope: energybaseline tests alembic scripts requirements.txt requirements-dev.txt pytest.ini alembic.ini install.bat start.bat stop.bat (markdown docs excluded to avoid self-contamination)
+
+ProcessPoolExecutor      hits=0
+freeze_support           hits=0
+win32job                 hits=0
+JobObject                hits=0
+aboutToQuit              hits=0
+closeEvent               hits=0
+QLocalServer             hits=0
+QTranslator              hits=0
+QSettings                hits=0
+ebproj                   hits=0
+mapie                    hits=0
+from arch                hits=0
+sqlglot                  hits=0
+reportlab                hits=0
+weasyprint               hits=10
+psi|PSI                  hits=3
+vsg                      hits=0
+tcp                      hits=0
+QAbstractTableModel      hits=0
+fetchMore                hits=0
+QAccessible              hits=0
+hypothesis               hits=0
+pytest-qt                hits=0
+onnx                     hits=0
+SECURITY                 hits=0
+cyclonedx                hits=0
+
+# note: "psi|PSI" hits are false positives (substring inside words), i.e. no drift implementation exists.

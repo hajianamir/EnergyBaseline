@@ -1,0 +1,15 @@
+## library verification against installed versions (2026-11-12)
+mapie 1.6.0 : SplitConformalRegressor / CrossConformalRegressor / JackknifeAfterBootstrapRegressor /
+              ConformalizedQuantileRegressor / TimeSeriesRegressor  ->  ALL PRESENT
+              TimeSeriesRegressor(method='enbpi'|'aci') signature confirmed
+              -> NOT in requirements.txt
+arch 9.0.0  : ADF / KPSS / PhillipsPerron / DFGLS / ZivotAndrews -> ALL PRESENT
+              -> NOT in requirements.txt
+sqlglot 30.31.0 : parse("SELECT ...; DROP TABLE t;") -> 2 statements [Select, Drop]
+              CTE "WITH c AS (SELECT 1) SELECT ..." root = Select ; "INSERT ..." root = Insert
+              -> NOT in requirements.txt
+reportlab 5.1.0 : reportlab.pdfgen.canvas importable -> OK ; weasyprint still declared (REP-3 violation)
+statsmodels 0.15.0 : MICEData.mcar_test -> MISSING (AttributeError)  [prompt claim FALSE]
+              grangercausalitytests(verbose=False) -> TypeError          [API changed]
+              adfuller/kpss/acorr_lm -> FutureWarning: result_object return type changes
+scipy 1.17.1 : brunnermunzel(midrank=...) deprecated -> variant (removal SciPy 1.19)
