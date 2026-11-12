@@ -73,23 +73,26 @@ jobs:
       - name: Emit pytest failure annotations on error
         if: failure()
         run: |
-          python -c "import pathlib, xml.etree.ElementTree as ET; p = pathlib.Path('pytest-core.xml'); [print(f'::error title={tc.attrib.get(\"classname\")}.{tc.attrib.get(\"name\")}::' + (ch.attrib.get('message','') + ' ' + (ch.text or ''))[:800].replace('\r',' ').replace('\n',' | ')) for tc in (ET.parse(p).iter('testcase') if p.exists() else []) for ch in tc if ch.tag in ('failure','error')]"
+          python scripts/ci_junit_annotations.py pytest-core.xml
 
       - name: GUI QApplication smoke test (pytest-qt)
+        if: always()
         run: |
           python -m pytest -q tests/gui -p no:cacheprovider
 
       - name: Self-signed Authenticode signing smoke test (D1=B, Windows)
-        if: matrix.os == 'windows-latest'
+        if: always() && matrix.os == 'windows-latest'
         shell: pwsh
         run: |
           pwsh -NoProfile -File scripts/sign/sign_artifacts.ps1 -SelfTest
 
       - name: Vulnerability audit (pip-audit)
+        if: always()
         run: |
           pip-audit -r requirements.lock
 
       - name: Generate CycloneDX SBOM
+        if: always()
         run: |
           cyclonedx-py requirements requirements.lock --pyproject pyproject.toml --output-reproducible -o sbom.json
 
