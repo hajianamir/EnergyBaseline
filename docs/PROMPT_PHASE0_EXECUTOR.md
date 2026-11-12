@@ -172,7 +172,10 @@ existing generator for test use only.
 
 ---
 
-## 7. Acceptance gate G0 (every command must exit 0)
+## 7. Acceptance gate G0 (canonical block — must be byte-identical with `docs/PHASE0_BRIEF.md`)
+
+Every command must exit 0. The `test -z "$(…)"` lines assert empty output on purpose: a bare `grep`
+exits 1 on a clean tree, which would contradict the gate.
 
 ```bash
 python -m pytest -q
@@ -184,12 +187,10 @@ python scripts/gates/guard_env_readers.py
 python scripts/gates/guard_tests_integrity.py
 python scripts/gen_matrix.py --check
 python -m pytest -q --cov=energybaseline/core --cov-fail-under=60
-git ls-files | grep -Ei "package.json|tsconfig|\.tsx?$|next\.config|drizzle|eslint|postcss"   # empty
-git ls-files | grep -E "__pycache__|\.pyc$"                                                 # empty
-grep -rn "weasyprint" energybaseline scripts requirements.txt requirements.in requirements.lock  # empty
+test -z "$(git ls-files | grep -Ei 'package.json|tsconfig|\.tsx?$|next\.config|drizzle|eslint|postcss')"
+test -z "$(git ls-files | grep -E '__pycache__|\.pyc$')"
+test -z "$(grep -rn 'weasyprint' energybaseline scripts requirements.txt requirements.in requirements.lock)"
 ```
-
----
 
 ## 8. Auto-fail conditions (no discussion)
 

@@ -5,8 +5,8 @@
 **Owner vote:** D1=B · D2=B+A · D3=A · D4=B · D5=A · S7=Proprietary — all match the reviewer's recommendation.
 
 > Any decision still `OPEN` blocks the dependent phase. If the owner does not vote, the **silence default**
-> applies and is recorded in `docs/deviations.md`. `docs/DECISIONS_FA.md` is a Persian translation of this
-> file; **the English version is authoritative**.
+> applies and is recorded in `docs/deviations.md`. This file is the only authoritative record of the
+> decisions (G-7: the repository ships English only).
 
 ## Summary of ratified decisions
 

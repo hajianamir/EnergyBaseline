@@ -3,12 +3,11 @@
 **Status:** ratifications complete (D1–D5 + S7) · Phase 0 **OPEN** · Phase 1 blocked until Phase 0 passes
 **Branch:** `arena/af928d3c-energybaseline` · **Base commit:** `2c92f2a` · **Review date:** 2026-11-12
 **Companions:** `docs/DECISIONS.md` · `docs/PHASE0_BRIEF.md` · `docs/PROMPT_PHASE0_EXECUTOR.md`
-**Persian translations (owner-facing, non-authoritative):** `docs/*_FA.md`
 
 > This is the governance document between the **reviewer** and the **executor**. It is not a product
-> artifact. Product documentation (`USER_GUIDE.md`, `requirements_matrix.md`, `deviations.md`,
-> `assumptions.md`, `not_implemented.md`, `SECURITY.md`) is English, per G-7.
-> `docs/*_FA.md` files are owner-facing translations; **the English version is authoritative**.
+> artifact. Every document in this repository — product docs, process docs, prompts and reports — is
+> English (G-7). There are no translations in-tree; the owner may request one out-of-band, but the
+> in-repo text is the only authoritative version.
 
 ---
 
@@ -187,16 +186,9 @@ gates each with a negative test · two-OS CI (`windows-latest` mandatory) · gen
 process documents (deviations/assumptions/not_implemented/SECURITY/THIRD_PARTY_NOTICES/SUPPORT_MATRIX/CHANGELOG) ·
 repo hygiene · the two broken tests resolved **by contract** · seeds for the next phase (no features).
 
-**Gate G0**
-```bash
-python -m pytest -q && python -m pytest -q tests/gates
-python -m ruff check . && python -m ruff format --check . && python -m pyflakes energybaseline
-python scripts/gates/guard_web_free.py
-python scripts/gates/guard_env_readers.py
-python scripts/gates/guard_tests_integrity.py
-python scripts/gen_matrix.py --check
-python -m pytest -q --cov=energybaseline/core --cov-fail-under=60
-```
+**Gate G0** — the canonical block lives in `docs/PHASE0_BRIEF.md` §“Gate G0” and is reproduced
+verbatim in `docs/PROMPT_PHASE0_EXECUTOR.md` §7. Three copies of a gate that can drift are a defect:
+if the block changes, all three files change in the same commit (the reviewer diffs them).
 
 **How the reviewer rejects:** a gate without a negative test; a matrix row `done` with empty `test_ids`;
 fixing a broken test with `skip`/`xfail`/deleted assertion; any `weasyprint` left in code or manifests;
@@ -418,7 +410,8 @@ stepper, Ctrl+K command palette over the registry, QSS themes persisted in `QSet
 progress, drag & drop, tray notifications, i18n-ready `QTranslator`) · `SECURITY.md` threat model, log
 scrubbing test, SBOM shipped, `pip-audit` in CI · NSIS/Inno per-user installer, `.ebproj` association,
 uninstaller that offers to keep data, signed updater (explicit user action only), checksums, reproducible
-build · final English docs including “Where is my data stored?”.
+build · final English docs including “Where is my data stored?”. The UI is *i18n-ready* (`QTranslator`) but
+ships **English only** — no localized `.qm` files are produced (G-7).
 
 **Gate G9:** full end-to-end run on Windows (E3): install → ingest sample → VSG → TCP → run → Top-5 → lock →
 monitoring → report → backup/restore → uninstall keeping data; then an **AC-01..AC-35 sweep** with evidence

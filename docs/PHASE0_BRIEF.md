@@ -150,11 +150,16 @@ Check: `git ls-files | grep -E "\.pyc$|__pycache__"` is empty.
 
 ---
 
-## Gate G0 — these commands must exit 0
+## Gate G0 — canonical block (single source of truth: this section)
+
+Every command below must exit 0. The block is byte-identical in `docs/PROMPT_PHASE0_EXECUTOR.md` §7 and
+referenced by `docs/EXECUTION_PLAN.md`; if one copy changes, all three change in the same commit.
+The three `test -z "$(…)"` lines assert **empty output**; a bare `grep` would exit 1 on a clean tree and
+would therefore contradict “must exit 0”.
 
 ```bash
-python -m pytest -q                                             # all tests green (including §8)
-python -m pytest -q tests/gates                                 # gate negative tests green
+python -m pytest -q
+python -m pytest -q tests/gates
 python -m ruff check . && python -m ruff format --check .
 python -m pyflakes energybaseline
 python scripts/gates/guard_web_free.py
@@ -162,11 +167,16 @@ python scripts/gates/guard_env_readers.py
 python scripts/gates/guard_tests_integrity.py
 python scripts/gen_matrix.py --check
 python -m pytest -q --cov=energybaseline/core --cov-fail-under=60
-git ls-files | grep -Ei "package.json|tsconfig|\.tsx?$|next\.config|drizzle|eslint|postcss"   # empty
-git ls-files | grep -E "__pycache__|\.pyc$"                                                 # empty
-grep -rn "weasyprint" energybaseline scripts requirements.txt requirements.in requirements.lock  # empty
+test -z "$(git ls-files | grep -Ei 'package.json|tsconfig|\.tsx?$|next\.config|drizzle|eslint|postcss')"
+test -z "$(git ls-files | grep -E '__pycache__|\.pyc$')"
+test -z "$(grep -rn 'weasyprint' energybaseline scripts requirements.txt requirements.in requirements.lock)"
 ```
+
 On Windows (CI): `ci.yml` green; the nightly R job remains a skeleton.
+
+**Note on the empty-output greps:** a clean result is *no output and exit code 1* from `grep`. The gate
+requires “no matches”, so the executor must capture output and assert emptiness explicitly
+(`test -z "$(...)"`) rather than relying on grep's exit status, which is inverted for that purpose.
 
 ---
 
