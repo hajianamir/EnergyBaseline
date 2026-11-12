@@ -4,6 +4,11 @@
 **Branch:** `arena/af928d3c-energybaseline` · **Base commit:** `2c92f2a` · **Review date:** 2026-11-12
 **Companions:** `docs/DECISIONS.md` · `docs/PHASE0_BRIEF.md` · `docs/PROMPT_PHASE0_EXECUTOR.md`
 
+**Branch topology:** the executor works on `arena/3611a52f-energybaseline`; this review branch holds the
+governance documents and is the integration point. The reviewer fetches the executor branch read-only,
+runs G0 personally, and merges into this branch **only after PASS**. Nobody pushes to another person's
+branch, and nothing is force-pushed.
+
 > This is the governance document between the **reviewer** and the **executor**. It is not a product
 > artifact. Every document in this repository — product docs, process docs, prompts and reports — is
 > English (G-7). There are no translations in-tree; the owner may request one out-of-band, but the
@@ -111,7 +116,8 @@ statistics/UQ modules from Phase 4 · S6 generated sample artifacts.
 
 ### 4.1 Iron rules for the executor
 
-1. Work only on this branch; never `main`; no force-push.
+1. Work only on your own branch (`arena/3611a52f-energybaseline`); never the reviewer's branch, never
+   `main`; no force-push.
 2. **Never align a test with a bug.** Editing or deleting an existing test to go green = instant FAIL.
 3. Every `[M]` ID needs an automated test or a documented manual check **with an evidence file**.
 4. Every claim needs an artifact path (file, SHA-256, command line).

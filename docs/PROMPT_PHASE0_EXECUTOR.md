@@ -11,15 +11,44 @@ You are the **executor**, not the judge. An independent reviewer reads your code
 personally, and issues PASS/FAIL. Three things fail you immediately: a claim without raw output,
 tampering with tests, and adding anything outside the phase scope.
 
-- **Branch:** `arena/af928d3c-energybaseline` — the only branch you may touch. Never touch `main`. No force-push.
-- **Base commit:** `2d05487` (the current tip; it sits on top of `2c92f2a`). Re-derive it with
-  `git rev-parse HEAD` before you start and quote that SHA in your report.
+- **Branch:** `arena/3611a52f-energybaseline` is **yours** — the only branch you push to.
+  `arena/af928d3c-energybaseline` is the **reviewer's** branch: you may `git fetch` it and read it,
+  but never push to it. Never touch `main`. No force-push, ever.
+- **Base commit:** create your branch from the reviewer's tip, `abd0eae` (which sits on `2c92f2a`), so the
+  governance documents (`docs/EXECUTION_PLAN.md`, `docs/DECISIONS.md`, `docs/PHASE0_BRIEF.md`, this file)
+  are present locally. If your branch already exists, merge or rebase that tip in **before** any work.
+  Re-derive the SHA with `git rev-parse HEAD` and quote it in your report.
 - **Scope of this round: Phase 0 only.** Do not add product features: no VSG, no TCP, no test catalog,
   no ProcessPool, no new report, no new UI. Anything extra is rejected.
 - **Language:** every artifact you produce — code, comments, product docs, commit messages, reports,
   test names, fixture names — is **English** (G-7). The repository ships English only: no translations,
   no localized text, no second-language copies of any document.
 - **After delivering the report: STOP.** Phase 1 does not open until the reviewer votes.
+
+---
+
+## 1.1 Branch topology and handover protocol
+
+| Branch | Owner | Purpose |
+|---|---|---|
+| `main` | product owner | release history. Both working branches are branched from `2c92f2a` |
+| `arena/af928d3c-energybaseline` | reviewer | governance docs, review evidence, integration point after PASS |
+| `arena/3611a52f-energybaseline` | **executor (you)** | all Phase 0 work: code, gates, CI, process docs, `artifacts/phase0/` |
+
+Flow:
+1. You branch from `abd0eae` and do the Phase 0 work on `arena/3611a52f-energybaseline`.
+2. You push that branch and post the report in chat (`artifacts/phase0/REPORT.md` plus a summary).
+3. The reviewer fetches your branch read-only, runs the G0 block **personally**, and votes.
+4. **Only after PASS** does the work land on the review branch: the reviewer merges your commits into
+   `arena/af928d3c-energybaseline`, so the accepted state and its evidence live together.
+   Requested changes are made **on your own branch**; the review branch is never a scratch pad.
+
+Rules that follow from this topology:
+- Never open a pull request into `main` yourself; the owner decides release timing.
+- Keep history clean and linear; no force-push and no rebasing of commits the reviewer already cited.
+- If you must rebuild your branch, say so in chat **before** pushing so the citation does not dangle.
+- If the branch name `arena/3611a52f-energybaseline` does not yet exist on the remote, create it on your
+  first push — that is expected.
 
 ---
 
@@ -212,7 +241,7 @@ test -z "$(grep -rn 'weasyprint' energybaseline scripts requirements.txt require
 
 ## 9. Closing
 
-Deliver the report and **stop**. If something is genuinely impossible in your environment (no
-`windows-latest`, no torch, no network), say so explicitly and leave evidence — concealment costs more
-than a defect. Then wait for the reviewer's vote; Phase 1 (Lifecycle & Skeleton) stays closed until
-Phase 0 passes.
+Deliver the report on `arena/3611a52f-energybaseline`, post the summary in chat, and **stop**. If something
+is genuinely impossible in your environment (no `windows-latest`, no torch, no network), say so explicitly
+and leave evidence — concealment costs more than a defect. Then wait for the reviewer's vote; Phase 1
+(Lifecycle & Skeleton) stays closed until Phase 0 passes.

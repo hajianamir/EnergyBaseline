@@ -18,7 +18,8 @@ brief is rejected.
 2. Do not delete or weaken any existing test. The two broken tests are resolved by an explicit documented
    contract (§8), never by `skip`/`xfail`/deleted assertions.
 3. Do not add dependencies beyond the list in §2.
-4. Never touch `main`; work only on `arena/af928d3c-energybaseline`.
+4. Never touch `main` and never push to the reviewer's branch. Your work goes on
+   `arena/3611a52f-energybaseline`, branched from the reviewer's tip `abd0eae` (see §1.1 of the prompt).
 
 ---
 
