@@ -14,6 +14,9 @@ target_metadata = Base.metadata
 
 
 def _url() -> str:
+    explicit = config.attributes.get("eb_target_url")
+    if explicit:
+        return str(explicit)
     ensure_dirs()
     return get_engine_url(get_database_url())
 
