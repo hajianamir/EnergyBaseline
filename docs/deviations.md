@@ -26,6 +26,12 @@ This register records every known gap between the baseline commit (`2c92f2a06f6f
 - **Context:** Baseline commit `2c92f2a` produced 32 `pyflakes` unused-import and unused-variable warnings across 15 files (`config/__init__.py`, `db/__init__.py`, `core/{features,mining,models,pipeline,quality,report,scoring,secrets,sqlsource,store}.py`, and `gui/{main_window,page_monitor,pages_results}.py`), because `pyflakes` does not honor `# noqa: F401`.
 - **Resolution:** Isolated in a dedicated, standalone commit containing strictly zero runtime or numerical behavior changes (`__all__` declarations on package `__init__.py` files, `_ = <mod>` on optional-import availability probes, and removal of dead unused symbols) so Gate G0 passes cleanly without weakening the gate command.
 
+### DEV-04 — SQLite Connection Disposal in `alembic/env.py` on Windows + SQLAlchemy 2.1 (`D0.4` / `D0.8`)
+- **Date recorded:** `2026-11-12`
+- **Affected file:** `alembic/env.py` (outside `energybaseline/`).
+- **Context:** Under `SQLAlchemy==2.1.8` on `windows-latest`, `create_engine(_url())` defaults to `QueuePool` for file-backed SQLite URLs. Because `alembic/env.py::run_migrations_online()` did not pass `poolclass=NullPool` or call `engine.dispose()`, an uncollected pooled SQLite handle caused `PermissionError: [WinError 32]` in `tests/test_config_db.py::test_alembic_upgrade_on_clean_machine` when unlinking `app.db` on Windows.
+- **Resolution:** Configured `NullPool` and `try ... finally: engine.dispose()` in `alembic/env.py` while keeping `tests/test_config_db.py` byte-identical. Also configured `ubuntu-latest` (migrated by GitHub Actions to Ubuntu 26.04) to use `python-version: "3.11.18"` while `windows-latest` runs exact `python-version: "3.11.9"` because `actions/python-versions` only publishes `3.11.17+` tarballs for Ubuntu 26.04.
+
 ---
 
 ## 2. Baseline Gap Register (`2c92f2a` vs Target Architecture)
