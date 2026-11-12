@@ -1,3 +1,7 @@
+> ⚠️ **این فایل ترجمهٔ فارسی برای مالک محصول است. نسخهٔ انگلیسی مرجع است:**
+> `docs/EXECUTION_PLAN.md` · `docs/DECISIONS.md` · `docs/PHASE0_BRIEF.md` · `docs/PROMPT_PHASE0_EXECUTOR.md`
+> در صورت اختلاف، نسخهٔ انگلیسی معتبر است (G-7).
+
 # PROMPT — عامل اجرا: فاز ۰ (Truth & Rails) · EnergyBaseline v6
 
 > این متن را کامل به عامل اجرایی بده. مکمل آن، سه سند زیر **اجباری‌الخواندن** است:

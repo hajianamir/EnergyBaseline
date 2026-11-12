@@ -1,3 +1,7 @@
+> ⚠️ **این فایل ترجمهٔ فارسی برای مالک محصول است. نسخهٔ انگلیسی مرجع است:**
+> `docs/EXECUTION_PLAN.md` · `docs/DECISIONS.md` · `docs/PHASE0_BRIEF.md` · `docs/PROMPT_PHASE0_EXECUTOR.md`
+> در صورت اختلاف، نسخهٔ انگلیسی معتبر است (G-7).
+
 # برنامهٔ اجرایی فازبندی‌شده — EnergyBaseline v6 (PySide6 / Python-only / Offline Windows)
 
 > **جایگاه این سند:** سند حاکمیت داخلی بین *ناظر* (نویسندهٔ این سند) و *عامل اجرا*.

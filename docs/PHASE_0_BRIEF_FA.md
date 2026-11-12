@@ -1,3 +1,7 @@
+> ⚠️ **این فایل ترجمهٔ فارسی برای مالک محصول است. نسخهٔ انگلیسی مرجع است:**
+> `docs/EXECUTION_PLAN.md` · `docs/DECISIONS.md` · `docs/PHASE0_BRIEF.md` · `docs/PROMPT_PHASE0_EXECUTOR.md`
+> در صورت اختلاف، نسخهٔ انگلیسی معتبر است (G-7).
+
 # PHASE 0 BRIEF — Truth & Rails (دستور کار اجباری عامل اجرا)
 
 **پیش‌نیاز:** بستهٔ تصمیم‌ها RATIFIED است (`docs/DECISIONS_FA.md`): D1=B, D2=B+A, D3=A, D4=B, D5=A.
