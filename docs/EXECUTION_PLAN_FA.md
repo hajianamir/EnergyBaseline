@@ -6,6 +6,8 @@
 > زبان گفت‌وگو و گزارش‌های داوری فارسی است.
 
 شاخه: `arena/af928d3c-energybaseline` · کامیت پایه: `2c92f2a` · تاریخ بازبینی: 2026-11-12
+**وضعیت تصمیم‌ها:** ✅ RATIFIED (D1=B, D2=B+A, D3=A, D4=B, D5=A) — `docs/DECISIONS_FA.md`
+**وضعیت فازها:** فاز ۰ **باز**؛ فاز ۱ تا PASS فاز ۰ باز نمی‌شود.
 
 ---
 
@@ -96,13 +98,15 @@ stubهای *link-only* برای `libGL/libEGL/libxkbcommon/libdbus` + `QT_QPA_PL
 پرامپت حداکثر ۵ پرسش را مجاز کرده است. پاسخ نداده ⇒ پیش‌فرض زیر اعمال و در `docs/assumptions.md` ثبت می‌شود.
 گزینه‌ها، هزینه‌ها، ریسک‌ها و اثر هر انتخاب بر ماتریس انطباق در **`docs/DECISIONS_FA.md`** آمده است؛ جدول زیر فقط خلاصه است.
 
-| # | پرسش | پیش‌فرض پیشنهادی ناظر |
+| # | پرسش | ✅ تصمیم تصویب‌شده (2026-11-12) |
 |---|---|---|
-| D1 | گواهی **Authenticode** در دسترس است؟ | ندارد ⇒ PKG-3 به [S] تنزل، `docs/deviations.md` با ریسک SmartScreen/AV و برنامهٔ «rebuilt bootloader» |
-| D2 | برای شواهد E3، **ماشین مرجع** چیست؟ | GitHub Actions `windows-latest` **+** یک ماشین واقعی Win11 برای زمان‌سنجی warm start و orphan-kill؛ اعداد روی سخت‌افزار مرجع اعلام‌شده |
-| D3 | **استک NN** (torch CPU ≈ +1.5–2.5 GB) در نصب‌کنندهٔ پایه باشد؟ | «کامپوننت اختیاری» طبق SCR-6؛ نصب‌کنندهٔ پایه بدون torch ولی **بدون از دست دادن LSTM/GRU/TCN** در حالت نصب کامل |
-| D4 | **R** برای تست‌های مرجع، در CI؟ | اسکریپت‌های R در `tests/reference/` + خروجی JSON امضاشدهٔ مرجع commit‌شده؛ CI نگاشت پایتون↔JSON را تست می‌کند (اجرای R اختیاری/شبانه) |
-| D5 | موتور PDF | فقط **ReportLab**؛ WeasyPrint و Qt-text-PDF و matplotlib-PDF حذف می‌شوند (REP-3) |
+| D1 | گواهی **Authenticode** | **B** — تعویق + اسکریپت امضای آماده/تست‌شده؛ `PKG-3 → [S]`، trigger اجباری پیش از توزیع عمومی |
+| D2 | **ماشین مرجع E3** | **B+A** — CI `windows-latest` کار اجباری + ماشین فیزیکی مرجع `8-core/16GB/NVMe/Win11 23H2` برای اعداد رسمی |
+| D3 | **استک NN** | **A** — Full پیش‌فرض (torch CPU پین) + بیلد Lite اختیاری؛ AC-10 روی Full شاهد می‌گیرد |
+| D4 | **مرجع R** | **B** — JSON نسخه‌دار با هش اسکریپت + جاب شبانهٔ R که در اختلاف issue باز می‌کند |
+| D5 | **موتور PDF** | **A** — فقط **ReportLab**؛ WeasyPrint/Qt-PDF/matplotlib-PDF حذف و با guard test ممنوع |
+
+جزئیات، گزینه‌های رد‌شده و «اگر انتخاب دیگری می‌کردی چه می‌شد»: `docs/DECISIONS_FA.md` (وضعیت: RATIFIED).
 
 ---
 
@@ -194,9 +198,16 @@ EDA/Mining «کامل» نیست (AC-27).
 3. `.gitignore` (data/, logs/, runs/, models/, dist/, build/, *.sqlite, artifacts/)، `LICENSE`، `CHANGELOG.md`.
 4. CI: `.github/workflows/ci.yml` روی `windows-latest` (+ `ubuntu-latest` برای تست‌های غیر-GUI):
    نصب از lock → `pyflakes` → `pytest -q` → `pytest-cov` → `pip-audit` → `cyclonedx-py` → آپلود artifacts.
-5. اسکریپت‌های دروازه: `scripts/gates/guard_web_free.py` (grep منفی: weasyprint/QWebEngine/flask/fastapi/
-   http.server/localhost)، `scripts/gates/guard_env_readers.py` (فقط `config/settings.py` مجاز به خواندن env DB)،
-   `scripts/gates/guard_tests_integrity.py` (هش تست‌های موجود در `tests/.baseline.sha256`).
+5. اسکریپت‌های دروازه (تعریف دقیق، برای اینکه دروازه با خودش تضاد نداشته باشد):
+   - `scripts/gates/guard_web_free.py` — **AST scan** روی همهٔ `*.py` برای `import/from` ممنوع
+     (`weasyprint`, `PySide6.QtWebEngineWidgets`, `flask`, `fastapi`, `uvicorn`, `http.server`, `electron`-bridge)
+     + اسکن `requirements*.txt`/`requirements.lock` + رد حضور `package.json`/`src/*.tsx`/`next.config.*` در فایل‌های git.
+     **دامنهٔ استثنا (مستند در docstring):** `docs/EXECUTION_PLAN_FA.md`, `docs/DECISIONS_FA.md`, `artifacts/**`
+     فقط «واژه» را نقل می‌کنند و کد اجرایی نیستند؛ آن‌ها اسکن نمی‌شوند. **متن مستندات ≠ استفادهٔ کتابخانه.**
+   - `scripts/gates/guard_env_readers.py` — فقط `energybaseline/config/settings.py` مجاز به خواندن
+     `DATABASE_URL/POSTGRES_URL/DB_CONNECTION_STRING/DB_URI/EB_DATABASE_URL` است (بقیه: خطا).
+   - `scripts/gates/guard_tests_integrity.py` — هش SHA-256 تست‌های پایه در `tests/.baseline.sha256`؛
+     تغییر/حذف تست موجود بدون تأیید صریح ناظر ⇒ خطا.
 6. `docs/requirements_matrix.md` مولد-محور (`scripts/gen_matrix.py`) با **همهٔ** AC-01..AC-35 و IDهای
    T1..T14، DAT-*, VSG-*, TCP-*, UQ-*, DR-*, PER-*, REP-*, RPT-*, UX-*؛ وضعیت اولیه `not_started`.
 7. ثبت ۱۰ شکاف بخش ۰ این سند در `docs/deviations.md` + جدول انحرافات کتابخانه‌ای §2 همین سند.
@@ -204,13 +215,21 @@ EDA/Mining «کامل» نیست (AC-27).
    - `samples/daily_plant_multitarget.xlsx` یا commit شود یا تست به generator وابسته شود (بدون وابستگی به آرتیفکت commit‌نشده).
    - تعارض `test_nn_explicitly_rejected_for_small_data` با رفتار واقعی (ثبت `LSTM (PyTorch)` در حالت
      «not evaluated» وقتی torch نیست) با **تصمیم قراردادی صریح** حل شود، نه با شل‌کردن assert.
-9. `docs/SUPPORT_MATRIX.md`: نسخهٔ پایتون پین‌شده (3.11.9)، ویندوز هدف، سخت‌افزار مرجع.
+9. `docs/SUPPORT_MATRIX.md`: نسخهٔ پایتون پین‌شده (**3.11.9** طبق S1)، ویندوز هدف، و **سخت‌افزار مرجع رسمی**
+   `8-core x64 · 16 GB · NVMe · Windows 11 23H2 · 1920×1080@100%` (تصویب D2).
+10. **پیامدهای D1..D5 در فاز ۰:**
+   - `scripts/sign/sign_artifacts.ps1` + تست CI با گواهی self-signed (`signtool sign` → `signtool verify /pa`) — D1.
+   - `scripts/build_exe.py --profile full|lite` (پیش‌فرض full) — D3.
+   - `tests/reference/README.md` + `tests/test_reference_staleness.py` (هش اسکریپت R ↔ JSON) — D4.
+   - حذف کامل `weasyprint` از `requirements.txt`, `core/report.py`, `README.md`, `docs/USER_GUIDE.md`, `scripts/build_exe.py` — D5.
+   - `ruff` (lint+format) در CI — S4؛ آستانهٔ پوشش `--cov-fail-under=60` روی `core/` — S5.
 
 **گیت پذیرش (G0)**
 ```bash
 python -m pytest -q                      # exit 0
 python -m pyflakes energybaseline        # exit 0
-python scripts/gates/guard_web_free.py   # exit 0
+python scripts/gates/guard_web_free.py   # exit 0 (AST-based; docs/artifacts excluded by design)
+python scripts/gates/guard_tests_integrity.py   # exit 0
 python scripts/gates/guard_env_readers.py# exit 0
 python scripts/gen_matrix.py --check     # هر AC/T-ID موجود، هیچ status=done بدون test_id
 pip install -r requirements.lock --require-hashes --dry-run   # exit 0
@@ -259,8 +278,11 @@ pytest -q tests/test_lifecycle.py tests/test_pool.py tests/test_db_fallback.py t
 python -m pytest -q                    # + تست‌های: no-env, whitespace-env, unreachable-PG, read-only APP_HOME,
                                        #   %TEMP% fallback, in-memory fallback, sentinel self-test, guard: ممنوعیت eval
 # E3 (ویندوز، الزامی):
-powershell -File scripts/evidence/lif_orphans.ps1    # kill main → 0 orphans ≤ 5 s (JSON: before/after pids)
-powershell -File scripts/evidence/startup_time.ps1   # warm start روی سخت‌افزار مرجع (هدف ≤ 3 s، سقف 10 s)
+powershell -File scripts/evidence/lif_orphans.ps1     # kill main → 0 orphans ≤ 5 s (JSON: pids before/after, kill latency)
+powershell -File scripts/evidence/startup_time.ps1    # 5 cold + 5 warm runs → JSON {median, p95}; هدف ≤ 3 s، سقف 10 s
+powershell -File scripts/evidence/installer_smoke.ps1 # نصب سکوت، association، اجرا، حذف با حفظ داده
+powershell -File scripts/evidence/dpi_matrix.ps1      # 100/150/200 % scaling
+runs-on: windows-latest                                 # همین تست‌ها در CI ویندوزی (D2)
 # اندازهٔ نصب و idle RAM اندازه‌گیری و منتشر شود (SCR-6)
 ```
 
@@ -530,9 +552,9 @@ uninstaller داده را حذف کند · updater در boot اجرا شود.
 
 ## 8. آنچه اکنون از عامل اجرا انتظار می‌رود (اولین قدم)
 
-1. تأیید یا رد **D1..D5** (بخش ۳) در یک پیام کوتاه.
-2. اجرای **فاز ۰** و ارسال `artifacts/phase0/REPORT.md` طبق قالب ۴.۲.
-3. **توقف** تا رأی ناظر؛ سپس فاز ۱.
+1. ~~تأیید یا رد D1..D5~~ ✅ **انجام شد** (2026-11-12) — بستهٔ تصمیم‌ها بسته است.
+2. اجرای **فاز ۰** دقیقاً مطابق بخش «فاز ۰» (با پیامدهای تصویب‌شدهٔ D1..D5) و ارسال `artifacts/phase0/REPORT.md` طبق قالب ۴.۲.
+3. **توقف** تا رأی ناظر؛ سپس فاز ۱. هیچ فازی خودگشا نیست.
 
 > یادآوری: ناظر کد نمی‌نویسد و اصلاح نمی‌کند. ناظر فقط کد را می‌خواند، اجرا می‌کند، شواهد را می‌سنجد و
 > PASS/FAIL می‌دهد. هیچ فازی با «به‌نظر می‌رسد کار می‌کند» تأیید نمی‌شود.
