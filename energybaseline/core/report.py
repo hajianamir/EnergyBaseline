@@ -1,4 +1,4 @@
-"""Report generation: HTML -> PDF (WeasyPrint, or Qt text engine fallback), multi-sheet Excel, dashboard exports."""
+"""Report generation: interim HTML -> PDF fallback (Qt text engine / matplotlib; ReportLab lands in Phase 8), multi-sheet Excel, dashboard exports."""
 from __future__ import annotations
 
 import base64
@@ -204,13 +204,7 @@ def render_html(run: RunResult, selections: list[dict], audit: list[dict], data_
 
 
 def html_to_pdf(html: str, charts: dict[str, bytes], path: Path) -> str:
-    """WeasyPrint when available (needs GTK/Pango), otherwise Qt's native text engine (no extra dependencies)."""
-    try:
-        from weasyprint import HTML
-        HTML(string=html).write_pdf(str(path))
-        return "weasyprint"
-    except Exception as exc:
-        log.info("weasyprint unavailable (%s) -> using Qt PDF writer", exc)
+    """Interim PDF fallback via Qt's native text engine (or matplotlib fallback); ReportLab lands in Phase 8."""
     try:
         from PySide6.QtCore import QMarginsF, QUrl
         from PySide6.QtGui import QGuiApplication, QImage, QPageLayout, QPageSize, QPdfWriter, QTextDocument
@@ -218,7 +212,8 @@ def html_to_pdf(html: str, charts: dict[str, bytes], path: Path) -> str:
         log.info("Qt PDF writer unavailable (%s) -> using built-in matplotlib PDF writer", exc)
         _plain_pdf(html, charts, path)
         return "matplotlib"
-    app = QGuiApplication.instance() or QGuiApplication([])  # noqa: F841
+    app = QGuiApplication.instance() or QGuiApplication([])
+    _ = app
     doc = QTextDocument()
     for name, png in charts.items():
         img = QImage.fromData(png)
@@ -308,21 +303,13 @@ def generate_all(run: RunResult, selections: list[dict], audit: list[dict], data
     if "pdf" in formats:
         html_names, _ = render_html(run, selections, audit, data_dictionary, embed=False)
         p = outdir / "energy_baseline_report.pdf"
-        out["pdf_engine"] = html_to_pdf(html if _weasy_ok() else html_names, charts, p)
+        out["pdf_engine"] = html_to_pdf(html_names, charts, p)
         out["pdf"] = str(p)
     if "xlsx" in formats:
         p = outdir / "energy_baseline_report.xlsx"
         export_excel(run, selections, audit, p)
         out["xlsx"] = str(p)
     return out
-
-
-def _weasy_ok() -> bool:
-    try:
-        import weasyprint  # noqa: F401
-        return True
-    except Exception:
-        return False
 
 
 # ------------------------------------------------------------------ dashboard exports

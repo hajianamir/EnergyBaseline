@@ -1,4 +1,4 @@
-"""Jinja2 template for the professional English report (simple HTML/CSS: renders in WeasyPrint and in Qt's rich-text engine)."""
+"""Jinja2 template for the professional English report (interim HTML/CSS template for Qt rich-text fallback; ReportLab lands in Phase 8)."""
 
 REPORT_TEMPLATE = r"""<html><head><meta charset="utf-8"><title>Energy Baseline Report</title>
 <style>
