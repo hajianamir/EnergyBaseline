@@ -1,0 +1,5 @@
+# Preserve deterministic LF line endings across Linux and Windows checkouts
+# so SHA-256 integrity checks (e.g. tests/.baseline.sha256) match byte-for-byte.
+* text=auto eol=lf
+*.bat text eol=crlf
+*.ps1 text eol=crlf

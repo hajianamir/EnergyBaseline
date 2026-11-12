@@ -5,12 +5,17 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 .venv/
+.coverage
+coverage.xml
 
-# Application data (never commit user data or generated artifacts)
+# Application data and generated artifacts (never commit user data or generated artifacts)
 data/
 logs/
+catboost_info/
+samples/*.xlsx
 artifacts/**/*.db
 artifacts/**/*.sqlite
+artifacts/**/*.joblib
 *.joblib
 *.ebproj
 
@@ -19,4 +24,5 @@ build/
 dist/
 *.spec
 EnergyBaseline.exe
+EnergyBaseline.lnk
 _internal/

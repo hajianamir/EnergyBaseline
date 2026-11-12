@@ -58,5 +58,5 @@ Neural networks are rejected explicitly when data are insufficient or when they 
 
 ## 7. Troubleshooting
 * *Access import fails*: install the 64-bit Microsoft Access Database Engine, or export the table to CSV.
-* *PDF engine*: WeasyPrint is used when its GTK runtime is present; otherwise the built-in Qt (or matplotlib) PDF writer is used automatically.
+* *PDF engine*: interim builds use the built-in Qt (or matplotlib) PDF fallback; the ratified target PDF renderer is pure-Python ReportLab (Phase 8).
 * *Rebuilding the exe*: run `install.bat` on Windows 10/11 (creates `EnergyBaseline.exe`, the icon and the `.lnk`).
