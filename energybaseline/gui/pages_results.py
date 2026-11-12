@@ -4,9 +4,8 @@ from __future__ import annotations
 import json
 import logging
 
-import numpy as np
 import pandas as pd
-from PySide6.QtCore import QUrl, Qt
+from PySide6.QtCore import QUrl
 from PySide6.QtGui import QDesktopServices, QFont, QImage, QTextDocument
 from PySide6.QtWidgets import (QButtonGroup, QComboBox, QFrame, QGroupBox, QHBoxLayout, QLabel, QLineEdit, QMessageBox, QPushButton, QRadioButton,
                                QScrollArea, QTabWidget, QTextBrowser, QTextEdit, QVBoxLayout, QWidget)

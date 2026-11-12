@@ -10,7 +10,7 @@ from pathlib import Path
 
 import joblib
 import pandas as pd
-from sqlalchemy import select, update
+from sqlalchemy import select
 
 from ..config import ensure_dirs
 from ..db import models as M

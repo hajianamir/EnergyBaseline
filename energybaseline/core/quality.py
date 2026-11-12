@@ -9,7 +9,7 @@ import pandas as pd
 from scipy import stats
 
 from .auto import AutoLog
-from .temporal import ENERGY_NAME, Granularity
+from .temporal import Granularity
 
 ENERGY_LIKE = re.compile(r"kwh|mwh|energy|consum|usage|meter|power|\bkw\b|therm|gas|steam|chilled|elec|water", re.I)
 

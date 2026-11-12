@@ -1,8 +1,6 @@
 """Transparent multi-criteria scoring, acceptance thresholds, Top-5 shortlist and rejection register."""
 from __future__ import annotations
 
-import math
-
 import numpy as np
 
 from .auto import AutoLog

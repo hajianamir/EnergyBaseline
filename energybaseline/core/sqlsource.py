@@ -89,19 +89,22 @@ def _engine(p: ConnectionProfile):
             raise SourceError("SQLite: please provide the database file path.")
         return create_engine(URL.create("sqlite", database=p.database), connect_args={"timeout": 10})
     if d == "MySQL":
-        import pymysql  # noqa: F401
+        import pymysql
+        _ = pymysql
         args = {"connect_timeout": 10}
         if p.ssl:
             args["ssl"] = {"ca": p.ssl_ca} if p.ssl_ca else {"check_hostname": False}
         return create_engine(URL.create("mysql+pymysql", username=p.username, password=p.password, host=p.host, port=p.port or 3306, database=p.database), connect_args=args)
     if d == "PostgreSQL":
-        import psycopg2  # noqa: F401
+        import psycopg2
+        _ = psycopg2
         args = {"connect_timeout": 10, "sslmode": "require" if p.ssl else "prefer"}
         if p.ssl_ca:
             args["sslrootcert"] = p.ssl_ca
         return create_engine(URL.create("postgresql+psycopg2", username=p.username, password=p.password, host=p.host, port=p.port or 5432, database=p.database), connect_args=args)
     if d == "SQL Server":
-        import pyodbc  # noqa: F401
+        import pyodbc
+        _ = pyodbc
         cs = (f"DRIVER={{{p.odbc_driver}}};SERVER={p.host},{p.port or 1433};DATABASE={p.database};UID={p.username};PWD={p.password};"
               f"Encrypt={'yes' if p.ssl else 'no'};TrustServerCertificate={'no' if p.ssl_ca else 'yes'};")
         return create_engine("mssql+pyodbc:///?odbc_connect=" + quote_plus(cs), connect_args={"timeout": 10})

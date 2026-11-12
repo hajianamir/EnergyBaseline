@@ -304,7 +304,6 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
         # ---- interpretability + bundles
         with_imp = bool(auto.decide("include_importance", lambda: (n <= 20000, f"n={n}", "interpretability extras on unless n>20000 (cost)")))
         stats = {c: {"min": float(Xall[c].min()), "max": float(Xall[c].max()), "mean": float(Xall[c].mean()), "std": float(Xall[c].std())} for c in spec.raw_cols if c in Xall}
-        agg = "sum" if "sum" in set((res.temporal.get("aggregation") or {}).values()) and (res.temporal.get("aggregation") or {}).get(target) == "sum" else "mean"
         agg_map = res.temporal.get("aggregation") or {}
         for rank, r in enumerate(top, 1):
             emit(93 + 6 * rank / max(1, len(top)), f"Interpretability for {r['name']}")
@@ -367,7 +366,6 @@ def run_analysis(df: pd.DataFrame, time_col: str, targets: list[str], config: di
     cancel = cancel or (lambda: False)
     auto = AutoLog(config)
     seed = int(auto.decide("seed", lambda: (_seed_from(df, targets, dataset_sha), "SHA-256 of dataset hash, column names, row count, targets", "deterministic seed derived from the data (same data -> same seed)")))
-    from .auto import AutoLog as _A
     cpu = os.cpu_count() or 2
     par = int(auto.decide("parallel_targets", lambda: ((1 if len(targets) == 1 else min(2, max(1, cpu // 2))), f"targets={len(targets)}, cores={cpu}", "sequential for a single target, else up to cores/2 (max 2)")))
     par = max(1, min(par, len(targets), cpu))
