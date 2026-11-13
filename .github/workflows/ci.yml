@@ -100,15 +100,19 @@ jobs:
             if ($LASTEXITCODE -ne 0) { throw "startup_time.ps1 exited with $LASTEXITCODE" }
             pwsh -NoProfile -File scripts/evidence/dpi_matrix.ps1 -PythonExe $py
             if ($LASTEXITCODE -ne 0) { throw "dpi_matrix.ps1 exited with $LASTEXITCODE" }
-            Get-ChildItem artifacts\phase1\evidence\*.json | ForEach-Object {
-              $h = (Get-FileHash -Algorithm SHA256 $_.FullName).Hash.ToLowerInvariant()
-              $compact = (Get-Content $_.FullName -Raw | ConvertFrom-Json | ConvertTo-Json -Compress -Depth 8)
-              Write-Output "::notice title=$($_.Name) (sha256=$h)::$compact"
-            }
           }
           catch {
             Write-Output "::error title=Phase1WindowsEvidence::$($_.Exception.Message) at $($_.InvocationInfo.ScriptName):$($_.InvocationInfo.ScriptLineNumber)"
             throw
+          }
+          finally {
+            if (Test-Path artifacts\phase1\evidence) {
+              Get-ChildItem artifacts\phase1\evidence\*.json | ForEach-Object {
+                $h = (Get-FileHash -Algorithm SHA256 $_.FullName).Hash.ToLowerInvariant()
+                $compact = (Get-Content $_.FullName -Raw | ConvertFrom-Json | ConvertTo-Json -Compress -Depth 8)
+                Write-Output "::notice title=$($_.Name) (sha256=$h)::$compact"
+              }
+            }
           }
 
       - name: Self-signed Authenticode signing smoke test (D1=B, Windows)

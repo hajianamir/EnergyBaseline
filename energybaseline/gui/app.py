@@ -157,14 +157,28 @@ def main(argv: list[str] | None = None) -> int:
         if scr is not None:
             telemetry["dpi_scale"] = float(scr.devicePixelRatio())
             avail = scr.availableGeometry()
-            geom = win.frameGeometry()
+            # Ensure outer frame fits available desktop work area across high-DPI scales
+            frame = win.frameGeometry()
+            client = win.geometry()
+            extra_w = max(0, frame.width() - client.width())
+            extra_h = max(0, frame.height() - client.height())
+            max_client_w = max(240, avail.width() - extra_w)
+            max_client_h = max(200, avail.height() - extra_h)
+            if client.width() > max_client_w or client.height() > max_client_h:
+                win.setMinimumSize(min(win.minimumWidth(), max_client_w), min(win.minimumHeight(), max_client_h))
+                win.resize(min(client.width(), max_client_w), min(client.height(), max_client_h))
+                app.processEvents()
+            frame = win.frameGeometry()
+            client = win.geometry()
             telemetry["window_geometry"] = {
-                "width": geom.width(),
-                "height": geom.height(),
+                "width": client.width(),
+                "height": client.height(),
+                "frame_width": frame.width(),
+                "frame_height": frame.height(),
                 "screen_width": avail.width(),
                 "screen_height": avail.height(),
-                "fits_width": geom.width() <= max(avail.width(), 800),
-                "fits_height": geom.height() <= max(avail.height(), 600),
+                "fits_width": client.width() <= avail.width(),
+                "fits_height": client.height() <= avail.height(),
             }
 
         if opts.spawn_worker_seconds is not None and opts.spawn_worker_seconds > 0:

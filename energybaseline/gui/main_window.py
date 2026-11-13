@@ -99,13 +99,13 @@ class MainWindow(QMainWindow):
         self.setWindowTitle(f"EnergyBaseline {__version__} - local-first energy baseline analytics")
         scr = QApplication.primaryScreen()
         avail = scr.availableGeometry() if scr is not None else None
-        init_w = min(1480, max(640, avail.width() - 20)) if avail is not None else 1480
-        init_h = min(920, max(480, avail.height() - 20)) if avail is not None else 920
-        self.setMinimumSize(min(640, init_w), min(480, init_h))
-        self.resize(init_w, init_h)
+        init_w = min(1480, max(360, avail.width() - 24)) if avail is not None else 1480
+        init_h = min(920, max(300, avail.height() - 48)) if avail is not None else 920
+        self.setMinimumSize(min(480, init_w), min(320, init_h))
 
         # Central container: fallback banner + MDI area
         central = QWidget(self)
+        central.setMinimumSize(200, 160)
         central_lay = QVBoxLayout(central)
         central_lay.setContentsMargins(0, 0, 0, 0)
         central_lay.setSpacing(0)
@@ -115,6 +115,7 @@ class MainWindow(QMainWindow):
         central_lay.addWidget(self.banner)
 
         self.mdi = QMdiArea(central)
+        self.mdi.setMinimumSize(200, 140)
         self.mdi.setViewMode(QMdiArea.ViewMode.TabbedView)
         self.mdi.setDocumentMode(True)
         self.mdi.setTabsClosable(False)
@@ -124,8 +125,10 @@ class MainWindow(QMainWindow):
         # live log dock
         self.log_view = QPlainTextEdit()
         self.log_view.setReadOnly(True)
+        self.log_view.setMinimumHeight(40)
         self.log_view.setMaximumBlockCount(5000)
         self.log_dock = QDockWidget("Live log", self)
+        self.log_dock.setMinimumHeight(50)
         self.log_dock.setWidget(self.log_view)
         self.addDockWidget(Qt.DockWidgetArea.BottomDockWidgetArea, self.log_dock)
         handler = QtLogHandler()
@@ -134,11 +137,14 @@ class MainWindow(QMainWindow):
 
         setup_logging(handler)
         self.auto_panel = AutoPanel()
+        self.auto_panel.setMinimumHeight(40)
         self.auto_dock = QDockWidget("AUTO Resolutions (read-only)", self)
+        self.auto_dock.setMinimumHeight(50)
         self.auto_dock.setWidget(self.auto_panel)
         self.addDockWidget(Qt.DockWidgetArea.BottomDockWidgetArea, self.auto_dock)
         self.tabifyDockWidget(self.log_dock, self.auto_dock)
         self.log_dock.raise_()
+        self.resizeDocks([self.log_dock], [max(70, init_h // 6)], Qt.Orientation.Vertical)
 
         # pages
         self.setup_page = SetupPage(state, self)
@@ -191,6 +197,9 @@ class MainWindow(QMainWindow):
         self.show_page("setup")
         state.run_changed.connect(self._on_run)
         self._menus()
+        self.resize(init_w, init_h)
+        if avail is not None:
+            self.setMaximumSize(avail.width(), avail.height())
         self.statusBar().showMessage(
             f"Database self-test: {'OK' if boot_selftest.get('ok') else 'FAILED'} \u00b7 "
             f"Rung: {boot_selftest.get('rung', 'sqlite')} \u00b7 offline, local-first"
