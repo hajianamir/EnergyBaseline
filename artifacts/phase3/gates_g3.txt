@@ -1,0 +1,16 @@
+$ python -m ruff check . && python -m ruff format --check .
+All checks passed!
+49 files already formatted
+$ python -m pyflakes energybaseline
+$ python scripts/gates/guard_web_free.py
+OK [guard_web_free] clean (/home/user/EnergyBaseline)
+$ python scripts/gates/guard_env_readers.py
+OK [guard_env_readers] clean (/home/user/EnergyBaseline)
+$ python scripts/gates/guard_tests_integrity.py
+OK [guard_tests_integrity] verified 4 baseline test files
+$ python scripts/gates/guard_no_qthread_compute.py
+OK [guard_no_qthread_compute] clean (/home/user/EnergyBaseline)
+$ python scripts/gen_matrix.py --check
+OK [gen_matrix] verified 251 requirement IDs (89 done)
+$ Hygiene checks (web files, pycache, weasyprint, launcher DATABASE_URL)
+OK [hygiene] all 4 git/grep assertions exited 0

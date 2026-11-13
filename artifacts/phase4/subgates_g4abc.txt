@@ -1,0 +1,12 @@
+=== R Reference Staleness & Parity Gate ===
+.....                                                                    [100%]
+5 passed in 4.68s
+=== Sub-Gate G4a (T1-T4) ===
+..........                                                               [100%]
+10 passed in 27.86s
+=== Sub-Gate G4b (T5-T9) ===
+...........                                                              [100%]
+11 passed in 43.97s
+=== Sub-Gate G4c (T10-T14) ===
+............                                                             [100%]
+12 passed in 47.92s

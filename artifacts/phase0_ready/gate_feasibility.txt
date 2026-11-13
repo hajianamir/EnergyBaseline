@@ -1,0 +1,11 @@
+# Gate feasibility probe — 2026-11-12T20:35:22Z — commit f0fa4d6b14d6c5e994d703aaef18381e0e5a12e5
+# Purpose: prove the phase-0 gates are real, buildable checks (not decorative), and record the
+#          exact violation count the executor must drive to zero. Throw-away script, not shipped.
+
+AST-visible banned imports in .py: 2
+    ('energybaseline/core/report.py', 'weasyprint')
+    ('energybaseline/core/report.py', 'weasyprint')
+files: {'package.json': True, 'next.config.ts': True, 'tsconfig.json': True, 'src/app/page.tsx': True}
+weasyprint in requirements.txt: True
+
+## expected after phase 0: 0 AST-visible banned imports, no stack files, no weasyprint in manifests

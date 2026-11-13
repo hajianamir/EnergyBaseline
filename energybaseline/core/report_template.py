@@ -1,4 +1,4 @@
-"""Jinja2 template for the professional English report (simple HTML/CSS: renders in WeasyPrint and in Qt's rich-text engine)."""
+"""Jinja2 template for the professional English report (interim HTML/CSS template for Qt rich-text fallback; ReportLab lands in Phase 8)."""
 
 REPORT_TEMPLATE = r"""<html><head><meta charset="utf-8"><title>Energy Baseline Report</title>
 <style>
@@ -94,9 +94,20 @@ All models are compared on identical, time-aware, purged validation folds; hyper
 <p>Prediction interval (95 %): prediction {{ '%.4g'|format(t.sel.uncertainty.lower) }} to {{ '%+.4g'|format(t.sel.uncertainty.upper) }}.</p>
 {% if t.charts.fit %}<img src="{{ t.charts.fit }}" width="640">{% endif %}{% if t.charts.resid %}<img src="{{ t.charts.resid }}" width="640">{% endif %}{% if t.charts.importance %}<img src="{{ t.charts.importance }}" width="640">{% endif %}{% endif %}{% endfor %}
 
-<h2>15. Comparative Diagnostics (Top-3)</h2>
+<h2>15. Comparative Diagnostics (Top-3) &amp; Statistical Test Catalog (T1&ndash;T14)</h2>
 {% for t in targets if t.status=='ok' %}<h3>{{ t.name }}</h3>{{ t.comparative_html|safe }}
-<p class="muted">Durbin-Watson ~2 and p-values &gt; 0.05 (Jarque-Bera, Ljung-Box, Breusch-Pagan) indicate well-behaved residuals. Computed on out-of-fold residuals.</p>{% endfor %}
+<p class="muted">Durbin-Watson ~2 and p-values &gt; 0.05 (Jarque-Bera, Ljung-Box, Breusch-Pagan) indicate well-behaved residuals. Computed on out-of-fold residuals.</p>
+{% if t.test_catalog %}<h4>Statistical Test Catalog (T1&ndash;T14)</h4>
+<table><tr><th>ID</th><th>Stage</th><th>Test (Subtest)</th><th>Statistic</th><th>p_raw</th><th>p_adj</th><th>Effect Size</th><th>CI (Method)</th><th>Inference</th><th>Decision</th><th>Downstream Action</th></tr>
+{% for tc in t.test_catalog %}<tr class="{{ loop.cycle('','alt') }}"><td>{{ tc.test_id }}</td><td>{{ tc.stage }}</td><td>{{ tc.name }} ({{ tc.subtest }})</td>
+<td>{{ '%.4g'|format(tc.statistic) if tc.statistic is not none else 'n/a' }}</td>
+<td>{{ '%.4g'|format(tc.p_raw) if tc.p_raw is not none else 'n/a' }}</td>
+<td>{{ '%.4g'|format(tc.p_adj) if tc.p_adj is not none else 'n/a' }}</td>
+<td>{{ '%.4g'|format(tc.effect_size) if tc.effect_size is not none else 'n/a' }}</td>
+<td>{% if tc.ci and tc.ci.low is not none %}[{{ '%.4g'|format(tc.ci.low) }}, {{ '%.4g'|format(tc.ci.high) }}] ({{ tc.ci.method }}){% else %}{{ tc.ci.method if tc.ci else 'n/a' }}{% endif %}</td>
+<td>{{ tc.inference_label }}</td>
+<td><b>{{ tc.decision }}</b></td>
+<td>{{ tc.downstream_action }}</td></tr>{% endfor %}</table>{% endif %}{% endfor %}
 
 <h2>16. Uncertainty</h2>
 <p>Uncertainty is expressed as the empirical 2.5 % / 97.5 % quantiles of out-of-fold residuals (distribution-free, valid for every model family). Fold-to-fold CV(RMSE) spread quantifies robustness.</p>

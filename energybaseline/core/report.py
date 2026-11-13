@@ -1,4 +1,4 @@
-"""Report generation: HTML -> PDF (WeasyPrint, or Qt text engine fallback), multi-sheet Excel, dashboard exports."""
+"""Report generation: interim HTML -> PDF fallback (Qt text engine / matplotlib; ReportLab lands in Phase 8), multi-sheet Excel, dashboard exports."""
 from __future__ import annotations
 
 import base64
@@ -169,6 +169,7 @@ def build_context(run: RunResult, selections: list[dict], audit: list[dict], dat
                 "drivers": ", ".join(list(imp)[:4]) if imp else "n/a", "rel_html": _tbl(tr.eda["relationships"]),
                 "validation_text": f"{run.config.get('cv_scheme', 'AUTO')} scheme resolved in the AUTO log; thresholds ASHRAE 14 / IPMVP-based.",
                 "sel": pick, "limitations": ([tr.notice] if tr.notice else []) + [n for n in tr.notes if n.startswith("WARNING")],
+                "test_catalog": tr.test_catalog,
             })
             if pick:
                 terms = pick["formula"].get("terms") or []
@@ -204,13 +205,7 @@ def render_html(run: RunResult, selections: list[dict], audit: list[dict], data_
 
 
 def html_to_pdf(html: str, charts: dict[str, bytes], path: Path) -> str:
-    """WeasyPrint when available (needs GTK/Pango), otherwise Qt's native text engine (no extra dependencies)."""
-    try:
-        from weasyprint import HTML
-        HTML(string=html).write_pdf(str(path))
-        return "weasyprint"
-    except Exception as exc:
-        log.info("weasyprint unavailable (%s) -> using Qt PDF writer", exc)
+    """Interim PDF fallback via Qt's native text engine (or matplotlib fallback); ReportLab lands in Phase 8."""
     try:
         from PySide6.QtCore import QMarginsF, QUrl
         from PySide6.QtGui import QGuiApplication, QImage, QPageLayout, QPageSize, QPdfWriter, QTextDocument
@@ -218,7 +213,8 @@ def html_to_pdf(html: str, charts: dict[str, bytes], path: Path) -> str:
         log.info("Qt PDF writer unavailable (%s) -> using built-in matplotlib PDF writer", exc)
         _plain_pdf(html, charts, path)
         return "matplotlib"
-    app = QGuiApplication.instance() or QGuiApplication([])  # noqa: F841
+    app = QGuiApplication.instance() or QGuiApplication([])
+    _ = app
     doc = QTextDocument()
     for name, png in charts.items():
         img = QImage.fromData(png)
@@ -287,6 +283,28 @@ def export_excel(run: RunResult, selections: list[dict], audit: list[dict], path
             pd.DataFrame(tr.exclusions).to_excel(xw, sheet_name=nm(f"Exclusions_{k}"), index=False)
             pd.DataFrame(tr.rationale).to_excel(xw, sheet_name=nm(f"Rationale_{k}"), index=False)
             pd.DataFrame(tr.comparative).to_excel(xw, sheet_name=nm(f"Diagnostics_{k}"), index=False)
+            if tr.test_catalog:
+                pd.DataFrame(
+                    [
+                        {
+                            "test_id": tc["test_id"],
+                            "stage": tc["stage"],
+                            "name": tc["name"],
+                            "subtest": tc["subtest"],
+                            "statistic": tc["statistic"],
+                            "p_raw": tc["p_raw"],
+                            "p_adj": tc["p_adj"],
+                            "effect_size": tc["effect_size"],
+                            "ci_low": (tc.get("ci") or {}).get("low"),
+                            "ci_high": (tc.get("ci") or {}).get("high"),
+                            "ci_method": (tc.get("ci") or {}).get("method"),
+                            "inference_label": tc.get("inference_label"),
+                            "decision": tc["decision"],
+                            "downstream_action": tc["downstream_action"],
+                        }
+                        for tc in tr.test_catalog
+                    ]
+                ).to_excel(xw, sheet_name=nm(f"TestCatalog_{k}_{t}"), index=False)
             tr.eda["relationships"].to_excel(xw, sheet_name=nm(f"Relationships_{k}"), index=False)
             pd.DataFrame([{"method": m["method"], "status": m["status"], "params": json.dumps(m["params"], default=str), "results": json.dumps(m["results"], default=str),
                            "interpretation": m["interpretation"], "downstream": m["downstream"]} for m in tr.mining]).to_excel(xw, sheet_name=nm(f"Mining_{k}"), index=False)
@@ -308,21 +326,13 @@ def generate_all(run: RunResult, selections: list[dict], audit: list[dict], data
     if "pdf" in formats:
         html_names, _ = render_html(run, selections, audit, data_dictionary, embed=False)
         p = outdir / "energy_baseline_report.pdf"
-        out["pdf_engine"] = html_to_pdf(html if _weasy_ok() else html_names, charts, p)
+        out["pdf_engine"] = html_to_pdf(html_names, charts, p)
         out["pdf"] = str(p)
     if "xlsx" in formats:
         p = outdir / "energy_baseline_report.xlsx"
         export_excel(run, selections, audit, p)
         out["xlsx"] = str(p)
     return out
-
-
-def _weasy_ok() -> bool:
-    try:
-        import weasyprint  # noqa: F401
-        return True
-    except Exception:
-        return False
 
 
 # ------------------------------------------------------------------ dashboard exports

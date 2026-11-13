@@ -16,7 +16,8 @@ def backend_name() -> str:
     if sys.platform == "win32":
         return "windows-dpapi"
     try:
-        import keyring  # noqa: F401
+        import keyring
+        _ = keyring
         return "os-keyring+fernet"
     except Exception:
         return "fernet-keyfile (non-Windows development fallback)"

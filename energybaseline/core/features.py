@@ -8,7 +8,7 @@ from dataclasses import dataclass, field
 import numpy as np
 import pandas as pd
 
-from .auto import AutoLog, coerce
+from .auto import AutoLog
 from .temporal import Granularity
 
 TEMP_RE = re.compile(r"temp|oat|tdb|drybulb|dry_bulb|outdoor|t_out|tout", re.I)

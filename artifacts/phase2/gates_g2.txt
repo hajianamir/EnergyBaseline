@@ -1,0 +1,17 @@
+=== ruff check . ===
+All checks passed!
+=== ruff format --check . ===
+44 files already formatted
+=== pyflakes energybaseline ===
+=== guard_web_free ===
+OK [guard_web_free] clean (/home/user/EnergyBaseline)
+=== guard_env_readers ===
+OK [guard_env_readers] clean (/home/user/EnergyBaseline)
+=== guard_tests_integrity ===
+OK [guard_tests_integrity] verified 4 baseline test files
+=== guard_no_qthread_compute ===
+OK [guard_no_qthread_compute] clean (/home/user/EnergyBaseline)
+=== launcher DATABASE_URL check ===
+OK [launcher_no_database_url]
+=== gen_matrix --check ===
+OK [gen_matrix] verified 249 requirement IDs (51 done)

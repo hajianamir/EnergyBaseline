@@ -1,0 +1,49 @@
+{
+  "format": "energybaseline.dataset_schema",
+  "schema": {
+    "columns": [
+      {
+        "availability": "always",
+        "inclusion": "known_in_advance",
+        "name": "Month",
+        "notes": "Heuristic suggestion: timestamp column",
+        "quality_agg": "mean",
+        "quantity_type": null,
+        "role": "time",
+        "suggested_by_heuristic": true,
+        "unit": ""
+      },
+      {
+        "availability": "always",
+        "inclusion": "observed_only",
+        "name": "Energy_kWh",
+        "notes": "Heuristic suggestion (override via ColumnSpec metadata)",
+        "quality_agg": "mean",
+        "quantity_type": "flow",
+        "role": "target",
+        "suggested_by_heuristic": true,
+        "unit": "kWh"
+      },
+      {
+        "availability": "always",
+        "inclusion": "known_in_advance",
+        "name": "Avg_Temp_C",
+        "notes": "Heuristic suggestion (override via ColumnSpec metadata)",
+        "quality_agg": "mean",
+        "quantity_type": "quality",
+        "role": "predictor",
+        "suggested_by_heuristic": false,
+        "unit": "degC"
+      }
+    ],
+    "dataset_name": "monthly_building.csv",
+    "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+    "non_routine_events": [],
+    "outlier_policy": "flag_only",
+    "schema_version": "2.0",
+    "storage_timezone": "UTC",
+    "timezone": ""
+  },
+  "schema_version": "2.0",
+  "sha256": "f387bef7912b0fc6ff4aeac49a3cbf090c1fa92a47611006fa9d186d4278f460"
+}

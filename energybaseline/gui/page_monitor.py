@@ -5,12 +5,11 @@ import logging
 from pathlib import Path
 
 import pandas as pd
-from PySide6.QtCore import QDateTime, Qt
+from PySide6.QtCore import QDateTime
 from PySide6.QtWidgets import (QCheckBox, QComboBox, QDateTimeEdit, QDoubleSpinBox, QFileDialog, QFormLayout, QGridLayout, QGroupBox, QHBoxLayout, QInputDialog,
                                QLabel, QLineEdit, QMessageBox, QPlainTextEdit, QPushButton, QSpinBox, QTabWidget, QTextEdit, QVBoxLayout, QWidget)
 
 from ..core import ingest, monitor, report, sqlsource as sq, store
-from ..core.auto import is_auto
 from .sql_dialog import SqlDialog
 from .widgets import FuncWorker, KpiCard, MplCanvas, PasteTable, fill_table, make_table
 

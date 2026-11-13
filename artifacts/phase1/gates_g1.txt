@@ -1,0 +1,109 @@
+=== Canonical Gate G1 Block (Prompt Section 7) ===
+$ python -m pytest -q
+.......................................................................  [100%]
+=============================== warnings summary ===============================
+tests/test_pipeline.py: 1680 warnings
+  /home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/sklearn/utils/parallel.py:144: UserWarning: `sklearn.utils.parallel.delayed` should be used with `sklearn.utils.parallel.Parallel` to make it possible to propagate the scikit-learn configuration of the current thread to the joblib workers.
+    warnings.warn(
+
+tests/test_pipeline.py::test_monthly_run_shortlist_and_formulas
+  /home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/shap/plots/colors/_colors.py:47: PendingDeprecationWarning: The set_bad function will be deprecated in a future version. Use cmap.with_extremes(bad=...) or Colormap(bad=...) instead.
+    red_blue.set_bad(gray_rgb.tolist(), 1.0)
+
+tests/test_pipeline.py::test_monthly_run_shortlist_and_formulas
+  /home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/shap/plots/colors/_colors.py:48: PendingDeprecationWarning: The set_over function will be deprecated in a future version. Use cmap.with_extremes(over=...) or Colormap(over=...) instead.
+    red_blue.set_over(gray_rgb.tolist(), 1.0)
+
+tests/test_pipeline.py::test_monthly_run_shortlist_and_formulas
+  /home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/shap/plots/colors/_colors.py:49: PendingDeprecationWarning: The set_under function will be deprecated in a future version. Use cmap.with_extremes(under=...) or Colormap(under=...) instead.
+    red_blue.set_under(gray_rgb.tolist(), 1.0)  # "under" is incorrectly used instead of "bad" in the scatter plot
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+71 passed, 1683 warnings in 108.42s (0:01:48)
+exit=0
+
+$ python -m pytest -q tests/gates
+................................................                         [100%]
+48 passed in 46.61s
+exit=0
+
+$ python -m ruff check . && python -m ruff format --check .
+All checks passed!
+39 files already formatted
+exit=0
+
+$ python -m pyflakes energybaseline
+exit=0
+
+$ python scripts/gates/guard_web_free.py
+OK [guard_web_free] clean (/home/user/EnergyBaseline)
+exit=0
+
+$ python scripts/gates/guard_env_readers.py
+OK [guard_env_readers] clean (/home/user/EnergyBaseline)
+exit=0
+
+$ python scripts/gates/guard_tests_integrity.py
+OK [guard_tests_integrity] verified 4 baseline test files
+exit=0
+
+$ python scripts/gates/guard_no_qthread_compute.py
+OK [guard_no_qthread_compute] clean (/home/user/EnergyBaseline)
+exit=0
+
+$ python scripts/gen_matrix.py --check
+OK [gen_matrix] verified 249 requirement IDs (41 done)
+exit=0
+
+$ python -m pytest -q --cov=energybaseline/core --cov-fail-under=60
+.......................................................................  [100%]
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.11.2-final-0 ________________
+
+Name                                     Stmts   Miss  Cover
+------------------------------------------------------------
+energybaseline/core/auto.py                 67      7    90%
+energybaseline/core/eda.py                 106     32    70%
+energybaseline/core/features.py            251     39    84%
+energybaseline/core/ingest.py              149     55    63%
+energybaseline/core/mining.py              264     47    82%
+energybaseline/core/models.py              515     79    85%
+energybaseline/core/monitor.py             121     25    79%
+energybaseline/core/nn.py                  250     28    89%
+energybaseline/core/pipeline.py            331     35    89%
+energybaseline/core/pool.py                651    218    67%
+energybaseline/core/quality.py             264     62    77%
+energybaseline/core/report.py              329     65    80%
+energybaseline/core/report_template.py       1      0   100%
+energybaseline/core/schema.py               18      0   100%
+energybaseline/core/scoring.py             149     17    89%
+energybaseline/core/secrets.py              71     27    62%
+energybaseline/core/sqlsource.py           154     61    60%
+energybaseline/core/store.py               134     10    93%
+energybaseline/core/temporal.py            166     34    80%
+------------------------------------------------------------
+TOTAL                                     3991    841    79%
+Required test coverage of 60% reached. Total coverage: 78.93%
+71 passed in 145.66s (0:02:25)
+exit=0
+
+$ python -m pytest -q tests/gui -p no:cacheprovider
+...                                                                      [100%]
+3 passed in 4.47s
+exit=0
+
+$ test -z "$(git ls-files | grep -Ei 'package.json|tsconfig|\.tsx?$|next\.config|drizzle|eslint|postcss')"
+exit=0
+
+$ test -z "$(git ls-files | grep -E '__pycache__|\.pyc$')"
+exit=0
+
+$ test -z "$(grep -rn 'weasyprint' energybaseline scripts requirements.txt requirements.in requirements.lock)"
+exit=0
+
+$ test -z "$(grep -rn 'os.environ\["DATABASE_URL"\]' launcher.py)"
+grep: launcher.py: No such file or directory
+exit=0
+
+$ test -z "$(grep -rn 'os.environ\["DATABASE_URL"\]' energybaseline/launcher.py)"
+exit=0

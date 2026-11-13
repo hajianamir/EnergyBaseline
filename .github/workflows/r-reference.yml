@@ -1,0 +1,104 @@
+name: R Reference Nightly Validation (D4=B, CI-3)
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  r-reference-nightly:
+    name: Live R vs Versioned JSON Parity & Staleness Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up R 4.4.1
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "4.4.1"
+
+      - name: Install R reference packages
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            any::jsonlite
+            any::strucchange
+            any::trend
+            any::forecast
+
+      - name: Set up Python 3.11.9
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11.9"
+
+      - name: Install locked Python runtime & dev dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install --require-hashes -r requirements.lock
+          pip install -r requirements-dev.txt
+          pip install --no-build-isolation --no-deps -e .
+
+      - name: Execute R reference scripts and compare live R outputs vs committed JSONs
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import subprocess
+
+          ref_dir = Path("tests/reference")
+          mapping = {
+              "chow": ("null_case", "break_case"),
+              "quandt_andrews": ("null_case", "break_case"),
+              "pettitt": ("null_case", "shift_case"),
+              "diebold_mariano": ("equal_case", "superior_case"),
+              "nemenyi": ("null_case", "alt_case"),
+              "little_mcar": ("mcar_case", "mar_case"),
+              "mcs": ("tie_case", "dominated_case"),
+          }
+          divergences = []
+          for slug, case_keys in mapping.items():
+              out = subprocess.check_output(["Rscript", str(ref_dir / f"{slug}.R")], text=True).strip()
+              r_live = json.loads(out.splitlines()[-1])
+              committed = json.loads((ref_dir / f"{slug}.json").read_text(encoding="utf-8"))
+              tol_s = float(committed["tolerances"]["statistic_abs"])
+              tol_p = float(committed["tolerances"]["p_value_abs"])
+              for idx, r_key in enumerate(case_keys):
+                  live_case = r_live[r_key]
+                  exp_case = committed["cases"][idx]["expected"]
+                  live_stat = float(live_case.get("statistic", live_case.get("sup_f")))
+                  if abs(live_stat - float(exp_case["statistic"])) > tol_s:
+                      divergences.append(f"{slug}/{r_key} stat: live_R={live_stat} vs json={exp_case['statistic']}")
+                  if "p_value" in live_case and slug != "quandt_andrews":
+                      if abs(float(live_case["p_value"]) - float(exp_case["p_value"])) > tol_p:
+                          divergences.append(f"{slug}/{r_key} p: live_R={live_case['p_value']} vs json={exp_case['p_value']}")
+          if divergences:
+              raise SystemExit("R reference divergence detected:\n" + "\n".join(divergences))
+          print("All 7 live R reference scripts match committed JSON fixtures within tolerances.")
+          PY
+
+      - name: Run Python R-reference parity and 14-day staleness gate
+        run: pytest tests/test_reference_staleness.py -q
+
+      - name: Open GitHub issue on R reference divergence or staleness failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = `[CI-3] Nightly R Reference Divergence / Staleness Alert (${new Date().toISOString().slice(0, 10)})`;
+            const body = [
+              "The scheduled `r-reference.yml` workflow failed against live R 4.4.1 or exceeded the 14-day freshness window (`D4=B`).",
+              "",
+              `- Run URL: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              `- Commit SHA: \`${context.sha}\``,
+            ].join("\n");
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title,
+              body,
+            });

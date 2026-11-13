@@ -249,7 +249,8 @@ def run_mining(df: pd.DataFrame, target: str, predictors: list[str], g: Granular
             m = SARIMAX(yy.values, order=(1, 0, 1), seasonal_order=(1, 0, 0, s) if s else (0, 0, 0, 0)).fit(disp=False, maxiter=50)
             res.append(_rec("SARIMA(1,0,1)(1,0,0)s", {"s": s, "n": len(yy)}, {"aic": round(float(m.aic), 1)}, "Univariate benchmark (AIC) for autoregressive structure.", "Informational: residual autocorrelation justifies Durbin–Watson / Ljung–Box scoring."))
         try:
-            import prophet  # noqa: F401
+            import prophet
+            _ = prophet
             res.append(_rec("Prophet", {}, {}, "Installed; not run by default to keep analysis time bounded.", "none", "skipped"))
         except Exception:
             res.append(_rec("Prophet", {}, {}, "Skipped: optional package 'prophet' not installed.", "none", "skipped"))

@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools==84.2.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "energybaseline"
+version = "6.0.0.dev0"
+description = "Offline single-user Windows desktop energy-baseline analytics (Python + PySide6)."
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+license = { file = "LICENSE" }
+authors = [{ name = "Amir Hajian" }]
+
+[tool.setuptools.packages.find]
+include = ["energybaseline*"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
+ignore = ["E702", "E741"]
+
+[tool.ruff.lint.per-file-ignores]
+# Preserve untouched baseline assertions/locals in frozen test functions (Phase 0 D0.8).
+"tests/test_pipeline.py" = ["F841"]
+
+[tool.ruff.format]
+# Pre-Phase-0 product/test modules remain frozen in Phase 0 per docs/PROMPT_PHASE0_EXECUTOR.md §5
+# and are formatted incrementally when modified in their respective phases (Phases 1–9).
+exclude = [
+    "alembic/**",
+    "energybaseline/**",
+    "samples/generate_samples.py",
+    "scripts/build_exe.py",
+    "scripts/make_example_reports.py",
+    "scripts/make_icon.py",
+    "scripts/make_shortcut.py",
+    "tests/test_config_db.py",
+    "tests/test_core.py",
+    "tests/test_pipeline.py",
+]

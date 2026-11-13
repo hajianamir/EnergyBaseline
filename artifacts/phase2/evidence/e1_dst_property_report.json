@@ -1,0 +1,146 @@
+{
+  "all_energy_residuals_below_1e_9": true,
+  "artifact": "E1",
+  "disaggregation_refusal_code": "DATA_REFUSED",
+  "gate": "G2",
+  "phase": 2,
+  "results": [
+    {
+      "ambiguous_wall_times_resolved": 0,
+      "daily_aggregated_total_kwh": 244.8,
+      "daily_output_rows": 4,
+      "energy_conservation_abs_error_kwh": 5.684341886080802e-14,
+      "input_half_hour_intervals": 144,
+      "input_total_kwh": 244.8,
+      "local_day_distinct_utc_hours": {
+        "2024-03-30": 23,
+        "2024-03-31": 23,
+        "2024-04-01": 24,
+        "2024-04-02": 2
+      },
+      "nonexistent_wall_times_detected": 0,
+      "normalized_non_null_utc_rows": 144,
+      "scenario": "spring_forward_23h",
+      "timezone": "Europe/Berlin",
+      "utc_index_monotonic": true
+    },
+    {
+      "ambiguous_wall_times_resolved": 4,
+      "daily_aggregated_total_kwh": 244.8,
+      "daily_output_rows": 4,
+      "energy_conservation_abs_error_kwh": 5.684341886080802e-14,
+      "input_half_hour_intervals": 144,
+      "input_total_kwh": 244.8,
+      "local_day_distinct_utc_hours": {
+        "2024-10-26": 22,
+        "2024-10-27": 25,
+        "2024-10-28": 24,
+        "2024-10-29": 1
+      },
+      "nonexistent_wall_times_detected": 0,
+      "normalized_non_null_utc_rows": 144,
+      "scenario": "fall_back_25h",
+      "timezone": "Europe/Berlin",
+      "utc_index_monotonic": true
+    },
+    {
+      "ambiguous_wall_times_resolved": 0,
+      "daily_aggregated_total_kwh": 244.8,
+      "daily_output_rows": 4,
+      "energy_conservation_abs_error_kwh": 5.684341886080802e-14,
+      "input_half_hour_intervals": 144,
+      "input_total_kwh": 244.8,
+      "local_day_distinct_utc_hours": {
+        "2024-03-09": 24,
+        "2024-03-10": 23,
+        "2024-03-11": 24,
+        "2024-03-12": 1
+      },
+      "nonexistent_wall_times_detected": 0,
+      "normalized_non_null_utc_rows": 144,
+      "scenario": "spring_forward_23h",
+      "timezone": "America/New_York",
+      "utc_index_monotonic": true
+    },
+    {
+      "ambiguous_wall_times_resolved": 4,
+      "daily_aggregated_total_kwh": 244.8,
+      "daily_output_rows": 3,
+      "energy_conservation_abs_error_kwh": 8.526512829121202e-14,
+      "input_half_hour_intervals": 144,
+      "input_total_kwh": 244.8,
+      "local_day_distinct_utc_hours": {
+        "2024-11-02": 24,
+        "2024-11-03": 25,
+        "2024-11-04": 23
+      },
+      "nonexistent_wall_times_detected": 0,
+      "normalized_non_null_utc_rows": 144,
+      "scenario": "fall_back_25h",
+      "timezone": "America/New_York",
+      "utc_index_monotonic": true
+    },
+    {
+      "ambiguous_wall_times_resolved": 2,
+      "daily_aggregated_total_kwh": 244.8,
+      "daily_output_rows": 4,
+      "energy_conservation_abs_error_kwh": 5.684341886080802e-14,
+      "input_half_hour_intervals": 144,
+      "input_total_kwh": 244.8,
+      "local_day_distinct_utc_hours": {
+        "2024-04-06": 13,
+        "2024-04-07": 25,
+        "2024-04-08": 25,
+        "2024-04-09": 11
+      },
+      "nonexistent_wall_times_detected": 0,
+      "normalized_non_null_utc_rows": 144,
+      "scenario": "fall_back_30min_24_5h",
+      "timezone": "Australia/Lord_Howe",
+      "utc_index_monotonic": true
+    },
+    {
+      "ambiguous_wall_times_resolved": 0,
+      "daily_aggregated_total_kwh": 244.8,
+      "daily_output_rows": 4,
+      "energy_conservation_abs_error_kwh": 8.526512829121202e-14,
+      "input_half_hour_intervals": 144,
+      "input_total_kwh": 244.8,
+      "local_day_distinct_utc_hours": {
+        "2024-10-05": 14,
+        "2024-10-06": 24,
+        "2024-10-07": 24,
+        "2024-10-08": 11
+      },
+      "nonexistent_wall_times_detected": 0,
+      "normalized_non_null_utc_rows": 144,
+      "scenario": "spring_forward_30min_23_5h",
+      "timezone": "Australia/Lord_Howe",
+      "utc_index_monotonic": true
+    },
+    {
+      "ambiguous_wall_times_resolved": 0,
+      "daily_aggregated_total_kwh": 244.8,
+      "daily_output_rows": 3,
+      "energy_conservation_abs_error_kwh": 5.684341886080802e-14,
+      "input_half_hour_intervals": 144,
+      "input_total_kwh": 244.8,
+      "local_day_distinct_utc_hours": {
+        "2024-03-30": 24,
+        "2024-03-31": 24,
+        "2024-04-01": 24
+      },
+      "nonexistent_wall_times_detected": 0,
+      "normalized_non_null_utc_rows": 144,
+      "scenario": "no_dst_control_24h",
+      "timezone": "UTC",
+      "utc_index_monotonic": true
+    }
+  ],
+  "zones_tested": [
+    "Europe/Berlin",
+    "America/New_York",
+    "Australia/Lord_Howe",
+    "UTC"
+  ]
+}

@@ -1,0 +1,7 @@
+## GUI smoke (offscreen, link-only stubs) — 2026-11-12T20:09:27Z
+2026-11-12 20:09:29,316 INFO energybaseline.db db.selftest {"ok": true, "url": "sqlite:////tmp/ebhome_smoke2/data/app.db", "fallback": true, "writable": true}
+2026-11-12 20:09:29,358 INFO energybaseline.gui GUI started
+This plugin does not support propagateSizeHints()
+PAGES: ['setup', 'analysis', 'results', 'selection', 'monitor', 'status']
+stepper(UX-1): False | command palette(UX-3): False
+closeEvent override: False

@@ -1,36 +1,167 @@
-# EnergyBaseline v3 - runtime requirements (Python 3.11+, Windows 10/11 64-bit)
-PySide6>=6.6
-numpy>=1.26
-pandas>=2.1
-scipy>=1.11
-statsmodels>=0.14
-scikit-learn>=1.4
-sqlalchemy>=2.0
-alembic>=1.13
-matplotlib>=3.8
-jinja2>=3.1
-openpyxl>=3.1
-pillow>=10
-cryptography>=42
-keyring>=24
-# advanced ML / data mining (each is optional at runtime: missing packages are reported as "skipped" in the report)
-xgboost>=2.0
-lightgbm>=4.3
-catboost>=1.2
-optuna>=3.5
-shap>=0.45
-mlxtend>=0.23
-ruptures>=1.1
-umap-learn>=0.5
-holidays>=0.45
-# neural networks (CPU build is fine; a CUDA build is used automatically when present)
-torch>=2.2
-# reporting (PDF falls back to the built-in Qt / matplotlib writers if WeasyPrint's GTK runtime is missing)
-weasyprint>=61
-# optional external SQL drivers for the Prediction module
-pymysql>=1.1
-psycopg2-binary>=2.9
-pyodbc>=5.0
-# packaging
-pyinstaller>=6.5
-# optional: prophet>=1.1
+# Exact pinned requirements for EnergyBaseline v6 (Python 3.11.x, generated from requirements.in).
+alembic==1.20.1
+altgraph==0.17.5
+annotated-types==0.8.0
+arch==9.0.0
+arrow==1.4.0
+attrs==26.1.0
+backports-tarfile==1.2.0
+boolean-py==5.0
+cachecontrol==0.14.4
+catboost==1.2.10
+certifi==2026.10.23
+cffi==2.1.1
+chardet==7.7.0
+charset-normalizer==3.5.2
+cloudpickle==3.1.2
+colorama==0.4.6 ; sys_platform == 'win32'
+colorlog==6.12.0
+contourpy==1.3.3
+coverage==7.17.3
+cryptography==50.0.2
+cuda-bindings==13.5.0 ; sys_platform == 'linux'
+cuda-pathfinder==1.8.6 ; sys_platform == 'linux'
+cuda-toolkit==13.2.2 ; sys_platform == 'linux'
+cycler==0.12.1
+cyclonedx-bom==8.0.1
+cyclonedx-python-lib==11.12.0
+defusedxml==0.7.1
+et-xmlfile==2.0.0
+filelock==4.2.10
+fonttools==4.68.0
+formulaic==1.2.2
+fqdn==1.6.0
+fsspec==2026.9.0
+graphviz==0.21
+holidays==0.108
+hypothesis==6.170.15
+idna==3.20
+importlib-metadata==10.2.0
+iniconfig==2.3.1
+interface-meta==2.0.1
+isoduration==20.11.0
+jaraco-classes==3.4.0
+jaraco-context==6.1.2
+jaraco-functools==4.6.0
+jeepney==0.9.0 ; sys_platform == 'linux'
+jinja2==3.1.6
+joblib==1.6.0
+jsonpointer==3.12
+jsonschema==4.26.0
+jsonschema-specifications==2025.9.1
+keyring==25.7.0
+kiwisolver==1.5.1
+lark==1.3.1
+lazy-importer==0.1.0
+license-expression==30.4.4
+lightgbm==4.7.0
+llvmlite==0.50.0
+lxml==6.1.3
+mako==1.4.3
+mapie==1.6.0
+markdown-it-py==4.3.0
+markupsafe==3.0.4
+matplotlib==3.11.2
+mdurl==0.1.2
+mlxtend==0.25.0
+more-itertools==11.2.1
+mpmath==1.3.0
+msgpack==1.2.4
+narwhals==2.28.0
+networkx==3.6.1
+numba==0.68.1
+numpy==2.4.6
+nvidia-cublas==13.4.1.3 ; sys_platform == 'linux'
+nvidia-cuda-cccl==13.3.5.0.6 ; sys_platform == 'linux'
+nvidia-cuda-cupti==13.2.86 ; sys_platform == 'linux'
+nvidia-cuda-nvrtc==13.2.86 ; sys_platform == 'linux'
+nvidia-cuda-runtime==13.2.86 ; sys_platform == 'linux'
+nvidia-cudnn-cu13==9.26.0.51 ; sys_platform == 'linux'
+nvidia-cufft==12.2.0.57 ; sys_platform == 'linux'
+nvidia-cufile==1.17.1.22 ; sys_platform == 'linux'
+nvidia-cusolver==12.2.0.11 ; sys_platform == 'linux'
+nvidia-cusparse==12.7.10.12 ; sys_platform == 'linux'
+nvidia-cusparselt-cu13==0.8.1 ; sys_platform == 'linux'
+nvidia-nccl-cu12==2.32.6 ; sys_platform == 'linux'
+nvidia-nccl-cu13==2.30.7 ; sys_platform == 'linux'
+nvidia-nvjitlink==13.5.37 ; sys_platform == 'linux'
+nvidia-nvshmem-cu13==3.7.2 ; sys_platform == 'linux'
+nvidia-nvtx==13.2.86 ; sys_platform == 'linux'
+openpyxl==3.1.5
+optuna==5.0.0
+packageurl-python==0.17.6
+packaging==26.3
+pandas==3.1.1
+patsy==1.0.3
+pefile==2024.8.26 ; sys_platform == 'win32'
+pillow==13.0.0
+pip==26.3
+pip-api==0.0.35
+pip-audit==2.10.1
+pip-requirements-parser==32.0.1
+platformdirs==4.14.5
+plotly==7.1.0
+pluggy==1.7.0
+psycopg2-binary==2.9.13
+py-serializable==2.2.0
+pyarrow==24.0.0
+pycparser==3.12
+pydantic==2.14.3
+pydantic-core==2.50.4
+pyflakes==4.1.0
+pygments==2.21.0
+pyinstaller==6.22.3
+pyinstaller-hooks-contrib==2026.10
+pymysql==1.2.4
+pynndescent==0.7.0
+pyodbc==5.5.0
+pyparsing==3.3.3
+pyside6==6.9.3
+pyside6-addons==6.9.3
+pyside6-essentials==6.9.3
+pytest==9.2.0
+pytest-cov==7.1.0
+pytest-qt==4.5.0
+python-dateutil==2.9.0.post0
+pywin32==312 ; sys_platform == 'win32'
+pywin32-ctypes==0.2.3 ; sys_platform == 'win32'
+pyyaml==6.0.3
+referencing==0.37.0
+reportlab==5.1.0
+requests==2.34.2
+rfc3339-validator==0.1.4
+rfc3986-validator==0.1.1
+rfc3987-syntax==1.1.0
+rich==15.0.0
+rpds-py==2026.9.1
+ruff==0.17.5
+ruptures==1.1.10
+scikit-learn==1.9.1
+scipy==1.17.1
+secretstorage==3.5.0 ; sys_platform == 'linux'
+setuptools==84.2.1
+shap==0.51.0
+shiboken6==6.9.3
+six==1.17.0
+slicer==0.0.8
+sortedcontainers==2.4.0
+sqlalchemy==2.1.8
+sqlglot==30.31.0
+statsmodels==0.15.0
+sympy==1.14.0
+threadpoolctl==3.8.0
+tomli==2.5.0
+tomli-w==1.2.0
+torch==2.15.0
+tqdm==4.70.1
+triton==3.9.0 ; sys_platform == 'linux'
+typing-extensions==4.16.0
+typing-inspection==0.4.5
+tzdata==2026.6
+umap-learn==0.6.0
+uri-template==1.3.0
+urllib3==2.8.0
+webcolors==25.10.0
+wrapt==2.5.2
+xgboost==3.2.0
+zipp==4.1.2

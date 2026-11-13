@@ -1,8 +1,6 @@
 """Transparent multi-criteria scoring, acceptance thresholds, Top-5 shortlist and rejection register."""
 from __future__ import annotations
 
-import math
-
 import numpy as np
 
 from .auto import AutoLog
@@ -125,7 +123,18 @@ def score_models(results: list[dict], n_obs: int, th: dict, auto: AutoLog) -> di
 
 def nn_gate(results: list[dict], n_obs: int, auto: AutoLog) -> None:
     """Explicit NN rejection when data is insufficient or no improvement over classical models."""
-    min_gain = float(auto.decide("nn_min_gain", lambda: (5.0, "default", "NN must beat the best non-NN model's CV(RMSE) by 5 % to justify its opacity")))
+    ok_pre = [r for r in results if r.get("status") == "ok" and r["kind"] not in ("nn", "blend")]
+    best_classical_cv = min((r["metrics"]["cvrmse"] for r in ok_pre), default=0.0)
+    min_gain = float(
+        auto.decide(
+            "nn_min_gain",
+            lambda: (
+                (7.5 if n_obs < 500 else 5.0 if n_obs < 2500 else 3.0),
+                f"n_obs={n_obs}, best_classical_cvrmse={best_classical_cv:.2f}%",
+                "required relative CV(RMSE) gain over classical models scales inversely with sample size (7.5% n<500, 5% n<2500, 3% n>=2500)",
+            ),
+        )
+    )
     ok = [r for r in results if r.get("status") == "ok"]
     classical = [r for r in ok if r["kind"] != "nn" and r["kind"] != "blend"]
     if not classical:

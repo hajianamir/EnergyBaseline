@@ -1,0 +1,25 @@
+## hardcoded interval level (UQ/CI violation)
+328:                          "train_metrics": r["train_metrics"], "criteria": r["criteria"], "formula": r["formula"], "reason": r["reason"], "uncertainty": {"lower": r["resid_q"][0], "upper": r["resid_q"][1], "level": 0.95,
+
+## launcher rewrites DATABASE_URL (DB-2 violation)
+3:Launcher contract: create ./data, export DATABASE_URL=sqlite:///./data/app.db BEFORE the ORM is
+60:    os.environ["DATABASE_URL"] = "sqlite:///./data/app.db"  # launcher contract (SQLite-only runtime)
+
+## table ceiling 3000 rows (IPC-7/UX-5)
+20:def fill_table(tbl: QTableWidget, df: pd.DataFrame | None, max_rows: int = 3000, decimals: int = 4) -> None:
+
+## web-stack files tracked by git
+drizzle.config.json
+eslint.config.mjs
+next.config.ts
+package.json
+postcss.config.mjs
+src/app/api/health/route.ts
+src/app/globals.css
+src/app/layout.tsx
+src/app/page.tsx
+src/db/index.ts
+src/db/schema.ts
+tsconfig.json
+
+## files tracked: 75 ; python LOC:   7732 total

@@ -1,0 +1,4 @@
+alembic upgrade head -> OK
+alembic downgrade base -> OK
+alembic upgrade head -> OK
+alembic current -> 0003 (head)

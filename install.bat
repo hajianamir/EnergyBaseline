@@ -6,7 +6,7 @@ where py >nul 2>nul && (set "PY=py -3.11") || (set "PY=python")
 if not exist ".venv" %PY% -m venv .venv
 call .venv\Scripts\activate.bat
 python -m pip install --upgrade pip
-pip install -r requirements.txt
+pip install --require-hashes -r requirements.lock
 if errorlevel 1 exit /b 1
 if not exist data mkdir data
 if not exist logs mkdir logs

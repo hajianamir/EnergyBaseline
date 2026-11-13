@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0",
+  "script": "scripts/evidence/startup_time.ps1",
+  "timestamp_utc": "2026-11-13T07:19:09.0990133Z",
+  "target_kind": "pyinstaller_onedir_exe",
+  "target_executable": "D:\\a\\EnergyBaseline\\EnergyBaseline\\dist\\EnergyBaseline\\EnergyBaseline.exe",
+  "hardware": {
+    "environment_label": "CI, non-normative",
+    "is_ci": true,
+    "normative_per_d2": false,
+    "d2_note": "Measured on GitHub Actions virtual runner; non-normative per Decision D2 (reference: 8-core, 16 GB, NVMe, Win11 23H2).",
+    "os_caption": "Microsoft Windows Server 2025 Datacenter",
+    "cpu_name": "AMD EPYC 9V74 80-Core Processor                ",
+    "logical_processors": 4,
+    "ram_gb": 15.99
+  },
+  "cold_iterations": 5,
+  "warm_iterations": 5,
+  "cold_median_ms": 2213.75,
+  "cold_p95_ms": 2262.22,
+  "warm_median_ms": 2125.88,
+  "warm_p95_ms": 2154.36,
+  "cold_first_paint_ms": 2213.75,
+  "warm_first_paint_median_ms": 2125.88,
+  "cold_stats": {
+    "count": 5,
+    "min_ms": 2189.62,
+    "median_ms": 2213.75,
+    "p95_ms": 2262.22,
+    "max_ms": 2271.4
+  },
+  "warm_stats": {
+    "count": 5,
+    "min_ms": 2121.65,
+    "median_ms": 2125.88,
+    "p95_ms": 2154.36,
+    "max_ms": 2156.17
+  },
+  "normative_budgets_ms": {
+    "cold_max_ms_on_d2_ref_hw": 4000.0,
+    "warm_max_ms_on_d2_ref_hw": 1500.0
+  },
+  "cold_runs": [
+    {
+      "label": "cold_1",
+      "exit_code": 0,
+      "first_paint_ms": 2271.4,
+      "total_process_ms": 3025.08,
+      "db_ok": true,
+      "db_rung": "eb_home"
+    },
+    {
+      "label": "cold_2",
+      "exit_code": 0,
+      "first_paint_ms": 2225.5,
+      "total_process_ms": 2939.85,
+      "db_ok": true,
+      "db_rung": "eb_home"
+    },
+    {
+      "label": "cold_3",
+      "exit_code": 0,
+      "first_paint_ms": 2213.75,
+      "total_process_ms": 2960.66,
+      "db_ok": true,
+      "db_rung": "eb_home"
+    },
+    {
+      "label": "cold_4",
+      "exit_code": 0,
+      "first_paint_ms": 2189.62,
+      "total_process_ms": 2931.09,
+      "db_ok": true,
+      "db_rung": "eb_home"
+    },
+    {
+      "label": "cold_5",
+      "exit_code": 0,
+      "first_paint_ms": 2200.23,
+      "total_process_ms": 2932.22,
+      "db_ok": true,
+      "db_rung": "eb_home"
+    }
+  ],
+  "warm_runs": [
+    {
+      "label": "warm_1",
+      "exit_code": 0,
+      "first_paint_ms": 2156.17,
+      "total_process_ms": 2894.34,
+      "db_ok": true,
+      "db_rung": "eb_home"
+    },
+    {
+      "label": "warm_2",
+      "exit_code": 0,
+      "first_paint_ms": 2147.1,
+      "total_process_ms": 2867.86,
+      "db_ok": true,
+      "db_rung": "eb_home"
+    },
+    {
+      "label": "warm_3",
+      "exit_code": 0,
+      "first_paint_ms": 2125.88,
+      "total_process_ms": 2853.99,
+      "db_ok": true,
+      "db_rung": "eb_home"
+    },
+    {
+      "label": "warm_4",
+      "exit_code": 0,
+      "first_paint_ms": 2121.65,
+      "total_process_ms": 2835.16,
+      "db_ok": true,
+      "db_rung": "eb_home"
+    },
+    {
+      "label": "warm_5",
+      "exit_code": 0,
+      "first_paint_ms": 2124.45,
+      "total_process_ms": 2835.66,
+      "db_ok": true,
+      "db_rung": "eb_home"
+    }
+  ],
+  "pass": true
+}

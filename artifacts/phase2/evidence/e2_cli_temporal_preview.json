@@ -1,0 +1,246 @@
+{
+  "auto_resolutions": [
+    {
+      "mode": "AUTO",
+      "rule": "AUTO keeps naive wall-clock time (no conversion)",
+      "setting": "timezone",
+      "signals": "timestamps carry no declared timezone",
+      "target": "Energy_kWh",
+      "value": "(none)"
+    },
+    {
+      "mode": "AUTO",
+      "rule": "nearest standard granularity to the median timestamp step",
+      "setting": "sampling_period",
+      "signals": "median step=2678400s, regularity=100.0%",
+      "target": "Energy_kWh",
+      "value": "monthly"
+    },
+    {
+      "mode": "AUTO",
+      "rule": "AUTO uses the entire available range",
+      "setting": "baseline_window",
+      "signals": "data span 2021-01-01 00:00:00 .. 2023-12-01 00:00:00",
+      "target": "Energy_kWh",
+      "value": "(none)"
+    },
+    {
+      "mode": "AUTO",
+      "rule": "none - whole baseline range used for fitting",
+      "setting": "reporting_window",
+      "signals": "no reporting period declared",
+      "target": "Energy_kWh",
+      "value": "(none)"
+    },
+    {
+      "mode": "AUTO",
+      "rule": "columns >40 % missing carry too little information",
+      "setting": "max_missing_rate",
+      "signals": "default engineering limit",
+      "target": "Energy_kWh",
+      "value": "0.4"
+    },
+    {
+      "mode": "AUTO",
+      "rule": "relative variance below 1e-8 means constant",
+      "setting": "min_variance",
+      "signals": "default numerical tolerance",
+      "target": "Energy_kWh",
+      "value": "1e-08"
+    },
+    {
+      "mode": "AUTO",
+      "rule": "|r|>=0.99 with target AND energy-like name => leakage",
+      "setting": "leakage_threshold",
+      "signals": "default",
+      "target": "Energy_kWh",
+      "value": "0.99"
+    },
+    {
+      "mode": "AUTO",
+      "rule": "approximately symmetric -> robust z-score on calendar-adjusted values",
+      "setting": "outlier_method",
+      "signals": "target |skew|=0.25 <= 2, n=36",
+      "target": "Energy_kWh",
+      "value": "robust_z"
+    },
+    {
+      "mode": "AUTO",
+      "rule": "3.5 (Iglewicz-Hoaglin); 4.5 for skewed variables",
+      "setting": "outlier_threshold",
+      "signals": "|skew|=0.25",
+      "target": "Energy_kWh",
+      "value": "3.5"
+    },
+    {
+      "mode": "AUTO",
+      "rule": "few extreme points: remove from training (target never altered)",
+      "setting": "outlier_treatment",
+      "signals": "target flagged share=0.00% <= 2 %",
+      "target": "Energy_kWh",
+      "value": "remove"
+    },
+    {
+      "mode": "AUTO",
+      "rule": "apply modelled DatasetSchema outlier action policy",
+      "setting": "outlier_action_policy",
+      "signals": "DatasetSchema.outlier_policy='flag_only'",
+      "target": "Energy_kWh",
+      "value": "flag_only"
+    },
+    {
+      "mode": "AUTO",
+      "rule": "irrelevant (kept as default)",
+      "setting": "missing_strategy",
+      "signals": "no missing predictor values",
+      "target": "Energy_kWh",
+      "value": "linear"
+    },
+    {
+      "mode": "AUTO",
+      "rule": "|r|>=0.95 => redundant pair",
+      "setting": "corr_threshold",
+      "signals": "default",
+      "target": "Energy_kWh",
+      "value": "0.95"
+    },
+    {
+      "mode": "AUTO",
+      "rule": "stricter VIF for small samples",
+      "setting": "vif_threshold",
+      "signals": "n=36 < 100",
+      "target": "Energy_kWh",
+      "value": "5"
+    }
+  ],
+  "dataset": {
+    "dataframe_sha256": "e36f55d0f7e39e2003c8a6e11311eafcbffdd2a03ca35828eb2f94431beda17c",
+    "input_columns": [
+      "Month",
+      "Energy_kWh",
+      "Avg_Temp_C"
+    ],
+    "input_rows": 36,
+    "name": "monthly_building.csv",
+    "sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c"
+  },
+  "format": "energybaseline.phase2_temporal_preview",
+  "preprocessing": {
+    "exclusions": [],
+    "group_columns": [],
+    "non_routine_events_applied": [],
+    "notes": [],
+    "outlier_policy_record": {
+      "applied": false,
+      "flagged_count": 0,
+      "flagged_rows": [],
+      "flagged_target_rows": [],
+      "n_train_after": 36,
+      "n_train_before": 36,
+      "pending_user_confirmation": false,
+      "policy": "flag_only",
+      "rule": "robust_z(threshold=3.5, treatment=remove)",
+      "target_mean_delta": 0.0,
+      "target_std_delta": 0.0,
+      "training_set_delta": 0,
+      "treatment": "remove"
+    },
+    "quality": {
+      "completeness": 1.0,
+      "regularity": 1.0,
+      "score": 100.0,
+      "uniqueness": 1.0,
+      "validity": 1.0
+    },
+    "retained_predictors": [
+      "Avg_Temp_C"
+    ],
+    "target": "Energy_kWh",
+    "weight_column": null
+  },
+  "schema": {
+    "format": "energybaseline.dataset_schema",
+    "schema": {
+      "columns": [
+        {
+          "availability": "always",
+          "inclusion": "known_in_advance",
+          "name": "Month",
+          "notes": "Heuristic suggestion: timestamp column",
+          "quality_agg": "mean",
+          "quantity_type": null,
+          "role": "time",
+          "suggested_by_heuristic": true,
+          "unit": ""
+        },
+        {
+          "availability": "always",
+          "inclusion": "observed_only",
+          "name": "Energy_kWh",
+          "notes": "Heuristic suggestion (override via ColumnSpec metadata)",
+          "quality_agg": "mean",
+          "quantity_type": "flow",
+          "role": "target",
+          "suggested_by_heuristic": true,
+          "unit": "kWh"
+        },
+        {
+          "availability": "always",
+          "inclusion": "known_in_advance",
+          "name": "Avg_Temp_C",
+          "notes": "Heuristic suggestion (override via ColumnSpec metadata)",
+          "quality_agg": "mean",
+          "quantity_type": "quality",
+          "role": "predictor",
+          "suggested_by_heuristic": false,
+          "unit": "degC"
+        }
+      ],
+      "dataset_name": "monthly_building.csv",
+      "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+      "non_routine_events": [],
+      "outlier_policy": "flag_only",
+      "schema_version": "2.0",
+      "storage_timezone": "UTC",
+      "timezone": ""
+    },
+    "schema_version": "2.0",
+    "sha256": "f387bef7912b0fc6ff4aeac49a3cbf090c1fa92a47611006fa9d186d4278f460"
+  },
+  "temporal_report": {
+    "aggregation": {},
+    "applied": "monthly",
+    "baseline_window": [
+      "2021-01-01 00:00:00",
+      "2023-12-01 00:00:00"
+    ],
+    "declared": "monthly",
+    "detected": "monthly",
+    "display_timezone": "naive",
+    "dst": "naive",
+    "gap_segments": [],
+    "local_day_hour_counts": {},
+    "messages": [],
+    "n_dst_ambiguous": 0,
+    "n_dst_nonexistent": 0,
+    "n_duplicates": 0,
+    "n_extended_shutdowns": 0,
+    "n_gaps_filled_as_missing": 0,
+    "n_input_rows": 36,
+    "n_output_rows": 36,
+    "n_short_gaps": 0,
+    "needs_confirmation": true,
+    "quantity_types": {
+      "Avg_Temp_C": "quality",
+      "Energy_kWh": "flow"
+    },
+    "regularity": 1.0,
+    "reporting_window": null,
+    "storage_timezone": "naive",
+    "timezone": "naive"
+  },
+  "unit_conversions": [
+    "Energy_kWh: unit 'kWh' already canonical (kWh)",
+    "Avg_Temp_C: unit 'degC' already canonical (degC)"
+  ]
+}

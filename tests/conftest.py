@@ -16,3 +16,12 @@ def eb_home():
     for k in ("DATABASE_URL", "POSTGRES_URL", "DB_CONNECTION_STRING", "DB_URI"):
         os.environ.pop(k, None)
     return Path(tmp)
+
+
+@pytest.fixture(scope="session")
+def generated_samples_dir(tmp_path_factory: pytest.TempPathFactory) -> Path:
+    """Generate deterministic sample datasets (including .xlsx) into a temporary session folder (S6)."""
+    from tests.fixtures.synthetic import generate_samples_into
+
+    out_dir = tmp_path_factory.mktemp("generated_samples")
+    return generate_samples_into(out_dir, seed=2024)

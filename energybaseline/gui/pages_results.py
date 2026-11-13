@@ -4,9 +4,8 @@ from __future__ import annotations
 import json
 import logging
 
-import numpy as np
 import pandas as pd
-from PySide6.QtCore import QUrl, Qt
+from PySide6.QtCore import QUrl
 from PySide6.QtGui import QDesktopServices, QFont, QImage, QTextDocument
 from PySide6.QtWidgets import (QButtonGroup, QComboBox, QFrame, QGroupBox, QHBoxLayout, QLabel, QLineEdit, QMessageBox, QPushButton, QRadioButton,
                                QScrollArea, QTabWidget, QTextBrowser, QTextEdit, QVBoxLayout, QWidget)
@@ -52,9 +51,10 @@ class ResultsPage(QWidget):
         dl = QVBoxLayout(dw)
         self.diag_canvas = MplCanvas((8, 5))
         dl.addWidget(self.diag_canvas)
+        self.catalog_tbl = make_table()
         self.rep_tab = self._report_tab()
         for w, n in ((self.summary, "Summary & Temporal"), (self.leader, "Model Leaderboard"), (rw, "Decision Rationale"), (self.register, "Rejected Models Register"),
-                     (self.excl, "Exclusions & Reasons"), (ew, "EDA"), (self.mining, "Data Mining"), (dw, "Diagnostics & Interpretability"), (self.rep_tab, "Report")):
+                     (self.excl, "Exclusions & Reasons"), (ew, "EDA"), (self.mining, "Data Mining"), (dw, "Diagnostics & Interpretability"), (self.catalog_tbl, "Test Catalog (T1-T14)"), (self.rep_tab, "Report")):
             self.tabs.addTab(w, n)
         state.run_changed.connect(self.reload)
         state.selection_changed.connect(self._update_preview_hint)
@@ -122,6 +122,27 @@ class ResultsPage(QWidget):
         fill_table(self.rel_tbl, tr.eda.get("relationships"))
         fill_table(self.mining, pd.DataFrame([{"method": m["method"], "status": m["status"], "parameters": json.dumps(m["params"], default=str), "results": json.dumps(m["results"], default=str)[:300],
                                                "interpretation": m["interpretation"], "downstream": m["downstream"]} for m in tr.mining]))
+        fill_table(
+            self.catalog_tbl,
+            pd.DataFrame(
+                [
+                    {
+                        "test_id": tc["test_id"],
+                        "stage": tc["stage"],
+                        "name": tc["name"],
+                        "statistic": tc["statistic"],
+                        "p_raw": tc["p_raw"],
+                        "p_adj": tc["p_adj"],
+                        "effect_size": tc["effect_size"],
+                        "ci_method": (tc.get("ci") or {}).get("method"),
+                        "inference": tc.get("inference_label"),
+                        "decision": tc["decision"],
+                        "downstream_action": tc["downstream_action"],
+                    }
+                    for tc in getattr(tr, "test_catalog", [])
+                ]
+            ),
+        )
         self._draw_eda(tr)
         self._draw_diag(tr)
 

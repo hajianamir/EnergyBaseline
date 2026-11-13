@@ -1,0 +1,53 @@
+........................................................................ [ 58%]
+...................................................                      [100%]
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.11.2-final-0 ________________
+
+Name                                     Stmts   Miss  Cover
+------------------------------------------------------------
+energybaseline/core/auto.py                 67      7    90%
+energybaseline/core/eda.py                 106     32    70%
+energybaseline/core/features.py            251     39    84%
+energybaseline/core/ingest.py              368     69    81%
+energybaseline/core/mining.py              264     47    82%
+energybaseline/core/models.py              515     79    85%
+energybaseline/core/monitor.py             121     25    79%
+energybaseline/core/nn.py                  250     28    89%
+energybaseline/core/pipeline.py            336     35    90%
+energybaseline/core/pool.py                651    220    66%
+energybaseline/core/quality.py             535    115    79%
+energybaseline/core/report.py              329     65    80%
+energybaseline/core/report_template.py       1      0   100%
+energybaseline/core/schema.py              467     74    84%
+energybaseline/core/scoring.py             149     17    89%
+energybaseline/core/secrets.py              71     27    62%
+energybaseline/core/sqlsource.py           222     82    63%
+energybaseline/core/store.py               206     27    87%
+energybaseline/core/temporal.py            515     95    82%
+------------------------------------------------------------
+TOTAL                                     5424   1083    80%
+Required test coverage of 60% reached. Total coverage: 80.03%
+123 passed in 127.16s (0:02:07)
+Name                                     Stmts   Miss  Cover
+------------------------------------------------------------
+energybaseline/core/auto.py                 67      7    90%
+energybaseline/core/eda.py                 106     32    70%
+energybaseline/core/features.py            251     39    84%
+energybaseline/core/ingest.py              368     69    81%
+energybaseline/core/mining.py              264     47    82%
+energybaseline/core/models.py              515     79    85%
+energybaseline/core/monitor.py             121     25    79%
+energybaseline/core/nn.py                  250     28    89%
+energybaseline/core/pipeline.py            336     35    90%
+energybaseline/core/pool.py                651    220    66%
+energybaseline/core/quality.py             535    115    79%
+energybaseline/core/report.py              329     65    80%
+energybaseline/core/report_template.py       1      0   100%
+energybaseline/core/schema.py              467     74    84%
+energybaseline/core/scoring.py             149     17    89%
+energybaseline/core/secrets.py              71     27    62%
+energybaseline/core/sqlsource.py           222     82    63%
+energybaseline/core/store.py               206     27    87%
+energybaseline/core/temporal.py            515     95    82%
+------------------------------------------------------------
+TOTAL                                     5424   1083    80%

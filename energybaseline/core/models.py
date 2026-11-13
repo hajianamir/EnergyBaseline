@@ -539,7 +539,7 @@ def build_portfolio(ctx: Ctx, n: int) -> tuple[list[Candidate], list[dict]]:
     from sklearn.svm import SVR
 
     seed, nj = ctx.seed, ctx.n_jobs
-    L, Lm = "Linear / statistical", "linear"
+    L = "Linear / statistical"
     cands: list[Candidate] = []
     missing: list[dict] = []
     kf = KFold(4)

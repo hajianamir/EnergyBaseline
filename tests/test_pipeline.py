@@ -43,10 +43,16 @@ def test_monthly_run_shortlist_and_formulas(monthly):
     assert any(a["setting"] == "weight_profile" and a["value"] == "interpretable" for a in run.auto)  # n=36 < 200
 
 
-def test_nn_explicitly_rejected_for_small_data(monthly):
+@pytest.mark.parametrize("model_token", ["MLP", "LSTM"])
+def test_nn_explicitly_rejected_for_small_data(monthly, model_token):
+    from energybaseline.core.nn import torch_available
     tr = monthly[2].targets["Energy_kWh"]
-    nn = [r for r in tr.register if "MLP" in r["model"] or "LSTM" in r["model"]]
-    assert nn and all("insufficient" in r["reason"] for r in nn)
+    nn = [r for r in tr.register if model_token in r["model"]]
+    assert nn
+    if model_token == "MLP" or torch_available():
+        assert all(r["status"] == "rejected" and "insufficient" in r["reason"] for r in nn)
+    else:
+        assert all(r["status"] == "not evaluated" and "not installed" in r["reason"] for r in nn)
 
 
 def test_determinism(monthly, db):
@@ -111,10 +117,10 @@ def test_store_lock_monitor_and_report(monthly, db, tmp_path):
     assert (tmp_path / "d.pdf").stat().st_size > 1000
 
 
-def test_daily_multitarget_independent(db):
+def test_daily_multitarget_independent(db, generated_samples_dir):
     from energybaseline.core.ingest import guess_time_column, load_file
     from energybaseline.core.pipeline import run_analysis
-    df = load_file(str(SAMPLES / "daily_plant_multitarget.xlsx")).iloc[:300]
+    df = load_file(str(generated_samples_dir / "daily_plant_multitarget.xlsx")).iloc[:300]
     tc = guess_time_column(df)
     run, _ = run_analysis(df, tc, ["Electricity_kWh", "Gas_m3"], {"hpo_trials": "0", "nn_max_epochs": "10", "enable_mining": "false"})
     e, g = run.targets["Electricity_kWh"], run.targets["Gas_m3"]

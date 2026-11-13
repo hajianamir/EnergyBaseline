@@ -1,0 +1,8 @@
+$ alembic upgrade head
+
+$ alembic downgrade base
+
+$ alembic upgrade head
+
+$ alembic current
+0002 (head)

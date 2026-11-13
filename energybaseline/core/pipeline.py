@@ -18,14 +18,19 @@ import pandas as pd
 
 from .. import __version__
 from . import nn as nnmod
-from .auto import AutoLog, is_auto
+from .auto import AutoLog, compute_auto_log_hash, is_auto
+from .cache import CachedComplianceRunner, ResultCache
 from .eda import run_eda
 from .features import FeatureSpec, build_spec, select_features
 from .mining import run_mining
 from .models import Blend, Ctx, build_portfolio, diagnostics, evaluate_candidate, make_folds, metrics, plausibility
+from .provenance import ProvenanceLedger
 from .quality import preprocess_target
+from .schema import DatasetSchema, coerce_dataset_schema
 from .scoring import build_shortlist, decision_rationale, nn_gate, score_models, thresholds
+from .tcp import TestConfigPanel, compute_target_characterization_profile
 from .temporal import prepare_temporal
+from .vsg import ComplianceGateError, VariableSelectionGate
 
 log = logging.getLogger("energybaseline.pipeline")
 Progress = Callable[[str, float, str], None]
@@ -63,6 +68,9 @@ class TargetResult:
     n_obs: int = 0
     series: pd.DataFrame | None = None  # y + best-model OOF for charts
     auto_summary: dict = field(default_factory=dict)
+    characterization: dict = field(default_factory=dict)
+    compliance_tests: list = field(default_factory=list)
+    test_catalog: list = field(default_factory=list)
     seconds: float = 0.0
 
 
@@ -77,6 +85,10 @@ class RunResult:
     dataset: dict = field(default_factory=dict)
     run_id: int | None = None
     cancelled: bool = False
+    auto_log_hash: str = ""
+    provenance: dict = field(default_factory=dict)
+    vsg_summary: dict = field(default_factory=dict)
+    tcp_summary: dict = field(default_factory=dict)
 
 
 def collect_versions() -> dict:
@@ -181,12 +193,14 @@ def _importance(model, X: pd.DataFrame, y: np.ndarray, seed: int, with_shap: boo
 
 def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: list[str], config: dict, seed: int,
                    auto_root: AutoLog, n_jobs: int, progress: Progress, cancel: Callable[[], bool],
-                   formulas_artifact: Callable[[str, str], str] | None = None) -> tuple[TargetResult, dict]:
+                   formulas_artifact: Callable[[str, str], str] | None = None,
+                   *, schema: DatasetSchema | dict | None = None) -> tuple[TargetResult, dict]:
     t0 = time.time()
     res = TargetResult(target)
     bundles: dict = {}
     cfg = {k: v for k, v in config.items() if k != "per_target"}
     cfg.update((config.get("per_target") or {}).get(target, {}))
+    resolved_schema = coerce_dataset_schema(schema or cfg.get("dataset_schema"))
     auto = AutoLog(cfg, target)
     auto.records = auto_root.records
 
@@ -197,14 +211,27 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
 
     try:
         emit(2, "Temporal configuration")
-        tdf, trep, g = prepare_temporal(df, time_col, auto)
+        tdf, trep, g = prepare_temporal(df, time_col, auto, schema=resolved_schema)
         res.temporal, res.granularity, res.freq = trep.as_dict(), g.label, g.freq
         emit(8, "Quality & preprocessing")
-        prep = preprocess_target(tdf, target, all_targets, g, auto, seed, trep.n_duplicates)
+        prep = preprocess_target(tdf, target, all_targets, g, auto, seed, trep.n_duplicates, schema=resolved_schema)
         res.exclusions, res.quality, res.notes, res.outliers = prep.exclusions, prep.quality, prep.notes, prep.outliers
+        res.characterization = compute_target_characterization_profile(
+            prep.df,
+            target=target,
+            predictors=prep.predictors,
+            dataset_sha256=(resolved_schema.dataset_sha256 if resolved_schema is not None else ""),
+        )
         emit(14, "Exploratory analysis")
         res.eda = run_eda(prep.df, target, prep.predictors, g)
-        if auto.decide("enable_mining", lambda: (True, "default", "data-mining layer enabled")):
+        if auto.decide(
+            "enable_mining",
+            lambda: (
+                len(prep.df) >= 12,
+                f"n_clean={len(prep.df)}, predictors={len(prep.predictors)}",
+                "data-mining layer enabled when at least 12 cleaned observations exist",
+            ),
+        ):
             emit(18, "Data mining (clustering, anomalies, association, time-series)")
             res.mining = run_mining(prep.df, target, prep.predictors, g, seed, cancel)
         emit(34, "Feature engineering & selection")
@@ -232,7 +259,14 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
         epochs = int(auto.decide("nn_max_epochs", lambda: ((150 if n < 1000 else 80 if n < 5000 else 40), f"n={n}", "fewer epochs for large n; early stopping always on")))
         seq = int(auto.decide("nn_seq_len", lambda: ({"subdaily": max(4, min(12, int(g.steps_per_day // 2))), "daily": 7, "weekly": 4, "monthly": 3}[g.tier], f"granularity={g.label}", "window covers half a day (sub-daily), a week (daily) or a few periods")))
         nn_on = bool(auto.decide("enable_nn", lambda: (n >= 300, f"n={n}", "neural networks need >= 300 observations to be trainable and comparable")))
-        fam = auto.decide("model_families", lambda: (["linear", "tree", "kernel", "nn"], "default", "all applicable families compete"))
+        fam = auto.decide(
+            "model_families",
+            lambda: (
+                (["linear", "tree", "kernel", "nn"] if len(sel) >= 1 else ["linear"]),
+                f"n={n}, p_selected={len(sel)}, tier={g.tier}",
+                "all four model families enter gated competition when predictors>=1 (mean-only linear when predictors==0)",
+            ),
+        )
         fam = tuple(fam)
         gap = max(1, min(int(round(max(g.steps_per_day, 1))), n // 20))
         folds = make_folds(n, k, scheme, gap)
@@ -304,7 +338,6 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
         # ---- interpretability + bundles
         with_imp = bool(auto.decide("include_importance", lambda: (n <= 20000, f"n={n}", "interpretability extras on unless n>20000 (cost)")))
         stats = {c: {"min": float(Xall[c].min()), "max": float(Xall[c].max()), "mean": float(Xall[c].mean()), "std": float(Xall[c].std())} for c in spec.raw_cols if c in Xall}
-        agg = "sum" if "sum" in set((res.temporal.get("aggregation") or {}).values()) and (res.temporal.get("aggregation") or {}).get(target) == "sum" else "mean"
         agg_map = res.temporal.get("aggregation") or {}
         for rank, r in enumerate(top, 1):
             emit(93 + 6 * rank / max(1, len(top)), f"Interpretability for {r['name']}")
@@ -348,6 +381,36 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
             ser["baseline_oof"] = top[0]["oof"]
             ser["baseline_fit"] = top[0]["model"].predict(X)
             res.series = ser
+
+        # ---- Phase 4 Statistical Test Catalog (T1..T14)
+        from ..tests_catalog import run_full_test_catalog
+
+        grp_col: str | None = config.get("group_column")
+        if not grp_col and resolved_schema is not None:
+            for cspec in resolved_schema.columns:
+                if cspec.role.value == "group" and cspec.name in prep.df.columns:
+                    grp_col = cspec.name
+                    break
+        oof_map: dict[str, np.ndarray] = {}
+        for r_cand in sorted(results, key=lambda r: -r["score"])[:5]:
+            oof_vec = r_cand.get("oof")
+            if oof_vec is not None and len(oof_vec) == len(y):
+                oof_map[str(r_cand["name"])] = y - np.asarray(oof_vec, dtype=float)
+        cat_mode = str(config.get("test_catalog_mode", "fast"))
+        disabled_tids = tuple(config.get("disabled_tests", ()))
+        cat_out = run_full_test_catalog(
+            prep.df,
+            target_col=target,
+            predictor_cols=list(prep.predictors),
+            group_col=grp_col,
+            oof_errors_by_model=oof_map,
+            alpha=float(config.get("tcp_alpha", 0.05)) if not is_auto(config.get("tcp_alpha", "AUTO")) else 0.05,
+            disabled_tests=disabled_tids,
+            mode=cat_mode,
+            allow_hac=bool(config.get("allow_hac", True)),
+            seed=seed,
+        )
+        res.test_catalog = [item.to_dict() for item in cat_out]
         emit(100, "Done")
     except Cancelled:
         raise
@@ -359,15 +422,64 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
     return res, bundles
 
 
+def run_gated_inferential_stage(
+    df: pd.DataFrame,
+    vsg: VariableSelectionGate,
+    tcp: TestConfigPanel,
+    *,
+    cache: ResultCache | None = None,
+    seed: int = 42,
+) -> dict:
+    """Execute gated inferential pre-model testing + characterization after VSG & TCP acceptance (PIPE-1..3)."""
+    tcp.assert_accepted()
+    runner = CachedComplianceRunner(cache=cache, seed=seed)
+    dag_out = runner.run_compliance_stage_dag(df, vsg, tcp, stages_to_run=("pre_model",))
+    char_by_target = {
+        t: compute_target_characterization_profile(
+            df,
+            target=t,
+            predictors=vsg.included_variables(t),
+            time_col=vsg.time_col,
+            dataset_sha256=vsg.dataset_sha256,
+        )
+        for t in vsg.targets
+    }
+    return {
+        "auto_log_hash": vsg.auto_log.compute_hash(),
+        "characterization_by_target": char_by_target,
+        "dag": dag_out,
+        "engine_call_count": runner.engine_call_count,
+        "provenance": vsg.provenance.to_dict(),
+        "runner": runner,
+        "tcp_sha256": tcp.tcp_sha256,
+        "vsg_sha256": vsg.vsg_sha256,
+    }
+
+
 def run_analysis(df: pd.DataFrame, time_col: str, targets: list[str], config: dict | None = None, *, dataset_sha: str | None = None,
-                 dataset_info: dict | None = None, progress: Progress | None = None, cancel: Callable[[], bool] | None = None,
+                 dataset_info: dict | None = None, schema: DatasetSchema | dict | None = None,
+                 vsg: VariableSelectionGate | None = None, tcp: TestConfigPanel | None = None,
+                 enforce_compliance_gates: bool = False,
+                 progress: Progress | None = None, cancel: Callable[[], bool] | None = None,
                  artifact_fn: Callable[[str, str], str] | None = None) -> tuple[RunResult, dict]:
     config = dict(config or {})
+    if enforce_compliance_gates or bool(config.get("require_gate_acceptance", False)):
+        if vsg is None or tcp is None:
+            raise ComplianceGateError(
+                "PIPE-1 violation: both VariableSelectionGate and TestConfigPanel must be supplied and accepted."
+            )
+    if vsg is not None:
+        vsg.assert_accepted()
+    if tcp is not None:
+        tcp.assert_accepted()
+
+    resolved_schema = coerce_dataset_schema(schema or config.get("dataset_schema"))
+    if resolved_schema is not None:
+        config["dataset_schema"] = resolved_schema.to_dict()
     progress = progress or (lambda t, p, m: None)
     cancel = cancel or (lambda: False)
     auto = AutoLog(config)
     seed = int(auto.decide("seed", lambda: (_seed_from(df, targets, dataset_sha), "SHA-256 of dataset hash, column names, row count, targets", "deterministic seed derived from the data (same data -> same seed)")))
-    from .auto import AutoLog as _A
     cpu = os.cpu_count() or 2
     par = int(auto.decide("parallel_targets", lambda: ((1 if len(targets) == 1 else min(2, max(1, cpu // 2))), f"targets={len(targets)}, cores={cpu}", "sequential for a single target, else up to cores/2 (max 2)")))
     par = max(1, min(par, len(targets), cpu))
@@ -375,9 +487,10 @@ def run_analysis(df: pd.DataFrame, time_col: str, targets: list[str], config: di
     nnmod.seed_everything(seed)
     out_t: dict[str, TargetResult] = {}
     bundles: dict[str, dict] = {}
+    target_logs: dict[str, AutoLog] = {t: auto.for_target(t, isolated=True) for t in targets}
 
     def work(t):
-        return analyze_target(df, time_col, t, targets, config, seed, auto, n_jobs, progress, cancel, artifact_fn)
+        return analyze_target(df, time_col, t, targets, config, seed, target_logs[t], n_jobs, progress, cancel, artifact_fn, schema=resolved_schema)
 
     cancelled = False
     try:
@@ -393,6 +506,32 @@ def run_analysis(df: pd.DataFrame, time_col: str, targets: list[str], config: di
                     out_t[t], bundles[t] = r, b
     except Cancelled:
         cancelled = True
-    run = RunResult(seed=seed, config=config, versions=collect_versions(), auto=auto.as_dicts(), targets=out_t,
-                    created=time.strftime("%Y-%m-%d %H:%M:%S"), dataset=dataset_info or {}, cancelled=cancelled)
+
+    # Merge target AUTO logs in deterministic target order so repeated multi-target runs match byte-for-byte.
+    for t in targets:
+        auto.merge_from(target_logs[t])
+
+    eff_ds_sha = str(dataset_sha or (resolved_schema.dataset_sha256 if resolved_schema is not None else "") or "unspecified")
+    prov = vsg.provenance if vsg is not None else ProvenanceLedger(dataset_sha256=eff_ds_sha)
+    prov.record_stage(
+        stage_name="pipeline_run_completed",
+        payload={"cancelled": cancelled, "seed": seed, "targets": sorted(targets)},
+        upstream_stage_sha256=eff_ds_sha,
+    )
+    auto_dicts = auto.as_dicts()
+    auto_hash = compute_auto_log_hash(auto_dicts)
+    run = RunResult(
+        seed=seed,
+        config=config,
+        versions=collect_versions(),
+        auto=auto_dicts,
+        targets=out_t,
+        created=time.strftime("%Y-%m-%d %H:%M:%S"),
+        dataset=dataset_info or {},
+        cancelled=cancelled,
+        auto_log_hash=auto_hash,
+        provenance=prov.to_dict(),
+        vsg_summary=vsg.to_dict() if vsg is not None else {},
+        tcp_summary=tcp.to_dict() if tcp is not None else {},
+    )
     return run, bundles

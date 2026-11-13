@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "script": "scripts/evidence/installer_smoke.ps1",
+  "timestamp_utc": "2026-11-13T07:18:30.0306917Z",
+  "environment_label": "CI, non-normative",
+  "profile": "lite",
+  "layout": "onedir",
+  "installer_engine": "inno_setup",
+  "artifacts": {
+    "onedir_exe": "D:\\a\\EnergyBaseline\\EnergyBaseline\\dist\\EnergyBaseline\\EnergyBaseline.exe",
+    "onedir_exe_sha256": "d5305142b8d46c2b543090bac58e02d505671b8bf3437be71c10e00ffbc18127",
+    "shortcut_lnk": "D:\\a\\EnergyBaseline\\EnergyBaseline\\dist\\EnergyBaseline\\EnergyBaseline.lnk",
+    "shortcut_sha256": "62a253d7aa3474ef524fe02351dd7d70ff18f61bac123e210438036edf881a03",
+    "sbom_path": "D:\\a\\EnergyBaseline\\EnergyBaseline\\dist\\EnergyBaseline\\sbom.cdx.json",
+    "sbom_sha256": "fd23aff534c7bc90f03c1157e4843e67c44ec5b02e0d647fc16f173aefb5aa2d",
+    "sbom_component_count": 143,
+    "installer_exe": "D:\\a\\EnergyBaseline\\EnergyBaseline\\dist\\EnergyBaseline-Setup-lite.exe",
+    "installer_sha256": "eb3edb5f129e3aedf8c8075bb57c89efbc692d882de0c2c06cd890b3af25f084"
+  },
+  "install_smoke": {
+    "install_exit_code": 0,
+    "installed_exe_verified": true,
+    "launch_exit_code": 0,
+    "launch_db_ok": true,
+    "first_paint_ms": 2286.26,
+    "uninstall_exit_code": 0,
+    "uninstalled_cleanly": true
+  },
+  "pass": true
+}

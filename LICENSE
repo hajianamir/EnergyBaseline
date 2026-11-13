@@ -1,0 +1,26 @@
+Copyright (c) 2026 Amir Hajian. All rights reserved.
+
+PROPRIETARY AND CONFIDENTIAL — INTERNAL USE ONLY
+
+This software, including its source code, documentation, build scripts, and any
+accompanying artifacts (collectively, "the Software"), is proprietary and
+confidential. No license, express or implied, is granted to any person or entity
+except by a separate written agreement signed by the copyright holder.
+
+Without such an agreement, you may not:
+
+  1. copy, reproduce, or distribute the Software or any part of it;
+  2. modify, adapt, translate, or create derivative works from the Software;
+  3. sublicense, sell, rent, lease, lend, or otherwise transfer the Software;
+  4. reverse engineer, decompile, or disassemble the Software, except to the
+     extent such restriction is prohibited by applicable law;
+  5. remove or alter any proprietary notices in the Software.
+
+Third-party components included in or required by the Software remain governed by
+their own licenses. See THIRD_PARTY_NOTICES.md, which ships with every build.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT
+HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM, OUT OF OR
+IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
