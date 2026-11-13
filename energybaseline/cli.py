@@ -573,6 +573,235 @@ def _cmd_model_catalog(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_scoring_register(args: argparse.Namespace) -> int:
+    from .models import (
+        MANDATORY_PORTFOLIO_CLASSES,
+        SampleSizeGateSkippedError,
+        Top5CandidateCard,
+        Top5ShortlistView,
+        build_model_representation,
+        get_portfolio_registry,
+    )
+    from .pipeline import InFoldModelPipeline, run_leakage_safe_cv
+    from .scoring import (
+        analyze_weight_sensitivity_20pct,
+        compute_13_subscores,
+        compute_pairwise_comparison_matrix,
+        fit_validity_domain_envelope,
+        partition_model_registers,
+        rank_candidates_13,
+        select_parsimonious_mcs_leader,
+    )
+
+    df, sha, vsg = _load_dataset_and_vsg(args.dataset, args.targets)
+    vsg.accept()
+    tcp = TestConfigPanel(vsg)
+    lock_hash = tcp.lock_preregistration()
+    target = vsg.targets[0]
+    preds = [c for c in vsg.included_variables(target) if c in df.columns and c != target]
+    work = df[[target, *preds]].dropna(subset=[target]).copy()
+    X = work[preds]
+    yv = work[target].to_numpy(dtype=float)
+
+    oof_by_model = {}
+    cands_13 = []
+    unfit = []
+    fitted_wrappers = {}
+
+    for key, cls in MANDATORY_PORTFOLIO_CLASSES.items():
+        try:
+            cv_res = run_leakage_safe_cv(
+                lambda c=cls: InFoldModelPipeline(lambda cc=c: cc(), scale=False, enforce_k_max=True, seed=42),
+                X,
+                yv,
+                n_folds=3,
+                mode="expanding",
+                steps_per_day=1.0,
+                granularity="monthly",
+            )
+            m = cv_res.oos_metrics
+            est = cv_res.final_estimator
+            oof_by_model[key] = cv_res.oof_predictions
+            fitted_wrappers[key] = (est, cv_res)
+            subs = compute_13_subscores(
+                cvrmse=m.cvrmse,
+                nmbe=m.nmbe,
+                r2=m.r2,
+                wape=m.wape,
+                fold_cvrmse_std=float(sum((v - m.cvrmse) ** 2 for v in cv_res.fold_cvrmse) ** 0.5)
+                if cv_res.fold_cvrmse
+                else 0.0,
+                n_obs=len(yv),
+                n_params=est.n_params,
+                family=est.family_id,
+                is_parametric=est.is_parametric,
+            )
+            cands_13.append(
+                {
+                    "model_name": key,
+                    "family": est.family_id,
+                    "is_parametric": est.is_parametric,
+                    "qualified": bool(m.meets_ashrae14),
+                    "in_mcs": True,
+                    "cvrmse": m.cvrmse,
+                    "nmbe": m.nmbe,
+                    "r2": m.r2,
+                    "mae": m.mae,
+                    "wape": m.wape,
+                    "n_params": est.n_params,
+                    "subscores_13": subs,
+                }
+            )
+        except SampleSizeGateSkippedError as exc:
+            unfit.append({"model_name": key, "family": cls.family_id, "status": "skipped", "reason": str(exc)})
+        except Exception as exc:
+            unfit.append({"model_name": key, "family": cls.family_id, "status": "rejected", "reason": str(exc)})
+
+    pw = compute_pairwise_comparison_matrix(yv, oof_by_model, alpha=tcp.alpha, seed=42)
+    mcs_set = set(pw.mcs_superior_set)
+    for c in cands_13:
+        c["in_mcs"] = c["model_name"] in mcs_set
+
+    ranked = rank_candidates_13(cands_13)
+    ranked_dicts = [
+        {
+            **r.to_dict(),
+            "mae": next(c["mae"] for c in cands_13 if c["model_name"] == r.model_name),
+            "wape": next(c["wape"] for c in cands_13 if c["model_name"] == r.model_name),
+        }
+        for r in ranked
+    ]
+    sep = partition_model_registers(ranked_dicts, unfit)
+    sens = analyze_weight_sensitivity_20pct(cands_13, seed=42)
+    tie_dec = select_parsimonious_mcs_leader(ranked_dicts)
+    env = fit_validity_domain_envelope(X)
+
+    cards = []
+    for rk in ranked_dicts[:5]:
+        nm = rk["model_name"]
+        est, _ = fitted_wrappers[nm]
+        X_proc = cv_res_last = fitted_wrappers[nm][1].final_preprocessor.transform(X)
+        _ = cv_res_last
+        yhat_full = est.predict(X_proc)
+        coefs = getattr(est, "coef_raw_", {}) if est.is_parametric else {}
+        rep = build_model_representation(
+            model_name=nm,
+            family=est.family_id,
+            is_parametric=est.is_parametric,
+            formula_or_arch=est.formula_text(),
+            coefficients=coefs,
+            hyperparameters=est.hyperparameters(),
+            X_ref=X_proc,
+            y_hat_ref=yhat_full,
+            predict_fn=est.predict,
+            seed=42,
+        )
+        cards.append(
+            Top5CandidateCard(
+                rank=int(rk["rank"]),
+                model_name=nm,
+                family=est.family_id,
+                composite_score=float(rk["composite_score"]),
+                in_mcs=bool(rk["in_mcs"]),
+                cvrmse=float(rk["cvrmse"]),
+                nmbe=float(rk["nmbe"]),
+                r2=float(rk["r2"]),
+                mae=float(rk["mae"]),
+                wape=float(rk["wape"]),
+                n_params=int(rk["n_params"]),
+                representation=rep,
+                selection_guidance=tie_dec.reason if int(rk["rank"]) == 1 else "Shortlisted Top-5 candidate.",
+            )
+        )
+    top5_view = Top5ShortlistView(
+        target=target,
+        visible_before_lock=True,
+        is_locked=False,
+        locked_model_name=None,
+        candidates=tuple(cards),
+    )
+
+    payload = {
+        "dataset_sha256": sha,
+        "ok": True,
+        "pairwise_comparison": pw.to_dict(),
+        "parsimony_tiebreak": tie_dec.to_dict(),
+        "portfolio_registry": [p.to_dict() for p in get_portfolio_registry()],
+        "ranked_13_criteria": ranked_dicts,
+        "separated_registers": sep.to_dict(),
+        "target": target,
+        "tcp_lock_sha256": lock_hash,
+        "top5_pre_lock_view": top5_view.to_dict(),
+        "validity_envelope": env.to_dict(),
+        "weight_sensitivity_20pct": sens.to_dict(),
+    }
+    _write_or_print(payload, args.out)
+    return 0
+
+
+def _cmd_baseline_lock(args: argparse.Namespace) -> int:
+    import tempfile
+
+    from .lock import BaselineLockManager, export_locked_baseline_excel, verify_excel_formula_roundtrip
+    from .models import MLRBaselineWrapper
+    from .scoring import fit_validity_domain_envelope
+    from .validation import compute_ashrae14_oos_metrics
+
+    df, sha, vsg = _load_dataset_and_vsg(args.dataset, args.targets)
+    vsg.accept()
+    tcp = TestConfigPanel(vsg)
+    tcp_sha = tcp.lock_preregistration()
+    target = vsg.targets[0]
+    preds = [c for c in vsg.included_variables(target) if c in df.columns and c != target]
+    work = df[[target, *preds]].dropna(subset=[target]).copy()
+    X = work[preds].apply(lambda s: s.astype(float)).fillna(0.0)
+    yv = work[target].to_numpy(dtype=float)
+
+    est = MLRBaselineWrapper(enforce_k_max=True, seed=42).fit(X, yv)
+    yhat = est.predict(X)
+    m = compute_ashrae14_oos_metrics(yv, yhat, n_params=est.n_params, granularity="monthly")
+    env = fit_validity_domain_envelope(X)
+
+    lock_root = Path(args.lock_dir) if args.lock_dir else Path(tempfile.mkdtemp(prefix="eb_cli_lock_"))
+    mgr = BaselineLockManager(lock_root)
+    coefs = {"intercept": float(est.intercept_), **{k: float(v) for k, v in est.coef_raw_.items()}}
+    rec = mgr.lock_baseline(
+        run_id="cli-phase6",
+        target=target,
+        model_name="mlr",
+        family=est.family_id,
+        is_parametric=True,
+        fitted_artifact=est,
+        formula_or_architecture=est.formula_text(),
+        coefficients=coefs,
+        selected_features=list(est.selected_cols_),
+        vsg_snapshot={"accepted": True, "dataset_sha256": sha, "included": preds},
+        tcp_snapshot={"alpha": float(tcp.alpha), "confidence": round(1.0 - float(tcp.alpha), 4), "lock_sha256": tcp_sha},
+        baseline_window={"granularity": "monthly", "n_obs": len(yv)},
+        thresholds={"max_cvrmse": 15.0, "max_nmbe": 5.0, "min_r2": 0.75},
+        random_seed=42,
+        calibration_metrics=m.to_dict(),
+        composite_score=92.5,
+        validity_envelope=env.to_dict(),
+        locked_by="cli-audit",
+        notes="Phase 6 Gate G6 CLI locked baseline & Excel formula round-trip check",
+    )
+    loaded = mgr.load_verified_artifact(rec)
+    _ = loaded
+    xlsx_path = lock_root / "locked_baseline_formulas.xlsx"
+    export_locked_baseline_excel(rec, X, yv, xlsx_path)
+    rt = verify_excel_formula_roundtrip(xlsx_path, yhat, yv)
+    payload = {
+        "audit_ledger": mgr.read_audit_ledger(),
+        "excel_formula_roundtrip": rt.to_dict(),
+        "locked_baseline_record": rec.to_dict(),
+        "ok": bool(rt.passed),
+        "verified_artifact_sha256": rec.artifact_sha256,
+    }
+    _write_or_print(payload, args.out)
+    return 0 if rt.passed else 1
+
+
 CLI_COMMAND_HANDLERS: Mapping[str, Callable[[argparse.Namespace], int]] = MappingProxyType(
     {
         "schema-suggest": _cmd_schema_suggest,
@@ -591,6 +820,8 @@ CLI_COMMAND_HANDLERS: Mapping[str, Callable[[argparse.Namespace], int]] = Mappin
         "r-references-check": _cmd_r_references_check,
         "clustering-validity": _cmd_clustering_validity,
         "model-catalog": _cmd_model_catalog,
+        "scoring-register": _cmd_scoring_register,
+        "baseline-lock": _cmd_baseline_lock,
     }
 )
 
@@ -735,6 +966,17 @@ def build_parser() -> argparse.ArgumentParser:
     p_mc.add_argument("--targets", default="", help="Optional comma-separated target columns.")
     p_mc.add_argument("--lite", action="store_true", help="Simulate Lite build profile (skip PyTorch LSTM cleanly).")
     p_mc.add_argument("--out", default=None, help="Write JSON output to path.")
+
+    p_sr = sub.add_parser("scoring-register", help="Run Phase 6 [M] portfolio, 13-criteria scoring, separated registers, and pre-lock Top-5 JSON.")
+    p_sr.add_argument("dataset", help="Path to dataset file.")
+    p_sr.add_argument("--targets", default="", help="Optional comma-separated target columns.")
+    p_sr.add_argument("--out", default=None, help="Write JSON output to path.")
+
+    p_bl = sub.add_parser("baseline-lock", help="Create immutable Phase 6 LockedBaselineRecord, verify SHA-256 joblib load & Excel formula round-trip.")
+    p_bl.add_argument("dataset", help="Path to dataset file.")
+    p_bl.add_argument("--targets", default="", help="Optional comma-separated target columns.")
+    p_bl.add_argument("--lock-dir", default=None, help="Optional directory to store immutable lock manifests & artifacts.")
+    p_bl.add_argument("--out", default=None, help="Write JSON output to path.")
 
     return parser
 

@@ -62,17 +62,45 @@ def artifact_path(run_id: int, target: str, model: str) -> Path:
     return artifact_dir(run_id, target) / f"{safe}.joblib"
 
 
+def _write_sha256_sidecar(path: Path) -> str:
+    from ..lock.baseline_lock import compute_file_sha256
+
+    digest = compute_file_sha256(path)
+    Path(f"{path}.sha256").write_text(f"{digest}  {path.name}\n", encoding="utf-8")
+    return digest
+
+
+def _verify_sha256_sidecar_if_present(path: Path) -> str:
+    from ..lock.baseline_lock import ArtifactIntegrityError, compute_file_sha256
+
+    p = Path(path)
+    if not p.is_file():
+        raise FileNotFoundError(str(p))
+    actual = compute_file_sha256(p)
+    sidecar = Path(f"{p}.sha256")
+    if sidecar.is_file():
+        expected = sidecar.read_text(encoding="utf-8").strip().split()[0]
+        if actual != expected:
+            raise ArtifactIntegrityError(
+                f"G-9 SHA-256 verification FAILED before joblib.load('{p}'): expected {expected}, got {actual}."
+            )
+    return actual
+
+
 def save_run(run_id: int, run: RunResult, bundles: dict) -> str:
     run.run_id = run_id
     for t, bs in bundles.items():
         for name, b in bs.items():
             b["run_id"] = run_id
-            joblib.dump(b, artifact_path(run_id, t, name))
+            ap = artifact_path(run_id, t, name)
+            joblib.dump(b, ap)
+            _write_sha256_sidecar(ap)
     rdir = ensure_dirs()["runs"] / f"run_{run_id}"
     rdir.mkdir(parents=True, exist_ok=True)
     path = rdir / "results.joblib"
     slim = RunResult(**{**run.__dict__})
     joblib.dump(slim, path)
+    _write_sha256_sidecar(path)
     with session_scope() as s:
         r = s.get(M.Run, run_id)
         r.finished_at = dt.datetime.now(dt.timezone.utc).replace(tzinfo=None)
@@ -100,6 +128,7 @@ def load_run(run_id: int) -> RunResult:
         if r is None or not r.results_path:
             raise FileNotFoundError(f"Run {run_id} has no stored results")
         path = r.results_path
+    _verify_sha256_sidecar_if_present(Path(path))
     run = joblib.load(path)
     run.run_id = run_id
     return run
@@ -112,7 +141,7 @@ def list_runs() -> list[dict]:
 
 
 def lock_baseline(run_id: int, target: str, model_name: str, note: str = "") -> dict:
-    """Lock (or change) the baseline selection; previous selections are retained as history."""
+    """Lock (or append a new immutable version for) the baseline selection; prior versions remain intact."""
     with session_scope() as s:
         prev = s.execute(select(M.Selection).where(M.Selection.run_id == run_id, M.Selection.target == target, M.Selection.active.is_(True))).scalars().all()
         for p in prev:
@@ -122,6 +151,47 @@ def lock_baseline(run_id: int, target: str, model_name: str, note: str = "") -> 
         s.flush()
         out = {"id": sel.id, "run_id": run_id, "target": target, "model": model_name, "note": note, "at": str(sel.selected_at),
                "replaced": [p.model_name for p in prev]}
+
+    # Also write immutable versioned LockedBaselineRecord (SC-10, AC-04, G-9) when run bundle exists
+    try:
+        from ..lock.baseline_lock import BaselineLockManager
+
+        lock_dir = ensure_dirs()["runs"] / f"run_{run_id}" / "locks"
+        ap = artifact_path(run_id, target, model_name)
+        if ap.is_file():
+            bundle = load_bundle(run_id, target, model_name)
+            mgr = BaselineLockManager(lock_dir)
+            fml = bundle.get("formula") or {}
+            is_param = bool(fml.get("kind") == "equation")
+            coefs: dict[str, float] = {}
+            if is_param:
+                coefs["intercept"] = float(fml.get("intercept", 0.0))
+                for k_t, v_t in fml.get("terms") or []:
+                    coefs[str(k_t)] = float(v_t)
+            rec = mgr.lock_baseline(
+                run_id=str(run_id),
+                target=target,
+                model_name=model_name,
+                family=str(getattr(bundle.get("model"), "family", "Baseline")),
+                is_parametric=is_param,
+                fitted_artifact=bundle,
+                formula_or_architecture=str(fml.get("text", model_name)),
+                coefficients=coefs,
+                selected_features=list(bundle.get("required_columns") or ()),
+                baseline_window={"window": str(bundle.get("baseline_window", "")), "granularity": str(bundle.get("granularity", ""))},
+                thresholds={k: float(v) for k, v in (bundle.get("thresholds") or {}).items() if isinstance(v, (int, float))},
+                random_seed=int(bundle.get("seed", 42)),
+                calibration_metrics={k: float(v) for k, v in (bundle.get("metrics") or {}).items() if isinstance(v, (int, float))},
+                validity_envelope={"drivers": list((bundle.get("train_stats") or {}).keys())},
+                notes=note,
+            )
+            out["version"] = rec.version
+            out["artifact_sha256"] = rec.artifact_sha256
+            out["record_sha256"] = rec.record_sha256
+            out["lock_manifest_path"] = rec.manifest_path
+    except Exception:
+        pass
+
     audit(f"Baseline selected for '{target}': {model_name}" + (f" (replaces {out['replaced']})" if out["replaced"] else "") + (f" - note: {note}" if note else ""),
           "selection", run_id=run_id, detail=out)
     return out
@@ -143,7 +213,9 @@ def active_selection(run_id: int, target: str) -> dict | None:
 
 
 def load_bundle(run_id: int, target: str, model: str) -> dict:
-    return joblib.load(artifact_path(run_id, target, model))
+    ap = artifact_path(run_id, target, model)
+    _verify_sha256_sidecar_if_present(ap)
+    return joblib.load(ap)
 
 
 def audit_entries(run_id: int | None = None, limit: int = 2000) -> list[dict]:

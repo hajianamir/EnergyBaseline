@@ -417,6 +417,7 @@ class Fitted:
         self.ctx_target = ctx.target
         self.X_columns: list[str] = []
         self.steps_per_day = ctx.steps_per_day
+        self._surrogate_info: dict | None = None
 
     def predict(self, X: pd.DataFrame) -> np.ndarray:
         A = np.nan_to_num(self.design.transform(X).values.astype(float))
@@ -483,41 +484,78 @@ class Fitted:
             return {"text": f"ŷ({t}) = {body}{more}{extra}", "terms": terms, "intercept": b, "kind": "equation"}
         e = getattr(self.est, "est", self.est)
         feats = ", ".join(self.names[:15]) + (" …" if len(self.names) > 15 else "")
+        surr_block = ""
+        surr_meta = self._surrogate_info
+        if surr_meta:
+            surr_block = (
+                f"\n[{surr_meta['surrogate_banner']} — fidelity R²={surr_meta['fidelity_r2']:.3f} | "
+                f"NOT the model's actual prediction formula]\n{surr_meta['approximation_expression']}"
+            )
         if hasattr(e, "describe"):
-            return {"text": f"ŷ({t}) = NN(x)  with features [{feats}]\n{e.describe(self.names)}\nArtifact: {artifact}", "terms": [], "kind": "network"}
+            return {
+                "text": f"Architecture: {self.name} with features [{feats}]\n{e.describe(self.names)}\nArtifact: {artifact}{surr_block}",
+                "terms": [],
+                "kind": "network",
+                "is_parametric": False,
+                "surrogate": surr_meta,
+            }
         n_par = self.n_params()
         if hasattr(e, "estimators_") and "Gradient" not in type(e).__name__:
-            txt = f"ŷ = (1/B)·Σ_b T_b(x), B={len(e.estimators_)} regression trees ({n_par} nodes total), params={self.params}"
+            txt = f"Architecture: bagged tree ensemble B={len(e.estimators_)} trees ({n_par} nodes total), hyperparameters={self.params}"
         elif hasattr(e, "estimators_"):
-            txt = f"ŷ = F0 + ν·Σ_m h_m(x), F0=mean(y), ν={e.learning_rate}, M={e.n_estimators} depth-{e.max_depth} trees, params={self.params}"
+            txt = f"Architecture: stagewise boosted trees F0=mean(y), lr={e.learning_rate}, M={e.n_estimators}, max_depth={e.max_depth}, hyperparameters={self.params}"
         elif hasattr(e, "booster_") or hasattr(e, "get_booster") or hasattr(e, "tree_count_"):
-            txt = f"ŷ = F0 + Σ_m η·h_m(x): gradient-boosted decision trees ({n_par} leaves), params={self.params}"
+            txt = f"Architecture: gradient-boosted decision trees ({n_par} leaves), hyperparameters={self.params}"
         elif hasattr(e, "support_"):
-            txt = (f"ŷ = ysd·(Σ_i α_i·exp(−γ‖z−z_i‖²) + b) + ymu, γ={e._gamma:.4g}, C={e.C}, ε={e.epsilon}, {len(e.support_)} support vectors, z standardised")
+            txt = f"Architecture: RBF kernel SVR (gamma={e._gamma:.4g}, C={e.C}, epsilon={e.epsilon}, {len(e.support_)} support vectors, z standardised)"
         elif hasattr(e, "kernel_"):
-            txt = f"ŷ = μ + k(z,Z)ᵀ K⁻¹ (y − μ), fitted kernel: {e.kernel_}, {len(e.X_train_)} training points"
+            txt = f"Architecture: Gaussian Process ({e.kernel_}, {len(e.X_train_)} training points)"
         else:
-            txt = f"Model {type(e).__name__}, params={self.params}"
-        return {"text": f"{txt}\nFeatures ({len(self.names)}): {feats}\nExported model artifact: {artifact}", "terms": [], "kind": "ensemble/kernel"}
+            txt = f"Architecture: {type(e).__name__}, hyperparameters={self.params}"
+        return {
+            "text": f"{txt}\nFeatures ({len(self.names)}): {feats}\nExported model artifact: {artifact}{surr_block}",
+            "terms": [],
+            "kind": "ensemble/kernel",
+            "is_parametric": False,
+            "surrogate": surr_meta,
+        }
 
 
 class Blend:
-    """Average of two fitted models (NN + best tree) - only created when justified."""
+    """Weighted NNLS combination of fitted models whose weights were estimated strictly on inner-fold OOF."""
 
-    def __init__(self, a: Fitted, b: Fitted, target: str):
+    def __init__(self, a: Fitted, b: Fitted, target: str, weights: tuple[float, float] = (0.5, 0.5)):
+        wa, wb = float(weights[0]), float(weights[1])
+        s = wa + wb
+        self.wa, self.wb = (wa / s, wb / s) if s > 1e-12 else (0.5, 0.5)
         self.a, self.b = a, b
-        self.name, self.family, self.kind, self.tier = f"Blend({a.name} + {b.name})", "Hybrid ensemble", "blend", 5
-        self.names, self.params, self.hpo_note, self.ctx_target = a.names + b.names, {}, "n/a", target
+        self.name, self.family, self.kind, self.tier = f"NNLS_Ensemble({a.name} + {b.name})", "Hybrid ensemble", "blend", 5
+        self.names, self.params, self.hpo_note, self.ctx_target = (
+            a.names + b.names,
+            {"w_a": round(self.wa, 6), "w_b": round(self.wb, 6)},
+            "NNLS simplex weights fitted strictly on inner walk-forward OOF",
+            target,
+        )
 
     def predict(self, X):
-        return 0.5 * self.a.predict(X) + 0.5 * self.b.predict(X)
+        return self.wa * self.a.predict(X) + self.wb * self.b.predict(X)
 
     def n_params(self):
         return self.a.n_params() + self.b.n_params()
 
     def formula(self, features, artifact=""):
-        return {"text": f"ŷ = 0.5·ŷ_[{self.a.name}] + 0.5·ŷ_[{self.b.name}]\n--- component 1 ---\n{self.a.formula(features, artifact)['text']}\n--- component 2 ---\n{self.b.formula(features, artifact)['text']}",
-                "terms": [], "kind": "blend"}
+        return {
+            "text": (
+                f"Architecture: Inner-OOF NNLS Ensemble w=({self.wa:.4f}, {self.wb:.4f}) on "
+                f"[{self.a.name}, {self.b.name}]\n--- component 1 ({self.wa:.4f}) ---\n"
+                f"{self.a.formula(features, artifact)['text']}\n--- component 2 ({self.wb:.4f}) ---\n"
+                f"{self.b.formula(features, artifact)['text']}"
+            ),
+            "terms": [],
+            "kind": "blend",
+            "is_parametric": False,
+            "surrogate": None,
+        }
 
 
 # ============================================================== portfolio
@@ -535,14 +573,14 @@ def build_portfolio(ctx: Ctx, n: int) -> tuple[list[Candidate], list[dict]]:
     from sklearn.gaussian_process import GaussianProcessRegressor
     from sklearn.gaussian_process.kernels import ConstantKernel, RBF, WhiteKernel
     from sklearn.linear_model import BayesianRidge, ElasticNetCV, LassoCV, LinearRegression, QuantileRegressor, RidgeCV
-    from sklearn.model_selection import KFold
+    from sklearn.model_selection import TimeSeriesSplit
     from sklearn.svm import SVR
 
     seed, nj = ctx.seed, ctx.n_jobs
     L = "Linear / statistical"
     cands: list[Candidate] = []
     missing: list[dict] = []
-    kf = KFold(4)
+    kf = TimeSeriesSplit(n_splits=3)
     alphas = np.logspace(-3, 3, 13)
 
     cands += [
@@ -650,14 +688,28 @@ def evaluate_candidate(cand: Candidate, X: pd.DataFrame, y: np.ndarray, folds, c
     for tr, te in folds:
         if ctx.cancel():
             raise InterruptedError("cancelled")
-        m = cand.fit(X.iloc[tr], y[tr], ctx, tune=True)
-        oof[te] = m.predict(X.iloc[te])
+        # Fit fold-local medians exclusively on training rows (VAL-4 leakage safety)
+        X_tr_raw = X.iloc[tr]
+        fold_med = X_tr_raw.median(numeric_only=True).fillna(0.0)
+        X_tr_clean = X_tr_raw.fillna(fold_med).fillna(0.0)
+        X_te_clean = X.iloc[te].fillna(fold_med).fillna(0.0)
+        m = cand.fit(X_tr_clean, y[tr], ctx, tune=True)
+        oof[te] = m.predict(X_te_clean)
         fold_cv.append(metrics(y[te], oof[te])["cvrmse"])
     cov = ~np.isnan(oof)
     if cov.sum() < 5:
         raise RuntimeError("no out-of-fold predictions produced")
-    final = cand.fit(X, y, ctx, tune=True)
-    ptrain = final.predict(X)
+    full_med = X.median(numeric_only=True).fillna(0.0)
+    X_full_clean = X.fillna(full_med).fillna(0.0)
+    final = cand.fit(X_full_clean, y, ctx, tune=True)
+    ptrain = final.predict(X_full_clean)
+    if final.kind != "linear":
+        try:
+            from ..models.top5 import fit_labelled_diagnostic_surrogate
+
+            final._surrogate_info = fit_labelled_diagnostic_surrogate(X_full_clean, ptrain, seed=ctx.seed).to_dict()
+        except Exception:
+            final._surrogate_info = None
     m = metrics(y[cov], oof[cov])
     tm = metrics(y, ptrain)
     k = final.n_params()

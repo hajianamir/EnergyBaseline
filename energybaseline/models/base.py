@@ -150,6 +150,155 @@ def recommend_autocorr_embargo_gap(
 
 
 @dataclass(frozen=True)
+class NNGateDecision:
+    """Bidirectional neural-network eligibility & acceptance gate decision (Phase 6 Gate G6)."""
+
+    model_name: str
+    accepted: bool
+    status: str
+    n_obs: int
+    min_samples: int
+    n_features: int
+    nn_cvrmse: float | None
+    reference_cvrmse: float | None
+    relative_gain_pct: float | None
+    reason: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "accepted": bool(self.accepted),
+            "min_samples": int(self.min_samples),
+            "model_name": self.model_name,
+            "n_features": int(self.n_features),
+            "n_obs": int(self.n_obs),
+            "nn_cvrmse": round(float(self.nn_cvrmse), 4) if self.nn_cvrmse is not None and np.isfinite(self.nn_cvrmse) else None,
+            "reason": self.reason,
+            "reference_cvrmse": (
+                round(float(self.reference_cvrmse), 4)
+                if self.reference_cvrmse is not None and np.isfinite(self.reference_cvrmse)
+                else None
+            ),
+            "relative_gain_pct": (
+                round(float(self.relative_gain_pct), 4)
+                if self.relative_gain_pct is not None and np.isfinite(self.relative_gain_pct)
+                else None
+            ),
+            "status": self.status,
+        }
+
+
+def evaluate_nn_gate(
+    model_name: str,
+    *,
+    n_obs: int,
+    n_features: int = 1,
+    min_samples: int = 50,
+    min_obs_per_feature: int = 10,
+    nn_cvrmse: float | None = None,
+    reference_cvrmse: float | None = None,
+    max_cvrmse: float | None = None,
+    min_relative_gain_pct: float = 0.0,
+) -> NNGateDecision:
+    """Evaluate bidirectional neural-network eligibility & OOS acceptance gate with logged reason."""
+    n_i = int(n_obs)
+    p_i = max(1, int(n_features))
+    req_n = max(int(min_samples), int(min_obs_per_feature) * p_i)
+    if n_i < req_n:
+        return NNGateDecision(
+            model_name=str(model_name),
+            accepted=False,
+            status="skipped_sample_size_gate",
+            n_obs=n_i,
+            min_samples=req_n,
+            n_features=p_i,
+            nn_cvrmse=nn_cvrmse,
+            reference_cvrmse=reference_cvrmse,
+            relative_gain_pct=None,
+            reason=(
+                f"NN gate SKIPPED {model_name}: sample size n={n_i} < required {req_n} "
+                f"(floor={min_samples}, {min_obs_per_feature}*p={min_obs_per_feature * p_i})."
+            ),
+        )
+
+    if nn_cvrmse is not None:
+        if not np.isfinite(nn_cvrmse):
+            return NNGateDecision(
+                model_name=str(model_name),
+                accepted=False,
+                status="rejected_nn_gate",
+                n_obs=n_i,
+                min_samples=req_n,
+                n_features=p_i,
+                nn_cvrmse=None,
+                reference_cvrmse=reference_cvrmse,
+                relative_gain_pct=None,
+                reason=f"NN gate REJECTED {model_name}: non-finite OOS CV(RMSE) on n={n_i}.",
+            )
+        if max_cvrmse is not None and float(nn_cvrmse) > float(max_cvrmse):
+            return NNGateDecision(
+                model_name=str(model_name),
+                accepted=False,
+                status="rejected_nn_gate",
+                n_obs=n_i,
+                min_samples=req_n,
+                n_features=p_i,
+                nn_cvrmse=float(nn_cvrmse),
+                reference_cvrmse=reference_cvrmse,
+                relative_gain_pct=None,
+                reason=(
+                    f"NN gate REJECTED {model_name}: OOS CV(RMSE)={nn_cvrmse:.3f}% exceeds "
+                    f"ASHRAE threshold {max_cvrmse:.2f}% (n={n_i})."
+                ),
+            )
+        if reference_cvrmse is not None and np.isfinite(reference_cvrmse) and float(reference_cvrmse) > 1e-9:
+            gain_pct = 100.0 * (float(reference_cvrmse) - float(nn_cvrmse)) / float(reference_cvrmse)
+            if gain_pct < float(min_relative_gain_pct):
+                return NNGateDecision(
+                    model_name=str(model_name),
+                    accepted=False,
+                    status="rejected_nn_gate",
+                    n_obs=n_i,
+                    min_samples=req_n,
+                    n_features=p_i,
+                    nn_cvrmse=float(nn_cvrmse),
+                    reference_cvrmse=float(reference_cvrmse),
+                    relative_gain_pct=gain_pct,
+                    reason=(
+                        f"NN gate REJECTED {model_name}: relative CV(RMSE) gain {gain_pct:.2f}% < "
+                        f"required {min_relative_gain_pct:.2f}% vs tabular reference ({nn_cvrmse:.3f}% vs {reference_cvrmse:.3f}%)."
+                    ),
+                )
+            return NNGateDecision(
+                model_name=str(model_name),
+                accepted=True,
+                status="accepted_nn_gate",
+                n_obs=n_i,
+                min_samples=req_n,
+                n_features=p_i,
+                nn_cvrmse=float(nn_cvrmse),
+                reference_cvrmse=float(reference_cvrmse),
+                relative_gain_pct=gain_pct,
+                reason=(
+                    f"NN gate ACCEPTED {model_name}: n={n_i} >= {req_n} and OOS CV(RMSE)={nn_cvrmse:.3f}% "
+                    f"(gain {gain_pct:+.2f}% vs reference {reference_cvrmse:.3f}%)."
+                ),
+            )
+
+    return NNGateDecision(
+        model_name=str(model_name),
+        accepted=True,
+        status="accepted_nn_gate",
+        n_obs=n_i,
+        min_samples=req_n,
+        n_features=p_i,
+        nn_cvrmse=float(nn_cvrmse) if nn_cvrmse is not None else None,
+        reference_cvrmse=reference_cvrmse,
+        relative_gain_pct=None,
+        reason=f"NN gate ACCEPTED {model_name}: sample size n={n_i} >= required {req_n} (p={p_i}).",
+    )
+
+
+@dataclass(frozen=True)
 class ModelEvaluationEntry:
     """Single row of the UX-5 / VAL-7 Model Evaluation Register."""
 
@@ -171,6 +320,7 @@ class ModelEvaluationEntry:
     fit_seconds: float
     formula_summary: str
     reason: str
+    requirement_tier: str = "M"
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -188,6 +338,7 @@ class ModelEvaluationEntry:
             "nmbe": round(self.nmbe, 4) if self.nmbe is not None and np.isfinite(self.nmbe) else None,
             "r2": round(self.r2, 4) if self.r2 is not None and np.isfinite(self.r2) else None,
             "reason": self.reason,
+            "requirement_tier": self.requirement_tier,
             "rmse": round(self.rmse, 4) if self.rmse is not None and np.isfinite(self.rmse) else None,
             "status": self.status,
             "status_badge": self.status_badge,

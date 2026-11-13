@@ -1,0 +1,1852 @@
+{
+  "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+  "ok": true,
+  "pairwise_comparison": {
+    "dm_pvalue_matrix": [
+      [
+        1.0,
+        0.000414,
+        0.084396,
+        0.119822,
+        0.325247,
+        0.265669,
+        0.000727,
+        0.000576,
+        0.000538,
+        0.000442,
+        0.000841,
+        0.001321,
+        0.00654,
+        0.000818
+      ],
+      [
+        0.000414,
+        1.0,
+        0.003663,
+        0.002671,
+        0.001431,
+        0.001616,
+        0.083107,
+        0.098332,
+        0.213849,
+        0.207462,
+        0.138195,
+        0.226411,
+        0.991822,
+        0.097002
+      ],
+      [
+        0.084396,
+        0.003663,
+        1.0,
+        0.135663,
+        0.070918,
+        0.079284,
+        0.002085,
+        0.001965,
+        0.002029,
+        0.001742,
+        0.00272,
+        0.002746,
+        0.0223,
+        0.00236
+      ],
+      [
+        0.119822,
+        0.002671,
+        0.135663,
+        1.0,
+        0.048377,
+        0.053421,
+        0.002337,
+        0.002163,
+        0.002171,
+        0.001915,
+        0.003035,
+        0.003161,
+        0.021425,
+        0.002624
+      ],
+      [
+        0.325247,
+        0.001431,
+        0.070918,
+        0.048377,
+        1.0,
+        0.032332,
+        0.002271,
+        0.002054,
+        0.00198,
+        0.001801,
+        0.002933,
+        0.003143,
+        0.016901,
+        0.002526
+      ],
+      [
+        0.265669,
+        0.001616,
+        0.079284,
+        0.053421,
+        0.032332,
+        1.0,
+        0.002317,
+        0.002104,
+        0.002042,
+        0.001848,
+        0.002995,
+        0.003196,
+        0.017873,
+        0.002581
+      ],
+      [
+        0.000727,
+        0.083107,
+        0.002085,
+        0.002337,
+        0.002271,
+        0.002317,
+        1.0,
+        0.106737,
+        0.023358,
+        0.02758,
+        0.215363,
+        0.135184,
+        0.003026,
+        0.141967
+      ],
+      [
+        0.000576,
+        0.098332,
+        0.001965,
+        0.002163,
+        0.002054,
+        0.002104,
+        0.106737,
+        1.0,
+        0.027031,
+        0.094223,
+        0.521606,
+        0.8081,
+        0.036866,
+        0.182934
+      ],
+      [
+        0.000538,
+        0.213849,
+        0.002029,
+        0.002171,
+        0.00198,
+        0.002042,
+        0.023358,
+        0.027031,
+        1.0,
+        0.669791,
+        0.073905,
+        0.365814,
+        0.20719,
+        0.036032
+      ],
+      [
+        0.000442,
+        0.207462,
+        0.001742,
+        0.001915,
+        0.001801,
+        0.001848,
+        0.02758,
+        0.094223,
+        0.669791,
+        1.0,
+        0.118613,
+        0.447869,
+        0.156895,
+        0.050565
+      ],
+      [
+        0.000841,
+        0.138195,
+        0.00272,
+        0.003035,
+        0.002933,
+        0.002995,
+        0.215363,
+        0.521606,
+        0.073905,
+        0.118613,
+        1.0,
+        0.444471,
+        0.015387,
+        0.34266
+      ],
+      [
+        0.001321,
+        0.226411,
+        0.002746,
+        0.003161,
+        0.003143,
+        0.003196,
+        0.135184,
+        0.8081,
+        0.365814,
+        0.447869,
+        0.444471,
+        1.0,
+        0.059271,
+        0.188879
+      ],
+      [
+        0.00654,
+        0.991822,
+        0.0223,
+        0.021425,
+        0.016901,
+        0.017873,
+        0.003026,
+        0.036866,
+        0.20719,
+        0.156895,
+        0.015387,
+        0.059271,
+        1.0,
+        0.004634
+      ],
+      [
+        0.000818,
+        0.097002,
+        0.00236,
+        0.002624,
+        0.002526,
+        0.002581,
+        0.141967,
+        0.182934,
+        0.036032,
+        0.050565,
+        0.34266,
+        0.188879,
+        0.004634,
+        1.0
+      ]
+    ],
+    "dm_stat_matrix": [
+      [
+        0.0,
+        4.269643,
+        1.820985,
+        1.628807,
+        1.009869,
+        1.146881,
+        4.023065,
+        4.124885,
+        4.155031,
+        4.240683,
+        3.959077,
+        3.761489,
+        3.053334,
+        3.971271
+      ],
+      [
+        -4.269643,
+        0.0,
+        -3.312268,
+        -3.451897,
+        -3.726495,
+        -3.673168,
+        1.829215,
+        1.738333,
+        1.286136,
+        1.305046,
+        1.54768,
+        1.250187,
+        0.010385,
+        1.745767
+      ],
+      [
+        -1.820985,
+        3.312268,
+        0.0,
+        -1.558301,
+        -1.913166,
+        -1.854311,
+        3.561086,
+        3.587229,
+        3.572972,
+        3.639985,
+        3.443937,
+        3.439683,
+        2.487929,
+        3.50654
+      ],
+      [
+        -1.628807,
+        3.451897,
+        1.558301,
+        0.0,
+        -2.109684,
+        -2.059459,
+        3.510778,
+        3.544925,
+        3.543315,
+        3.59855,
+        3.395487,
+        3.377576,
+        2.506939,
+        3.459804
+      ],
+      [
+        -1.009869,
+        3.726495,
+        1.913166,
+        2.109684,
+        0.0,
+        2.309274,
+        3.523412,
+        3.567652,
+        3.583805,
+        3.62556,
+        3.410694,
+        3.380084,
+        2.618592,
+        3.47661
+      ],
+      [
+        -1.146881,
+        3.673168,
+        1.854311,
+        2.059459,
+        -2.309274,
+        0.0,
+        3.514618,
+        3.557201,
+        3.570331,
+        3.614188,
+        3.401432,
+        3.372713,
+        2.592401,
+        3.46715
+      ],
+      [
+        -4.023065,
+        -1.829215,
+        -3.561086,
+        -3.510778,
+        -3.523412,
+        -3.514618,
+        0.0,
+        -1.693267,
+        -2.465882,
+        -2.386283,
+        -1.281717,
+        -1.560331,
+        -3.396879,
+        -1.532149
+      ],
+      [
+        -4.124885,
+        -1.738333,
+        -3.587229,
+        -3.544925,
+        -3.567652,
+        -3.557201,
+        1.693267,
+        0.0,
+        -2.395969,
+        -1.761585,
+        0.65296,
+        -0.246288,
+        -2.244998,
+        1.382235
+      ],
+      [
+        -4.155031,
+        -1.286136,
+        -3.572972,
+        -3.543315,
+        -3.583805,
+        -3.570331,
+        2.465882,
+        2.395969,
+        0.0,
+        0.43314,
+        1.891483,
+        0.926485,
+        -1.305862,
+        2.256257
+      ],
+      [
+        -4.240683,
+        -1.305046,
+        -3.639985,
+        -3.59855,
+        -3.62556,
+        -3.614188,
+        2.386283,
+        1.761585,
+        -0.43314,
+        0.0,
+        1.634503,
+        0.775016,
+        -1.47386,
+        2.087339
+      ],
+      [
+        -3.959077,
+        -1.54768,
+        -3.443937,
+        -3.395487,
+        -3.410694,
+        -3.401432,
+        1.281717,
+        -0.65296,
+        -1.891483,
+        -1.634503,
+        0.0,
+        -0.780921,
+        -2.662369,
+        0.973246
+      ],
+      [
+        -3.761489,
+        -1.250187,
+        -3.439683,
+        -3.377576,
+        -3.380084,
+        -3.372713,
+        1.560331,
+        0.246288,
+        -0.926485,
+        -0.775016,
+        0.780921,
+        0.0,
+        -2.006307,
+        1.362807
+      ],
+      [
+        -3.053334,
+        -0.010385,
+        -2.487929,
+        -2.506939,
+        -2.618592,
+        -2.592401,
+        3.396879,
+        2.244998,
+        1.305862,
+        1.47386,
+        2.662369,
+        2.006307,
+        0.0,
+        3.207659
+      ],
+      [
+        -3.971271,
+        -1.745767,
+        -3.50654,
+        -3.459804,
+        -3.47661,
+        -3.46715,
+        1.532149,
+        -1.382235,
+        -2.256257,
+        -2.087339,
+        -0.973246,
+        -1.362807,
+        -3.207659,
+        0.0
+      ]
+    ],
+    "friedman_pvalue": null,
+    "mcs_pvalues": {},
+    "mcs_superior_set": [
+      "degree_day",
+      "piecewise_1p_5p",
+      "towt",
+      "rf",
+      "extratrees",
+      "gb",
+      "xgboost",
+      "lightgbm",
+      "svr_rbf"
+    ],
+    "mean_fold_ranks": {},
+    "model_names": [
+      "mean",
+      "degree_day",
+      "mlr",
+      "ridge",
+      "lasso",
+      "elasticnet",
+      "piecewise_1p_5p",
+      "towt",
+      "rf",
+      "extratrees",
+      "gb",
+      "xgboost",
+      "lightgbm",
+      "svr_rbf"
+    ]
+  },
+  "parsimony_tiebreak": {
+    "parsimony_applied": false,
+    "raw_best_tier": 0,
+    "raw_highest_score_model": "piecewise_1p_5p",
+    "reason": "Selected 'piecewise_1p_5p' (tier 0, score=90.94) with deterministic tie-break order.",
+    "score_delta": 0.0,
+    "selected_model": "piecewise_1p_5p",
+    "selected_tier": 0
+  },
+  "portfolio_registry": [
+    {
+      "display_name": "1P Constant Mean",
+      "family_id": "F1",
+      "installed_in_lock": true,
+      "is_parametric": true,
+      "key": "mean",
+      "notes": "ASHRAE 1P baseline",
+      "requirement_tier": "M",
+      "wrapper_class_name": "MeanBaselineWrapper"
+    },
+    {
+      "display_name": "HDD + CDD Degree-Day OLS",
+      "family_id": "F1",
+      "installed_in_lock": true,
+      "is_parametric": true,
+      "key": "degree_day",
+      "notes": "Variable-base degree-day linear model",
+      "requirement_tier": "M",
+      "wrapper_class_name": "DegreeDayBaselineWrapper"
+    },
+    {
+      "display_name": "OLS Multiple Linear Regression + HAC",
+      "family_id": "F1",
+      "installed_in_lock": true,
+      "is_parametric": true,
+      "key": "mlr",
+      "notes": "Closed-form parametric OLS + Newey-West SEs",
+      "requirement_tier": "M",
+      "wrapper_class_name": "MLRBaselineWrapper"
+    },
+    {
+      "display_name": "Ridge Regression (L2)",
+      "family_id": "F3",
+      "installed_in_lock": true,
+      "is_parametric": true,
+      "key": "ridge",
+      "notes": "Temporal-CV L2 shrinkage with k_max",
+      "requirement_tier": "M",
+      "wrapper_class_name": "RidgeBaselineWrapper"
+    },
+    {
+      "display_name": "Lasso Regression (L1)",
+      "family_id": "F3",
+      "installed_in_lock": true,
+      "is_parametric": true,
+      "key": "lasso",
+      "notes": "Temporal-CV L1 sparse selection with k_max",
+      "requirement_tier": "M",
+      "wrapper_class_name": "LassoBaselineWrapper"
+    },
+    {
+      "display_name": "ElasticNet Regression (L1+L2)",
+      "family_id": "F3",
+      "installed_in_lock": true,
+      "is_parametric": true,
+      "key": "elasticnet",
+      "notes": "Temporal-CV ElasticNet with k_max",
+      "requirement_tier": "M",
+      "wrapper_class_name": "ElasticNetBaselineWrapper"
+    },
+    {
+      "display_name": "ASHRAE Piecewise Change-Point (1P-5P)",
+      "family_id": "F2",
+      "installed_in_lock": true,
+      "is_parametric": true,
+      "key": "piecewise_1p_5p",
+      "notes": "1P, 2P, 3PC, 3PH, 4P, 5P continuous change-point",
+      "requirement_tier": "M",
+      "wrapper_class_name": "Piecewise1PTo5PWrapper"
+    },
+    {
+      "display_name": "Time-of-Week & Piecewise Temperature (TOWT)",
+      "family_id": "F2",
+      "installed_in_lock": true,
+      "is_parametric": true,
+      "key": "towt",
+      "notes": "LBNL TOWT occupancy + piecewise temperature",
+      "requirement_tier": "M",
+      "wrapper_class_name": "TOWTBaselineWrapper"
+    },
+    {
+      "display_name": "Random Forest Regressor",
+      "family_id": "F5",
+      "installed_in_lock": true,
+      "is_parametric": false,
+      "key": "rf",
+      "notes": "Bagged CART ensemble",
+      "requirement_tier": "M",
+      "wrapper_class_name": "RandomForestWrapper"
+    },
+    {
+      "display_name": "ExtraTrees Regressor",
+      "family_id": "F5",
+      "installed_in_lock": true,
+      "is_parametric": false,
+      "key": "extratrees",
+      "notes": "Extremely randomized trees ensemble",
+      "requirement_tier": "M",
+      "wrapper_class_name": "ExtraTreesWrapper"
+    },
+    {
+      "display_name": "Gradient Boosting Regressor (GB)",
+      "family_id": "F6",
+      "installed_in_lock": true,
+      "is_parametric": false,
+      "key": "gb",
+      "notes": "Scikit-learn stagewise additive trees",
+      "requirement_tier": "M",
+      "wrapper_class_name": "GradientBoostingWrapper"
+    },
+    {
+      "display_name": "XGBoost Regressor",
+      "family_id": "F6",
+      "installed_in_lock": true,
+      "is_parametric": false,
+      "key": "xgboost",
+      "notes": "Second-order regularized GBDT",
+      "requirement_tier": "M",
+      "wrapper_class_name": "XGBoostWrapper"
+    },
+    {
+      "display_name": "LightGBM Regressor",
+      "family_id": "F6",
+      "installed_in_lock": true,
+      "is_parametric": false,
+      "key": "lightgbm",
+      "notes": "Leaf-wise histogram GBDT",
+      "requirement_tier": "M",
+      "wrapper_class_name": "LightGBMWrapper"
+    },
+    {
+      "display_name": "Support Vector Regression (RBF)",
+      "family_id": "F5",
+      "installed_in_lock": true,
+      "is_parametric": false,
+      "key": "svr_rbf",
+      "notes": "Standardized kernel SVR-RBF",
+      "requirement_tier": "M",
+      "wrapper_class_name": "SVRRBFWrapper"
+    },
+    {
+      "display_name": "Multi-Layer Perceptron (MLP)",
+      "family_id": "F9",
+      "installed_in_lock": true,
+      "is_parametric": false,
+      "key": "mlp",
+      "notes": "Bidirectionally sample-gated feedforward NN",
+      "requirement_tier": "M",
+      "wrapper_class_name": "MLPWrapper"
+    },
+    {
+      "display_name": "Sequence LSTM (1D Temporal NN)",
+      "family_id": "F9",
+      "installed_in_lock": true,
+      "is_parametric": false,
+      "key": "lstm",
+      "notes": "Bidirectionally sample-gated PyTorch CPU LSTM",
+      "requirement_tier": "M",
+      "wrapper_class_name": "SequenceLSTMWrapper"
+    },
+    {
+      "display_name": "CatBoost Regressor",
+      "family_id": "F6",
+      "installed_in_lock": true,
+      "is_parametric": false,
+      "key": "catboost",
+      "notes": "Symmetric oblivious GBDT (F6)",
+      "requirement_tier": "S",
+      "wrapper_class_name": "CatBoostRegressor"
+    },
+    {
+      "display_name": "Huber & Quantile Robust Regression",
+      "family_id": "F3",
+      "installed_in_lock": true,
+      "is_parametric": true,
+      "key": "huber_quantile",
+      "notes": "Outlier-resistant linear estimators (F3)",
+      "requirement_tier": "S",
+      "wrapper_class_name": "HuberRegressor/QuantileRegressor"
+    },
+    {
+      "display_name": "Penalized B-Spline Additive GAM",
+      "family_id": "F4",
+      "installed_in_lock": true,
+      "is_parametric": true,
+      "key": "gam_spline",
+      "notes": "Smooth nonlinear thermal response (F4)",
+      "requirement_tier": "S",
+      "wrapper_class_name": "SplineTransformer+RidgeCV"
+    },
+    {
+      "display_name": "SARIMAX / Dynamic ARX",
+      "family_id": "F7",
+      "installed_in_lock": true,
+      "is_parametric": true,
+      "key": "sarimax_arima",
+      "notes": "Autoregressive exogenous state-space (F7)",
+      "requirement_tier": "S",
+      "wrapper_class_name": "SARIMAX"
+    },
+    {
+      "display_name": "STL + Fourier Harmonic Regression",
+      "family_id": "F8",
+      "installed_in_lock": true,
+      "is_parametric": true,
+      "key": "stl_fourier",
+      "notes": "Explicit seasonal decomposition (F8)",
+      "requirement_tier": "S",
+      "wrapper_class_name": "STL+HarmonicOLS"
+    },
+    {
+      "display_name": "Exogenous Regime-Segmented Linear",
+      "family_id": "F2",
+      "installed_in_lock": true,
+      "is_parametric": true,
+      "key": "regime_segmented",
+      "notes": "Calendar/driver-only segmented OLS (MT-5 safe)",
+      "requirement_tier": "S",
+      "wrapper_class_name": "RegimeSegmented"
+    },
+    {
+      "display_name": "Inner-OOF NNLS Ensemble (>3% Gate)",
+      "family_id": "F10",
+      "installed_in_lock": true,
+      "is_parametric": false,
+      "key": "nnls_ensemble",
+      "notes": "Simplex NNLS meta-learner on inner OOF only",
+      "requirement_tier": "S",
+      "wrapper_class_name": "InnerFoldNNLSEnsemble"
+    },
+    {
+      "display_name": "Prophet Decomposable Trend",
+      "family_id": "F8",
+      "installed_in_lock": false,
+      "is_parametric": false,
+      "key": "prophet_optional",
+      "notes": "Optional backend; skipped cleanly when uninstalled",
+      "requirement_tier": "O",
+      "wrapper_class_name": "OptionalPlugin"
+    },
+    {
+      "display_name": "TFT / PatchTST Deep Horizon Forecasters",
+      "family_id": "F9",
+      "installed_in_lock": false,
+      "is_parametric": false,
+      "key": "tft_patchtst_optional",
+      "notes": "Optional backend; skipped cleanly when uninstalled",
+      "requirement_tier": "O",
+      "wrapper_class_name": "OptionalPlugin"
+    }
+  ],
+  "ranked_13_criteria": [
+    {
+      "composite_score": 90.9372,
+      "cvrmse": 4.3726,
+      "family": "F2",
+      "in_mcs": true,
+      "is_parametric": true,
+      "mae": 596.080113508743,
+      "model_name": "piecewise_1p_5p",
+      "n_params": 4,
+      "nmbe": 0.5263,
+      "qualified": true,
+      "r2": 0.947,
+      "rank": 1,
+      "subscores_13": {
+        "computational_cost": 96.921,
+        "cvrmse": 80.566,
+        "fold_stability": 96.772,
+        "homoscedasticity": 100.0,
+        "interpretability": 100.0,
+        "mae_wape": 83.718,
+        "nmbe": 94.737,
+        "normality_tails": 100.0,
+        "parsimony": 45.0,
+        "physical_plausibility": 100.0,
+        "r2": 94.7,
+        "residual_whiteness": 100.0,
+        "structural_stability": 100.0
+      },
+      "wape": 3.663349692306113
+    },
+    {
+      "composite_score": 86.6511,
+      "cvrmse": 4.715,
+      "family": "F5",
+      "in_mcs": true,
+      "is_parametric": false,
+      "mae": 646.6974057110765,
+      "model_name": "svr_rbf",
+      "n_params": 34,
+      "nmbe": 0.3643,
+      "qualified": true,
+      "r2": 0.9384,
+      "rank": 2,
+      "subscores_13": {
+        "computational_cost": 96.921,
+        "cvrmse": 79.045,
+        "fold_stability": 93.966,
+        "homoscedasticity": 100.0,
+        "interpretability": 55.0,
+        "mae_wape": 82.336,
+        "nmbe": 96.357,
+        "normality_tails": 100.0,
+        "parsimony": 5.294,
+        "physical_plausibility": 100.0,
+        "r2": 93.838,
+        "residual_whiteness": 100.0,
+        "structural_stability": 100.0
+      },
+      "wape": 3.974430095111846
+    },
+    {
+      "composite_score": 85.9408,
+      "cvrmse": 6.1052,
+      "family": "F2",
+      "in_mcs": true,
+      "is_parametric": true,
+      "mae": 780.9135577006496,
+      "model_name": "towt",
+      "n_params": 6,
+      "nmbe": -0.0747,
+      "qualified": true,
+      "r2": 0.8967,
+      "rank": 3,
+      "subscores_13": {
+        "computational_cost": 96.921,
+        "cvrmse": 72.866,
+        "fold_stability": 65.582,
+        "homoscedasticity": 100.0,
+        "interpretability": 100.0,
+        "mae_wape": 78.67,
+        "nmbe": 99.253,
+        "normality_tails": 100.0,
+        "parsimony": 30.0,
+        "physical_plausibility": 100.0,
+        "r2": 89.668,
+        "residual_whiteness": 100.0,
+        "structural_stability": 100.0
+      },
+      "wape": 4.799286834920364
+    },
+    {
+      "composite_score": 84.4523,
+      "cvrmse": 5.4568,
+      "family": "F6",
+      "in_mcs": true,
+      "is_parametric": false,
+      "mae": 708.5154783548475,
+      "model_name": "gb",
+      "n_params": 10,
+      "nmbe": -0.5539,
+      "qualified": true,
+      "r2": 0.9175,
+      "rank": 4,
+      "subscores_13": {
+        "computational_cost": 96.921,
+        "cvrmse": 75.748,
+        "fold_stability": 81.604,
+        "homoscedasticity": 100.0,
+        "interpretability": 38.0,
+        "mae_wape": 80.647,
+        "nmbe": 94.461,
+        "normality_tails": 100.0,
+        "parsimony": 18.0,
+        "physical_plausibility": 100.0,
+        "r2": 91.746,
+        "residual_whiteness": 100.0,
+        "structural_stability": 100.0
+      },
+      "wape": 4.354347512697685
+    },
+    {
+      "composite_score": 79.0201,
+      "cvrmse": 6.4491,
+      "family": "F6",
+      "in_mcs": true,
+      "is_parametric": false,
+      "mae": 827.493603515625,
+      "model_name": "xgboost",
+      "n_params": 12,
+      "nmbe": 2.4541,
+      "qualified": true,
+      "r2": 0.8847,
+      "rank": 5,
+      "subscores_13": {
+        "computational_cost": 96.921,
+        "cvrmse": 71.337,
+        "fold_stability": 61.347,
+        "homoscedasticity": 100.0,
+        "interpretability": 38.0,
+        "mae_wape": 77.398,
+        "nmbe": 75.459,
+        "normality_tails": 100.0,
+        "parsimony": 15.0,
+        "physical_plausibility": 100.0,
+        "r2": 88.471,
+        "residual_whiteness": 100.0,
+        "structural_stability": 100.0
+      },
+      "wape": 5.085555396203934
+    },
+    {
+      "composite_score": 78.4213,
+      "cvrmse": 7.6441,
+      "family": "F5",
+      "in_mcs": true,
+      "is_parametric": false,
+      "mae": 1013.463611423077,
+      "model_name": "extratrees",
+      "n_params": 8,
+      "nmbe": -1.84,
+      "qualified": true,
+      "r2": 0.838,
+      "rank": 6,
+      "subscores_13": {
+        "computational_cost": 96.921,
+        "cvrmse": 66.026,
+        "fold_stability": 54.328,
+        "homoscedasticity": 100.0,
+        "interpretability": 55.0,
+        "mae_wape": 72.318,
+        "nmbe": 81.6,
+        "normality_tails": 100.0,
+        "parsimony": 22.5,
+        "physical_plausibility": 100.0,
+        "r2": 83.803,
+        "residual_whiteness": 100.0,
+        "structural_stability": 100.0
+      },
+      "wape": 6.2284775568439015
+    },
+    {
+      "composite_score": 77.5559,
+      "cvrmse": 7.8556,
+      "family": "F5",
+      "in_mcs": true,
+      "is_parametric": false,
+      "mae": 1033.95470734127,
+      "model_name": "rf",
+      "n_params": 8,
+      "nmbe": -2.0003,
+      "qualified": true,
+      "r2": 0.8289,
+      "rank": 7,
+      "subscores_13": {
+        "computational_cost": 96.921,
+        "cvrmse": 65.086,
+        "fold_stability": 49.726,
+        "homoscedasticity": 100.0,
+        "interpretability": 55.0,
+        "mae_wape": 71.758,
+        "nmbe": 79.997,
+        "normality_tails": 100.0,
+        "parsimony": 22.5,
+        "physical_plausibility": 100.0,
+        "r2": 82.894,
+        "residual_whiteness": 100.0,
+        "structural_stability": 100.0
+      },
+      "wape": 6.354410377325131
+    },
+    {
+      "composite_score": 73.5849,
+      "cvrmse": 10.1404,
+      "family": "F6",
+      "in_mcs": true,
+      "is_parametric": false,
+      "mae": 1407.831431867249,
+      "model_name": "lightgbm",
+      "n_params": 12,
+      "nmbe": 0.3524,
+      "qualified": false,
+      "r2": 0.715,
+      "rank": 8,
+      "subscores_13": {
+        "computational_cost": 96.921,
+        "cvrmse": 54.932,
+        "fold_stability": 35.864,
+        "homoscedasticity": 100.0,
+        "interpretability": 38.0,
+        "mae_wape": 61.546,
+        "nmbe": 96.476,
+        "normality_tails": 100.0,
+        "parsimony": 15.0,
+        "physical_plausibility": 100.0,
+        "r2": 71.497,
+        "residual_whiteness": 100.0,
+        "structural_stability": 100.0
+      },
+      "wape": 8.652157194762907
+    },
+    {
+      "composite_score": 71.8551,
+      "cvrmse": 10.1679,
+      "family": "F1",
+      "in_mcs": true,
+      "is_parametric": true,
+      "mae": 1166.5103637311042,
+      "model_name": "degree_day",
+      "n_params": 5,
+      "nmbe": -2.7527,
+      "qualified": false,
+      "r2": 0.7134,
+      "rank": 9,
+      "subscores_13": {
+        "computational_cost": 96.921,
+        "cvrmse": 54.809,
+        "fold_stability": 0.0,
+        "homoscedasticity": 100.0,
+        "interpretability": 100.0,
+        "mae_wape": 68.138,
+        "nmbe": 72.473,
+        "normality_tails": 100.0,
+        "parsimony": 36.0,
+        "physical_plausibility": 100.0,
+        "r2": 71.341,
+        "residual_whiteness": 100.0,
+        "structural_stability": 100.0
+      },
+      "wape": 7.169062153226075
+    },
+    {
+      "composite_score": 56.6557,
+      "cvrmse": 18.5603,
+      "family": "F1",
+      "in_mcs": false,
+      "is_parametric": true,
+      "mae": 2502.528636447557,
+      "model_name": "mlr",
+      "n_params": 2,
+      "nmbe": -5.2005,
+      "qualified": false,
+      "r2": 0.0451,
+      "rank": 10,
+      "subscores_13": {
+        "computational_cost": 96.921,
+        "cvrmse": 17.51,
+        "fold_stability": 16.928,
+        "homoscedasticity": 100.0,
+        "interpretability": 100.0,
+        "mae_wape": 31.645,
+        "nmbe": 47.995,
+        "normality_tails": 100.0,
+        "parsimony": 90.0,
+        "physical_plausibility": 100.0,
+        "r2": 4.51,
+        "residual_whiteness": 100.0,
+        "structural_stability": 100.0
+      },
+      "wape": 15.379874789570424
+    },
+    {
+      "composite_score": 53.1505,
+      "cvrmse": 18.9766,
+      "family": "F3",
+      "in_mcs": false,
+      "is_parametric": true,
+      "mae": 2524.2360090519455,
+      "model_name": "ridge",
+      "n_params": 2,
+      "nmbe": -6.0719,
+      "qualified": false,
+      "r2": 0.0018,
+      "rank": 11,
+      "subscores_13": {
+        "computational_cost": 96.921,
+        "cvrmse": 15.66,
+        "fold_stability": 5.355,
+        "homoscedasticity": 100.0,
+        "interpretability": 82.0,
+        "mae_wape": 31.052,
+        "nmbe": 39.281,
+        "normality_tails": 100.0,
+        "parsimony": 90.0,
+        "physical_plausibility": 100.0,
+        "r2": 0.178,
+        "residual_whiteness": 100.0,
+        "structural_stability": 100.0
+      },
+      "wape": 15.513282522774219
+    },
+    {
+      "composite_score": 50.6474,
+      "cvrmse": 19.6704,
+      "family": "F3",
+      "in_mcs": false,
+      "is_parametric": true,
+      "mae": 2622.0201709405637,
+      "model_name": "elasticnet",
+      "n_params": 2,
+      "nmbe": -7.1453,
+      "qualified": false,
+      "r2": -0.0725,
+      "rank": 12,
+      "subscores_13": {
+        "computational_cost": 96.921,
+        "cvrmse": 12.576,
+        "fold_stability": 0.0,
+        "homoscedasticity": 100.0,
+        "interpretability": 82.0,
+        "mae_wape": 28.381,
+        "nmbe": 28.547,
+        "normality_tails": 100.0,
+        "parsimony": 90.0,
+        "physical_plausibility": 100.0,
+        "r2": 0.0,
+        "residual_whiteness": 100.0,
+        "structural_stability": 100.0
+      },
+      "wape": 16.114237950155417
+    },
+    {
+      "composite_score": 50.501,
+      "cvrmse": 21.1464,
+      "family": "F1",
+      "in_mcs": false,
+      "is_parametric": true,
+      "mae": 2889.4560714285712,
+      "model_name": "mean",
+      "n_params": 1,
+      "nmbe": -7.6149,
+      "qualified": false,
+      "r2": -0.2395,
+      "rank": 13,
+      "subscores_13": {
+        "computational_cost": 96.921,
+        "cvrmse": 6.016,
+        "fold_stability": 12.028,
+        "homoscedasticity": 100.0,
+        "interpretability": 100.0,
+        "mae_wape": 21.076,
+        "nmbe": 23.851,
+        "normality_tails": 100.0,
+        "parsimony": 100.0,
+        "physical_plausibility": 100.0,
+        "r2": 0.0,
+        "residual_whiteness": 100.0,
+        "structural_stability": 100.0
+      },
+      "wape": 17.757827799173224
+    },
+    {
+      "composite_score": 50.1423,
+      "cvrmse": 19.8465,
+      "family": "F3",
+      "in_mcs": false,
+      "is_parametric": true,
+      "mae": 2660.259220938252,
+      "model_name": "lasso",
+      "n_params": 2,
+      "nmbe": -7.3792,
+      "qualified": false,
+      "r2": -0.0918,
+      "rank": 14,
+      "subscores_13": {
+        "computational_cost": 96.921,
+        "cvrmse": 11.793,
+        "fold_stability": 0.0,
+        "homoscedasticity": 100.0,
+        "interpretability": 82.0,
+        "mae_wape": 27.337,
+        "nmbe": 26.208,
+        "normality_tails": 100.0,
+        "parsimony": 90.0,
+        "physical_plausibility": 100.0,
+        "r2": 0.0,
+        "residual_whiteness": 100.0,
+        "structural_stability": 100.0
+      },
+      "wape": 16.34924497164206
+    }
+  ],
+  "separated_registers": {
+    "acknowledgement": null,
+    "counts": {
+      "qualified_not_shortlisted": 2,
+      "rejected": 7,
+      "shortlisted_top5": 5,
+      "skipped": 2
+    },
+    "qualified_not_shortlisted": [
+      {
+        "composite_score": 78.4213,
+        "cvrmse": 7.6441,
+        "family": "F5",
+        "in_mcs": true,
+        "model_name": "extratrees",
+        "nmbe": -1.84,
+        "qualified": true,
+        "r2": 0.838,
+        "rank": 6,
+        "reason": "Meets all qualification thresholds (CV(RMSE)<=15%, |NMBE|<=5%, R2>=0.75); ranked #6 > Top-5.",
+        "register_bucket": "qualified_not_shortlisted"
+      },
+      {
+        "composite_score": 77.5559,
+        "cvrmse": 7.8556,
+        "family": "F5",
+        "in_mcs": true,
+        "model_name": "rf",
+        "nmbe": -2.0003,
+        "qualified": true,
+        "r2": 0.8289,
+        "rank": 7,
+        "reason": "Meets all qualification thresholds (CV(RMSE)<=15%, |NMBE|<=5%, R2>=0.75); ranked #7 > Top-5.",
+        "register_bucket": "qualified_not_shortlisted"
+      }
+    ],
+    "rejected": [
+      {
+        "composite_score": 73.5849,
+        "cvrmse": 10.1404,
+        "family": "F6",
+        "in_mcs": true,
+        "model_name": "lightgbm",
+        "nmbe": 0.3524,
+        "qualified": false,
+        "r2": 0.715,
+        "rank": null,
+        "reason": "Failed qualification thresholds (CV(RMSE)<=15%, |NMBE|<=5%, R2>=0.75).",
+        "register_bucket": "rejected"
+      },
+      {
+        "composite_score": 71.8551,
+        "cvrmse": 10.1679,
+        "family": "F1",
+        "in_mcs": true,
+        "model_name": "degree_day",
+        "nmbe": -2.7527,
+        "qualified": false,
+        "r2": 0.7134,
+        "rank": null,
+        "reason": "Failed qualification thresholds (CV(RMSE)<=15%, |NMBE|<=5%, R2>=0.75).",
+        "register_bucket": "rejected"
+      },
+      {
+        "composite_score": 56.6557,
+        "cvrmse": 18.5603,
+        "family": "F1",
+        "in_mcs": false,
+        "model_name": "mlr",
+        "nmbe": -5.2005,
+        "qualified": false,
+        "r2": 0.0451,
+        "rank": null,
+        "reason": "Failed qualification thresholds (CV(RMSE)<=15%, |NMBE|<=5%, R2>=0.75).",
+        "register_bucket": "rejected"
+      },
+      {
+        "composite_score": 53.1505,
+        "cvrmse": 18.9766,
+        "family": "F3",
+        "in_mcs": false,
+        "model_name": "ridge",
+        "nmbe": -6.0719,
+        "qualified": false,
+        "r2": 0.0018,
+        "rank": null,
+        "reason": "Failed qualification thresholds (CV(RMSE)<=15%, |NMBE|<=5%, R2>=0.75).",
+        "register_bucket": "rejected"
+      },
+      {
+        "composite_score": 50.6474,
+        "cvrmse": 19.6704,
+        "family": "F3",
+        "in_mcs": false,
+        "model_name": "elasticnet",
+        "nmbe": -7.1453,
+        "qualified": false,
+        "r2": -0.0725,
+        "rank": null,
+        "reason": "Failed qualification thresholds (CV(RMSE)<=15%, |NMBE|<=5%, R2>=0.75).",
+        "register_bucket": "rejected"
+      },
+      {
+        "composite_score": 50.501,
+        "cvrmse": 21.1464,
+        "family": "F1",
+        "in_mcs": false,
+        "model_name": "mean",
+        "nmbe": -7.6149,
+        "qualified": false,
+        "r2": -0.2395,
+        "rank": null,
+        "reason": "Failed qualification thresholds (CV(RMSE)<=15%, |NMBE|<=5%, R2>=0.75).",
+        "register_bucket": "rejected"
+      },
+      {
+        "composite_score": 50.1423,
+        "cvrmse": 19.8465,
+        "family": "F3",
+        "in_mcs": false,
+        "model_name": "lasso",
+        "nmbe": -7.3792,
+        "qualified": false,
+        "r2": -0.0918,
+        "rank": null,
+        "reason": "Failed qualification thresholds (CV(RMSE)<=15%, |NMBE|<=5%, R2>=0.75).",
+        "register_bucket": "rejected"
+      }
+    ],
+    "requires_user_acknowledgement": false,
+    "shortlisted_top5": [
+      {
+        "composite_score": 90.9372,
+        "cvrmse": 4.3726,
+        "family": "F2",
+        "in_mcs": true,
+        "model_name": "piecewise_1p_5p",
+        "nmbe": 0.5263,
+        "qualified": true,
+        "r2": 0.947,
+        "rank": 1,
+        "reason": "Qualified & shortlisted at rank #1.",
+        "register_bucket": "shortlisted_top5"
+      },
+      {
+        "composite_score": 86.6511,
+        "cvrmse": 4.715,
+        "family": "F5",
+        "in_mcs": true,
+        "model_name": "svr_rbf",
+        "nmbe": 0.3643,
+        "qualified": true,
+        "r2": 0.9384,
+        "rank": 2,
+        "reason": "Qualified & shortlisted at rank #2.",
+        "register_bucket": "shortlisted_top5"
+      },
+      {
+        "composite_score": 85.9408,
+        "cvrmse": 6.1052,
+        "family": "F2",
+        "in_mcs": true,
+        "model_name": "towt",
+        "nmbe": -0.0747,
+        "qualified": true,
+        "r2": 0.8967,
+        "rank": 3,
+        "reason": "Qualified & shortlisted at rank #3.",
+        "register_bucket": "shortlisted_top5"
+      },
+      {
+        "composite_score": 84.4523,
+        "cvrmse": 5.4568,
+        "family": "F6",
+        "in_mcs": true,
+        "model_name": "gb",
+        "nmbe": -0.5539,
+        "qualified": true,
+        "r2": 0.9175,
+        "rank": 4,
+        "reason": "Qualified & shortlisted at rank #4.",
+        "register_bucket": "shortlisted_top5"
+      },
+      {
+        "composite_score": 79.0201,
+        "cvrmse": 6.4491,
+        "family": "F6",
+        "in_mcs": true,
+        "model_name": "xgboost",
+        "nmbe": 2.4541,
+        "qualified": true,
+        "r2": 0.8847,
+        "rank": 5,
+        "reason": "Qualified & shortlisted at rank #5.",
+        "register_bucket": "shortlisted_top5"
+      }
+    ],
+    "skipped": [
+      {
+        "composite_score": null,
+        "cvrmse": null,
+        "family": "F9",
+        "in_mcs": false,
+        "model_name": "mlp",
+        "nmbe": null,
+        "qualified": false,
+        "r2": null,
+        "rank": null,
+        "reason": "NN gate SKIPPED MLP: sample size n=15 < required 50 (floor=50, 10*p=10).",
+        "register_bucket": "skipped"
+      },
+      {
+        "composite_score": null,
+        "cvrmse": null,
+        "family": "F6",
+        "in_mcs": false,
+        "model_name": "lstm",
+        "nmbe": null,
+        "qualified": false,
+        "r2": null,
+        "rank": null,
+        "reason": "NN gate SKIPPED LSTM: sample size n=15 < required 60 (floor=60, 10*p=10).",
+        "register_bucket": "skipped"
+      }
+    ],
+    "zero_qualified_warning": null
+  },
+  "target": "Energy_kWh",
+  "tcp_lock_sha256": "5f9032ba287826132eb31d940dab64fd8c0ab931f0ec22f7ef0aaa639b34bd93",
+  "top5_pre_lock_view": {
+    "candidates": [
+      {
+        "composite_score": 90.9372,
+        "cvrmse": 4.3726,
+        "family": "F2",
+        "in_mcs": true,
+        "mae": 596.0801,
+        "model_name": "piecewise_1p_5p",
+        "n_params": 4,
+        "nmbe": 0.5263,
+        "r2": 0.947,
+        "rank": 1,
+        "representation": {
+          "architecture_summary": null,
+          "attributions": {
+            "additivity_max_error": 0.0,
+            "baseline_value": 14142.935772,
+            "global_mean_abs_attribution": {
+              "Avg_Temp_C": 3715.755146
+            },
+            "local_sample_attributions": [
+              {
+                "Avg_Temp_C": 6880.024219
+              },
+              {
+                "Avg_Temp_C": 6534.303133
+              },
+              {
+                "Avg_Temp_C": 5522.283226
+              },
+              {
+                "Avg_Temp_C": 2058.786528
+              },
+              {
+                "Avg_Temp_C": -2146.439046
+              }
+            ],
+            "method": "exact_coalition_shapley",
+            "signed_standardized_effect": {
+              "Avg_Temp_C": -1197.523287
+            }
+          },
+          "coefficients": {},
+          "confidence_intervals": {},
+          "family": "F2",
+          "hyperparameters": {
+            "knots": [
+              16.883713649014748
+            ],
+            "selected_kind": "4P",
+            "temp_col": "Avg_Temp_C"
+          },
+          "is_parametric": true,
+          "model_name": "piecewise_1p_5p",
+          "primary_formula": "y_hat = +11039 +628.58*max(0, 16.884 - Avg_Temp_C) +1387.3*max(0, Avg_Temp_C - 16.884)  [ASHRAE 4P]",
+          "representation_kind": "closed_form_equation",
+          "surrogate": null
+        },
+        "selection_guidance": "Selected 'piecewise_1p_5p' (tier 0, score=90.94) with deterministic tie-break order.",
+        "wape": 3.6633
+      },
+      {
+        "composite_score": 86.6511,
+        "cvrmse": 4.715,
+        "family": "F5",
+        "in_mcs": true,
+        "mae": 646.6974,
+        "model_name": "svr_rbf",
+        "n_params": 34,
+        "nmbe": 0.3643,
+        "r2": 0.9384,
+        "rank": 2,
+        "representation": {
+          "architecture_summary": "SVR(kernel='rbf', C=10.0, epsilon=0.05, n_support=34)",
+          "attributions": {
+            "additivity_max_error": 0.0,
+            "baseline_value": 13914.220268,
+            "global_mean_abs_attribution": {
+              "Avg_Temp_C": 3894.706944
+            },
+            "local_sample_attributions": [
+              {
+                "Avg_Temp_C": 6935.969205
+              },
+              {
+                "Avg_Temp_C": 6754.738412
+              },
+              {
+                "Avg_Temp_C": 5978.563038
+              },
+              {
+                "Avg_Temp_C": 2341.572869
+              },
+              {
+                "Avg_Temp_C": -1862.363782
+              }
+            ],
+            "method": "exact_coalition_shapley",
+            "signed_standardized_effect": {
+              "Avg_Temp_C": -1179.678101
+            }
+          },
+          "coefficients": {},
+          "confidence_intervals": {},
+          "family": "F5",
+          "hyperparameters": {
+            "C": 10.0,
+            "epsilon": 0.05,
+            "gamma": "scale",
+            "kernel": "rbf"
+          },
+          "is_parametric": false,
+          "model_name": "svr_rbf",
+          "primary_formula": null,
+          "representation_kind": "architecture_with_labelled_surrogate",
+          "surrogate": {
+            "approximation_expression": "[SURROGATE APPROXIMATION ONLY \u2014 shallow depth-3 tree, fidelity R^2=0.909] piecewise 8-leaf diagnostic approximation",
+            "disclaimer": "Approximate diagnostic surrogate fitted to black-box model predictions for engineering inspection ONLY \u2014 NOT the model's actual prediction formula.",
+            "fidelity_r2": 0.909307,
+            "fidelity_rmse": 932.660735,
+            "is_surrogate": true,
+            "surrogate_banner": "APPROXIMATE_DIAGNOSTIC_SURROGATE",
+            "surrogate_kind": "shallow_tree_depth_3_surrogate",
+            "tree_rules_preview": "|--- Avg_Temp_C <= 6.690\n|   |--- Avg_Temp_C <= 2.620\n|   |   |--- Avg_Temp_C <= 1.360\n|   |   |   |--- value: [20898.591]\n|   |   |--- Avg_Temp_C >  1.360\n|   |   |   |--- value: [20560.576]\n|   |--- Avg_Temp_C >  2.620\n|   |   |--- Avg_Temp_C <= 4.395\n|   |   |   |--- value: [19434.321]\n|   |   |--- Avg_Temp_C >  4.395\n|   |   |   |--- value: [18865.279]\n|--- Avg_Temp_C >  6.690\n|   |--- Avg_Temp_C <= 20.980\n|   |   |--- Avg_Temp_C <= 11.935\n|   |   |   |--- value: [15955.610]\n|   |   |--- Avg_Temp_C >  11.935\n|   |   |   |--- value: [13418.041]\n|   |--- Avg_Temp_C >  20.980\n|   |   |--- Avg"
+          }
+        },
+        "selection_guidance": "Shortlisted Top-5 candidate.",
+        "wape": 3.9744
+      },
+      {
+        "composite_score": 85.9408,
+        "cvrmse": 6.1052,
+        "family": "F2",
+        "in_mcs": true,
+        "mae": 780.9136,
+        "model_name": "towt",
+        "n_params": 6,
+        "nmbe": -0.0747,
+        "r2": 0.8967,
+        "rank": 3,
+        "representation": {
+          "architecture_summary": null,
+          "attributions": {
+            "additivity_max_error": 12913.749684127099,
+            "baseline_value": 13940.821406,
+            "global_mean_abs_attribution": {
+              "Avg_Temp_C": 3533.385902
+            },
+            "local_sample_attributions": [
+              {
+                "Avg_Temp_C": 5219.588723
+              },
+              {
+                "Avg_Temp_C": 4957.304489
+              },
+              {
+                "Avg_Temp_C": 4189.527004
+              },
+              {
+                "Avg_Temp_C": 1561.91586
+              },
+              {
+                "Avg_Temp_C": -1628.414186
+              }
+            ],
+            "method": "analytical_linear_shapley_standardized_ols",
+            "signed_standardized_effect": {
+              "Avg_Temp_C": -3722.2121
+            }
+          },
+          "coefficients": {
+            "Avg_Temp_C": -476.8804254299924,
+            "towt_hinge_15.23": 1388.5134651203252,
+            "towt_hinge_20.67": 837.4298899400344,
+            "towt_hinge_4.09": -237.87772088089238,
+            "towt_hinge_8.79": 60.84242950836615
+          },
+          "confidence_intervals": {},
+          "family": "F2",
+          "hyperparameters": {
+            "alpha": 1.0,
+            "mode": "temp_spline_only",
+            "n_temp_bins": 5
+          },
+          "is_parametric": true,
+          "model_name": "towt",
+          "primary_formula": "TOWT(mode=temp_spline_only, n_schedule_bins=0, n_temp_knots=4, alpha=1.0)",
+          "representation_kind": "closed_form_equation",
+          "surrogate": null
+        },
+        "selection_guidance": "Shortlisted Top-5 candidate.",
+        "wape": 4.7993
+      },
+      {
+        "composite_score": 84.4523,
+        "cvrmse": 5.4568,
+        "family": "F6",
+        "in_mcs": true,
+        "mae": 708.5155,
+        "model_name": "gb",
+        "n_params": 10,
+        "nmbe": -0.5539,
+        "r2": 0.9175,
+        "rank": 4,
+        "representation": {
+          "architecture_summary": "GradientBoostingRegressor(n_estimators=140, lr=0.05, max_depth=3)",
+          "attributions": {
+            "additivity_max_error": 0.0,
+            "baseline_value": 12499.381544,
+            "global_mean_abs_attribution": {
+              "Avg_Temp_C": 4820.077615
+            },
+            "local_sample_attributions": [
+              {
+                "Avg_Temp_C": 8739.747545
+              },
+              {
+                "Avg_Temp_C": 7706.823394
+              },
+              {
+                "Avg_Temp_C": 6885.983262
+              },
+              {
+                "Avg_Temp_C": 3126.112242
+              },
+              {
+                "Avg_Temp_C": -262.939555
+              }
+            ],
+            "method": "exact_coalition_shapley",
+            "signed_standardized_effect": {
+              "Avg_Temp_C": -1195.145903
+            }
+          },
+          "coefficients": {},
+          "confidence_intervals": {},
+          "family": "F6",
+          "hyperparameters": {
+            "learning_rate": 0.05,
+            "max_depth": 3,
+            "n_estimators": 140,
+            "subsample": 0.85
+          },
+          "is_parametric": false,
+          "model_name": "gb",
+          "primary_formula": null,
+          "representation_kind": "architecture_with_labelled_surrogate",
+          "surrogate": {
+            "approximation_expression": "[SURROGATE APPROXIMATION ONLY \u2014 shallow depth-3 tree, fidelity R^2=0.906] piecewise 8-leaf diagnostic approximation",
+            "disclaimer": "Approximate diagnostic surrogate fitted to black-box model predictions for engineering inspection ONLY \u2014 NOT the model's actual prediction formula.",
+            "fidelity_r2": 0.90578,
+            "fidelity_rmse": 949.918281,
+            "is_surrogate": true,
+            "surrogate_banner": "APPROXIMATE_DIAGNOSTIC_SURROGATE",
+            "surrogate_kind": "shallow_tree_depth_3_surrogate",
+            "tree_rules_preview": "|--- Avg_Temp_C <= 6.690\n|   |--- Avg_Temp_C <= 2.620\n|   |   |--- Avg_Temp_C <= 1.360\n|   |   |   |--- value: [21047.721]\n|   |   |--- Avg_Temp_C >  1.360\n|   |   |   |--- value: [20500.309]\n|   |--- Avg_Temp_C >  2.620\n|   |   |--- Avg_Temp_C <= 4.395\n|   |   |   |--- value: [19272.548]\n|   |   |--- Avg_Temp_C >  4.395\n|   |   |   |--- value: [19004.761]\n|--- Avg_Temp_C >  6.690\n|   |--- Avg_Temp_C <= 20.980\n|   |   |--- Avg_Temp_C <= 9.705\n|   |   |   |--- value: [15982.526]\n|   |   |--- Avg_Temp_C >  9.705\n|   |   |   |--- value: [13550.769]\n|   |--- Avg_Temp_C >  20.980\n|   |   |--- Avg_T"
+          }
+        },
+        "selection_guidance": "Shortlisted Top-5 candidate.",
+        "wape": 4.3543
+      },
+      {
+        "composite_score": 79.0201,
+        "cvrmse": 6.4491,
+        "family": "F6",
+        "in_mcs": true,
+        "mae": 827.4936,
+        "model_name": "xgboost",
+        "n_params": 12,
+        "nmbe": 2.4541,
+        "r2": 0.8847,
+        "rank": 5,
+        "representation": {
+          "architecture_summary": "XGBRegressor(n_estimators=140, lr=0.05, max_depth=4)",
+          "attributions": {
+            "additivity_max_error": 0.0,
+            "baseline_value": 14521.829102,
+            "global_mean_abs_attribution": {
+              "Avg_Temp_C": 3484.852203
+            },
+            "local_sample_attributions": [
+              {
+                "Avg_Temp_C": 6669.116211
+              },
+              {
+                "Avg_Temp_C": 5647.852539
+              },
+              {
+                "Avg_Temp_C": 4888.930664
+              },
+              {
+                "Avg_Temp_C": 1121.775391
+              },
+              {
+                "Avg_Temp_C": -2264.938477
+              }
+            ],
+            "method": "exact_coalition_shapley",
+            "signed_standardized_effect": {
+              "Avg_Temp_C": -1202.218037
+            }
+          },
+          "coefficients": {},
+          "confidence_intervals": {},
+          "family": "F6",
+          "hyperparameters": {
+            "learning_rate": 0.05,
+            "max_depth": 4,
+            "n_estimators": 140,
+            "reg_lambda": 1.0,
+            "subsample": 0.85
+          },
+          "is_parametric": false,
+          "model_name": "xgboost",
+          "primary_formula": null,
+          "representation_kind": "architecture_with_labelled_surrogate",
+          "surrogate": {
+            "approximation_expression": "[SURROGATE APPROXIMATION ONLY \u2014 shallow depth-3 tree, fidelity R^2=0.907] piecewise 8-leaf diagnostic approximation",
+            "disclaimer": "Approximate diagnostic surrogate fitted to black-box model predictions for engineering inspection ONLY \u2014 NOT the model's actual prediction formula.",
+            "fidelity_r2": 0.906696,
+            "fidelity_rmse": 941.565367,
+            "is_surrogate": true,
+            "surrogate_banner": "APPROXIMATE_DIAGNOSTIC_SURROGATE",
+            "surrogate_kind": "shallow_tree_depth_3_surrogate",
+            "tree_rules_preview": "|--- Avg_Temp_C <= 6.690\n|   |--- Avg_Temp_C <= 2.620\n|   |   |--- Avg_Temp_C <= 1.360\n|   |   |   |--- value: [21026.719]\n|   |   |--- Avg_Temp_C >  1.360\n|   |   |   |--- value: [20482.932]\n|   |--- Avg_Temp_C >  2.620\n|   |   |--- Avg_Temp_C <= 4.395\n|   |   |   |--- value: [19304.980]\n|   |   |--- Avg_Temp_C >  4.395\n|   |   |   |--- value: [18928.822]\n|--- Avg_Temp_C >  6.690\n|   |--- Avg_Temp_C <= 20.980\n|   |   |--- Avg_Temp_C <= 9.705\n|   |   |   |--- value: [16022.461]\n|   |   |--- Avg_Temp_C >  9.705\n|   |   |   |--- value: [13553.179]\n|   |--- Avg_Temp_C >  20.980\n|   |   |--- Avg_T"
+          }
+        },
+        "selection_guidance": "Shortlisted Top-5 candidate.",
+        "wape": 5.0856
+      }
+    ],
+    "count": 5,
+    "is_locked": false,
+    "locked_model_name": null,
+    "target": "Energy_kWh",
+    "visible_before_lock": true
+  },
+  "validity_envelope": {
+    "bounds": {
+      "Avg_Temp_C": {
+        "driver": "Avg_Temp_C",
+        "max": 24.04,
+        "median": 11.934999999999999,
+        "min": 0.01,
+        "p01": 0.35650000000000004,
+        "p05": 1.1275,
+        "p95": 23.375,
+        "p99": 23.8755
+      }
+    },
+    "drivers": [
+      "Avg_Temp_C"
+    ],
+    "hull_drivers": [
+      "Avg_Temp_C"
+    ],
+    "hull_vertices": [],
+    "mahalanobis_center": [
+      11.945277777777777
+    ],
+    "mahalanobis_threshold_99": 2.312993661159725,
+    "n_training_obs": 36
+  },
+  "weight_sensitivity_20pct": {
+    "baseline_top1": "piecewise_1p_5p",
+    "baseline_top5": [
+      "piecewise_1p_5p",
+      "svr_rbf",
+      "towt",
+      "gb",
+      "xgboost"
+    ],
+    "criterion_coordinate_flips": {
+      "computational_cost": false,
+      "cvrmse": false,
+      "fold_stability": false,
+      "homoscedasticity": false,
+      "interpretability": false,
+      "mae_wape": false,
+      "nmbe": false,
+      "normality_tails": false,
+      "parsimony": false,
+      "physical_plausibility": false,
+      "r2": false,
+      "residual_whiteness": false,
+      "structural_stability": false
+    },
+    "n_scenarios": 90,
+    "perturbation_fraction": 0.2,
+    "rank_intervals": {
+      "degree_day": [
+        9,
+        9
+      ],
+      "elasticnet": [
+        12,
+        13
+      ],
+      "extratrees": [
+        6,
+        6
+      ],
+      "gb": [
+        4,
+        4
+      ],
+      "lasso": [
+        14,
+        14
+      ],
+      "lightgbm": [
+        8,
+        8
+      ],
+      "mean": [
+        12,
+        13
+      ],
+      "mlr": [
+        10,
+        10
+      ],
+      "piecewise_1p_5p": [
+        1,
+        1
+      ],
+      "rf": [
+        7,
+        7
+      ],
+      "ridge": [
+        11,
+        11
+      ],
+      "svr_rbf": [
+        2,
+        3
+      ],
+      "towt": [
+        2,
+        3
+      ],
+      "xgboost": [
+        5,
+        5
+      ]
+    },
+    "rank_stable": true,
+    "top1_flip_rate": 0.0,
+    "top5_min_jaccard": 1.0
+  }
+}

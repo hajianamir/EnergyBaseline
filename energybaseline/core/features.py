@@ -262,7 +262,10 @@ def select_features(X: pd.DataFrame, y: pd.Series, auto: AutoLog, seed: int, exc
             return "lasso", f"p={p}, n={n} > 10p", "L1-penalised regression with time-series CV"
         return "mutual_info", f"p={p}, n={n} <= 10p", "L1 unstable with small n/p: use non-parametric mutual information"
     method = auto.decide("selection_method", _m)
-    kmax = auto.decide("max_features", lambda: (max(3, min(p, n // 20)), f"p={p}, n={n}", "n/20 observations per feature"))
+    kmax = auto.decide(
+        "max_features",
+        lambda: ((min(p, n // 20) if n >= 20 else min(p, 1)), f"p={p}, n={n}", "exact k_max = min(p, n // 20) observations-per-feature rule"),
+    )
     kmax = int(kmax)
     keep = list(X.columns)
     if method != "none" and p > 1:
