@@ -12,6 +12,7 @@ from PySide6.QtCore import Qt, QUrl
 from PySide6.QtGui import QDesktopServices, QFont, QImage, QKeySequence, QShortcut, QTextDocument
 from PySide6.QtWidgets import (
     QButtonGroup,
+    QCheckBox,
     QComboBox,
     QFrame,
     QGroupBox,
@@ -39,6 +40,7 @@ REGISTER_COLUMNS: tuple[str, ...] = (
     "family_id",
     "family_name",
     "model_name",
+    "requirement_tier",
     "status",
     "status_badge",
     "composite_score",
@@ -76,6 +78,8 @@ def _synthesize_register_rows(tr: Any) -> list[dict[str, Any]]:
         st = str(lb.get("status", "qualified"))
         if mname in short_names:
             badge = "SHORTLISTED"
+        elif st == "qualified_not_shortlisted":
+            badge = "QUALIFIED_NOT_SHORTLISTED"
         elif st in ("ok", "qualified", "shortlisted"):
             badge = "QUALIFIED"
         else:
@@ -206,6 +210,10 @@ class ResultsPage(QWidget):
         rl.addWidget(QLabel("<b>Comparative diagnostics (Top-3 side by side)</b>"))
         rl.addWidget(self.compare_tbl)
 
+        self.qualified_other_tbl: PagedTableView = make_table(
+            accessible_name="Qualified non-shortlisted models register table",
+            accessible_description="Models meeting ASHRAE/IPMVP qualification thresholds but ranked outside Top-5 (never mixed with rejected).",
+        )
         self.register: PagedTableView = make_table(
             accessible_name="Rejected and skipped models register table",
             accessible_description="Models excluded, skipped, or failing ASHRAE/ISO thresholds with explicit reasons.",
@@ -259,6 +267,7 @@ class ResultsPage(QWidget):
                 (reg_wrap, "Model Evaluation Register"),
                 (self.leader, "Model Leaderboard"),
                 (rw, "Decision Rationale"),
+                (self.qualified_other_tbl, "Qualified (Not Top-5)"),
                 (self.register, "Rejected Models Register"),
                 (self.excl, "Exclusions & Reasons"),
                 (ew, "EDA"),
@@ -297,7 +306,7 @@ class ResultsPage(QWidget):
         return self._all_tables
 
     def _apply_global_table_filter(self, text: str) -> None:
-        for tbl in (self.eval_register_tbl, self.leader, self.register, self.catalog_tbl):
+        for tbl in (self.eval_register_tbl, self.leader, self.qualified_other_tbl, self.register, self.catalog_tbl):
             tbl.set_filter_text(text)
 
     def populate_model_evaluation_register(self, entries: Sequence[Any]) -> pd.DataFrame:
@@ -400,6 +409,7 @@ class ResultsPage(QWidget):
             fill_table(self.leader, lb)
         fill_table(self.rationale_tbl, pd.DataFrame(tr.rationale))
         fill_table(self.compare_tbl, pd.DataFrame(tr.comparative))
+        fill_table(self.qualified_other_tbl, pd.DataFrame(getattr(tr, "qualified_not_shortlisted_register", [])))
         fill_table(self.register, pd.DataFrame(tr.register))
         fill_table(self.excl, pd.DataFrame(tr.exclusions))
         fill_table(self.rel_tbl, tr.eda.get("relationships"))
@@ -601,14 +611,21 @@ class SelectionPage(QWidget):
         self.groups: dict[str, QButtonGroup] = {}
         self.notes: dict[str, QLineEdit] = {}
         self.status: dict[str, QLabel] = {}
+        self.ack_checks: dict[str, QCheckBox] = {}
+        self.candidate_cards: dict[str, list[QFrame]] = {}
         state.run_changed.connect(self.rebuild)
+
+    def is_shortlist_visible_before_lock(self, target: str) -> bool:
+        """Verify Gate G6 invariant: Top-5 candidate cards are rendered and visible BEFORE baseline lock."""
+        cards = self.candidate_cards.get(target, [])
+        return bool(len(cards) > 0 and target not in self.state.locked)
 
     def rebuild(self):
         while self.vbox.count():
             it = self.vbox.takeAt(0)
             if it.widget():
                 it.widget().deleteLater()
-        self.groups, self.notes, self.status = {}, {}, {}
+        self.groups, self.notes, self.status, self.ack_checks, self.candidate_cards = {}, {}, {}, {}, {}
         run = self.state.run
         if not run:
             return
@@ -626,7 +643,17 @@ class SelectionPage(QWidget):
                 n.setObjectName("banner")
                 n.setWordWrap(True)
                 gl.addWidget(n)
+            sep_regs = getattr(tr, "separated_registers", {}) or {}
+            if sep_regs.get("requires_user_acknowledgement"):
+                ack_cb = QCheckBox(
+                    "SC-9 Acknowledgement: I understand zero models met strict ASHRAE 14 / IPMVP thresholds and "
+                    "accept diagnostic-only baseline selection with documented justification."
+                )
+                ack_cb.setAccessibleName(f"SC-9 zero-qualified acknowledgement checkbox for {t}")
+                gl.addWidget(ack_cb)
+                self.ack_checks[t] = ack_cb
             grp = QButtonGroup(gb)
+            cards_t: list[QFrame] = []
             for s in tr.shortlist:
                 card = QFrame()
                 card.setFrameShape(QFrame.Shape.StyledPanel)
@@ -637,6 +664,7 @@ class SelectionPage(QWidget):
                 f.setBold(True)
                 rb.setFont(f)
                 rb.setProperty("model", s["name"])
+                rb.setProperty("rank", int(s["rank"]))
                 grp.addButton(rb)
                 cl.addWidget(rb)
                 m = s["metrics"]
@@ -650,24 +678,49 @@ class SelectionPage(QWidget):
                 why = QLabel("Why shortlisted: " + s["reason"] + (" " + "; ".join(s["failures"]) if s["failures"] else ""))
                 why.setWordWrap(True)
                 cl.addWidget(why)
+                fml_dict = s["formula"]
+                is_param_card = fml_dict.get("kind") == "equation"
+                rep_hdr = QLabel(
+                    "<b>Closed-form prediction equation (parametric baseline):</b>"
+                    if is_param_card
+                    else "<b>Architecture, hyperparameters &amp; approximate diagnostic surrogate (NOT model formula):</b>"
+                )
+                cl.addWidget(rep_hdr)
+                surr_meta = fml_dict.get("surrogate")
+                if not is_param_card and isinstance(surr_meta, dict):
+                    surr_lbl = QLabel(
+                        f"<span style='color:#92400e'><b>[{surr_meta.get('surrogate_banner', 'APPROXIMATE_DIAGNOSTIC_SURROGATE')}]</b> "
+                        f"Fidelity R² = {float(surr_meta.get('fidelity_r2', 0.0)):.3f} — Diagnostic approximation ONLY; "
+                        "never treated as the non-parametric model's formula.</span>"
+                    )
+                    surr_lbl.setWordWrap(True)
+                    cl.addWidget(surr_lbl)
                 te = QTextEdit()
                 te.setReadOnly(True)
-                te.setAccessibleName(f"Closed-form formula for {s['name']}")
+                te.setAccessibleName(
+                    f"Closed-form formula for {s['name']}"
+                    if is_param_card
+                    else f"Architecture and labelled diagnostic surrogate for {s['name']}"
+                )
                 te.setFont(QFont("Consolas", 9))
-                te.setPlainText(s["formula"]["text"])
+                te.setPlainText(fml_dict["text"])
                 te.setMinimumHeight(110)
                 te.setMaximumHeight(190)
                 cl.addWidget(te)
                 gl.addWidget(card)
+                cards_t.append(card)
+            self.candidate_cards[t] = cards_t
+            qual_other = getattr(tr, "qualified_not_shortlisted_register", []) or []
             rej = [r for r in tr.register if r["status"] == "rejected"]
             gl.addWidget(
                 QLabel(
-                    f"{len(rej)} further model(s) were rejected - every reason is listed in <i>Results -> Model Evaluation Register</i> and in the report."
+                    f"{len(qual_other)} additional model(s) qualified outside Top-5 (see <i>Qualified (Not Top-5)</i> tab); "
+                    f"{len(rej)} model(s) were rejected (see <i>Rejected Models Register</i> tab)."
                 )
             )
             row = QHBoxLayout()
             note = QLineEdit()
-            note.setPlaceholderText("Optional note for the audit log (why this model?)")
+            note.setPlaceholderText("Audit rationale note (required >=15 chars when overriding Rank #1 or acknowledging SC-9)")
             note.setAccessibleName(f"Audit rationale note for {t}")
             row.addWidget(note, 1)
             btn = QPushButton("Lock baseline")
@@ -699,18 +752,35 @@ class SelectionPage(QWidget):
             QMessageBox.information(self, "Baseline selection", "Select one model first.")
             return
         model = btn.property("model")
+        rank_sel = int(btn.property("rank") or 1)
+        note_txt = self.notes[target].text().strip()
+        ack_cb = self.ack_checks.get(target)
+        if ack_cb is not None and not ack_cb.isChecked():
+            QMessageBox.warning(
+                self,
+                "SC-9 Acknowledgement Required",
+                "Zero models met strict ASHRAE 14 / IPMVP thresholds. Check the SC-9 acknowledgement box and enter an engineering rationale before locking.",
+            )
+            return
+        if (rank_sel > 1 or ack_cb is not None) and len(note_txt) < 15:
+            QMessageBox.warning(
+                self,
+                "SC-7 Engineering Justification Required",
+                "Overriding the Rank #1 baseline (or locking under SC-9) requires a documented engineering justification of at least 15 characters in the audit note.",
+            )
+            return
         prev = self.state.locked.get(target)
         if prev and prev["model"] != model:
             if (
                 QMessageBox.question(
                     self,
                     "Change baseline",
-                    f"Replace the locked baseline '{prev['model']}' by '{model}'? The previous selection is kept in the history.",
+                    f"Append a new immutable baseline version '{model}' superseding '{prev['model']}'? Prior locked versions remain intact.",
                 )
                 != QMessageBox.StandardButton.Yes
             ):
                 return
-        sel = store.lock_baseline(self.state.run_id, target, model, self.notes[target].text().strip())
+        sel = store.lock_baseline(self.state.run_id, target, model, note_txt)
         self.state.locked[target] = {"model": model, "run_id": self.state.run_id, "at": sel["at"], "target": target}
         self.status[target].setText(
             f"<b>Locked:</b> {model} (at {sel['at']}). Prediction & Monitoring is now unlocked for '{target}'."

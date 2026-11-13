@@ -73,6 +73,11 @@ class TargetResult:
     test_catalog: list = field(default_factory=list)
     eda_attachment: dict = field(default_factory=dict)
     model_evaluation_register: list = field(default_factory=list)
+    qualified_not_shortlisted_register: list = field(default_factory=list)
+    separated_registers: dict = field(default_factory=dict)
+    validity_envelope: dict = field(default_factory=dict)
+    weight_sensitivity_20pct: dict = field(default_factory=dict)
+    purge_gap_spec: dict = field(default_factory=dict)
     seconds: float = 0.0
 
 
@@ -281,14 +286,30 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
             ),
         )
         fam = tuple(fam)
-        gap = max(1, min(int(round(max(g.steps_per_day, 1))), n // 20))
+        from ..validation.purge import compute_purge_gap_spec
+
+        max_lag_used = max([0, *[int(lag_v) for _, lag_v in getattr(spec, "lags", [])]])
+        max_roll_used = max([0, *[int(roll_v) for _, roll_v in getattr(spec, "rolls", [])]])
+        p_spec = compute_purge_gap_spec(
+            steps_per_day=g.steps_per_day,
+            max_lag=max_lag_used,
+            max_rolling_window=max_roll_used,
+        )
+        gap = min(p_spec.purge_gap, max(1, n // 5))
+        res.purge_gap_spec = p_spec.to_dict()
         folds = make_folds(n, k, scheme, gap)
         if not folds:
             raise ValueError("Not enough observations to build validation folds.")
-        auto.note("validation_gap", gap, f"steps/day={g.steps_per_day:.3g}, n={n}", "purge gap of one day (>=1 step) between train and validation blocks to limit autocorrelation leakage")
+        auto.note(
+            "validation_gap",
+            gap,
+            f"steps/day={g.steps_per_day:.3g}, max_lag={max_lag_used}, max_roll={max_roll_used}, n={n}",
+            "purge gap = max(1 day, 1 step, max lag, max rolling window) between train and validation blocks",
+        )
         ctx = Ctx(target=target, seed=seed, n_jobs=n_jobs, hpo_trials=trials, nn_max_epochs=epochs, seq_len=seq, cv_scheme=scheme, folds=k, gap=gap,
                   steps_per_day=g.steps_per_day, tier=g.tier, enable_nn=nn_on, families=fam, raw_names=list(spec.raw_cols), temp_col=spec.temp_col, cancel=cancel)
         cands, missing = build_portfolio(ctx, n)
+        cand_by_name = {c.name: c for c in cands}
         register: list[dict] = [{"model": m["model"], "family": "-", "status": "not evaluated", "reason": m["reason"]} for m in missing]
         results: list[dict] = []
         from .models import Unavailable
@@ -314,30 +335,92 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
         if not results:
             raise ValueError("No model could be fitted for this target.")
 
-        # ---- optional NN + tree blend (only if justified)
+        # ---- optional NN + tree NNLS ensemble (weights fitted ONLY on inner-fold OOF; gated at > 3% CV(RMSE) gain)
         nn_r = [r for r in results if r["kind"] == "nn"]
         tr_r = [r for r in results if r["kind"] == "tree"]
         if nn_r and tr_r:
             a, b = min(nn_r, key=lambda r: r["metrics"]["cvrmse"]), min(tr_r, key=lambda r: r["metrics"]["cvrmse"])
-            both = ~np.isnan(a["oof"]) & ~np.isnan(b["oof"])
-            if both.sum() > 10:
-                bo = np.where(both, 0.5 * a["oof"] + 0.5 * b["oof"], np.nan)
-                m = metrics(y[both], bo[both])
-                best_single = min(a["metrics"]["cvrmse"], b["metrics"]["cvrmse"])
-                if m["cvrmse"] < 0.97 * best_single:
-                    bl = Blend(a["model"], b["model"], target)
-                    k_ = bl.n_params()
-                    rss = float(np.sum((y[both] - bo[both]) ** 2))
-                    nc = int(both.sum())
-                    q = np.quantile(y[both] - bo[both], [0.025, 0.975])
-                    plz, pn = plausibility(bl, X, y)
-                    results.append({"name": bl.name, "family": bl.family, "tier": 5, "kind": "blend", "oof": bo, "metrics": m, "train_metrics": metrics(y, bl.predict(X)),
-                                    "fold_cvrmse": [m["cvrmse"]], "robustness": 0.0, "n_params": k_, "aic": nc * math.log(rss / nc) + 2 * k_, "bic": nc * math.log(rss / nc) + k_ * math.log(nc),
-                                    "model": bl, "hpo": "n/a", "params": {}, "seconds": 0.0, "diagnostics": diagnostics(y[both], bo[both]), "resid_q": (float(q[0]), float(q[1])),
-                                    "plausibility": plz, "plaus_notes": pn, "status": "ok", "mean_y": float(np.mean(y))})
-                    auto.note("nn_tree_blend", bl.name, f"blend CV(RMSE) {m['cvrmse']:.2f} % vs best single {best_single:.2f} % (>3 % gain)", "NN + tree ensemble added only because it improves CV(RMSE) by more than 3 %")
-                else:
-                    auto.note("nn_tree_blend", "not created", f"blend CV(RMSE) {m['cvrmse']:.2f} % vs best single {best_single:.2f} %", "gain below 3 % - hybrid not justified")
+            ca, cb = cand_by_name.get(a["name"]), cand_by_name.get(b["name"])
+            if ca is not None and cb is not None:
+                from ..models.ensemble import fit_nnls_weights_on_inner_oof
+
+                bo = np.full(n, np.nan, dtype=float)
+                fold_ws: list[np.ndarray] = []
+                for otr, ote in folds:
+                    in_folds = make_folds(len(otr), 2, scheme, max(1, min(gap, len(otr) // 6)))
+                    if not in_folds:
+                        continue
+                    P_in = np.full((len(otr), 2), np.nan, dtype=float)
+                    X_otr = X.iloc[otr]
+                    y_otr = y[otr]
+                    for itr, ite in in_folds:
+                        med_i = X_otr.iloc[itr].median(numeric_only=True).fillna(0.0)
+                        X_itr = X_otr.iloc[itr].fillna(med_i).fillna(0.0)
+                        X_ite = X_otr.iloc[ite].fillna(med_i).fillna(0.0)
+                        fa_in = ca.fit(X_itr, y_otr[itr], ctx, tune=False)
+                        fb_in = cb.fit(X_itr, y_otr[itr], ctx, tune=False)
+                        P_in[ite, 0] = fa_in.predict(X_ite)
+                        P_in[ite, 1] = fb_in.predict(X_ite)
+                    w_fold, _ = fit_nnls_weights_on_inner_oof(P_in, y_otr, normalize_simplex=True, enforce_k_max=False)
+                    fold_ws.append(w_fold)
+                    med_o = X_otr.median(numeric_only=True).fillna(0.0)
+                    X_otr_c = X_otr.fillna(med_o).fillna(0.0)
+                    X_ote_c = X.iloc[ote].fillna(med_o).fillna(0.0)
+                    fa_o = ca.fit(X_otr_c, y_otr, ctx, tune=False)
+                    fb_o = cb.fit(X_otr_c, y_otr, ctx, tune=False)
+                    bo[ote] = float(w_fold[0]) * fa_o.predict(X_ote_c) + float(w_fold[1]) * fb_o.predict(X_ote_c)
+
+                both = ~np.isnan(bo)
+                if both.sum() > 10 and fold_ws:
+                    m = metrics(y[both], bo[both])
+                    best_single = min(a["metrics"]["cvrmse"], b["metrics"]["cvrmse"])
+                    if m["cvrmse"] < 0.97 * best_single:
+                        mean_w = np.mean(np.vstack(fold_ws), axis=0)
+                        bl = Blend(a["model"], b["model"], target, weights=(float(mean_w[0]), float(mean_w[1])))
+                        k_ = bl.n_params()
+                        rss = float(np.sum((y[both] - bo[both]) ** 2))
+                        nc = int(both.sum())
+                        q = np.quantile(y[both] - bo[both], [0.025, 0.975])
+                        plz, pn = plausibility(bl, X, y)
+                        results.append(
+                            {
+                                "name": bl.name,
+                                "family": bl.family,
+                                "tier": 5,
+                                "kind": "blend",
+                                "oof": bo,
+                                "metrics": m,
+                                "train_metrics": metrics(y, bl.predict(X)),
+                                "fold_cvrmse": [m["cvrmse"]],
+                                "robustness": 0.0,
+                                "n_params": k_,
+                                "aic": nc * math.log(max(rss, 1e-12) / nc) + 2 * k_,
+                                "bic": nc * math.log(max(rss, 1e-12) / nc) + k_ * math.log(nc),
+                                "model": bl,
+                                "hpo": bl.hpo_note,
+                                "params": bl.params,
+                                "seconds": 0.0,
+                                "diagnostics": diagnostics(y[both], bo[both]),
+                                "resid_q": (float(q[0]), float(q[1])),
+                                "plausibility": plz,
+                                "plaus_notes": pn,
+                                "status": "ok",
+                                "mean_y": float(np.mean(y)),
+                            }
+                        )
+                        auto.note(
+                            "nn_tree_blend",
+                            bl.name,
+                            f"inner-OOF NNLS CV(RMSE) {m['cvrmse']:.2f} % vs best single {best_single:.2f} % (>3 % gain)",
+                            "NNLS ensemble accepted: inner-fold OOF weights improved outer CV(RMSE) by > 3 %",
+                        )
+                    else:
+                        auto.note(
+                            "nn_tree_blend",
+                            "not created",
+                            f"inner-OOF NNLS CV(RMSE) {m['cvrmse']:.2f} % vs best single {best_single:.2f} %",
+                            "gain <= 3 % - ensemble rejected by strict > 3 % gate",
+                        )
 
         emit(92, "Scoring & Top-5 shortlist")
         th = thresholds(g, auto)
@@ -381,10 +464,112 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
                                     "dw": round(r["diagnostics"]["durbin_watson"], 3), "jb_p": round(r["diagnostics"]["jarque_bera_p"], 4), "lb_p": round(r["diagnostics"]["ljung_box_p"], 4), "bp_p": round(r["diagnostics"]["breusch_pagan_p"], 4),
                                     "plausibility": round(r["plausibility"], 2), "qualified": r["qualified"], "status": r["status_final"], "reason": r["reason"], "seconds": round(r["seconds"], 1),
                                     **{f"c_{k_}": round(v, 3) for k_, v in r["criteria"].items()}})
+        qual_not_short: list[dict] = []
         for r in results:
             if r["status_final"] == "rejected":
                 register.append({"model": r["name"], "family": r["family"], "status": "rejected", "reason": r["reason"]})
+            elif r["status_final"] == "qualified_not_shortlisted":
+                qual_not_short.append(
+                    {
+                        "model": r["name"],
+                        "family": r["family"],
+                        "rank": r["rank"],
+                        "score": round(r["score"], 2),
+                        "cvrmse": round(r["metrics"]["cvrmse"], 4),
+                        "nmbe": round(r["metrics"]["nmbe"], 4),
+                        "r2": round(r["metrics"]["r2"], 4),
+                        "status": "qualified_not_shortlisted",
+                        "reason": r["reason"],
+                    }
+                )
         res.register = register
+        res.qualified_not_shortlisted_register = qual_not_short
+
+        # ---- Phase 6 Separated Registers, SC-9 Validity Envelope & ±20% Sensitivity
+        from ..scoring import (
+            analyze_weight_sensitivity_20pct,
+            compute_13_subscores,
+            fit_validity_domain_envelope,
+            partition_model_registers,
+        )
+
+        raw_cols_present = [c for c in spec.raw_cols if c in Xall.columns]
+        env_obj = fit_validity_domain_envelope(Xall[raw_cols_present] if raw_cols_present else X)
+        res.validity_envelope = env_obj.to_dict()
+
+        ranked_for_regs = [
+            {
+                "model_name": r["name"],
+                "family": r["family"],
+                "qualified": bool(r["qualified"]),
+                "composite_score": float(r["score"]),
+                "cvrmse": float(r["metrics"]["cvrmse"]),
+                "nmbe": float(r["metrics"]["nmbe"]),
+                "r2": float(r["metrics"]["r2"]),
+                "in_mcs": True,
+                "reason": r["reason"],
+            }
+            for r in sorted(results, key=lambda r: -r["score"])
+            if r.get("status") == "ok"
+        ]
+        unfit_for_regs = [
+            {
+                "model_name": reg_item["model"],
+                "family": reg_item.get("family", "-"),
+                "status": "skipped" if reg_item["status"] in ("not evaluated", "not applicable") else "rejected",
+                "reason": reg_item["reason"],
+            }
+            for reg_item in register
+            if reg_item["model"] not in {x["model_name"] for x in ranked_for_regs}
+        ]
+        sep_regs = partition_model_registers(
+            ranked_for_regs,
+            unfit_for_regs,
+            thresholds_label=f"CV(RMSE)<={th.get('max_cvrmse')}%, |NMBE|<={th.get('max_nmbe')}%, R2>={th.get('min_r2')}",
+        )
+        res.separated_registers = sep_regs.to_dict()
+
+        cands_13 = []
+        for r in sorted(results, key=lambda r: -r["score"]):
+            if r.get("status") != "ok":
+                continue
+            d_diag = r["diagnostics"]
+            subs = compute_13_subscores(
+                cvrmse=float(r["metrics"]["cvrmse"]),
+                nmbe=float(r["metrics"]["nmbe"]),
+                r2=float(r["metrics"]["r2"]),
+                wape=float(r["metrics"].get("smape", r["metrics"]["cvrmse"])),
+                fold_cvrmse_std=float(np.std(r["fold_cvrmse"])) if r["fold_cvrmse"] else 0.0,
+                ljung_box_p=float(d_diag.get("ljung_box_p", 0.5)),
+                durbin_watson=float(d_diag.get("durbin_watson", 2.0)),
+                breusch_pagan_p=float(d_diag.get("breusch_pagan_p", 0.5)),
+                normality_p=float(d_diag.get("jarque_bera_p", 0.5)),
+                sign_plausibility=float(r.get("plausibility", 1.0)),
+                n_obs=n,
+                n_params=int(r["n_params"]),
+                family=str(r["family"]),
+                is_parametric=bool(r["kind"] == "linear"),
+                fit_seconds=float(r.get("seconds", 0.05)),
+                max_cvrmse=float(th.get("max_cvrmse", 15.0)),
+                max_nmbe=float(th.get("max_nmbe", 5.0)),
+                min_r2=float(th.get("min_r2", 0.75)),
+            )
+            cands_13.append(
+                {
+                    "model_name": r["name"],
+                    "family": r["family"],
+                    "is_parametric": bool(r["kind"] == "linear"),
+                    "qualified": bool(r["qualified"]),
+                    "in_mcs": True,
+                    "cvrmse": float(r["metrics"]["cvrmse"]),
+                    "nmbe": float(r["metrics"]["nmbe"]),
+                    "r2": float(r["metrics"]["r2"]),
+                    "n_params": int(r["n_params"]),
+                    "subscores_13": subs,
+                }
+            )
+        if cands_13:
+            res.weight_sensitivity_20pct = analyze_weight_sensitivity_20pct(cands_13, seed=seed).to_dict()
         for r in top[:3]:
             d = r["diagnostics"]
             res.comparative.append({"model": r["name"], **{k_: round(v, 4) for k_, v in r["metrics"].items() if k_ != "n"}, "durbin_watson": round(d["durbin_watson"], 3), "jarque_bera_p": round(d["jarque_bera_p"], 4),

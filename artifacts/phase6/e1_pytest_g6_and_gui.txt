@@ -1,0 +1,71 @@
+=== [1] Gate G6 validation, portfolio, scoring, Top-5 & lock tests ===
+============================= test session starts ==============================
+platform linux -- Python 3.11.2, pytest-9.2.0, pluggy-1.7.0 -- /home/user/EnergyBaseline/.venv/bin/python
+cachedir: .pytest_cache
+hypothesis profile 'default'
+PySide6 6.9.3 -- Qt runtime 6.9.3 -- Qt compiled 6.9.3
+rootdir: /home/user/EnergyBaseline
+configfile: pytest.ini
+plugins: platformdirs-4.14.5, hypothesis-6.170.15, qt-4.5.0, cov-7.1.0
+collecting ... collected 14 items
+
+tests/gates/test_phase6_validation_and_portfolio.py::test_purge_gap_grows_strictly_with_larger_lag_and_rolling_window PASSED [  7%]
+tests/gates/test_phase6_validation_and_portfolio.py::test_val1_chronological_split_forbids_shuffling_and_non_monotonic_indices PASSED [ 14%]
+tests/gates/test_phase6_validation_and_portfolio.py::test_val4_in_fold_preprocessing_and_exact_k_max_rule PASSED [ 21%]
+tests/gates/test_phase6_validation_and_portfolio.py::test_val5_leakage_canary_passes_in_fold_pipeline_and_catches_leaky_pipeline PASSED [ 28%]
+tests/gates/test_phase6_validation_and_portfolio.py::test_val3_nested_hpo_and_val6_ashrae14_metrics PASSED [ 35%]
+tests/gates/test_phase6_validation_and_portfolio.py::test_planted_effect_recovery_across_all_16_mandatory_portfolio_wrappers PASSED [ 42%]
+tests/gates/test_phase6_validation_and_portfolio.py::test_nn_gate_both_directions_and_mt5_cluster_label_rejection PASSED [ 50%]
+tests/gates/test_phase6_validation_and_portfolio.py::test_nnls_ensemble_fitted_strictly_on_inner_oof_and_gated_at_3pct PASSED [ 57%]
+tests/gates/test_phase6_scoring_top5_and_lock.py::test_13_criteria_weights_sensitivity_20pct_deterministic_tiebreak_and_sc4_parsimony PASSED [ 64%]
+tests/gates/test_phase6_scoring_top5_and_lock.py::test_sc8_pairwise_dm_mcs_and_friedman_matrix PASSED [ 71%]
+tests/gates/test_phase6_scoring_top5_and_lock.py::test_strictly_separated_registers_sc9_acknowledgement_sc7_override_and_validity_envelope PASSED [ 78%]
+tests/gates/test_phase6_scoring_top5_and_lock.py::test_top5_visible_before_lock_and_nonparametric_surrogate_never_presented_as_formula PASSED [ 85%]
+tests/gates/test_phase6_scoring_top5_and_lock.py::test_baseline_lock_immutability_sha256_tamper_rejection_and_excel_formula_roundtrip PASSED [ 92%]
+tests/gates/test_phase6_scoring_top5_and_lock.py::test_core_pipeline_non_commingled_registers_sha256_store_and_cli_e2 PASSED [100%]
+
+============================= 14 passed in 16.67s ==============================
+=== [2] GUI full suite (Phase 1..6) with >=56% coverage gate ===
+============================= test session starts ==============================
+platform linux -- Python 3.11.2, pytest-9.2.0, pluggy-1.7.0 -- /home/user/EnergyBaseline/.venv/bin/python
+hypothesis profile 'default'
+PySide6 6.9.3 -- Qt runtime 6.9.3 -- Qt compiled 6.9.3
+rootdir: /home/user/EnergyBaseline
+configfile: pytest.ini
+plugins: platformdirs-4.14.5, hypothesis-6.170.15, qt-4.5.0, cov-7.1.0
+collecting ... collected 8 items
+
+tests/gui/test_phase1_gui.py::test_single_instance_guard_activates_primary_and_rejects_second PASSED [ 12%]
+tests/gui/test_phase1_gui.py::test_main_window_commands_path_guard_status_page_and_banners PASSED [ 25%]
+tests/gui/test_phase2_gui_schema.py::test_setup_page_schema_editor_json_db_roundtrip_and_parquet_import PASSED [ 37%]
+tests/gui/test_phase3_gui_vsg_tcp.py::test_gui_impact_preview_vsg_tcp_whatif_and_post_hoc_ui_badge PASSED [ 50%]
+tests/gui/test_phase5_gui_tables_ux5_ux8.py::test_paged_table_view_fetch_more_on_1m_rows_without_full_materialization PASSED [ 62%]
+tests/gui/test_phase5_gui_tables_ux5_ux8.py::test_results_page_zero_qtablewidget_ux5_register_and_ux8_accessibility PASSED [ 75%]
+tests/gui/test_phase6_gui_top5_and_lock.py::test_gui_top5_visible_before_lock_labelled_surrogates_separated_registers_and_override_guard PASSED [ 87%]
+tests/gui/test_qapp_smoke.py::test_qapplication_smoke PASSED             [100%]
+
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.11.2-final-0 ________________
+
+Name                                    Stmts   Miss  Cover
+-----------------------------------------------------------
+energybaseline/gui/advanced.py            144     82    43%
+energybaseline/gui/app.py                 137    137     0%
+energybaseline/gui/commands.py             34      4    88%
+energybaseline/gui/main_window.py         202     32    84%
+energybaseline/gui/page_monitor.py        471    235    50%
+energybaseline/gui/page_status.py         173     24    86%
+energybaseline/gui/pages_results.py       481     80    83%
+energybaseline/gui/pages_setup.py        1100    351    68%
+energybaseline/gui/single_instance.py      81     23    72%
+energybaseline/gui/sql_dialog.py          147    130    12%
+energybaseline/gui/state.py                46     13    72%
+energybaseline/gui/table_model.py         257     30    88%
+energybaseline/gui/theme.py                25     20    20%
+energybaseline/gui/widgets.py             190     83    56%
+-----------------------------------------------------------
+TOTAL                                    3488   1244    64%
+Required test coverage of 56% reached. Total coverage: 64.33%
+============================== 8 passed in 19.16s ==============================
+=== [3] pip-audit vulnerability gate ===
+No known vulnerabilities found

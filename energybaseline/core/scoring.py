@@ -170,23 +170,39 @@ def build_shortlist(results: list[dict], top_k: int = 5) -> dict:
         top = []
         notice = "No model could be fitted for this target."
     names = {r["name"] for r in top}
+    qual_not_shortlisted: list[dict] = []
     for r in ok:
         if r["name"] in names:
             r["status_final"] = "shortlisted"
             r["reason"] = rationale(r, top)
+        elif r["qualified"]:
+            # CRITICAL Phase 6 invariant: qualified models outside Top-5 are NEVER commingled with rejected models!
+            r["status_final"] = "qualified_not_shortlisted"
+            cut = top[-1] if top else None
+            r["reason"] = (
+                f"Qualified (meets ASHRAE 14 / IPMVP thresholds) at rank #{r['rank']} (score {r['score']:.1f}); "
+                f"outside Top-{top_k} shortlist cut-off score {cut['score']:.1f} ({cut['name']})."
+                if cut
+                else "Qualified."
+            )
+            qual_not_shortlisted.append(r)
         else:
             r["status_final"] = "rejected"
-            if r["threshold_failures"]:
-                r["reason"] = "Failed acceptance: " + "; ".join(r["threshold_failures"])
-            else:
-                cut = top[-1] if top else None
-                r["reason"] = (f"Qualified but ranked #{r['rank']} (score {r['score']:.1f}); the Top-{top_k} cut-off score is {cut['score']:.1f} ({cut['name']})."
-                               if cut else "No shortlist available.")
+            r["reason"] = (
+                "Failed acceptance: " + "; ".join(r["threshold_failures"])
+                if r["threshold_failures"]
+                else "Failed baseline qualification thresholds."
+            )
     for r in results:
         if r.get("status") != "ok":
             r["status_final"] = "rejected"
             r["reason"] = r.get("error", "not available")
-    return {"top": top, "notice": notice, "n_qualified": len(qualified)}
+    return {
+        "top": top,
+        "qualified_not_shortlisted": qual_not_shortlisted,
+        "notice": notice,
+        "n_qualified": len(qualified),
+    }
 
 
 def rationale(r: dict, top: list[dict]) -> str:

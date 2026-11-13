@@ -1,0 +1,177 @@
+{
+  "audit_ledger": [
+    {
+      "action": "BASELINE_LOCKED",
+      "artifact_sha256": "f048ec950a7e91e083834288d3b017287f73506f9317c148d191b4d67fcd19f3",
+      "lock_id": "lock-4a691b354f3f",
+      "locked_at_utc": "2026-11-13T21:53:39.101485+00:00",
+      "locked_by": "cli-audit",
+      "model_name": "mlr",
+      "override_applied": false,
+      "previous_lock_sha256": null,
+      "record_sha256": "c47ee10dcfd9fe790182ab82ed5b69f7799bc258043a2283a3b68d4ac51f76b2",
+      "run_id": "cli-phase6",
+      "target": "Energy_kWh",
+      "version": 1
+    }
+  ],
+  "excel_formula_roundtrip": {
+    "all_cells_are_formulas": true,
+    "excel_formula_rmse": 2830.4900018493454,
+    "max_abs_prediction_diff": 3.637978807091713e-12,
+    "n_rows_verified": 36,
+    "passed": true,
+    "python_rmse": 2830.4900018493454,
+    "rmse_abs_diff": 0.0,
+    "sample_formula": "=Coefficients!$B$2+(C2*Coefficients!$B$3)",
+    "workbook_path": "/tmp/eb_cli_lock_zw454xu5/locked_baseline_formulas.xlsx"
+  },
+  "locked_baseline_record": {
+    "artifact_path": "/tmp/eb_cli_lock_zw454xu5/cli-phase6__Energy_kWh__v001.joblib",
+    "artifact_sha256": "f048ec950a7e91e083834288d3b017287f73506f9317c148d191b4d67fcd19f3",
+    "baseline_window": {
+      "granularity": "monthly",
+      "n_obs": 36
+    },
+    "calibration_metrics": {
+      "cvrmse": 16.7053801203957,
+      "cvrmse_ashrae14_dof": 17.18969432949394,
+      "granularity": "monthly",
+      "mae": 2375.6879608432446,
+      "mape": 15.197333421649569,
+      "max_abs_nmbe_limit": 5.0,
+      "max_cvrmse_limit": 15.0,
+      "meets_ashrae14": false,
+      "min_r2_limit": 0.75,
+      "n": 36,
+      "n_params": 2,
+      "nmbe": 1.3419456260820393e-14,
+      "nmbe_ashrae14_dof": 1.4208836040868652e-14,
+      "r2": 0.1808984863681692,
+      "rmse": 2830.4900018493454,
+      "smape": 14.6089867814332,
+      "wape": 14.02116609046637
+    },
+    "coefficients": {
+      "Avg_Temp_C": -170.41923327456638,
+      "intercept": 18979.288413473936
+    },
+    "composite_score": 92.5,
+    "family": "F1",
+    "formula_or_architecture": "y = 18979.3 (-170.419)*Avg_Temp_C",
+    "hyperparameters": {},
+    "is_parametric": true,
+    "iso50006_model_card": {
+      "adjustment_method": "Closed-form parametric routine adjustment equation",
+      "baseline_period": {
+        "granularity": "monthly",
+        "n_obs": 36
+      },
+      "calibration_summary": {
+        "cvrmse": 16.7053801203957,
+        "cvrmse_ashrae14_dof": 17.18969432949394,
+        "granularity": "monthly",
+        "mae": 2375.6879608432446,
+        "mape": 15.197333421649569,
+        "max_abs_nmbe_limit": 5.0,
+        "max_cvrmse_limit": 15.0,
+        "meets_ashrae14": false,
+        "min_r2_limit": 0.75,
+        "n": 36,
+        "n_params": 2,
+        "nmbe": 1.3419456260820393e-14,
+        "nmbe_ashrae14_dof": 1.4208836040868652e-14,
+        "r2": 0.1808984863681692,
+        "rmse": 2830.4900018493454,
+        "smape": 14.6089867814332,
+        "wape": 14.02116609046637
+      },
+      "compliance_thresholds": {
+        "max_cvrmse": 15.0,
+        "max_nmbe": 5.0,
+        "min_r2": 0.75
+      },
+      "energy_performance_indicator_enpi": "Model-normalized Energy_kWh consumption & CUSUM savings residual",
+      "estimation_method_and_family": "mlr (F1)",
+      "formula_or_architecture": "y = 18979.3 (-170.419)*Avg_Temp_C",
+      "governing_standards": [
+        "ISO 50006:2014 (Energy baseline and EnPIs)",
+        "ISO 50015:2014 (M&V of energy performance)",
+        "ASHRAE Guideline 14-2014",
+        "EVO IPMVP Core Concepts (Option C)"
+      ],
+      "notes": "Phase 6 Gate G6 CLI locked baseline & Excel formula round-trip check",
+      "relevant_variables": [
+        "Avg_Temp_C"
+      ],
+      "static_factors_guidance": "Facility floor area, primary HVAC/process equipment topology, and core operating shifts assumed invariant; non-routine adjustments required upon static-factor change.",
+      "validity_domain_summary": {
+        "drivers_monitored": [
+          "Avg_Temp_C"
+        ],
+        "n_training_obs": 36
+      }
+    },
+    "lock_id": "lock-4a691b354f3f",
+    "locked_at_utc": "2026-11-13T21:53:39.101485+00:00",
+    "locked_by": "cli-audit",
+    "manifest_path": "/tmp/eb_cli_lock_zw454xu5/cli-phase6__Energy_kWh__v001.lock.json",
+    "model_name": "mlr",
+    "override_record": null,
+    "preprocessing_summary": {},
+    "previous_lock_sha256": null,
+    "random_seed": 42,
+    "record_sha256": "c47ee10dcfd9fe790182ab82ed5b69f7799bc258043a2283a3b68d4ac51f76b2",
+    "run_id": "cli-phase6",
+    "selected_features": [
+      "Avg_Temp_C"
+    ],
+    "target": "Energy_kWh",
+    "tcp_snapshot": {
+      "alpha": 0.05,
+      "confidence": 0.95,
+      "lock_sha256": "5f9032ba287826132eb31d940dab64fd8c0ab931f0ec22f7ef0aaa639b34bd93"
+    },
+    "thresholds": {
+      "max_cvrmse": 15.0,
+      "max_nmbe": 5.0,
+      "min_r2": 0.75
+    },
+    "validity_envelope": {
+      "bounds": {
+        "Avg_Temp_C": {
+          "driver": "Avg_Temp_C",
+          "max": 24.04,
+          "median": 11.934999999999999,
+          "min": 0.01,
+          "p01": 0.35650000000000004,
+          "p05": 1.1275,
+          "p95": 23.375,
+          "p99": 23.8755
+        }
+      },
+      "drivers": [
+        "Avg_Temp_C"
+      ],
+      "hull_drivers": [
+        "Avg_Temp_C"
+      ],
+      "hull_vertices": [],
+      "mahalanobis_center": [
+        11.945277777777777
+      ],
+      "mahalanobis_threshold_99": 2.312993661159725,
+      "n_training_obs": 36
+    },
+    "version": 1,
+    "vsg_snapshot": {
+      "accepted": true,
+      "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+      "included": [
+        "Avg_Temp_C"
+      ]
+    }
+  },
+  "ok": true,
+  "verified_artifact_sha256": "f048ec950a7e91e083834288d3b017287f73506f9317c148d191b4d67fcd19f3"
+}
