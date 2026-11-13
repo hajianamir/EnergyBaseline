@@ -119,33 +119,34 @@ def run_benchmark_1m(*, total_rows: int = 1_000_000, page_size: int = 512, max_c
             f"LRU page bound exceeded: {model.peak_resident_rows} > {max_allowed_resident}"
         )
         assert model.fetched_row_count == 21 * page_size
+        source.close()
         table_paging_ms = (time.perf_counter() - t_tbl0) * 1000.0
 
         # 2. Streaming sufficient-statistics OLS baseline recovery across all 1,000,000 rows (row-group by row-group)
         t_ols0 = time.perf_counter()
-        pf = pq.ParquetFile(pq_path)
         xtx = np.zeros((4, 4), dtype=float)
         xty = np.zeros(4, dtype=float)
-        y_Preview_chunks: list[np.ndarray] = []
+        y_preview_chunks: list[np.ndarray] = []
         n_seen = 0
 
-        for rg in range(pf.metadata.num_row_groups):
-            rg_tbl = pf.read_row_group(rg, columns=["temp_c", "occupancy", "energy_kwh"])
-            tc = rg_tbl.column("temp_c").to_numpy(zero_copy_only=False)
-            oc = rg_tbl.column("occupancy").to_numpy(zero_copy_only=False)
-            yv = rg_tbl.column("energy_kwh").to_numpy(zero_copy_only=False)
-            y_Preview_chunks.append(yv)
-            D_rg = np.column_stack(
-                [
-                    np.ones(tc.size, dtype=float),
-                    np.maximum(0.0, HEAT_BASE_C - tc),
-                    np.maximum(0.0, tc - COOL_BASE_C),
-                    oc,
-                ]
-            )
-            xtx += D_rg.T @ D_rg
-            xty += D_rg.T @ yv
-            n_seen += int(tc.size)
+        with pq.ParquetFile(pq_path) as pf:
+            for rg in range(pf.metadata.num_row_groups):
+                rg_tbl = pf.read_row_group(rg, columns=["temp_c", "occupancy", "energy_kwh"])
+                tc = rg_tbl.column("temp_c").to_numpy(zero_copy_only=False)
+                oc = rg_tbl.column("occupancy").to_numpy(zero_copy_only=False)
+                yv = rg_tbl.column("energy_kwh").to_numpy(zero_copy_only=False)
+                y_preview_chunks.append(yv)
+                D_rg = np.column_stack(
+                    [
+                        np.ones(tc.size, dtype=float),
+                        np.maximum(0.0, HEAT_BASE_C - tc),
+                        np.maximum(0.0, tc - COOL_BASE_C),
+                        oc,
+                    ]
+                )
+                xtx += D_rg.T @ D_rg
+                xty += D_rg.T @ yv
+                n_seen += int(tc.size)
 
         assert n_seen == total_rows
         beta_hat = np.linalg.solve(xtx, xty)
@@ -158,8 +159,8 @@ def run_benchmark_1m(*, total_rows: int = 1_000_000, page_size: int = 512, max_c
         assert abs(float(beta_hat[3]) - PLANTED_OCC_SLOPE) < 0.15
 
         # 3. 1,000,000-row LTTB and M4 chart downsampling
-        y_1m = np.concatenate(y_Preview_chunks)
-        del y_Preview_chunks
+        y_1m = np.concatenate(y_preview_chunks)
+        del y_preview_chunks
         x_1m = np.arange(total_rows, dtype=float)
         lttb_res = lttb_downsample(x_1m, y_1m, threshold=2000)
         m4_res = m4_downsample(x_1m, y_1m, pixel_width=800)

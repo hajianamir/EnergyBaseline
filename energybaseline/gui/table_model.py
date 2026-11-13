@@ -139,19 +139,26 @@ class ParquetPagedSource(CallableChunkSource):
         max_cached_pages: int = 8,
     ) -> None:
         self.parquet_path = Path(parquet_path)
-        pf = pq.ParquetFile(self.parquet_path)
-        self._pf = pf
-        total = int(pf.metadata.num_rows)
-        cols = [str(name) for name in pf.schema_arrow.names if not str(name).startswith("__index_level_")]
-
-        # Pre-compute cumulative row-group boundaries (metadata only — zero data rows read!)
-        bounds: list[tuple[int, int, int]] = []
-        cursor = 0
-        for rg in range(pf.metadata.num_row_groups):
-            n_rg = int(pf.metadata.row_group(rg).num_rows)
-            bounds.append((rg, cursor, cursor + n_rg))
-            cursor += n_rg
+        with pq.ParquetFile(self.parquet_path) as pf:
+            total = int(pf.metadata.num_rows)
+            cols = [str(name) for name in pf.schema_arrow.names if not str(name).startswith("__index_level_")]
+            bounds: list[tuple[int, int, int]] = []
+            cursor = 0
+            for rg in range(pf.metadata.num_row_groups):
+                n_rg = int(pf.metadata.row_group(rg).num_rows)
+                bounds.append((rg, cursor, cursor + n_rg))
+                cursor += n_rg
         self._rg_bounds = bounds
+        last_rg: dict[str, Any] = {"idx": -1, "tbl": None}
+
+        def _get_rg_table(rg_idx: int) -> Any:
+            if last_rg["idx"] == rg_idx and last_rg["tbl"] is not None:
+                return last_rg["tbl"]
+            with pq.ParquetFile(self.parquet_path) as pf_rg:
+                tbl_rg = pf_rg.read_row_group(rg_idx, columns=cols)
+            last_rg["idx"] = rg_idx
+            last_rg["tbl"] = tbl_rg
+            return tbl_rg
 
         def _read_slice(start: int, stop: int) -> dict[str, np.ndarray]:
             if stop <= start:
@@ -162,7 +169,7 @@ class ParquetPagedSource(CallableChunkSource):
                     continue
                 if rg_start >= stop:
                     break
-                tbl = self._pf.read_row_group(rg_idx, columns=cols)
+                tbl = _get_rg_table(rg_idx)
                 loc_s = max(0, start - rg_start)
                 loc_e = min(rg_stop - rg_start, stop - rg_start)
                 sliced = tbl.slice(loc_s, loc_e - loc_s)
@@ -170,6 +177,7 @@ class ParquetPagedSource(CallableChunkSource):
                     chunks[c].append(sliced.column(c).to_numpy(zero_copy_only=False))
             return {c: (np.concatenate(chunks[c]) if chunks[c] else np.empty(0)) for c in cols}
 
+        self._clear_rg_cache = lambda: last_rg.update({"idx": -1, "tbl": None})
         super().__init__(
             total_rows=total,
             columns=cols,
@@ -177,6 +185,11 @@ class ParquetPagedSource(CallableChunkSource):
             page_size=page_size,
             max_cached_pages=max_cached_pages,
         )
+
+    def close(self) -> None:
+        """Release any cached Arrow buffers (file handles are already closed after each row-group read)."""
+        self._clear_rg_cache()
+        self._cache.clear()
 
 
 def _format_cell_display(val: Any, decimals: int) -> tuple[str, Any]:

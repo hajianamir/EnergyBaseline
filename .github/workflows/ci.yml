@@ -70,7 +70,7 @@ jobs:
 
       - name: Gate G1 unit tests (gates + DB config)
         run: |
-          python -m pytest -q tests/gates/ tests/test_config_db.py
+          python -m pytest -q --junitxml=pytest-gates.xml tests/gates/ tests/test_config_db.py
 
       - name: Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
         run: |
@@ -81,7 +81,7 @@ jobs:
 
       - name: Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
         run: |
-          python -m pytest -q tests/gates/test_phase5_f1_f10_models.py tests/gates/test_phase5_mining_isolation_and_perf.py
+          python -m pytest -q --junitxml=pytest-g5.xml tests/gates/test_phase5_f1_f10_models.py tests/gates/test_phase5_mining_isolation_and_perf.py
           python scripts/benchmarks/bench_1m.py --out artifacts/phase5/ci_bench_1m.json
 
       - name: Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models >= 80%)
@@ -92,7 +92,7 @@ jobs:
       - name: Emit pytest failure annotations on error
         if: failure()
         run: |
-          python scripts/ci_junit_annotations.py pytest-core.xml
+          python -c "import glob, subprocess, sys; [subprocess.call([sys.executable, 'scripts/ci_junit_annotations.py', f]) for f in sorted(glob.glob('pytest-*.xml'))]"
 
       - name: GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
         run: |

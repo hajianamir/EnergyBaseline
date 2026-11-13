@@ -3,7 +3,7 @@
   "downsampling": {
     "lttb_2000": {
       "compression_ratio": 500.0,
-      "elapsed_ms": 145.2099,
+      "elapsed_ms": 169.6343,
       "envelope_max_error": 1.62032087,
       "envelope_min_error": 0.0,
       "max_abs_interp_error": 96.29179839,
@@ -14,7 +14,7 @@
     },
     "m4_800px": {
       "compression_ratio": 312.8911,
-      "elapsed_ms": 29.6038,
+      "elapsed_ms": 39.6538,
       "envelope_max_error": 0.0,
       "envelope_min_error": 0.0,
       "max_abs_interp_error": 97.5949459,
@@ -30,18 +30,18 @@
     "python": "3.11.2"
   },
   "memory": {
-    "current_traced_mib": 17.891,
-    "peak_traced_mib": 38.929
+    "current_traced_mib": 17.76,
+    "peak_traced_mib": 38.799
   },
   "ok": true,
   "parquet": {
     "file_size_mib": 34.183,
     "row_groups": 20,
     "total_rows": 1000000,
-    "write_elapsed_ms": 294.47
+    "write_elapsed_ms": 338.08
   },
   "streaming_ols_1m": {
-    "elapsed_ms": 37.36,
+    "elapsed_ms": 47.12,
     "planted": {
       "base_load": 120.0,
       "cdd_slope": 6.1,
@@ -56,7 +56,7 @@
     }
   },
   "table_paging": {
-    "elapsed_ms": 41.55,
+    "elapsed_ms": 16.3,
     "fetch_more_calls": 21,
     "fetched_rows": 10752,
     "full_frame_materialized": false,
@@ -71,5 +71,5 @@
     ],
     "total_source_rows": 1000000
   },
-  "total_wall_seconds": 0.5668
+  "total_wall_seconds": 0.6385
 }
