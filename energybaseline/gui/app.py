@@ -53,8 +53,9 @@ def main(argv: list[str] | None = None) -> int:
     raw_argv = list(sys.argv if argv is None else [sys.argv[0], *argv])
     opts, qt_rest = _parse_cli_options(raw_argv)
 
-    os.environ.setdefault("QT_API", "pyside6")
-    os.environ.setdefault("QT_ENABLE_HIGHDPI_SCALING", "1")
+    from ..config.runtime_env import configure_qt_runtime_env, is_interactive_ui
+
+    configure_qt_runtime_env(enable_highdpi=True)
     ensure_dirs()
     setup_logging()
 
@@ -103,7 +104,7 @@ def main(argv: list[str] | None = None) -> int:
     def hook(et, ev, tb):
         txt = "".join(traceback.format_exception(et, ev, tb))
         log.error("unhandled exception:\n%s", txt)
-        if os.environ.get("EB_NONINTERACTIVE") != "1" and opts.auto_close_ms is None:
+        if is_interactive_ui() and opts.auto_close_ms is None:
             try:
                 QMessageBox.critical(
                     None,

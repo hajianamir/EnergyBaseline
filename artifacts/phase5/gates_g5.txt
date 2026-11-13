@@ -1,0 +1,19 @@
+=== ruff check . && ruff format --check . ===
+All checks passed!
+59 files already formatted
+=== pyflakes energybaseline ===
+=== guard scripts + gen_matrix --check ===
+OK [guard_web_free] clean (/home/user/EnergyBaseline)
+OK [guard_env_readers] clean (/home/user/EnergyBaseline)
+OK [guard_tests_integrity] verified 4 baseline test files
+OK [guard_no_qthread_compute] clean (/home/user/EnergyBaseline)
+OK [gen_matrix] verified 251 requirement IDs (131 done)
+=== canonical hygiene checks ===
+OK: zero os.environ outside config/
+OK: zero DATABASE_URL in launcher.py
+OK: zero pickle.load in energybaseline/
+OK: zero web imports in energybaseline/
+OK: zero post_hoc outside gui/
+=== immutable baseline SHA-256 checks ===
+1c633e61e328b34b883571ae25a92cf6a390e6f2752871331545d70a5b553afe  LICENSE
+6f3abde78940ac71c104a32305c7a69bc2a9c90a09f6660a332de0eac467f3dc  tests/.baseline.sha256

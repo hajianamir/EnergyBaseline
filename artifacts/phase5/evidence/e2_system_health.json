@@ -1,0 +1,73 @@
+{
+  "app_version": "3.0.0",
+  "command": "system.health",
+  "compliance_core": {
+    "multiple_testing_corrections": [
+      "none",
+      "bonferroni",
+      "holm",
+      "benjamini_hochberg",
+      "benjamini_yekutieli"
+    ],
+    "non_disableable_integrity_rules": [
+      "DST_DUPLICATE_TIMESTAMPS",
+      "TARGET_AS_PREDICTOR",
+      "TARGET_LEAKAGE_MT2",
+      "TIME_ORDER_VIOLATION"
+    ],
+    "test_catalog_ids": [
+      "T1",
+      "T10",
+      "T11",
+      "T12",
+      "T13",
+      "T14",
+      "T2",
+      "T3",
+      "T4",
+      "T5",
+      "T6",
+      "T7",
+      "T8",
+      "T9"
+    ]
+  },
+  "database": {
+    "banner_level": "none",
+    "fallback": true,
+    "masked_url": "sqlite:////tmp/eb_g5_health_WLeXsM/data/app.db",
+    "pragmas": {
+      "busy_timeout": 5000,
+      "foreign_keys": 1,
+      "journal_mode": "wal",
+      "synchronous": 1,
+      "temp_store": 2
+    },
+    "rung": "eb_home",
+    "selftest": {
+      "banner_level": "none",
+      "banner_text": "",
+      "fallback": true,
+      "masked_url": "sqlite:////tmp/eb_g5_health_WLeXsM/data/app.db",
+      "ok": true,
+      "rung": "eb_home",
+      "url": "sqlite:////tmp/eb_g5_health_WLeXsM/data/app.db",
+      "writable": true
+    }
+  },
+  "ok": true,
+  "paths": {
+    "app_home": "/tmp/eb_g5_health_WLeXsM",
+    "cache_dir": "/tmp/eb_g5_health_WLeXsM/cache"
+  },
+  "payload_sha256": "717a303f72d613a968d9f7b318b12cf4b3f93f9de0e28999c98dc167f1bef183",
+  "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+  "pool": {
+    "active_job_count": 0,
+    "max_workers": 1,
+    "orphan_count": 0,
+    "protocol_version": "1.0",
+    "state": "idle"
+  },
+  "python_version": "3.11.2"
+}

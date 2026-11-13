@@ -15,8 +15,7 @@ requirements:
   priority: M
   phase: 0
   status: done
-  title: Pin exact runtime/dev dependencies, compile SHA-256 requirements.lock, remove WeasyPrint, and publish
-    SUPPORT_MATRIX.
+  title: Pin exact runtime/dev dependencies, compile SHA-256 requirements.lock, remove WeasyPrint, and publish SUPPORT_MATRIX.
   code_refs:
   - requirements.in
   - requirements.txt
@@ -66,8 +65,8 @@ requirements:
   priority: M
   phase: 0
   status: done
-  title: Author deviations, assumptions, not_implemented, SECURITY, THIRD_PARTY_NOTICES, SUPPORT_MATRIX, CHANGELOG,
-    and sign script.
+  title: Author deviations, assumptions, not_implemented, SECURITY, THIRD_PARTY_NOTICES, SUPPORT_MATRIX, CHANGELOG, and sign
+    script.
   code_refs:
   - docs/deviations.md
   - docs/assumptions.md
@@ -92,8 +91,7 @@ requirements:
   priority: M
   phase: 0
   status: done
-  title: Restore green baseline test suite via deterministic session .xlsx fixture and parametrized MLP/LSTM
-    small-data contract.
+  title: Restore green baseline test suite via deterministic session .xlsx fixture and parametrized MLP/LSTM small-data contract.
   code_refs:
   - tests/conftest.py
   - tests/test_pipeline.py
@@ -176,8 +174,7 @@ requirements:
   priority: M
   phase: 2
   status: done
-  title: Read-only SQL connector rejects DDL/DML/multi-statement queries via sqlglot AST and driver read-only
-    mode.
+  title: Read-only SQL connector rejects DDL/DML/multi-statement queries via sqlglot AST and driver read-only mode.
   code_refs:
   - energybaseline/core/sqlsource.py
   test_ids:
@@ -258,17 +255,20 @@ requirements:
 - id: AC-13
   priority: M
   phase: 5
-  status: planned
-  title: Model registry evaluates F1..F10 families gated by TCP and sample-size minimums with explicit status
-    register.
-  code_refs: []
-  test_ids: []
+  status: done
+  title: Model registry evaluates F1..F10 families gated by TCP and sample-size minimums with explicit status register.
+  code_refs:
+  - energybaseline/models/__init__.py
+  - energybaseline/models/base.py
+  - energybaseline/models/f6_neural.py
+  test_ids:
+  - tests/gates/test_phase5_f1_f10_models.py::test_gated_f1_f10_catalog_requires_vsg_tcp_and_builds_complete_register
+  - tests/gates/test_phase5_f1_f10_models.py::test_f6_neural_mlp_and_pytorch_lstm_planted_recovery_and_sample_size_skip
 - id: AC-14
   priority: M
   phase: 5
   status: planned
-  title: Strict temporal split and nested walk-forward CV prevent future data leakage in scaling, imputation,
-    and lags.
+  title: Strict temporal split and nested walk-forward CV prevent future data leakage in scaling, imputation, and lags.
   code_refs: []
   test_ids: []
 - id: AC-15
@@ -282,8 +282,7 @@ requirements:
   priority: M
   phase: 6
   status: planned
-  title: Uncertainty quantification calibrates 80%/95% prediction intervals via MAPIE EnbPI/ACI within +/-5
-    pp coverage.
+  title: Uncertainty quantification calibrates 80%/95% prediction intervals via MAPIE EnbPI/ACI within +/-5 pp coverage.
   code_refs: []
   test_ids: []
 - id: AC-17
@@ -345,8 +344,7 @@ requirements:
   priority: M
   phase: 3/8
   status: in_progress
-  title: Desktop UX satisfies wizard flow, keyboard accessibility, WCAG AA contrast, and 100%/125%/150% DPI
-    scaling.
+  title: Desktop UX satisfies wizard flow, keyboard accessibility, WCAG AA contrast, and 100%/125%/150% DPI scaling.
   code_refs:
   - energybaseline/core/cache.py
   - energybaseline/gui/pages_setup.py
@@ -403,10 +401,12 @@ requirements:
 - id: AC-30
   priority: M
   phase: 5
-  status: planned
+  status: done
   title: Degree-day / 3P-4P-5P ASHRAE Guideline 14 change-point models fitted with knot uncertainty.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/models/f2_ashrae.py
+  test_ids:
+  - tests/gates/test_phase5_f1_f10_models.py::test_f2_ashrae_2p_3p_4p_5p_planted_knots_and_hdd_cdd
 - id: AC-31
   priority: M
   phase: 6
@@ -559,8 +559,7 @@ requirements:
   priority: M
   phase: 3
   status: done
-  title: Typed stage contract connecting Ingest -> VSG -> TCP -> Candidate Gen -> Fit/CV -> Score -> UQ ->
-    Report.
+  title: Typed stage contract connecting Ingest -> VSG -> TCP -> Candidate Gen -> Fit/CV -> Score -> UQ -> Report.
   code_refs:
   - energybaseline/core/vsg.py
   - energybaseline/core/tcp.py
@@ -608,8 +607,7 @@ requirements:
   priority: M
   phase: 1
   status: done
-  title: 'SQLite pragmas enforced on every connection: WAL journal_mode, foreign_keys=ON, busy_timeout=5000,
-    synchronous=NORMAL.'
+  title: 'SQLite pragmas enforced on every connection: WAL journal_mode, foreign_keys=ON, busy_timeout=5000, synchronous=NORMAL.'
   code_refs:
   - energybaseline/db/session.py
   - energybaseline/launcher.py
@@ -620,8 +618,7 @@ requirements:
   priority: M
   phase: 1
   status: done
-  title: Exclusive Alembic migration execution at startup (Base.metadata.create_all removed from production
-    startup).
+  title: Exclusive Alembic migration execution at startup (Base.metadata.create_all removed from production startup).
   code_refs:
   - energybaseline/db/session.py
   - energybaseline/db/migrate.py
@@ -652,8 +649,7 @@ requirements:
   priority: M
   phase: 1
   status: planned
-  title: Normalized tables for projects, datasets, runs, targets, VSG logs, TCP profiles, model registers,
-    and monitors.
+  title: Normalized tables for projects, datasets, runs, targets, VSG logs, TCP profiles, model registers, and monitors.
   code_refs: []
   test_ids: []
 - id: DB-7
@@ -725,8 +721,7 @@ requirements:
   priority: M
   phase: 1
   status: planned
-  title: Step-by-step navigation rail covering Project, Data, VSG/Quality, Baseline Run, Results, Monitoring,
-    and Reports.
+  title: Step-by-step navigation rail covering Project, Data, VSG/Quality, Baseline Run, Results, Monitoring, and Reports.
   code_refs: []
   test_ids: []
 - id: SHL-3
@@ -766,8 +761,7 @@ requirements:
   priority: M
   phase: 1
   status: done
-  title: Global unhandled exception hook writing crash diagnostics locally and presenting actionable recovery
-    dialog.
+  title: Global unhandled exception hook writing crash diagnostics locally and presenting actionable recovery dialog.
   code_refs:
   - energybaseline/gui/app.py
   test_ids:
@@ -931,8 +925,7 @@ requirements:
   priority: M
   phase: 1
   status: planned
-  title: Zero unencrypted secret keys or plaintext connection passwords written to disk, SQLite, or config
-    files.
+  title: Zero unencrypted secret keys or plaintext connection passwords written to disk, SQLite, or config files.
   code_refs: []
   test_ids: []
 - id: SCR-4
@@ -960,8 +953,7 @@ requirements:
   priority: M
   phase: 1
   status: done
-  title: In-memory secret handling minimizing lifetime of plaintext password strings during SQL connection
-    setup.
+  title: In-memory secret handling minimizing lifetime of plaintext password strings during SQL connection setup.
   code_refs:
   - energybaseline/gui/commands.py
   - energybaseline/core/pool.py
@@ -983,8 +975,7 @@ requirements:
   priority: M
   phase: 2
   status: done
-  title: Timestamp parsing supporting ISO-8601, locale formats, explicit timezone/DST handling, and monotonicity
-    sort.
+  title: Timestamp parsing supporting ISO-8601, locale formats, explicit timezone/DST handling, and monotonicity sort.
   code_refs:
   - energybaseline/core/temporal.py
   test_ids:
@@ -1024,8 +1015,8 @@ requirements:
   priority: M
   phase: 2
   status: done
-  title: Leak-free missing-value policy (bounded linear/time interpolation for short gaps, MICE/flagging for
-    drivers, never imputing targets across long shutdowns).
+  title: Leak-free missing-value policy (bounded linear/time interpolation for short gaps, MICE/flagging for drivers, never
+    imputing targets across long shutdowns).
   code_refs:
   - energybaseline/core/quality.py
   - energybaseline/db/models.py
@@ -1052,8 +1043,7 @@ requirements:
   priority: M
   phase: 2
   status: done
-  title: Read-only external SQL ingestion validated by sqlglot AST (SELECT/WITH only), row limit, and query
-    timeout.
+  title: Read-only external SQL ingestion validated by sqlglot AST (SELECT/WITH only), row limit, and query timeout.
   code_refs:
   - energybaseline/core/sqlsource.py
   - energybaseline/core/schema.py
@@ -1189,8 +1179,7 @@ requirements:
   priority: M
   phase: 3
   status: done
-  title: Structured AutoDecisionEntry recording parameter, chosen value, candidate space, rule, metric evidence,
-    and timestamp.
+  title: Structured AutoDecisionEntry recording parameter, chosen value, candidate space, rule, metric evidence, and timestamp.
   code_refs:
   - energybaseline/core/auto.py
   test_ids:
@@ -1221,8 +1210,7 @@ requirements:
   priority: M
   phase: 3
   status: done
-  title: Automatic degree-day base temperature grid search and change-point knot initialization on training
-    fold.
+  title: Automatic degree-day base temperature grid search and change-point knot initialization on training fold.
   code_refs:
   - energybaseline/core/features.py
   - energybaseline/core/tcp.py
@@ -1296,8 +1284,7 @@ requirements:
   priority: M
   phase: 3
   status: done
-  title: 'TCP Dimension 5: Trend strength and deterministic vs stochastic unit-root profile (ADF + KPSS joint
-    matrix).'
+  title: 'TCP Dimension 5: Trend strength and deterministic vs stochastic unit-root profile (ADF + KPSS joint matrix).'
   code_refs:
   - energybaseline/core/tcp.py
   - energybaseline/core/store.py
@@ -1390,8 +1377,7 @@ requirements:
   priority: M
   phase: 3
   status: done
-  title: 'TCP Dimension 14: Persisted JSON Target Characterization Profile gating candidate model families
-    and CV strategy.'
+  title: 'TCP Dimension 14: Persisted JSON Target Characterization Profile gating candidate model families and CV strategy.'
   code_refs:
   - energybaseline/core/tcp.py
   - energybaseline/core/store.py
@@ -1423,8 +1409,7 @@ requirements:
   priority: M
   phase: 4
   status: done
-  title: 'Two-group location comparison: Welch t-test with Mann-Whitney U and Brunner-Munzel non-parametric
-    fallbacks.'
+  title: 'Two-group location comparison: Welch t-test with Mann-Whitney U and Brunner-Munzel non-parametric fallbacks.'
   code_refs:
   - energybaseline/tests_catalog/t3_autocorrelation.py
   - energybaseline/tests_catalog/t14_causal_group.py
@@ -1435,8 +1420,7 @@ requirements:
   priority: M
   phase: 4
   status: done
-  title: 'Multi-group comparison: One-way ANOVA / Welch ANOVA with Kruskal-Wallis and Dunn/Nemenyi post-hoc
-    tests.'
+  title: 'Multi-group comparison: One-way ANOVA / Welch ANOVA with Kruskal-Wallis and Dunn/Nemenyi post-hoc tests.'
   code_refs:
   - energybaseline/tests_catalog/t4_normality.py
   - energybaseline/tests_catalog/t14_causal_group.py
@@ -1447,8 +1431,7 @@ requirements:
   priority: M
   phase: 4
   status: done
-  title: 'Structural break tests: Known-date Chow F-test, unknown-date Quandt-Andrews sup-F, and non-parametric
-    Pettitt test.'
+  title: 'Structural break tests: Known-date Chow F-test, unknown-date Quandt-Andrews sup-F, and non-parametric Pettitt test.'
   code_refs:
   - energybaseline/tests_catalog/t5_heteroskedasticity.py
   - energybaseline/tests_catalog/t7_structural_break_chow.py
@@ -1498,8 +1481,7 @@ requirements:
   priority: M
   phase: 4
   status: done
-  title: 'Seasonality significance suite: Kruskal-Wallis seasonal test, QS test, and STL seasonal strength
-    threshold.'
+  title: 'Seasonality significance suite: Kruskal-Wallis seasonal test, QS test, and STL seasonal strength threshold.'
   code_refs:
   - energybaseline/tests_catalog/t9_pettitt.py
   - energybaseline/tests_catalog/t2_seasonality.py
@@ -1539,8 +1521,7 @@ requirements:
   priority: M
   phase: 4
   status: done
-  title: 'Outlier and influential observation suite: Studentized residuals with Bonferroni bound, Cook''s distance,
-    and Grubbs/ESD.'
+  title: 'Outlier and influential observation suite: Studentized residuals with Bonferroni bound, Cook''s distance, and Grubbs/ESD.'
   code_refs:
   - energybaseline/tests_catalog/t12_little_mcar.py
   - energybaseline/tests_catalog/t13_outlier_influence.py
@@ -1553,8 +1534,7 @@ requirements:
   priority: M
   phase: 4
   status: done
-  title: 'Forecast accuracy equivalence suite: Harvey-Leybourne-Newbold Diebold-Mariano test and Model Confidence
-    Set (MCS).'
+  title: 'Forecast accuracy equivalence suite: Harvey-Leybourne-Newbold Diebold-Mariano test and Model Confidence Set (MCS).'
   code_refs:
   - energybaseline/tests_catalog/t13_outlier_influence.py
   - energybaseline/tests_catalog/t10_diebold_mariano.py
@@ -1576,8 +1556,8 @@ requirements:
   priority: M
   phase: 4
   status: done
-  title: Unified immutable TestResult schema (test_id, name, statistic, df, p_raw, p_adj, alpha, decision,
-    effect_size, assumptions_met, fallback_used, interpretation).
+  title: Unified immutable TestResult schema (test_id, name, statistic, df, p_raw, p_adj, alpha, decision, effect_size, assumptions_met,
+    fallback_used, interpretation).
   code_refs:
   - energybaseline/tests_catalog/tc_assumptions.py
   test_ids:
@@ -1586,8 +1566,8 @@ requirements:
   priority: M
   phase: 4
   status: done
-  title: Minimum sample size and degeneracy pre-checks returning structured skipped/insufficient-data TestResult
-    instead of NaN/exception.
+  title: Minimum sample size and degeneracy pre-checks returning structured skipped/insufficient-data TestResult instead of
+    NaN/exception.
   code_refs:
   - energybaseline/tests_catalog/tc_assumptions.py
   - energybaseline/tests_catalog/__init__.py
@@ -1597,8 +1577,7 @@ requirements:
   priority: M
   phase: 4
   status: done
-  title: Automatic assumption verification before parametric tests with transparent switch to documented non-parametric
-    fallback.
+  title: Automatic assumption verification before parametric tests with transparent switch to documented non-parametric fallback.
   code_refs:
   - energybaseline/tests_catalog/tc_assumptions.py
   - energybaseline/tests_catalog/ci_method.py
@@ -1609,8 +1588,8 @@ requirements:
   priority: M
   phase: 4
   status: done
-  title: Benjamini-Hochberg False Discovery Rate (BH-FDR) multiplicity adjustment per hypothesis family preserving
-    both p_raw and p_adj.
+  title: Benjamini-Hochberg False Discovery Rate (BH-FDR) multiplicity adjustment per hypothesis family preserving both p_raw
+    and p_adj.
   code_refs:
   - energybaseline/tests_catalog/tc_assumptions.py
   test_ids:
@@ -1651,8 +1630,7 @@ requirements:
   priority: M
   phase: 4
   status: done
-  title: PR staleness gate (test_reference_staleness.py) verifying SHA-256 parity between each .R script and
-    its .json fixture.
+  title: PR staleness gate (test_reference_staleness.py) verifying SHA-256 parity between each .R script and its .json fixture.
   code_refs:
   - tests/test_reference_staleness.py
   - energybaseline/tests_catalog/tc_assumptions.py
@@ -1663,8 +1641,8 @@ requirements:
   priority: M
   phase: 0
   status: in_progress
-  title: Two-OS GitHub Actions matrix (windows-latest, ubuntu-latest) executing hashed lockfile install, linters,
-    gates, coverage, and GUI smoke.
+  title: Two-OS GitHub Actions matrix (windows-latest, ubuntu-latest) executing hashed lockfile install, linters, gates, coverage,
+    and GUI smoke.
   code_refs:
   - .github/workflows/ci.yml
   test_ids:
@@ -1673,8 +1651,7 @@ requirements:
   priority: M
   phase: 0
   status: in_progress
-  title: 'Automated supply-chain checks on every CI run: pip-audit vulnerability scan and reproducible CycloneDX
-    SBOM upload.'
+  title: 'Automated supply-chain checks on every CI run: pip-audit vulnerability scan and reproducible CycloneDX SBOM upload.'
   code_refs:
   - .github/workflows/ci.yml
   - requirements.lock
@@ -1684,8 +1661,7 @@ requirements:
   priority: M
   phase: 4
   status: done
-  title: Nightly R reference workflow executing tests/reference/*.R in clean R and opening issue on numerical
-    divergence.
+  title: Nightly R reference workflow executing tests/reference/*.R in clean R and opening issue on numerical divergence.
   code_refs:
   - .github/workflows/r-reference.yml
   - energybaseline/tests_catalog/r_reference_validator.py
@@ -1697,99 +1673,118 @@ requirements:
   priority: M
   phase: 9
   status: planned
-  title: Automated Windows PyInstaller packaging workflow producing Full/Lite bundles, SHA256SUMS, and self-signed
-    verification receipt.
+  title: Automated Windows PyInstaller packaging workflow producing Full/Lite bundles, SHA256SUMS, and self-signed verification
+    receipt.
   code_refs: []
   test_ids: []
 - id: F1
   priority: M
   phase: 5
-  status: planned
+  status: done
   title: Ordinary Least Squares, Weighted Least Squares, and HAC (Newey-West) linear energy baseline models.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/models/f1_baseline.py
+  test_ids:
+  - tests/gates/test_phase5_f1_f10_models.py::test_f1_ols_wls_hac_planted_effect_recovery_and_ci
 - id: F2
   priority: M
   phase: 5
-  status: planned
-  title: ASHRAE Guideline 14 / ISO 50006 piecewise change-point models (2P, 3P-cooling, 3P-heating, 4P, 5P)
-    and variable-base HDD/CDD.
-  code_refs: []
-  test_ids: []
+  status: done
+  title: ASHRAE Guideline 14 / ISO 50006 piecewise change-point models (2P, 3P-cooling, 3P-heating, 4P, 5P) and variable-base
+    HDD/CDD.
+  code_refs:
+  - energybaseline/models/f2_ashrae.py
+  test_ids:
+  - tests/gates/test_phase5_f1_f10_models.py::test_f2_ashrae_2p_3p_4p_5p_planted_knots_and_hdd_cdd
 - id: F3
   priority: M
   phase: 5
-  status: planned
+  status: done
   title: 'Regularized and robust linear models: Ridge, Lasso, ElasticNet, HuberRegressor, and Quantile Regression.'
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/models/f3_regularized.py
+  - energybaseline/core/models.py
+  test_ids:
+  - tests/gates/test_phase5_f1_f10_models.py::test_f3_regularized_path_outlier_robustness_and_above_3000_rows
 - id: F4
   priority: M
   phase: 5
-  status: planned
+  status: done
   title: Polynomial, spline / GAM-like basis regressions, and interaction-term linear baselines.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/models/f4_basis.py
+  test_ids:
+  - tests/gates/test_phase5_f1_f10_models.py::test_f4_basis_splines_polynomial_and_interactions_planted_recovery
 - id: F5
   priority: M
   phase: 5
-  status: planned
-  title: 'Tree and gradient-boosted ensembles: RandomForest, ExtraTrees, XGBoost, LightGBM, and CatBoost with
-    monotonic constraints.'
-  code_refs: []
-  test_ids: []
+  status: done
+  title: 'Tree and gradient-boosted ensembles: RandomForest, ExtraTrees, XGBoost, LightGBM, and CatBoost with monotonic constraints.'
+  code_refs:
+  - energybaseline/models/f5_ensemble.py
+  test_ids:
+  - tests/gates/test_phase5_f1_f10_models.py::test_f5_ensembles_planted_recovery_and_strict_monotonic_constraints
 - id: F6
   priority: M
   phase: 5
-  status: planned
-  title: 'Neural baselines: scikit-learn MLPRegressor (always available) and PyTorch CPU LSTM (Full profile;
-    clean skip in Lite) gated by sample size.'
-  code_refs: []
-  test_ids: []
+  status: done
+  title: 'Neural baselines: scikit-learn MLPRegressor (always available) and PyTorch CPU LSTM (Full profile; clean skip in
+    Lite) gated by sample size.'
+  code_refs:
+  - energybaseline/models/f6_neural.py
+  - energybaseline/models/base.py
+  test_ids:
+  - tests/gates/test_phase5_f1_f10_models.py::test_f6_neural_mlp_and_pytorch_lstm_planted_recovery_and_sample_size_skip
 - id: F7
   priority: M
   phase: 5
-  status: planned
-  title: 'Dynamic regression and classical time-series models: SARIMAX / ARIMAX with exogenous drivers and
-    ETS/Holt-Winters.'
-  code_refs: []
-  test_ids: []
+  status: done
+  title: 'Dynamic regression and classical time-series models: SARIMAX / ARIMAX with exogenous drivers and ETS/Holt-Winters.'
+  code_refs:
+  - energybaseline/models/f7_timeseries.py
+  test_ids:
+  - tests/gates/test_phase5_f1_f10_models.py::test_f7_sarimax_arimax_and_ets_planted_recovery
 - id: F8
   priority: M
   phase: 5
-  status: planned
+  status: done
   title: Regime-switching / operational-mode segmented baselines stratified by plant state or calendar regime.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/models/f8_regime.py
+  - energybaseline/mining/clustering.py
+  test_ids:
+  - tests/gates/test_phase5_f1_f10_models.py::test_f8_regime_segmented_recovery_and_kendalls_w_rank_agreement
+  - tests/gates/test_phase5_mining_isolation_and_perf.py::test_mt5_proof_discovery_cluster_labels_never_reach_any_model
 - id: F9
   priority: S
   phase: 5
-  status: planned
-  title: Decomposition + regression hybrid baselines (STL/Fourier + regressor; optional Prophet adapter when
-    installed).
-  code_refs: []
-  test_ids: []
+  status: done
+  title: Decomposition + regression hybrid baselines (STL/Fourier + regressor; optional Prophet adapter when installed).
+  code_refs:
+  - energybaseline/models/f9_decomposition.py
+  test_ids:
+  - tests/gates/test_phase5_f1_f10_models.py::test_f9_decomposition_hybrid_planted_recovery_and_exact_variable_breakdown
 - id: F10
   priority: M
   phase: 5
-  status: planned
+  status: done
   title: Constrained convex stacking / weighted ensemble of top diverse candidate families.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/models/f10_stacking.py
+  test_ids:
+  - tests/gates/test_phase5_f1_f10_models.py::test_f10_convex_stacking_simplex_weights_and_oof_blend
 - id: VAL-1
   priority: M
   phase: 5
   status: planned
-  title: Strict chronological train/validation/holdout splitting (random k-fold shuffling forbidden on time
-    series).
+  title: Strict chronological train/validation/holdout splitting (random k-fold shuffling forbidden on time series).
   code_refs: []
   test_ids: []
 - id: VAL-2
   priority: M
   phase: 5
   status: planned
-  title: Expanding and rolling walk-forward cross-validation with configurable horizon and embargo/gap matching
-    max lag.
+  title: Expanding and rolling walk-forward cross-validation with configurable horizon and embargo/gap matching max lag.
   code_refs: []
   test_ids: []
 - id: VAL-3
@@ -1803,80 +1798,77 @@ requirements:
   priority: M
   phase: 5
   status: planned
-  title: Pipeline-encapsulated preprocessing (imputation, scaling, degree-day knots, target lags) fitted exclusively
-    per fold.
+  title: Pipeline-encapsulated preprocessing (imputation, scaling, degree-day knots, target lags) fitted exclusively per fold.
   code_refs: []
   test_ids: []
 - id: VAL-5
   priority: M
   phase: 5
   status: planned
-  title: Automated data-leakage canary test verifying future target perturbations never alter historical fold
-    predictions.
+  title: Automated data-leakage canary test verifying future target perturbations never alter historical fold predictions.
   code_refs: []
   test_ids: []
 - id: VAL-6
   priority: M
   phase: 5
   status: planned
-  title: 'ASHRAE Guideline 14 compliance metrics computed out-of-sample: CV(RMSE), NMBE, R2, MAE, MAPE, sMAPE,
-    WAPE.'
+  title: 'ASHRAE Guideline 14 compliance metrics computed out-of-sample: CV(RMSE), NMBE, R2, MAE, MAPE, sMAPE, WAPE.'
   code_refs: []
   test_ids: []
 - id: VAL-7
   priority: M
   phase: 5
-  status: planned
-  title: Complete Model Evaluation Register logging every candidate's metrics, fit duration, status, and rejection/skip
-    reason.
-  code_refs: []
-  test_ids: []
+  status: done
+  title: Complete Model Evaluation Register logging every candidate's metrics, fit duration, status, and rejection/skip reason.
+  code_refs:
+  - energybaseline/models/base.py
+  - energybaseline/models/__init__.py
+  - energybaseline/core/pipeline.py
+  test_ids:
+  - tests/gates/test_phase5_f1_f10_models.py::test_gated_f1_f10_catalog_requires_vsg_tcp_and_builds_complete_register
 - id: SC-1
   priority: M
   phase: 6
   status: planned
-  title: Multi-criteria composite baseline score with documented, user-inspectable weights across accuracy,
-    bias, parsimony, and diagnostics.
+  title: Multi-criteria composite baseline score with documented, user-inspectable weights across accuracy, bias, parsimony,
+    and diagnostics.
   code_refs: []
   test_ids: []
 - id: SC-2
   priority: M
   phase: 6
   status: planned
-  title: Hard eligibility gates (ASHRAE Guideline 14 / user thresholds on NMBE and CV(RMSE)) applied prior
-    to composite ranking.
+  title: Hard eligibility gates (ASHRAE Guideline 14 / user thresholds on NMBE and CV(RMSE)) applied prior to composite ranking.
   code_refs: []
   test_ids: []
 - id: SC-3
   priority: M
   phase: 6
   status: planned
-  title: Residual diagnostic penalty terms incorporating autocorrelation (T7), heteroscedasticity (T8), and
-    extreme bias.
+  title: Residual diagnostic penalty terms incorporating autocorrelation (T7), heteroscedasticity (T8), and extreme bias.
   code_refs: []
   test_ids: []
 - id: SC-4
   priority: M
   phase: 6
   status: planned
-  title: Parsimony and interpretability tie-breaking favoring simpler physical/linear baselines within the
-    Model Confidence Set (T13).
+  title: Parsimony and interpretability tie-breaking favoring simpler physical/linear baselines within the Model Confidence
+    Set (T13).
   code_refs: []
   test_ids: []
 - id: SC-5
   priority: M
   phase: 6
   status: planned
-  title: Physical plausibility verifier checking expected driver signs (e.g. HDD/CDD/production >= 0) and extrapolation
-    stability.
+  title: Physical plausibility verifier checking expected driver signs (e.g. HDD/CDD/production >= 0) and extrapolation stability.
   code_refs: []
   test_ids: []
 - id: SC-6
   priority: M
   phase: 6
   status: planned
-  title: Global and local driver attribution (analytical coefficients + CI for linear/CP; TreeSHAP/KernelSHAP
-    for nonlinear models).
+  title: Global and local driver attribution (analytical coefficients + CI for linear/CP; TreeSHAP/KernelSHAP for nonlinear
+    models).
   code_refs: []
   test_ids: []
 - id: SC-7
@@ -1897,56 +1889,50 @@ requirements:
   priority: M
   phase: 6
   status: planned
-  title: Baseline validity domain envelope recording min/max/convex-hull quantiles of training drivers for
-    extrapolation warnings.
+  title: Baseline validity domain envelope recording min/max/convex-hull quantiles of training drivers for extrapolation warnings.
   code_refs: []
   test_ids: []
 - id: SC-10
   priority: M
   phase: 6
   status: planned
-  title: Pickle-free model artifact persistence using joblib + JSON metadata + verified SHA-256 digest before
-    load.
+  title: Pickle-free model artifact persistence using joblib + JSON metadata + verified SHA-256 digest before load.
   code_refs: []
   test_ids: []
 - id: UQ-1
   priority: M
   phase: 6
   status: planned
-  title: Distribution-free conformal prediction intervals for time series via MAPIE EnbPI / Adaptive Conformal
-    Inference (ACI).
+  title: Distribution-free conformal prediction intervals for time series via MAPIE EnbPI / Adaptive Conformal Inference (ACI).
   code_refs: []
   test_ids: []
 - id: UQ-2
   priority: M
   phase: 6
   status: planned
-  title: Parametric OLS/HAC prediction intervals and quantile-regression intervals cross-checked against conformal
-    bounds.
+  title: Parametric OLS/HAC prediction intervals and quantile-regression intervals cross-checked against conformal bounds.
   code_refs: []
   test_ids: []
 - id: UQ-3
   priority: M
   phase: 6
   status: planned
-  title: Empirical holdout coverage calibration diagnostics verifying 80% and 95% nominal intervals within
-    +/-5 percentage points.
+  title: Empirical holdout coverage calibration diagnostics verifying 80% and 95% nominal intervals within +/-5 percentage
+    points.
   code_refs: []
   test_ids: []
 - id: UQ-4
   priority: M
   phase: 6
   status: planned
-  title: Cumulative energy savings uncertainty propagation accounting for serial correlation across reporting
-    periods (ASHRAE/IPMVP).
+  title: Cumulative energy savings uncertainty propagation accounting for serial correlation across reporting periods (ASHRAE/IPMVP).
   code_refs: []
   test_ids: []
 - id: UQ-5
   priority: M
   phase: 6
   status: planned
-  title: Fractional Savings Uncertainty (FSU) calculation at user-selected confidence level (default 90% /
-    95%).
+  title: Fractional Savings Uncertainty (FSU) calculation at user-selected confidence level (default 90% / 95%).
   code_refs: []
   test_ids: []
 - id: PM-1
@@ -1967,8 +1953,7 @@ requirements:
   priority: M
   phase: 7
   status: planned
-  title: Period-by-period and cumulative EnPI ratio, absolute savings (E_adj - E_actual), and propagated confidence
-    bands.
+  title: Period-by-period and cumulative EnPI ratio, absolute savings (E_adj - E_actual), and propagated confidence bands.
   code_refs: []
   test_ids: []
 - id: PM-4
@@ -2003,8 +1988,8 @@ requirements:
   priority: M
   phase: 7
   status: planned
-  title: Covariate distribution drift monitoring on drivers using Population Stability Index (PSI) and two-sample
-    KS/Wasserstein tests.
+  title: Covariate distribution drift monitoring on drivers using Population Stability Index (PSI) and two-sample KS/Wasserstein
+    tests.
   code_refs: []
   test_ids: []
 - id: DR-2
@@ -2025,24 +2010,23 @@ requirements:
   priority: M
   phase: 7
   status: planned
-  title: Distinction between genuine efficiency improvement (sustained negative consumption residual inside
-    valid driver domain) and model breakdown.
+  title: Distinction between genuine efficiency improvement (sustained negative consumption residual inside valid driver domain)
+    and model breakdown.
   code_refs: []
   test_ids: []
 - id: DR-5
   priority: M
   phase: 7
   status: planned
-  title: Structured ISO 50006 re-baselining advisory summarizing triggered drift indicators and recommended
-    engineering action.
+  title: Structured ISO 50006 re-baselining advisory summarizing triggered drift indicators and recommended engineering action.
   code_refs: []
   test_ids: []
 - id: MT-1
   priority: M
   phase: 7
   status: planned
-  title: Simultaneous selection and execution of multiple EnPI target columns (e.g. Electricity_kWh, NaturalGas_Nm3,
-    Steam_t) in one project.
+  title: Simultaneous selection and execution of multiple EnPI target columns (e.g. Electricity_kWh, NaturalGas_Nm3, Steam_t)
+    in one project.
   code_refs: []
   test_ids: []
 - id: MT-2
@@ -2056,16 +2040,15 @@ requirements:
   priority: M
   phase: 7
   status: planned
-  title: 'Fault isolation: data or convergence failure on one target records target-scoped error while remaining
-    targets complete.'
+  title: 'Fault isolation: data or convergence failure on one target records target-scoped error while remaining targets complete.'
   code_refs: []
   test_ids: []
 - id: MT-4
   priority: S
   phase: 7
   status: planned
-  title: Site-level Rollup summary converting multi-carrier baselines and savings into unified energy/cost/CO2e
-    totals where factors are provided.
+  title: Site-level Rollup summary converting multi-carrier baselines and savings into unified energy/cost/CO2e totals where
+    factors are provided.
   code_refs: []
   test_ids: []
 - id: MT-5
@@ -2100,8 +2083,7 @@ requirements:
   priority: M
   phase: 7
   status: planned
-  title: 100,000-row sub-hourly/hourly pipeline completion <= 10 min with peak RSS <= 4 GB on D2 reference
-    machine.
+  title: 100,000-row sub-hourly/hourly pipeline completion <= 10 min with peak RSS <= 4 GB on D2 reference machine.
   code_refs: []
   test_ids: []
 - id: PER-5
@@ -2122,8 +2104,8 @@ requirements:
   priority: M
   phase: 7
   status: planned
-  title: Deterministic seed derivation from dataset SHA-256 + target + explicit user seed propagated to NumPy,
-    scikit-learn, GBDTs, Optuna, and PyTorch.
+  title: Deterministic seed derivation from dataset SHA-256 + target + explicit user seed propagated to NumPy, scikit-learn,
+    GBDTs, Optuna, and PyTorch.
   code_refs: []
   test_ids: []
 - id: REP-2
@@ -2137,64 +2119,60 @@ requirements:
   priority: M
   phase: 7
   status: planned
-  title: Complete provenance manifest per run recording package versions, OS, CPU count, dataset SHA-256, config
-    JSON, and commit SHA.
+  title: Complete provenance manifest per run recording package versions, OS, CPU count, dataset SHA-256, config JSON, and
+    commit SHA.
   code_refs: []
   test_ids: []
 - id: REP-4
   priority: M
   phase: 7
   status: planned
-  title: One-click audit archive export (.zip) containing config, AutoDecisionLog, TestResult catalog, metrics,
-    and SHA256SUMS.
+  title: One-click audit archive export (.zip) containing config, AutoDecisionLog, TestResult catalog, metrics, and SHA256SUMS.
   code_refs: []
   test_ids: []
 - id: REP-5
   priority: M
   phase: 7
   status: planned
-  title: Audit archive verifier re-validating file hashes and reproducing report tables from persisted run
-    state.
+  title: Audit archive verifier re-validating file hashes and reproducing report tables from persisted run state.
   code_refs: []
   test_ids: []
 - id: RPT-1
   priority: M
   phase: 8
   status: planned
-  title: Pure-Python ISO 50006 / IPMVP PDF report renderer built exclusively on ReportLab Platypus (D5=A; zero
-    GTK/WeasyPrint).
+  title: Pure-Python ISO 50006 / IPMVP PDF report renderer built exclusively on ReportLab Platypus (D5=A; zero GTK/WeasyPrint).
   code_refs: []
   test_ids: []
 - id: RPT-2
   priority: M
   phase: 8
   status: planned
-  title: Self-contained single-file offline HTML report with embedded base64/SVG charts and zero external CDN
-    links.
+  title: Self-contained single-file offline HTML report with embedded base64/SVG charts and zero external CDN links.
   code_refs: []
   test_ids: []
 - id: RPT-3
   priority: M
   phase: 8
   status: planned
-  title: 'Mandatory report sections: Executive Summary, Data & VSG Audit, TCP, Statistical Test Catalog (p_raw
-    & p_adj), Model Register, Selected Baseline & UQ, Monitoring/CUSUM, and AutoDecisionLog.'
+  title: 'Mandatory report sections: Executive Summary, Data & VSG Audit, TCP, Statistical Test Catalog (p_raw & p_adj), Model
+    Register, Selected Baseline & UQ, Monitoring/CUSUM, and AutoDecisionLog.'
   code_refs: []
   test_ids: []
 - id: RPT-4
   priority: M
   phase: 8
   status: planned
-  title: Publication-grade vector/high-DPI matplotlib diagnostic charts (Actual vs Predicted, Residual ACF/QQ,
-    CUSUM, Driver Partial Response, Prediction Intervals).
+  title: Publication-grade vector/high-DPI matplotlib diagnostic charts (Actual vs Predicted, Residual ACF/QQ, CUSUM, Driver
+    Partial Response, Prediction Intervals).
   code_refs: []
   test_ids: []
 - id: RPT-5
   priority: M
   phase: 8
   status: planned
-  title: Deterministic PDF generation (fixed ReportLab creation timestamp/ID metadata in reproducible mode
-    for regression testing).
+  title: Deterministic PDF generation (fixed ReportLab creation timestamp/ID metadata in reproducible mode for regression
+    testing).
   code_refs: []
   test_ids: []
 - id: RPT-6
@@ -2208,32 +2186,28 @@ requirements:
   priority: M
   phase: 8
   status: planned
-  title: Explicit disclosure banner in every report listing any manual overrides, skipped model families, or
-    assumption fallbacks.
+  title: Explicit disclosure banner in every report listing any manual overrides, skipped model families, or assumption fallbacks.
   code_refs: []
   test_ids: []
 - id: UX-1
   priority: M
   phase: 8
   status: planned
-  title: Guided workflow wizard with clear prerequisite gating so users cannot run modeling before valid target/time
-    selection.
+  title: Guided workflow wizard with clear prerequisite gating so users cannot run modeling before valid target/time selection.
   code_refs: []
   test_ids: []
 - id: UX-2
   priority: M
   phase: 8
   status: planned
-  title: Interactive data preview table with column types, missingness badges, unit selectors, and summary
-    sparklines.
+  title: Interactive data preview table with column types, missingness badges, unit selectors, and summary sparklines.
   code_refs: []
   test_ids: []
 - id: UX-3
   priority: M
   phase: 8
   status: planned
-  title: Dedicated VSG & Data Quality review screen allowing sorting, filtering, and audited manual override
-    of driver screening.
+  title: Dedicated VSG & Data Quality review screen allowing sorting, filtering, and audited manual override of driver screening.
   code_refs: []
   test_ids: []
 - id: UX-4
@@ -2246,34 +2220,39 @@ requirements:
 - id: UX-5
   priority: M
   phase: 8
-  status: planned
-  title: Model Evaluation Register table displaying every candidate family, metrics, composite score, MCS membership,
-    and status badge.
-  code_refs: []
-  test_ids: []
+  status: done
+  title: Model Evaluation Register table displaying every candidate family, metrics, composite score, MCS membership, and
+    status badge.
+  code_refs:
+  - energybaseline/gui/pages_results.py
+  - energybaseline/gui/table_model.py
+  test_ids:
+  - tests/gui/test_phase5_gui_tables_ux5_ux8.py::test_results_page_zero_qtablewidget_ux5_register_and_ux8_accessibility
 - id: UX-6
   priority: M
   phase: 8
   status: planned
-  title: Statistical Test Catalog explorer showing statistic, p_raw, p_adj (BH-FDR), assumption status, and
-    plain-English interpretation.
+  title: Statistical Test Catalog explorer showing statistic, p_raw, p_adj (BH-FDR), assumption status, and plain-English
+    interpretation.
   code_refs: []
   test_ids: []
 - id: UX-7
   priority: M
   phase: 8
   status: planned
-  title: AutoDecisionLog inspector allowing filter/search across all automatic rules and one-click switch to
-    Manual override.
+  title: AutoDecisionLog inspector allowing filter/search across all automatic rules and one-click switch to Manual override.
   code_refs: []
   test_ids: []
 - id: UX-8
   priority: M
   phase: 8
-  status: planned
+  status: done
   title: Full keyboard tab order, shortcuts for primary actions, and accessible labels on inputs and tables.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/gui/pages_results.py
+  - energybaseline/gui/widgets.py
+  test_ids:
+  - tests/gui/test_phase5_gui_tables_ux5_ux8.py::test_results_page_zero_qtablewidget_ux5_register_and_ux8_accessibility
 - id: UX-9
   priority: M
   phase: 8
@@ -2292,48 +2271,46 @@ requirements:
   priority: M
   phase: 8
   status: planned
-  title: Clean HiDPI layout rendering verified at 100%, 125%, and 150% Windows display scaling without clipped
-    text.
+  title: Clean HiDPI layout rendering verified at 100%, 125%, and 150% Windows display scaling without clipped text.
   code_refs: []
   test_ids: []
 - id: UX-12
   priority: M
   phase: 8
   status: planned
-  title: Automated pytest-qt widget test suite covering navigation, validation states, cancel flow, and results
-    views.
+  title: Automated pytest-qt widget test suite covering navigation, validation states, cancel flow, and results views.
   code_refs: []
   test_ids: []
 - id: DOM-1
   priority: M
   phase: 6
   status: planned
-  title: 'ISO 50006 terminology and workflow alignment: EnB (Energy Baseline), EnPI, relevant variables, static
-    factors, and baseline period vs reporting period.'
+  title: 'ISO 50006 terminology and workflow alignment: EnB (Energy Baseline), EnPI, relevant variables, static factors, and
+    baseline period vs reporting period.'
   code_refs: []
   test_ids: []
 - id: DOM-2
   priority: M
   phase: 6
   status: planned
-  title: ASHRAE Guideline 14-2014 / IPMVP Option C statistical acceptance criteria checks (monthly CV(RMSE)
-    <= 15%, NMBE within +/-5%; hourly CV(RMSE) <= 30%, NMBE within +/-10%).
+  title: ASHRAE Guideline 14-2014 / IPMVP Option C statistical acceptance criteria checks (monthly CV(RMSE) <= 15%, NMBE within
+    +/-5%; hourly CV(RMSE) <= 30%, NMBE within +/-10%).
   code_refs: []
   test_ids: []
 - id: DOM-3
   priority: M
   phase: 7
   status: planned
-  title: Explicit separation of routine adjustments (weather/production model) and documented non-routine adjustments
-    (static factor events).
+  title: Explicit separation of routine adjustments (weather/production model) and documented non-routine adjustments (static
+    factor events).
   code_refs: []
   test_ids: []
 - id: PKG-1
   priority: M
   phase: 9
   status: in_progress
-  title: Reproducible one-folder Windows PyInstaller build (scripts/build_exe.py --profile full|lite) producing
-    EnergyBaseline.exe + _internal/.
+  title: Reproducible one-folder Windows PyInstaller build (scripts/build_exe.py --profile full|lite) producing EnergyBaseline.exe
+    + _internal/.
   code_refs:
   - scripts/build_exe.py
   - scripts/evidence/installer_smoke.ps1
@@ -2353,8 +2330,8 @@ requirements:
   priority: S
   phase: 9
   status: in_progress
-  title: Authenticode signing pipeline (scripts/sign/sign_artifacts.ps1); reclassified [S] per D1=B with mandatory
-    production cert trigger before external distribution.
+  title: Authenticode signing pipeline (scripts/sign/sign_artifacts.ps1); reclassified [S] per D1=B with mandatory production
+    cert trigger before external distribution.
   code_refs:
   - scripts/sign/sign_artifacts.ps1
   - docs/deviations.md
@@ -2364,8 +2341,7 @@ requirements:
   priority: M
   phase: 9
   status: planned
-  title: Installer / portable archive packaging including LICENSE, THIRD_PARTY_NOTICES.md, USER_GUIDE.md, and
-    sample generator.
+  title: Installer / portable archive packaging including LICENSE, THIRD_PARTY_NOTICES.md, USER_GUIDE.md, and sample generator.
   code_refs: []
   test_ids: []
 - id: PKG-5
@@ -2391,8 +2367,8 @@ requirements:
   priority: M
   phase: 3
   status: done
-  title: Deterministic result cache keyed by (data_hash, variable_set, test_id, parameters, seed, library_versions)
-    with selective stage invalidation.
+  title: Deterministic result cache keyed by (data_hash, variable_set, test_id, parameters, seed, library_versions) with selective
+    stage invalidation.
   code_refs:
   - energybaseline/core/cache.py
   - energybaseline/core/store.py

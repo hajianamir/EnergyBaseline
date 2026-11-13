@@ -6,12 +6,13 @@ from collections import deque
 from collections.abc import Sequence
 import hashlib
 import logging
-import os
 from pathlib import Path
 from typing import Any
 
 import pandas as pd
 from PySide6.QtCore import Qt, QTimer
+
+from ..config.runtime_env import is_interactive_ui
 from PySide6.QtWidgets import (
     QComboBox,
     QDialog,
@@ -71,7 +72,7 @@ from ..core.tcp import (
 from ..core.temporal import TemporalError, prepare_temporal
 from ..core.vsg import VALID_PRESETS, VariableSelectionGate, VSGValidationError
 from ..io.paths import PathGuardError, resolve_picked_path
-from .widgets import PasteTable, fill_table, make_table
+from .widgets import PasteTable, fill_table, make_form_grid, make_table
 
 log = logging.getLogger("energybaseline.gui")
 SAMPLING = [
@@ -102,7 +103,7 @@ AVAILABILITY_OPTS = [a.value for a in Availability]
 
 
 def _is_interactive() -> bool:
-    return os.environ.get("EB_NONINTERACTIVE") != "1"
+    return is_interactive_ui()
 
 
 def format_limitations_badges(provenance_payload: dict[str, Any] | None) -> list[str]:
@@ -253,8 +254,8 @@ class SetupPage(QWidget):
         self.left_tabs = QTabWidget()
         preview_tab = QWidget()
         ll = QVBoxLayout(preview_tab)
-        ll.addWidget(QLabel("<b>Data preview</b> (first rows, raw as imported)"))
-        self.preview = make_table(False)
+        ll.addWidget(QLabel("<b>Data preview</b> (paged view, raw as imported)"))
+        self.preview = make_table(False, accessible_name="Imported dataset preview table")
         ll.addWidget(self.preview, 3)
         ll.addWidget(QLabel("<b>Data dictionary / import validation</b>"))
         self.report = QTextEdit()
@@ -278,7 +279,7 @@ class SetupPage(QWidget):
         self.schema_status = QLabel("No schema loaded.")
         sbar.addWidget(self.schema_status)
         sl.addLayout(sbar)
-        self.schema_tbl = make_table(False)
+        self.schema_tbl = make_form_grid(False, accessible_name="Column schema metadata editor")
         self.schema_tbl.setColumnCount(7)
         self.schema_tbl.setHorizontalHeaderLabels(
             ["Column", "Role", "Quantity Type", "Inclusion", "Unit", "Availability", "Source"]
@@ -423,7 +424,7 @@ class SetupPage(QWidget):
         h2.addWidget(QLabel("to"))
         h2.addWidget(self.r1)
         f2.addRow("Reporting period (optional)", h2)
-        self.override_tbl = make_table(False)
+        self.override_tbl = make_form_grid(False, accessible_name="Per-target sampling override grid")
         self.override_tbl.setColumnCount(2)
         self.override_tbl.setHorizontalHeaderLabels(["Target", "Sampling override (per target)"])
         self.override_tbl.horizontalHeader().setStretchLastSection(True)
@@ -559,7 +560,7 @@ class SetupPage(QWidget):
         s.schema_id = store.save_dataset_schema(suggested, dataset_id=s.dataset_id, ingestion_summary=summary)
         self.schema_status.setText(f"Schema #{s.schema_id} (SHA {suggested.compute_sha256()[:10]}…)")
 
-        fill_table(self.preview, df.head(300))
+        fill_table(self.preview, df)
         dd = ingest.data_dictionary(df, s.time_col)
         s.data_dictionary = dd
         rep = ingest.import_report(df, s.time_col)

@@ -370,9 +370,9 @@ _WORKER_CANCEL_EVENT: Any = None
 def _worker_initializer(event_queue: Any, global_cancel_event: Any) -> None:
     """Executed inside every spawned worker process before handling requests."""
     global _WORKER_QUEUE, _WORKER_CANCEL_EVENT
-    os.environ["_EB_IN_WORKER"] = "1"
-    os.environ.setdefault("OMP_NUM_THREADS", "1")
-    os.environ.setdefault("MKL_NUM_THREADS", "1")
+    from ..config.runtime_env import mark_worker_process_env
+
+    mark_worker_process_env()
     _WORKER_QUEUE = event_queue
     _WORKER_CANCEL_EVENT = global_cancel_event
     with contextlib.suppress(Exception):
@@ -386,6 +386,8 @@ def _worker_initializer(event_queue: Any, global_cancel_event: Any) -> None:
 
 
 def _cmd_worker_ping(payload: dict[str, Any]) -> dict[str, Any]:
+    from ..config.runtime_env import is_in_worker_process
+
     req_ver = payload.get("protocol_version")
     if req_ver != PROTOCOL_VERSION:
         raise PoolHandshakeError(f"Protocol mismatch: worker={PROTOCOL_VERSION}, caller={req_ver}")
@@ -393,7 +395,7 @@ def _cmd_worker_ping(payload: dict[str, Any]) -> dict[str, Any]:
         "ok": True,
         "pid": os.getpid(),
         "protocol_version": PROTOCOL_VERSION,
-        "in_worker_guard": os.environ.get("_EB_IN_WORKER") == "1",
+        "in_worker_guard": is_in_worker_process(),
     }
     if _WORKER_QUEUE is not None:
         _WORKER_QUEUE.put({"type": "pong", "job_id": payload.get("job_id", ""), **reply})

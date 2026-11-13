@@ -517,6 +517,62 @@ def _cmd_r_references_check(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_clustering_validity(args: argparse.Namespace) -> int:
+    from .mining import build_optional_eda_attachment, discover_operating_regimes
+    from .models import compute_feature_consensus_f8
+
+    df, sha, vsg = _load_dataset_and_vsg(args.dataset, args.targets)
+    target = vsg.targets[0]
+    preds = [c for c in vsg.included_variables(target) if c in df.columns and c != target]
+    cluster_rep = discover_operating_regimes(df, preds, method=args.method, k_range=(2, 5), n_boot=20, seed=42)
+    clean_sub = df[[target, *preds]].dropna()
+    consensus = (
+        compute_feature_consensus_f8(clean_sub[preds], clean_sub[target].to_numpy(dtype=float), seed=42)
+        if len(preds) >= 2
+        else None
+    )
+    eda_att = build_optional_eda_attachment(df, target_col=target, predictor_cols=preds)
+    payload = {
+        "clustering": cluster_rep.to_dict(),
+        "dataset_sha256": sha,
+        "eda_attachment": eda_att.to_dict(),
+        "f8_feature_consensus": consensus,
+        "ok": True,
+        "target": target,
+    }
+    _write_or_print(payload, args.out)
+    return 0
+
+
+def _cmd_model_catalog(args: argparse.Namespace) -> int:
+    from .models import evaluate_f1_f10_catalog
+
+    df, sha, vsg = _load_dataset_and_vsg(args.dataset, args.targets)
+    vsg.accept()
+    tcp = TestConfigPanel(vsg)
+    lock_hash = tcp.lock_preregistration()
+    target = vsg.targets[0]
+    preds = [c for c in vsg.included_variables(target) if c in df.columns and c != target]
+    entries = evaluate_f1_f10_catalog(
+        df,
+        target_col=target,
+        predictor_cols=preds,
+        vsg=vsg,
+        tcp=tcp,
+        lite_profile=bool(args.lite),
+        seed=42,
+    )
+    payload = {
+        "dataset_sha256": sha,
+        "ok": True,
+        "register": [e.to_dict() for e in entries],
+        "target": target,
+        "tcp_lock_sha256": lock_hash,
+    }
+    _write_or_print(payload, args.out)
+    return 0
+
+
 CLI_COMMAND_HANDLERS: Mapping[str, Callable[[argparse.Namespace], int]] = MappingProxyType(
     {
         "schema-suggest": _cmd_schema_suggest,
@@ -533,6 +589,8 @@ CLI_COMMAND_HANDLERS: Mapping[str, Callable[[argparse.Namespace], int]] = Mappin
         "auto-log-hash": _cmd_auto_log_hash,
         "test-catalog": _cmd_test_catalog,
         "r-references-check": _cmd_r_references_check,
+        "clustering-validity": _cmd_clustering_validity,
+        "model-catalog": _cmd_model_catalog,
     }
 )
 
@@ -665,6 +723,18 @@ def build_parser() -> argparse.ArgumentParser:
     p_rr.add_argument("--scripts-dir", default=None, help="Optional directory containing <slug>.R scripts.")
     p_rr.add_argument("--max-age-days", type=int, default=14, help="Maximum allowed R reference age in days.")
     p_rr.add_argument("--out", default=None, help="Write JSON output to path.")
+
+    p_cv = sub.add_parser("clustering-validity", help="Emit Phase 5 clustering validity, bootstrap ARI, Kendall W, and descriptive EDA JSON.")
+    p_cv.add_argument("dataset", help="Path to dataset file.")
+    p_cv.add_argument("--targets", default="", help="Optional comma-separated target columns.")
+    p_cv.add_argument("--method", default="kmeans", choices=["kmeans", "gmm", "ward"], help="Clustering algorithm.")
+    p_cv.add_argument("--out", default=None, help="Write JSON output to path.")
+
+    p_mc = sub.add_parser("model-catalog", help="Evaluate Phase 5 F1..F10 baseline catalog & emit Model Evaluation Register JSON.")
+    p_mc.add_argument("dataset", help="Path to dataset file.")
+    p_mc.add_argument("--targets", default="", help="Optional comma-separated target columns.")
+    p_mc.add_argument("--lite", action="store_true", help="Simulate Lite build profile (skip PyTorch LSTM cleanly).")
+    p_mc.add_argument("--out", default=None, help="Write JSON output to path.")
 
     return parser
 

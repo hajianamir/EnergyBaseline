@@ -18,6 +18,7 @@ import numpy as np
 import pandas as pd
 
 from ..config import ensure_dirs
+from ..config.runtime_env import is_in_worker_process
 from .temporal import parse_timestamps
 
 
@@ -459,7 +460,7 @@ def load_file(
     source_sha = sha256_file(p)
     selector = f"sheet={sheet}|table={table}" if (sheet is not None or table is not None) else ""
 
-    if use_parquet_cache and ext in (".csv", ".txt", ".tsv", ".xlsx", ".xlsm", ".xls") and os.environ.get("_EB_IN_WORKER") != "1":
+    if use_parquet_cache and ext in (".csv", ".txt", ".tsv", ".xlsx", ".xlsm", ".xls") and not is_in_worker_process():
         cached = read_parquet_cache(source_sha, selector=selector, strict=False, cache_dir=cache_dir)
         if cached is not None:
             cached.attrs["ingest_meta"] = {"cache_hit": True, "source_sha256": source_sha}
@@ -501,7 +502,7 @@ def load_file(
     df.columns = [str(c).strip() for c in df.columns]
     df = coerce_numeric(df)
 
-    if use_parquet_cache and ext in (".csv", ".txt", ".tsv", ".xlsx", ".xlsm", ".xls") and os.environ.get("_EB_IN_WORKER") != "1":
+    if use_parquet_cache and ext in (".csv", ".txt", ".tsv", ".xlsx", ".xlsm", ".xls") and not is_in_worker_process():
         try:
             pq_path, pq_manifest = write_parquet_cache(
                 df,

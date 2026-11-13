@@ -5,7 +5,6 @@ from __future__ import annotations
 import contextlib
 import json
 import logging
-import os
 import threading
 import time
 from collections.abc import Callable, Iterator
@@ -15,6 +14,8 @@ from sqlalchemy import create_engine, event, inspect, text
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import StaticPool
+
+from ..config.runtime_env import is_in_worker_process
 
 from ..config.settings import (
     DEFAULT_SQLITE_URL,
@@ -54,7 +55,7 @@ _state: dict = {
 
 
 def _assert_not_worker() -> None:
-    if os.environ.get("_EB_IN_WORKER") == "1":
+    if is_in_worker_process():
         raise RuntimeError("SHL-5 violation: worker process must never open SQLite or ORM sessions.")
 
 

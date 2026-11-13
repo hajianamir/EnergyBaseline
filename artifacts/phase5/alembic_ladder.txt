@@ -1,0 +1,1 @@
+OK: alembic upgrade head -> downgrade base -> upgrade head

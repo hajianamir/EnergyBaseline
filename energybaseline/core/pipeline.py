@@ -71,6 +71,8 @@ class TargetResult:
     characterization: dict = field(default_factory=dict)
     compliance_tests: list = field(default_factory=list)
     test_catalog: list = field(default_factory=list)
+    eda_attachment: dict = field(default_factory=dict)
+    model_evaluation_register: list = field(default_factory=list)
     seconds: float = 0.0
 
 
@@ -224,6 +226,14 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
         )
         emit(14, "Exploratory analysis")
         res.eda = run_eda(prep.df, target, prep.predictors, g)
+        if bool(config.get("include_eda_attachment", True)):
+            from ..mining.eda_attach import build_optional_eda_attachment
+
+            res.eda_attachment = build_optional_eda_attachment(
+                prep.df,
+                target_col=target,
+                predictor_cols=prep.predictors,
+            ).to_dict()
         if auto.decide(
             "enable_mining",
             lambda: (
@@ -235,7 +245,10 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
             emit(18, "Data mining (clustering, anomalies, association, time-series)")
             res.mining = run_mining(prep.df, target, prep.predictors, g, seed, cancel)
         emit(34, "Feature engineering & selection")
-        spec, Xall, finfo = build_spec(prep.df, target, prep.predictors, prep.cat_cols, g, auto)
+        from ..mining.clustering import strip_discovery_cluster_labels
+
+        clean_model_df, _ = strip_discovery_cluster_labels(prep.df)
+        spec, Xall, finfo = build_spec(clean_model_df, target, prep.predictors, prep.cat_cols, g, auto)
         valid = prep.df[target].notna().values
         X, y = Xall[valid], prep.df.loc[valid, target].values.astype(float)
         if len(y) < 8:

@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   verify:
-    name: Phase 4 Gate G4 (${{ matrix.os }})
+    name: Phase 5 Gate G5 (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -70,7 +70,7 @@ jobs:
 
       - name: Gate G1 unit tests (gates + DB config)
         run: |
-          python -m pytest -q tests/gates/ tests/test_config_db.py
+          python -m pytest -q --junitxml=pytest-gates.xml tests/gates/ tests/test_config_db.py
 
       - name: Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
         run: |
@@ -79,19 +79,24 @@ jobs:
           python -m pytest -q tests/gates/test_phase4_g4b_t5_t9.py
           python -m pytest -q tests/gates/test_phase4_g4c_t10_t14.py
 
-      - name: Full test suite and coverage gate (S5 >= 60%, Phase 4 Core + TestsCatalog >= 80%)
+      - name: Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
         run: |
-          python -m pytest -q --junitxml=pytest-core.xml --cov=energybaseline/core --cov=energybaseline/tests_catalog --cov-report=xml:coverage.xml --cov-report=term --cov-fail-under=60
+          python -m pytest -q --junitxml=pytest-g5.xml tests/gates/test_phase5_f1_f10_models.py tests/gates/test_phase5_mining_isolation_and_perf.py
+          python scripts/benchmarks/bench_1m.py --out artifacts/phase5/ci_bench_1m.json
+
+      - name: Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models >= 80%)
+        run: |
+          python -m pytest -q --junitxml=pytest-core.xml --cov=energybaseline/core --cov=energybaseline/tests_catalog --cov=energybaseline/mining --cov=energybaseline/models --cov-report=xml:coverage.xml --cov-report=term --cov-fail-under=60
           python -m coverage report --fail-under=80
 
       - name: Emit pytest failure annotations on error
         if: failure()
         run: |
-          python scripts/ci_junit_annotations.py pytest-core.xml
+          python -c "import glob, subprocess, sys; [subprocess.call([sys.executable, 'scripts/ci_junit_annotations.py', f]) for f in sorted(glob.glob('pytest-*.xml'))]"
 
-      - name: GUI smoke, Phase 1 shell, Phase 2 schema & Phase 3 VSG/TCP tests (GUI >= 52%)
+      - name: GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
         run: |
-          python -m pytest -q tests/gui -p no:cacheprovider --cov=energybaseline/gui --cov-report=term --cov-fail-under=52
+          python -m pytest -q tests/gui -p no:cacheprovider --cov=energybaseline/gui --cov-report=term --cov-fail-under=56
 
       - name: Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
         if: matrix.os == 'windows-latest'
