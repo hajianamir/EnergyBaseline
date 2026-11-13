@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   verify:
-    name: Phase 3 Gate G3 (${{ matrix.os }})
+    name: Phase 4 Gate G4 (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -72,9 +72,16 @@ jobs:
         run: |
           python -m pytest -q tests/gates/ tests/test_config_db.py
 
-      - name: Full test suite and coverage gate (S5 >= 60%, Phase 3 Core >= 80%)
+      - name: Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
         run: |
-          python -m pytest -q --junitxml=pytest-core.xml --cov=energybaseline/core --cov-report=xml:coverage.xml --cov-report=term --cov-fail-under=60
+          python -m pytest -q tests/test_reference_staleness.py
+          python -m pytest -q tests/gates/test_phase4_g4a_t1_t4.py
+          python -m pytest -q tests/gates/test_phase4_g4b_t5_t9.py
+          python -m pytest -q tests/gates/test_phase4_g4c_t10_t14.py
+
+      - name: Full test suite and coverage gate (S5 >= 60%, Phase 4 Core + TestsCatalog >= 80%)
+        run: |
+          python -m pytest -q --junitxml=pytest-core.xml --cov=energybaseline/core --cov=energybaseline/tests_catalog --cov-report=xml:coverage.xml --cov-report=term --cov-fail-under=60
           python -m coverage report --fail-under=80
 
       - name: Emit pytest failure annotations on error

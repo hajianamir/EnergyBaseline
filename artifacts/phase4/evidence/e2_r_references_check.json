@@ -1,0 +1,222 @@
+{
+  "freshness": {
+    "checked_at_utc": "2026-11-13T16:21:31.227553+00:00",
+    "directory": "/home/user/EnergyBaseline/energybaseline/tests_catalog/r_references",
+    "entries": {
+      "chow": {
+        "age_days": 1.6816,
+        "cases_count": 2,
+        "date": "2026-11-12T00:00:00Z",
+        "file": "/home/user/EnergyBaseline/energybaseline/tests_catalog/r_references/chow.json",
+        "r_version": "4.4.1",
+        "stale": false,
+        "test_id": "T7"
+      },
+      "diebold_mariano": {
+        "age_days": 1.6816,
+        "cases_count": 2,
+        "date": "2026-11-12T00:00:00Z",
+        "file": "/home/user/EnergyBaseline/energybaseline/tests_catalog/r_references/diebold_mariano.json",
+        "r_version": "4.4.1",
+        "stale": false,
+        "test_id": "T10"
+      },
+      "little_mcar": {
+        "age_days": 1.6816,
+        "cases_count": 2,
+        "date": "2026-11-12T00:00:00Z",
+        "file": "/home/user/EnergyBaseline/energybaseline/tests_catalog/r_references/little_mcar.json",
+        "r_version": "4.4.1",
+        "stale": false,
+        "test_id": "T12"
+      },
+      "mcs": {
+        "age_days": 1.6816,
+        "cases_count": 2,
+        "date": "2026-11-12T00:00:00Z",
+        "file": "/home/user/EnergyBaseline/energybaseline/tests_catalog/r_references/mcs.json",
+        "r_version": "4.4.1",
+        "stale": false,
+        "test_id": "T10_MCS"
+      },
+      "nemenyi": {
+        "age_days": 1.6816,
+        "cases_count": 2,
+        "date": "2026-11-12T00:00:00Z",
+        "file": "/home/user/EnergyBaseline/energybaseline/tests_catalog/r_references/nemenyi.json",
+        "r_version": "4.4.1",
+        "stale": false,
+        "test_id": "T11"
+      },
+      "pettitt": {
+        "age_days": 1.6816,
+        "cases_count": 2,
+        "date": "2026-11-12T00:00:00Z",
+        "file": "/home/user/EnergyBaseline/energybaseline/tests_catalog/r_references/pettitt.json",
+        "r_version": "4.4.1",
+        "stale": false,
+        "test_id": "T9"
+      },
+      "quandt_andrews": {
+        "age_days": 1.6816,
+        "cases_count": 2,
+        "date": "2026-11-12T00:00:00Z",
+        "file": "/home/user/EnergyBaseline/energybaseline/tests_catalog/r_references/quandt_andrews.json",
+        "r_version": "4.4.1",
+        "stale": false,
+        "test_id": "T8"
+      }
+    },
+    "errors": [],
+    "max_age_days": 14,
+    "nightly_run_verified": false,
+    "ok": true
+  },
+  "ok": true,
+  "parity": {
+    "mismatches": [],
+    "ok": true,
+    "results": {
+      "chow": [
+        {
+          "case_id": "chow_stable_regime_null",
+          "err_p": 1.6753265441593612e-13,
+          "err_stat": 3.130497163578161e-13,
+          "py_p": 0.9996971780271675,
+          "py_stat": 0.0003028694706869503,
+          "r_p": 0.999697178027,
+          "r_stat": 0.000302869471
+        },
+        {
+          "case_id": "chow_known_midpoint_break",
+          "err_p": 1.8187818236195085e-38,
+          "err_stat": 3.410605131648481e-13,
+          "py_p": 1.8187818236195085e-38,
+          "py_stat": 595.7678829802023,
+          "r_p": 0.0,
+          "r_stat": 595.767882980202
+        }
+      ],
+      "diebold_mariano": [
+        {
+          "case_id": "dm_equal_predictive_accuracy_h1",
+          "err_p": 1.4277468096679513e-13,
+          "err_stat": 2.9515279109659787e-13,
+          "py_p": 0.9224729583508572,
+          "py_stat": -0.09773631214770485,
+          "r_p": 0.922472958351,
+          "r_stat": -0.097736312148
+        },
+        {
+          "case_id": "dm_superior_model1_h2",
+          "err_p": 7.034660571242455e-14,
+          "err_stat": 7.72715225139109e-14,
+          "py_p": 1.2252260703466057e-06,
+          "py_stat": -5.404892801027077,
+          "r_p": 1.225226e-06,
+          "r_stat": -5.404892801027
+        }
+      ],
+      "little_mcar": [
+        {
+          "case_id": "little_mcar_periodic_index_null",
+          "err_p": 1.0120237980970614e-11,
+          "err_stat": 4.9951709435447356e-11,
+          "py_p": 0.9984928252101203,
+          "py_stat": 0.11186781315004829,
+          "r_p": 0.9984928252,
+          "r_stat": 0.1118678132
+        },
+        {
+          "case_id": "little_mcar_threshold_dependent_mar",
+          "err_p": 2.305696237453651e-11,
+          "err_stat": 2.809485977195436e-11,
+          "py_p": 7.694303762546349e-11,
+          "py_stat": 53.2119769227281,
+          "r_p": 1e-10,
+          "r_stat": 53.2119769227
+        }
+      ],
+      "mcs": [
+        {
+          "case_id": "mcs_three_tied_models",
+          "err_p": 0.0,
+          "err_stat": 0.0,
+          "py_p": 0.7375,
+          "py_stat": 0.62759474,
+          "r_p": 0.7375,
+          "r_stat": 0.62759474
+        },
+        {
+          "case_id": "mcs_naive_mean_eliminated",
+          "err_p": 0.0,
+          "err_stat": 0.0,
+          "py_p": 0.0,
+          "py_stat": 1895.91133445,
+          "r_p": 0.0,
+          "r_stat": 1895.91133445
+        }
+      ],
+      "nemenyi": [
+        {
+          "case_id": "nemenyi_balanced_phase_shifted_null",
+          "err_p": 0.0,
+          "err_stat": 0.0,
+          "py_p": 1.0,
+          "py_stat": 0.0,
+          "r_p": 1.0,
+          "r_stat": 0.0
+        },
+        {
+          "case_id": "nemenyi_clear_rank_hierarchy",
+          "err_p": 0.0,
+          "err_stat": 4.831690603168681e-13,
+          "py_p": 0.0,
+          "py_stat": 12.649110640673516,
+          "r_p": 0.0,
+          "r_stat": 12.649110640674
+        }
+      ],
+      "pettitt": [
+        {
+          "case_id": "pettitt_stationary_null",
+          "err_p": 0.0,
+          "err_stat": 0.0,
+          "py_p": 1.0,
+          "py_stat": 52.0,
+          "r_p": 1.0,
+          "r_stat": 52.0
+        },
+        {
+          "case_id": "pettitt_step_shift_t25",
+          "err_p": 5.810351148790204e-14,
+          "err_stat": 0.0,
+          "py_p": 7.40989418964885e-08,
+          "py_stat": 603.0,
+          "r_p": 7.4099e-08,
+          "r_stat": 603.0
+        }
+      ],
+      "quandt_andrews": [
+        {
+          "case_id": "qa_no_break_null",
+          "err_p": 0.0,
+          "err_stat": 6.927791673660977e-14,
+          "py_p": 0.718,
+          "py_stat": 1.0194399578040694,
+          "r_p": 0.718,
+          "r_stat": 1.019439957804
+        },
+        {
+          "case_id": "qa_interior_regime_shift_t36",
+          "err_p": 0.0,
+          "err_stat": 5.684341886080802e-14,
+          "py_p": 0.002,
+          "py_stat": 481.24852729315296,
+          "r_p": 0.002,
+          "r_stat": 481.248527293153
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,1074 @@
+{
+  "alpha": 0.05,
+  "confidence_level": 0.95,
+  "correction": "benjamini_hochberg",
+  "decision_rule": "p_only",
+  "disabled_tests": [
+    "T7"
+  ],
+  "mode": "full",
+  "targets": {
+    "Energy_kWh": [
+      {
+        "alpha": 0.05,
+        "assumptions_checked": [
+          {
+            "action": "full_sample_retained",
+            "metric_name": "original_n",
+            "metric_value": 36.0,
+            "name": "large_n_subsampling_policy",
+            "passed": true,
+            "threshold": 4000
+          },
+          {
+            "action": "proceed_adf_kpss",
+            "metric_name": "std",
+            "metric_value": 3171.830633,
+            "name": "non_degenerate_variance",
+            "passed": true,
+            "threshold": 1e-12
+          },
+          {
+            "action": "switched_to_moving_block_bootstrap",
+            "metric_name": "lag1_r",
+            "metric_value": 0.4195,
+            "name": "serial_independence",
+            "passed": false,
+            "threshold": 0.2
+          }
+        ],
+        "assumptions_met": false,
+        "ci": {
+          "confidence_level": 0.95,
+          "estimate": 0.426212,
+          "high": 0.52262677,
+          "inference_label": "block_bootstrap",
+          "low": 0.03157614,
+          "method": "moving_block_bootstrap_percentile(b=3,B=250)",
+          "std_error": 0.13456569
+        },
+        "correction": "benjamini_hochberg",
+        "decision": "pass",
+        "decision_rule": "p_only",
+        "details": {
+          "adf_lags": 3,
+          "adf_p": 0.02752901,
+          "adf_statistic": -3.0870172,
+          "autocorrelation_check": {
+            "autocorrelated": true,
+            "lag1_r": 0.4195,
+            "ljung_box_p": 0.0002612,
+            "n": 36
+          },
+          "kpss_lags": 1,
+          "kpss_p": 0.1,
+          "kpss_statistic": 0.11648566,
+          "lock_custom_matrix_decision": true,
+          "matrix_cell": "stationary",
+          "matrix_force_fail": false,
+          "policy_evaluation_note": "p=0.1 > alpha=0.05 (p_only).",
+          "subsampling": {
+            "applied": false,
+            "max_fast_n": 4000,
+            "original_n": 36,
+            "strategy": "full_sample_exact",
+            "used_n": 36
+          }
+        },
+        "df": 27.0,
+        "downstream_action": "proceed_stationary",
+        "effect_size": 0.426212,
+        "effect_size_name": "ar1_persistence_abs_phi1",
+        "fallback_used": "moving_block_bootstrap",
+        "family": "stationarity_trend",
+        "inference_label": "block_bootstrap",
+        "interpretation": "ADF rejects unit root and KPSS retains level stationarity -> stationary series. (ADF=-3.087, p_ADF=0.02753; KPSS=0.116, p_KPSS=0.1; |phi_1|=0.426).",
+        "library_versions": {
+          "energybaseline": "3.0.0",
+          "numpy": "2.4.6",
+          "pandas": "3.1.1",
+          "scipy": "1.17.1",
+          "sklearn": "1.9.1",
+          "statsmodels": "0.15.0"
+        },
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "n_used": 36,
+        "name": "ADF + KPSS Joint Stationarity",
+        "p_adj": 0.1,
+        "p_raw": 0.1,
+        "rejected_null": false,
+        "stage": "pre_model",
+        "statistic": -3.0870172,
+        "subtest": "adf_kpss_2x2",
+        "target": "Energy_kWh",
+        "test_id": "T1",
+        "variable": "Energy_kWh"
+      },
+      {
+        "alpha": 0.05,
+        "assumptions_checked": [
+          {
+            "action": "full_sample_retained",
+            "metric_name": "original_n",
+            "metric_value": 36.0,
+            "name": "large_n_subsampling_policy",
+            "passed": true,
+            "threshold": 4800
+          },
+          {
+            "action": "canova_hansen_harmonic_f",
+            "metric_name": "shapiro_p",
+            "metric_value": 0.02667,
+            "name": "gaussian_innovations_for_harmonic_f",
+            "passed": true,
+            "threshold": 0.01
+          },
+          {
+            "action": "switched_to_moving_block_bootstrap",
+            "metric_name": "lag1_r",
+            "metric_value": 0.4195,
+            "name": "serial_independence",
+            "passed": false,
+            "threshold": 0.2
+          }
+        ],
+        "assumptions_met": false,
+        "ci": {
+          "confidence_level": 0.95,
+          "estimate": 0.89591324,
+          "high": 0.89591324,
+          "inference_label": "block_bootstrap",
+          "low": 0.12036704,
+          "method": "moving_block_bootstrap_percentile(b=12,B=200)",
+          "std_error": 0.17252394
+        },
+        "correction": "benjamini_hochberg",
+        "decision": "fail",
+        "decision_rule": "p_only",
+        "details": {
+          "acf_2s": 0.308877,
+          "acf_s": 0.54827,
+          "autocorrelation_check": {
+            "autocorrelated": true,
+            "lag1_r": 0.4195,
+            "ljung_box_p": 0.0002612,
+            "n": 36
+          },
+          "canova_hansen_f": 26.37826234,
+          "canova_hansen_p": 0.0,
+          "kruskal_wallis_h": 31.59459459,
+          "kruskal_wallis_p": 0.0008857,
+          "pacf_s": 0.112667,
+          "period": 12,
+          "policy_evaluation_note": "p=3.813e-09 <= alpha=0.05 (p_only).",
+          "qs_p": 8.3e-07,
+          "qs_statistic": 28.01036572,
+          "seasonality_detected": true,
+          "subsampling": {
+            "applied": false,
+            "max_fast_n": 4800,
+            "original_n": 36,
+            "strategy": "full_sample_exact",
+            "used_n": 36
+          }
+        },
+        "df": [
+          4.0,
+          30.0
+        ],
+        "downstream_action": "add_seasonal_harmonics_or_dummies",
+        "effect_size": 0.89591324,
+        "effect_size_name": "stl_seasonal_strength_fs",
+        "fallback_used": "moving_block_bootstrap",
+        "family": "stationarity_trend",
+        "inference_label": "block_bootstrap",
+        "interpretation": "Period s=12: significant unmodelled seasonality detected (canova_hansen_harmonic_f=26.378, p_raw=1.906e-09, STL Fs=0.896, ACF(s)=0.548, QS_p=8.272e-07).",
+        "library_versions": {
+          "energybaseline": "3.0.0",
+          "numpy": "2.4.6",
+          "pandas": "3.1.1",
+          "scipy": "1.17.1",
+          "sklearn": "1.9.1",
+          "statsmodels": "0.15.0"
+        },
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "n_used": 36,
+        "name": "Seasonality Detection (ACF/PACF, Canova-Hansen & STL Strength)",
+        "p_adj": 3.8e-09,
+        "p_raw": 1.9e-09,
+        "rejected_null": true,
+        "stage": "pre_model",
+        "statistic": 26.37826234,
+        "subtest": "canova_hansen_harmonic_f",
+        "target": "Energy_kWh",
+        "test_id": "T2",
+        "variable": "Energy_kWh"
+      },
+      {
+        "alpha": 0.05,
+        "assumptions_checked": [
+          {
+            "action": "full_sample_retained",
+            "metric_name": "original_n",
+            "metric_value": 36.0,
+            "name": "large_n_subsampling_policy",
+            "passed": true,
+            "threshold": 5000
+          },
+          {
+            "action": "standard_ljung_box",
+            "metric_name": "excess_kurtosis",
+            "metric_value": -0.49913,
+            "name": "finite_fourth_moment_homoscedastic_innovations",
+            "passed": true,
+            "threshold": 8.0
+          },
+          {
+            "action": "ci_via_block_bootstrap",
+            "metric_name": "lag1_r",
+            "metric_value": 0.338328,
+            "name": "autocorrelation_ci_calibration",
+            "passed": true,
+            "threshold": 0.2
+          }
+        ],
+        "assumptions_met": true,
+        "ci": {
+          "confidence_level": 0.95,
+          "estimate": 0.33832815,
+          "high": 0.45749681,
+          "inference_label": "block_bootstrap",
+          "low": -0.06522767,
+          "method": "moving_block_bootstrap_percentile(b=3,B=250)",
+          "std_error": 0.13592726
+        },
+        "correction": "benjamini_hochberg",
+        "decision": "fail",
+        "decision_rule": "p_only",
+        "details": {
+          "durbin_watson": 1.295095,
+          "excess_kurtosis": -0.49913,
+          "lag1_r": 0.338328,
+          "lags_tested": 10,
+          "ljung_box_p": 0.0,
+          "ljung_box_q": 72.47812779,
+          "max_bartlett_band": 0.326667,
+          "policy_evaluation_note": "p=1.47e-11 <= alpha=0.05 (p_only).",
+          "subsampling": {
+            "applied": false,
+            "max_fast_n": 5000,
+            "original_n": 36,
+            "strategy": "full_sample_exact",
+            "used_n": 36
+          }
+        },
+        "df": 10.0,
+        "downstream_action": "apply_hac_or_add_autoregressive_lags",
+        "effect_size": 0.33832815,
+        "effect_size_name": "lag1_autocorrelation_r",
+        "fallback_used": "moving_block_bootstrap",
+        "family": "dependence_collinearity",
+        "inference_label": "block_bootstrap",
+        "interpretation": "Ljung-Box Q(10)=72.478 (p_raw=1.47e-11), Durbin-Watson=1.295, lag-1 r=+0.338: serial autocorrelation present.",
+        "library_versions": {
+          "energybaseline": "3.0.0",
+          "numpy": "2.4.6",
+          "pandas": "3.1.1",
+          "scipy": "1.17.1",
+          "sklearn": "1.9.1",
+          "statsmodels": "0.15.0"
+        },
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "n_used": 36,
+        "name": "Ljung-Box & Durbin-Watson Autocorrelation",
+        "p_adj": 0.0,
+        "p_raw": 0.0,
+        "rejected_null": true,
+        "stage": "pre_model",
+        "statistic": 72.47812779,
+        "subtest": "ljung_box_dw",
+        "target": "Energy_kWh",
+        "test_id": "T3",
+        "variable": "Energy_kWh_residuals"
+      },
+      {
+        "alpha": 0.05,
+        "assumptions_checked": [
+          {
+            "action": "full_sample_retained",
+            "metric_name": "original_n",
+            "metric_value": 36.0,
+            "name": "large_n_subsampling_policy",
+            "passed": true,
+            "threshold": 5000
+          },
+          {
+            "action": "shapiro_wilk_primary",
+            "metric_name": "n_used",
+            "metric_value": 35.0,
+            "name": "shapiro_wilk_sample_cap",
+            "passed": true,
+            "threshold": 5000
+          },
+          {
+            "action": "switched_to_moving_block_bootstrap",
+            "metric_name": "lag1_r",
+            "metric_value": 0.338328,
+            "name": "serial_independence",
+            "passed": false,
+            "threshold": 0.2
+          }
+        ],
+        "assumptions_met": false,
+        "ci": {
+          "confidence_level": 0.95,
+          "estimate": 0.25857734,
+          "high": 0.81333393,
+          "inference_label": "block_bootstrap",
+          "low": 0.11938176,
+          "method": "moving_block_bootstrap_percentile(b=3,B=200)",
+          "std_error": 0.19064384
+        },
+        "correction": "benjamini_hochberg",
+        "decision": "pass",
+        "decision_rule": "p_only",
+        "details": {
+          "anderson_darling_a2": 0.382172,
+          "autocorrelation_check": {
+            "autocorrelated": true,
+            "lag1_r": 0.338328,
+            "ljung_box_p": 1e-08,
+            "n": 36
+          },
+          "dagostino_k2": 0.510369,
+          "dagostino_p": 0.77477352,
+          "excess_kurtosis": -0.407987,
+          "jarque_bera_p": 0.72501536,
+          "jarque_bera_stat": 0.643125,
+          "policy_evaluation_note": "p=0.8132 > alpha=0.05 (p_only).",
+          "skewness": -0.216765,
+          "subsampling": {
+            "applied": false,
+            "max_fast_n": 5000,
+            "original_n": 36,
+            "strategy": "full_sample_exact",
+            "used_n": 36
+          }
+        },
+        "df": 35.0,
+        "downstream_action": "proceed_gaussian_parametric_intervals",
+        "effect_size": 0.29765823,
+        "effect_size_name": "rms_skew_kurtosis_departure",
+        "fallback_used": "ar1_prewhitened_innovations",
+        "family": "residual_diagnostics",
+        "inference_label": "block_bootstrap",
+        "interpretation": "Normality (shapiro_wilk=0.9734, p_raw=0.5422, JB=0.643, A2=0.382, skew=-0.22, excess_kurt=-0.41): consistent with Gaussianity.",
+        "library_versions": {
+          "energybaseline": "3.0.0",
+          "numpy": "2.4.6",
+          "pandas": "3.1.1",
+          "scipy": "1.17.1",
+          "sklearn": "1.9.1",
+          "statsmodels": "0.15.0"
+        },
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "n_used": 36,
+        "name": "Shapiro-Wilk, Jarque-Bera & Anderson-Darling Normality",
+        "p_adj": 0.8132457508,
+        "p_raw": 0.5421638339,
+        "rejected_null": false,
+        "stage": "pre_model",
+        "statistic": 0.97336859,
+        "subtest": "shapiro_wilk",
+        "target": "Energy_kWh",
+        "test_id": "T4",
+        "variable": "Energy_kWh_residuals"
+      },
+      {
+        "alpha": 0.05,
+        "assumptions_checked": [
+          {
+            "action": "full_sample_retained",
+            "metric_name": "original_n",
+            "metric_value": 36.0,
+            "name": "large_n_subsampling_policy",
+            "passed": true,
+            "threshold": 5000
+          },
+          {
+            "action": "classical_bp_and_white",
+            "metric_name": "excess_kurtosis",
+            "metric_value": -0.49913,
+            "name": "gaussian_fourth_moment_for_classical_bp",
+            "passed": true,
+            "threshold": 3.0
+          },
+          {
+            "action": "standard_inference",
+            "metric_name": "lag1_r",
+            "metric_value": 0.01706,
+            "name": "serial_independence",
+            "passed": true,
+            "threshold": 0.2
+          }
+        ],
+        "assumptions_met": true,
+        "ci": {
+          "confidence_level": 0.95,
+          "estimate": 0.5067889,
+          "high": 0.71609591,
+          "inference_label": "standard",
+          "low": 0.21386058,
+          "method": "fisher_z_transform",
+          "std_error": 0.12812361
+        },
+        "correction": "benjamini_hochberg",
+        "decision": "fail",
+        "decision_rule": "p_only",
+        "details": {
+          "arch_lags": 3,
+          "arch_lm": 1.673232,
+          "arch_p": 0.64290118,
+          "autocorrelation_check": {
+            "autocorrelated": false,
+            "lag1_r": 0.01706,
+            "ljung_box_p": 0.31716392,
+            "n": 36
+          },
+          "breusch_pagan_f": 11.75027,
+          "breusch_pagan_f_p": 0.00160953,
+          "breusch_pagan_lm": 6.497145,
+          "breusch_pagan_p": 0.01080479,
+          "policy_evaluation_note": "p=0.02109 <= alpha=0.05 (p_only).",
+          "spearman_abs_u_p": 0.01601013,
+          "spearman_abs_u_rho": 0.398713,
+          "subsampling": {
+            "applied": false,
+            "max_fast_n": 5000,
+            "original_n": 36,
+            "strategy": "full_sample_exact",
+            "used_n": 36
+          },
+          "white_lm": 9.915208,
+          "white_p": 0.00702975
+        },
+        "df": 2.0,
+        "downstream_action": "apply_hc3_hac_or_variance_stabilizing_transform",
+        "effect_size": 0.5067889,
+        "effect_size_name": "sqrt_auxiliary_variance_r2",
+        "fallback_used": "",
+        "family": "residual_diagnostics",
+        "inference_label": "standard",
+        "interpretation": "Heteroskedasticity (white_quadratic_lm=9.915, p_raw=0.00703, BP=6.497, White=9.915, ARCH(3)=1.673, sqrt(R2_aux)=0.507): non-constant error variance detected.",
+        "library_versions": {
+          "energybaseline": "3.0.0",
+          "numpy": "2.4.6",
+          "pandas": "3.1.1",
+          "scipy": "1.17.1",
+          "sklearn": "1.9.1",
+          "statsmodels": "0.15.0"
+        },
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "n_used": 36,
+        "name": "Breusch-Pagan, White & ARCH-LM Heteroskedasticity",
+        "p_adj": 0.0210892544,
+        "p_raw": 0.0070297515,
+        "rejected_null": true,
+        "stage": "pre_model",
+        "statistic": 9.91520785,
+        "subtest": "white_quadratic_lm",
+        "target": "Energy_kWh",
+        "test_id": "T5",
+        "variable": "Energy_kWh_residuals"
+      },
+      {
+        "alpha": 0.05,
+        "assumptions_checked": [
+          {
+            "action": "halt_test_structured",
+            "metric_name": "n_valid",
+            "metric_value": 36.0,
+            "name": "minimum_sample_and_non_degeneracy",
+            "passed": false,
+            "threshold": 8
+          }
+        ],
+        "assumptions_met": false,
+        "ci": {
+          "confidence_level": 0.95,
+          "high": null,
+          "low": null,
+          "method": "insufficient_data"
+        },
+        "correction": "none",
+        "decision": "insufficient_data",
+        "decision_rule": "p_only",
+        "details": {},
+        "df": null,
+        "downstream_action": "skip_insufficient_sample",
+        "effect_size": null,
+        "effect_size_name": "standardized_effect",
+        "fallback_used": "",
+        "family": "dependence_collinearity",
+        "inference_label": "standard",
+        "interpretation": "T6 (VIF & Condition Index Multicollinearity) skipped cleanly: requires >=2 predictors and n >= max(8, p+3) complete observations for VIF (n=36, required>=8).",
+        "library_versions": {
+          "energybaseline": "3.0.0",
+          "numpy": "2.4.6",
+          "pandas": "3.1.1",
+          "scipy": "1.17.1",
+          "sklearn": "1.9.1",
+          "statsmodels": "0.15.0"
+        },
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "n_used": 36,
+        "name": "VIF & Condition Index Multicollinearity",
+        "p_adj": null,
+        "p_raw": null,
+        "rejected_null": false,
+        "stage": "pre_model",
+        "statistic": null,
+        "subtest": "precheck_halted",
+        "target": "Energy_kWh",
+        "test_id": "T6",
+        "variable": ""
+      },
+      {
+        "alpha": 0.05,
+        "assumptions_checked": [
+          {
+            "action": "not run (user)",
+            "metric_name": "enabled",
+            "metric_value": "false",
+            "name": "user_execution_selection",
+            "passed": false,
+            "threshold": "true"
+          }
+        ],
+        "assumptions_met": false,
+        "ci": {
+          "confidence_level": 0.95,
+          "high": null,
+          "low": null,
+          "method": "not_run"
+        },
+        "correction": "none",
+        "decision": "not run (user)",
+        "decision_rule": "p_only",
+        "details": {},
+        "df": null,
+        "downstream_action": "none (not run by user)",
+        "effect_size": null,
+        "effect_size_name": "standardized_effect",
+        "fallback_used": "",
+        "family": "breaks_regimes",
+        "inference_label": "standard",
+        "interpretation": "T7 (Chow Known-Date Structural Break Test) was explicitly disabled by the user and not executed.",
+        "library_versions": {
+          "energybaseline": "3.0.0",
+          "numpy": "2.4.6",
+          "pandas": "3.1.1",
+          "scipy": "1.17.1",
+          "sklearn": "1.9.1",
+          "statsmodels": "0.15.0"
+        },
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "n_used": 0,
+        "name": "Chow Known-Date Structural Break Test",
+        "p_adj": null,
+        "p_raw": null,
+        "rejected_null": false,
+        "stage": "pre_model",
+        "statistic": null,
+        "subtest": "disabled_by_user",
+        "target": "Energy_kWh",
+        "test_id": "T7",
+        "variable": "Energy_kWh"
+      },
+      {
+        "alpha": 0.05,
+        "assumptions_checked": [
+          {
+            "action": "halt_test_structured",
+            "metric_name": "n_valid",
+            "metric_value": 36.0,
+            "name": "minimum_sample_and_non_degeneracy",
+            "passed": false,
+            "threshold": 54
+          }
+        ],
+        "assumptions_met": false,
+        "ci": {
+          "confidence_level": 0.95,
+          "high": null,
+          "low": null,
+          "method": "insufficient_data"
+        },
+        "correction": "none",
+        "decision": "insufficient_data",
+        "decision_rule": "p_only",
+        "details": {},
+        "df": null,
+        "downstream_action": "skip_insufficient_sample",
+        "effect_size": null,
+        "effect_size_name": "standardized_effect",
+        "fallback_used": "",
+        "family": "breaks_regimes",
+        "inference_label": "standard",
+        "interpretation": "T8 (Quandt-Andrews Unknown Breakpoint sup-F Test) skipped cleanly: requires >=54 non-constant observations for trimmed Quandt-Andrews grid (trim=0.15) (n=36, required>=54).",
+        "library_versions": {
+          "energybaseline": "3.0.0",
+          "numpy": "2.4.6",
+          "pandas": "3.1.1",
+          "scipy": "1.17.1",
+          "sklearn": "1.9.1",
+          "statsmodels": "0.15.0"
+        },
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "n_used": 36,
+        "name": "Quandt-Andrews Unknown Breakpoint sup-F Test",
+        "p_adj": null,
+        "p_raw": null,
+        "rejected_null": false,
+        "stage": "pre_model",
+        "statistic": null,
+        "subtest": "precheck_halted",
+        "target": "Energy_kWh",
+        "test_id": "T8",
+        "variable": "Energy_kWh"
+      },
+      {
+        "alpha": 0.05,
+        "assumptions_checked": [
+          {
+            "action": "full_sample_retained",
+            "metric_name": "original_n",
+            "metric_value": 36.0,
+            "name": "large_n_subsampling_policy",
+            "passed": true,
+            "threshold": 5000
+          },
+          {
+            "action": "pettitt_asymptotic_rank",
+            "metric_name": "tie_fraction",
+            "metric_value": 0.0,
+            "name": "continuous_distribution_low_ties",
+            "passed": true,
+            "threshold": 0.35
+          },
+          {
+            "action": "switched_to_moving_block_bootstrap",
+            "metric_name": "lag1_r",
+            "metric_value": 0.425578,
+            "name": "serial_independence",
+            "passed": false,
+            "threshold": 0.2
+          }
+        ],
+        "assumptions_met": false,
+        "ci": {
+          "confidence_level": 0.95,
+          "estimate": -0.32698413,
+          "high": 0.68004688,
+          "inference_label": "block_bootstrap",
+          "low": -0.73327061,
+          "method": "moving_block_bootstrap_percentile(b=3,B=150)",
+          "std_error": 0.47655637
+        },
+        "correction": "benjamini_hochberg",
+        "decision": "pass",
+        "decision_rule": "p_only",
+        "details": {
+          "asymptotic_p": 0.5303037773,
+          "autocorrelation_check": {
+            "autocorrelated": true,
+            "lag1_r": 0.425578,
+            "ljung_box_p": 0.0014177,
+            "n": 36
+          },
+          "change_point_1based": 15,
+          "median_after": 16083.0,
+          "median_before": 19072.0,
+          "normalized_median_shift": -0.760918,
+          "policy_evaluation_note": "p=0.59 > alpha=0.05 (p_only).",
+          "subsampling": {
+            "applied": false,
+            "max_fast_n": 5000,
+            "original_n": 36,
+            "strategy": "full_sample_exact",
+            "used_n": 36
+          },
+          "tie_fraction": 0.0
+        },
+        "df": 35.0,
+        "downstream_action": "retain_homogeneous_series",
+        "effect_size": -0.32698413,
+        "effect_size_name": "pettitt_rank_biserial_r",
+        "fallback_used": "moving_block_bootstrap_pettitt",
+        "family": "breaks_regimes",
+        "inference_label": "block_bootstrap",
+        "interpretation": "Pettitt K_T=103.00 at tau=15 (p_raw=0.59, asymptotic_p=0.5303, median 1.91e+04->1.61e+04, rank_biserial=-0.327): no significant level shift.",
+        "library_versions": {
+          "energybaseline": "3.0.0",
+          "numpy": "2.4.6",
+          "pandas": "3.1.1",
+          "scipy": "1.17.1",
+          "sklearn": "1.9.1",
+          "statsmodels": "0.15.0"
+        },
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "n_used": 36,
+        "name": "Pettitt Non-Parametric Change-Point Test",
+        "p_adj": 0.59,
+        "p_raw": 0.59,
+        "rejected_null": false,
+        "stage": "pre_model",
+        "statistic": 103.0,
+        "subtest": "pettitt_bootstrap_fallback",
+        "target": "Energy_kWh",
+        "test_id": "T9",
+        "variable": "Energy_kWh"
+      },
+      {
+        "alpha": 0.05,
+        "assumptions_checked": [
+          {
+            "action": "halt_test_structured",
+            "metric_name": "n_valid",
+            "metric_value": 0.0,
+            "name": "minimum_sample_and_non_degeneracy",
+            "passed": false,
+            "threshold": 2
+          }
+        ],
+        "assumptions_met": false,
+        "ci": {
+          "confidence_level": 0.95,
+          "high": null,
+          "low": null,
+          "method": "insufficient_data"
+        },
+        "correction": "none",
+        "decision": "insufficient_data",
+        "decision_rule": "p_only",
+        "details": {},
+        "df": null,
+        "downstream_action": "skip_insufficient_sample",
+        "effect_size": null,
+        "effect_size_name": "standardized_effect",
+        "fallback_used": "",
+        "family": "model_comparison",
+        "inference_label": "standard",
+        "interpretation": "T10 (Diebold-Mariano (HLN) OOF Forecast Equivalence & MCS) skipped cleanly: requires >=2 candidate models with OOF residuals (n=0, required>=2).",
+        "library_versions": {
+          "energybaseline": "3.0.0",
+          "numpy": "2.4.6",
+          "pandas": "3.1.1",
+          "scipy": "1.17.1",
+          "sklearn": "1.9.1",
+          "statsmodels": "0.15.0"
+        },
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "n_used": 0,
+        "name": "Diebold-Mariano (HLN) OOF Forecast Equivalence & MCS",
+        "p_adj": null,
+        "p_raw": null,
+        "rejected_null": false,
+        "stage": "post_model",
+        "statistic": null,
+        "subtest": "precheck_halted",
+        "target": "Energy_kWh",
+        "test_id": "T10",
+        "variable": ""
+      },
+      {
+        "alpha": 0.05,
+        "assumptions_checked": [
+          {
+            "action": "halt_test_structured",
+            "metric_name": "n_valid",
+            "metric_value": 0.0,
+            "name": "minimum_sample_and_non_degeneracy",
+            "passed": false,
+            "threshold": 3
+          }
+        ],
+        "assumptions_met": false,
+        "ci": {
+          "confidence_level": 0.95,
+          "high": null,
+          "low": null,
+          "method": "insufficient_data"
+        },
+        "correction": "none",
+        "decision": "insufficient_data",
+        "decision_rule": "p_only",
+        "details": {},
+        "df": null,
+        "downstream_action": "skip_insufficient_sample",
+        "effect_size": null,
+        "effect_size_name": "standardized_effect",
+        "fallback_used": "",
+        "family": "model_comparison",
+        "inference_label": "standard",
+        "interpretation": "T11 (Friedman + Nemenyi Post-Hoc OOF Rank Comparison) skipped cleanly: requires >=3 candidate models with OOF residuals for Nemenyi post-hoc ranks (n=0, required>=3).",
+        "library_versions": {
+          "energybaseline": "3.0.0",
+          "numpy": "2.4.6",
+          "pandas": "3.1.1",
+          "scipy": "1.17.1",
+          "sklearn": "1.9.1",
+          "statsmodels": "0.15.0"
+        },
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "n_used": 0,
+        "name": "Friedman + Nemenyi Post-Hoc OOF Rank Comparison",
+        "p_adj": null,
+        "p_raw": null,
+        "rejected_null": false,
+        "stage": "post_model",
+        "statistic": null,
+        "subtest": "precheck_halted",
+        "target": "Energy_kWh",
+        "test_id": "T11",
+        "variable": ""
+      },
+      {
+        "alpha": 0.05,
+        "assumptions_checked": [
+          {
+            "action": "full_sample_retained",
+            "metric_name": "original_n",
+            "metric_value": 36.0,
+            "name": "large_n_subsampling_policy",
+            "passed": true,
+            "threshold": 4000
+          }
+        ],
+        "assumptions_met": true,
+        "ci": {
+          "confidence_level": 0.95,
+          "estimate": 0.0,
+          "high": 0.0,
+          "inference_label": "standard",
+          "low": 0.0,
+          "method": "complete_data_exact",
+          "std_error": 0.0
+        },
+        "correction": "benjamini_hochberg",
+        "decision": "pass",
+        "decision_rule": "p_only",
+        "details": {
+          "missing_cells": 0,
+          "policy_evaluation_note": "p=1 > alpha=0.05 (p_only).",
+          "subsampling": {
+            "applied": false,
+            "max_fast_n": 4000,
+            "original_n": 36,
+            "strategy": "full_sample_exact",
+            "used_n": 36
+          }
+        },
+        "df": 0.0,
+        "downstream_action": "proceed_complete_case",
+        "effect_size": 0.0,
+        "effect_size_name": "little_mcar_cramers_phi",
+        "fallback_used": "",
+        "family": "missingness_balance",
+        "inference_label": "standard",
+        "interpretation": "Dataset has 0 missing numeric cells; MCAR holds trivially (d^2=0, p_raw=1.0).",
+        "library_versions": {
+          "energybaseline": "3.0.0",
+          "numpy": "2.4.6",
+          "pandas": "3.1.1",
+          "scipy": "1.17.1",
+          "sklearn": "1.9.1",
+          "statsmodels": "0.15.0"
+        },
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "n_used": 36,
+        "name": "Little's Multivariate MCAR Missingness Test",
+        "p_adj": 1.0,
+        "p_raw": 1.0,
+        "rejected_null": false,
+        "stage": "post_model",
+        "statistic": 0.0,
+        "subtest": "complete_data_no_missingness",
+        "target": "Energy_kWh",
+        "test_id": "T12",
+        "variable": "Energy_kWh,Avg_Temp_C"
+      },
+      {
+        "alpha": 0.05,
+        "assumptions_checked": [
+          {
+            "action": "full_sample_retained",
+            "metric_name": "original_n",
+            "metric_value": 36.0,
+            "name": "large_n_subsampling_policy",
+            "passed": true,
+            "threshold": 6000
+          },
+          {
+            "action": "bonferroni_studentized_cooks_d",
+            "metric_name": "trimmed_90pct_shapiro_p",
+            "metric_value": 0.174515,
+            "name": "core_bulk_gaussianity_for_studentized_bonferroni",
+            "passed": true,
+            "threshold": 0.01
+          },
+          {
+            "action": "flag_only_preserve_all_rows",
+            "metric_name": "rows_deleted",
+            "metric_value": 0.0,
+            "name": "flag_only_zero_mutation_policy",
+            "passed": true,
+            "threshold": 0
+          },
+          {
+            "action": "switched_to_moving_block_bootstrap",
+            "metric_name": "lag1_r",
+            "metric_value": 0.338328,
+            "name": "serial_independence",
+            "passed": false,
+            "threshold": 0.2
+          }
+        ],
+        "assumptions_met": false,
+        "ci": {
+          "confidence_level": 0.95,
+          "estimate": 0.22002687,
+          "high": 1.36721395,
+          "inference_label": "block_bootstrap",
+          "low": 0.07365046,
+          "method": "moving_block_bootstrap_percentile(b=3,B=100)",
+          "std_error": 0.33282674
+        },
+        "correction": "benjamini_hochberg",
+        "decision": "pass",
+        "decision_rule": "p_only",
+        "details": {
+          "autocorrelation_check": {
+            "autocorrelated": true,
+            "lag1_r": 0.338328,
+            "ljung_box_p": 1e-08,
+            "n": 36
+          },
+          "bonferroni_outlier_p": 1.0,
+          "cooks_cutoff_4_over_n": 0.11111111,
+          "flag_only": true,
+          "flagged_count": 0,
+          "flagged_indices": [],
+          "leverage_max": 0.09447474,
+          "max_abs_ext_studentized": 2.23866186,
+          "max_cooks_d": 0.22002687,
+          "max_cooks_index": 6,
+          "max_robust_z": 2.13157985,
+          "policy_evaluation_note": "p=1 > alpha=0.05 (p_only).",
+          "rows_deleted": 0,
+          "subsampling": {
+            "applied": false,
+            "max_fast_n": 6000,
+            "original_n": 36,
+            "strategy": "full_sample_exact",
+            "used_n": 36
+          }
+        },
+        "df": 33.0,
+        "downstream_action": "no_influential_outliers_flagged",
+        "effect_size": 0.22002687,
+        "effect_size_name": "max_cooks_distance",
+        "fallback_used": "moving_block_bootstrap",
+        "family": "residual_diagnostics",
+        "inference_label": "block_bootstrap",
+        "interpretation": "Flag-only influence check: max Cook's D=0.2200 (4/n=0.1111), max |studentized t|=2.239 (Bonferroni p_raw=1), flagged_rows=0 (0 rows deleted).",
+        "library_versions": {
+          "energybaseline": "3.0.0",
+          "numpy": "2.4.6",
+          "pandas": "3.1.1",
+          "scipy": "1.17.1",
+          "sklearn": "1.9.1",
+          "statsmodels": "0.15.0"
+        },
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "n_used": 36,
+        "name": "Flag-Only Outlier & Cook's Distance Influence Diagnostics",
+        "p_adj": 1.0,
+        "p_raw": 1.0,
+        "rejected_null": false,
+        "stage": "pre_model",
+        "statistic": 2.23866186,
+        "subtest": "cooks_distance_bonferroni_flag_only",
+        "target": "Energy_kWh",
+        "test_id": "T13",
+        "variable": "Energy_kWh"
+      },
+      {
+        "alpha": 0.05,
+        "assumptions_checked": [
+          {
+            "action": "not applicable (no group column)",
+            "metric_name": "group_column",
+            "metric_value": "none",
+            "name": "declared_group_column",
+            "passed": false,
+            "threshold": "present"
+          }
+        ],
+        "assumptions_met": false,
+        "ci": {
+          "confidence_level": 0.95,
+          "high": null,
+          "low": null,
+          "method": "not_applicable"
+        },
+        "correction": "none",
+        "decision": "not applicable (no group column)",
+        "decision_rule": "p_only",
+        "details": {},
+        "df": null,
+        "downstream_action": "skip_causal_group_mv",
+        "effect_size": null,
+        "effect_size_name": "standardized_effect",
+        "fallback_used": "",
+        "family": "causal_group",
+        "inference_label": "standard",
+        "interpretation": "T14 causal M&V tests require a declared 'group' column (treatment vs control); none present.",
+        "library_versions": {
+          "energybaseline": "3.0.0",
+          "numpy": "2.4.6",
+          "pandas": "3.1.1",
+          "scipy": "1.17.1",
+          "sklearn": "1.9.1",
+          "statsmodels": "0.15.0"
+        },
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "n_used": 0,
+        "name": "Causal M&V Group Balance & Parallel Trends",
+        "p_adj": null,
+        "p_raw": null,
+        "rejected_null": false,
+        "stage": "causal_group",
+        "statistic": null,
+        "subtest": "group_column_absent",
+        "target": "Energy_kWh",
+        "test_id": "T14",
+        "variable": ""
+      }
+    ]
+  }
+}

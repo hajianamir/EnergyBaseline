@@ -70,6 +70,7 @@ class TargetResult:
     auto_summary: dict = field(default_factory=dict)
     characterization: dict = field(default_factory=dict)
     compliance_tests: list = field(default_factory=list)
+    test_catalog: list = field(default_factory=list)
     seconds: float = 0.0
 
 
@@ -380,6 +381,36 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
             ser["baseline_oof"] = top[0]["oof"]
             ser["baseline_fit"] = top[0]["model"].predict(X)
             res.series = ser
+
+        # ---- Phase 4 Statistical Test Catalog (T1..T14)
+        from ..tests_catalog import run_full_test_catalog
+
+        grp_col: str | None = config.get("group_column")
+        if not grp_col and resolved_schema is not None:
+            for cspec in resolved_schema.columns:
+                if cspec.role.value == "group" and cspec.name in prep.df.columns:
+                    grp_col = cspec.name
+                    break
+        oof_map: dict[str, np.ndarray] = {}
+        for r_cand in sorted(results, key=lambda r: -r["score"])[:5]:
+            oof_vec = r_cand.get("oof")
+            if oof_vec is not None and len(oof_vec) == len(y):
+                oof_map[str(r_cand["name"])] = y - np.asarray(oof_vec, dtype=float)
+        cat_mode = str(config.get("test_catalog_mode", "fast"))
+        disabled_tids = tuple(config.get("disabled_tests", ()))
+        cat_out = run_full_test_catalog(
+            prep.df,
+            target_col=target,
+            predictor_cols=list(prep.predictors),
+            group_col=grp_col,
+            oof_errors_by_model=oof_map,
+            alpha=float(config.get("tcp_alpha", 0.05)) if not is_auto(config.get("tcp_alpha", "AUTO")) else 0.05,
+            disabled_tests=disabled_tids,
+            mode=cat_mode,
+            allow_hac=bool(config.get("allow_hac", True)),
+            seed=seed,
+        )
+        res.test_catalog = [item.to_dict() for item in cat_out]
         emit(100, "Done")
     except Cancelled:
         raise

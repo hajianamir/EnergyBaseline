@@ -154,7 +154,10 @@ def parse_timestamps(s: pd.Series, *, dayfirst: bool = False) -> pd.Series:
     if isinstance(s.dtype, pd.DatetimeTZDtype) or pd.api.types.is_datetime64_any_dtype(s):
         return pd.to_datetime(s, errors="coerce")
     if s.dtype == object or str(s.dtype).startswith("str"):
-        return pd.to_datetime(s, errors="coerce", format="mixed", dayfirst=dayfirst)
+        try:
+            return pd.to_datetime(s, errors="coerce", format="mixed", dayfirst=dayfirst)
+        except ValueError:
+            return pd.to_datetime(s, errors="coerce", format="mixed", dayfirst=dayfirst, utc=True)
     return pd.to_datetime(s, errors="coerce")
 
 
@@ -504,8 +507,14 @@ def normalize_timestamps_utc(
             local_aware_list.append(u0.astimezone(zi))
 
     if n_nonexistent:
-        action_desc = "shifted forward to transition boundary" if nonexistent_policy == "shift_forward" else "excluded as NaT (never fabricated)"
-        msgs.append(f"DST spring-forward ({tz_name}): {n_nonexistent} nonexistent local wall-clock timestamp(s) {action_desc}.")
+        action_desc = (
+            "shifted forward to transition boundary"
+            if nonexistent_policy == "shift_forward"
+            else "excluded as NaT (never fabricated)"
+        )
+        msgs.append(
+            f"DST spring-forward ({tz_name}): {n_nonexistent} nonexistent local wall-clock timestamp(s) {action_desc}."
+        )
     if n_ambiguous:
         amb_desc = (
             "dropped per dst_handling='drop_ambiguous'"
@@ -684,9 +693,7 @@ def prepare_temporal(
         resolved_schema = suggest_dataset_schema(raw, time_col=effective_time_col, auto=auto)
 
     # Drop explicitly ignored columns if not needed downstream, while keeping targets/predictors/etc.
-    ignored_cols = [
-        c for c in resolved_schema.ignored_columns if c in raw.columns and c != effective_time_col
-    ]
+    ignored_cols = [c for c in resolved_schema.ignored_columns if c in raw.columns and c != effective_time_col]
     if ignored_cols:
         raw = raw.drop(columns=ignored_cols)
         msgs.append(f"Ignored {len(ignored_cols)} column(s) per DatasetSchema role='ignore': {ignored_cols}.")
@@ -780,7 +787,11 @@ def prepare_temporal(
                 dedup_agg[c] = "first"
             else:
                 spec_c = resolved_schema.get(c)
-                if spec_c is not None and not spec_c.suggested_by_heuristic and spec_c.quantity_type == QuantityType.STOCK:
+                if (
+                    spec_c is not None
+                    and not spec_c.suggested_by_heuristic
+                    and spec_c.quantity_type == QuantityType.STOCK
+                ):
                     dedup_agg[c] = "last"
                 else:
                     dedup_agg[c] = "mean"
@@ -829,11 +840,7 @@ def prepare_temporal(
     user_agg_cfg = auto.config.get("aggregation")
     user_agg = None if is_auto(user_agg_cfg) else str(user_agg_cfg).strip().lower()
     qual_agg_cfg = auto.config.get("quality_aggregation")
-    qual_agg = (
-        "mean"
-        if is_auto(qual_agg_cfg)
-        else str(qual_agg_cfg).strip().lower()
-    )
+    qual_agg = "mean" if is_auto(qual_agg_cfg) else str(qual_agg_cfg).strip().lower()
 
     aggs: dict[str, str] = {}
     qtypes_used: dict[str, str] = {}
@@ -896,7 +903,10 @@ def prepare_temporal(
             a, b = [x.strip() for x in str(bw).split(",")]
             if tz:
                 norm_bounds = normalize_timestamps_utc(pd.Series([a, b]), tz, dst_handling="utc")
-                start, end = pd.Timestamp(norm_bounds.utc_timestamps.iloc[0]), pd.Timestamp(norm_bounds.utc_timestamps.iloc[1])
+                start, end = (
+                    pd.Timestamp(norm_bounds.utc_timestamps.iloc[0]),
+                    pd.Timestamp(norm_bounds.utc_timestamps.iloc[1]),
+                )
             else:
                 start, end = pd.Timestamp(a), pd.Timestamp(b)
         except Exception:

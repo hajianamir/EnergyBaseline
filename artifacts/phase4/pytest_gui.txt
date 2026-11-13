@@ -1,0 +1,23 @@
+.....                                                                    [100%]
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.11.2-final-0 ________________
+
+Name                                    Stmts   Miss  Cover
+-----------------------------------------------------------
+energybaseline/gui/advanced.py            144     82    43%
+energybaseline/gui/app.py                 137    137     0%
+energybaseline/gui/commands.py             34      4    88%
+energybaseline/gui/main_window.py         202     32    84%
+energybaseline/gui/page_monitor.py        471    235    50%
+energybaseline/gui/page_status.py         173     25    86%
+energybaseline/gui/pages_results.py       315    216    31%
+energybaseline/gui/pages_setup.py        1100    351    68%
+energybaseline/gui/single_instance.py      81     23    72%
+energybaseline/gui/sql_dialog.py          147    130    12%
+energybaseline/gui/state.py                46     13    72%
+energybaseline/gui/theme.py                25     20    20%
+energybaseline/gui/widgets.py             119     44    63%
+-----------------------------------------------------------
+TOTAL                                    2994   1312    56%
+Required test coverage of 52% reached. Total coverage: 56.18%
+5 passed in 6.61s

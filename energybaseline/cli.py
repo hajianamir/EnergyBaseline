@@ -39,6 +39,12 @@ from .core.telemetry import build_system_health, build_system_sbom
 from .core.temporal import TemporalError, prepare_temporal
 from .core.vsg import ComplianceGateError, VSGValidationError, VariableSelectionGate
 from .db.session import init_database
+from .tests_catalog import (
+    StaleRReferenceError,
+    check_r_reference_freshness,
+    run_full_test_catalog,
+    validate_python_against_r_references,
+)
 
 
 def _parse_kv_updates(spec_arg: str) -> tuple[str, dict[str, Any]]:
@@ -438,6 +444,79 @@ def _cmd_auto_log_hash(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_test_catalog(args: argparse.Namespace) -> int:
+    df, schema, vsg = _load_dataset_and_vsg(args.dataset, args.targets)
+    if args.group_col and args.group_col in df.columns:
+        schema = schema.with_column(
+            args.group_col,
+            role=ColumnRole.GROUP.value,
+            quantity_type=None,
+            inclusion=Inclusion.OBSERVED_ONLY.value,
+            suggested_by_heuristic=False,
+        )
+        vsg = VariableSelectionGate(df, time_col=schema.time_column, targets=vsg.targets, schema=schema)
+    vsg.accept()
+    tcp_cfg: dict[str, Any] = {}
+    if args.alpha is not None:
+        tcp_cfg["tcp_alpha"] = args.alpha
+    if args.correction is not None:
+        tcp_cfg["tcp_correction"] = args.correction
+    tcp = TestConfigPanel(vsg, config=tcp_cfg)
+    for tid in args.disable_test or []:
+        t_up = tid.strip().upper()
+        if t_up in tcp.test_panels:
+            tcp.configure_test_panel(t_up, enabled=False)
+    tcp.accept()
+
+    suites: dict[str, list[dict[str, Any]]] = {}
+    for target in vsg.targets:
+        res_list = run_full_test_catalog(
+            df,
+            target_col=target,
+            predictor_cols=vsg.included_variables(target),
+            group_col=args.group_col if (args.group_col and args.group_col in df.columns) else None,
+            panel=tcp,
+            disabled_tests=args.disable_test or (),
+            mode=args.mode,
+            allow_hac=not args.no_hac,
+            seed=42,
+        )
+        suites[target] = [r.to_dict() for r in res_list]
+
+    payload = {
+        "alpha": tcp.alpha,
+        "confidence_level": tcp.confidence_level,
+        "correction": tcp.correction,
+        "decision_rule": tcp.decision_rule,
+        "disabled_tests": sorted({t.strip().upper() for t in (args.disable_test or [])}),
+        "mode": args.mode,
+        "targets": suites,
+    }
+    _write_or_print(payload, args.out)
+    return 0
+
+
+def _cmd_r_references_check(args: argparse.Namespace) -> int:
+    ref_dir = Path(args.reference_dir) if args.reference_dir else None
+    scripts_dir = Path(args.scripts_dir) if args.scripts_dir else None
+    freshness = check_r_reference_freshness(
+        ref_dir,
+        r_scripts_dir=scripts_dir,
+        max_age_days=int(args.max_age_days),
+        raise_on_failure=True,
+    )
+    parity = validate_python_against_r_references(ref_dir)
+    if not parity["ok"]:
+        raise StaleRReferenceError("R reference parity mismatch: " + "; ".join(parity["mismatches"]))
+    payload = {
+        "freshness": freshness,
+        "ok": True,
+        "parity": parity,
+    }
+    _write_or_print(payload, args.out)
+    return 0
+
+
 CLI_COMMAND_HANDLERS: Mapping[str, Callable[[argparse.Namespace], int]] = MappingProxyType(
     {
         "schema-suggest": _cmd_schema_suggest,
@@ -452,6 +531,8 @@ CLI_COMMAND_HANDLERS: Mapping[str, Callable[[argparse.Namespace], int]] = Mappin
         "tcp-lock": _cmd_tcp_lock,
         "what-if": _cmd_what_if,
         "auto-log-hash": _cmd_auto_log_hash,
+        "test-catalog": _cmd_test_catalog,
+        "r-references-check": _cmd_r_references_check,
     }
 )
 
@@ -563,6 +644,28 @@ def build_parser() -> argparse.ArgumentParser:
     p_ah.add_argument("--targets", default="", help="Optional comma-separated target columns.")
     p_ah.add_argument("--out", default=None, help="Write JSON output to path.")
 
+    p_tc = sub.add_parser("test-catalog", help="Execute Phase 4 statistical test catalog T1..T14 (E2 JSON).")
+    p_tc.add_argument("dataset", help="Path to dataset file.")
+    p_tc.add_argument("--targets", default="", help="Optional comma-separated target columns.")
+    p_tc.add_argument("--group-col", default="", help="Optional causal group column for T14.")
+    p_tc.add_argument("--alpha", type=float, default=None, help="Optional significance alpha.")
+    p_tc.add_argument(
+        "--correction",
+        default=None,
+        choices=[c.value for c in MultipleTestingCorrection],
+        help="Optional multiple-testing correction.",
+    )
+    p_tc.add_argument("--mode", default="full", choices=["fast", "full"], help="Execution mode (fast or full).")
+    p_tc.add_argument("--disable-test", action="append", default=[], help="Disable specific test ID (e.g. T7).")
+    p_tc.add_argument("--no-hac", action="store_true", help="Disable HAC/block-bootstrap correction (forces naive label).")
+    p_tc.add_argument("--out", default=None, help="Write JSON output to path.")
+
+    p_rr = sub.add_parser("r-references-check", help="Validate versioned R reference JSON fixtures & <=14-day freshness.")
+    p_rr.add_argument("--reference-dir", default=None, help="Optional directory containing <slug>.json fixtures.")
+    p_rr.add_argument("--scripts-dir", default=None, help="Optional directory containing <slug>.R scripts.")
+    p_rr.add_argument("--max-age-days", type=int, default=14, help="Maximum allowed R reference age in days.")
+    p_rr.add_argument("--out", default=None, help="Write JSON output to path.")
+
     return parser
 
 
@@ -584,6 +687,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         TCPValidationError,
         ComplianceGateError,
         IntegrityError,
+        StaleRReferenceError,
     ) as exc:
         err_payload = {"valid": False, "error_type": type(exc).__name__, "error": str(exc)}
         sys.stderr.write(json.dumps(err_payload) + "\n")

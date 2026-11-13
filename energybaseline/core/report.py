@@ -169,6 +169,7 @@ def build_context(run: RunResult, selections: list[dict], audit: list[dict], dat
                 "drivers": ", ".join(list(imp)[:4]) if imp else "n/a", "rel_html": _tbl(tr.eda["relationships"]),
                 "validation_text": f"{run.config.get('cv_scheme', 'AUTO')} scheme resolved in the AUTO log; thresholds ASHRAE 14 / IPMVP-based.",
                 "sel": pick, "limitations": ([tr.notice] if tr.notice else []) + [n for n in tr.notes if n.startswith("WARNING")],
+                "test_catalog": tr.test_catalog,
             })
             if pick:
                 terms = pick["formula"].get("terms") or []
@@ -282,6 +283,28 @@ def export_excel(run: RunResult, selections: list[dict], audit: list[dict], path
             pd.DataFrame(tr.exclusions).to_excel(xw, sheet_name=nm(f"Exclusions_{k}"), index=False)
             pd.DataFrame(tr.rationale).to_excel(xw, sheet_name=nm(f"Rationale_{k}"), index=False)
             pd.DataFrame(tr.comparative).to_excel(xw, sheet_name=nm(f"Diagnostics_{k}"), index=False)
+            if tr.test_catalog:
+                pd.DataFrame(
+                    [
+                        {
+                            "test_id": tc["test_id"],
+                            "stage": tc["stage"],
+                            "name": tc["name"],
+                            "subtest": tc["subtest"],
+                            "statistic": tc["statistic"],
+                            "p_raw": tc["p_raw"],
+                            "p_adj": tc["p_adj"],
+                            "effect_size": tc["effect_size"],
+                            "ci_low": (tc.get("ci") or {}).get("low"),
+                            "ci_high": (tc.get("ci") or {}).get("high"),
+                            "ci_method": (tc.get("ci") or {}).get("method"),
+                            "inference_label": tc.get("inference_label"),
+                            "decision": tc["decision"],
+                            "downstream_action": tc["downstream_action"],
+                        }
+                        for tc in tr.test_catalog
+                    ]
+                ).to_excel(xw, sheet_name=nm(f"TestCatalog_{k}_{t}"), index=False)
             tr.eda["relationships"].to_excel(xw, sheet_name=nm(f"Relationships_{k}"), index=False)
             pd.DataFrame([{"method": m["method"], "status": m["status"], "params": json.dumps(m["params"], default=str), "results": json.dumps(m["results"], default=str),
                            "interpretation": m["interpretation"], "downstream": m["downstream"]} for m in tr.mining]).to_excel(xw, sheet_name=nm(f"Mining_{k}"), index=False)

@@ -1,0 +1,18 @@
+=== ruff check . ===
+All checks passed!
+=== ruff format --check . ===
+54 files already formatted
+=== pyflakes energybaseline ===
+=== guard_web_free.py ===
+OK [guard_web_free] clean (/home/user/EnergyBaseline)
+=== guard_env_readers.py ===
+OK [guard_env_readers] clean (/home/user/EnergyBaseline)
+=== guard_tests_integrity.py ===
+OK [guard_tests_integrity] verified 4 baseline test files
+=== guard_no_qthread_compute.py ===
+OK [guard_no_qthread_compute] clean (/home/user/EnergyBaseline)
+=== gen_matrix.py --check ===
+OK [gen_matrix] verified 251 requirement IDs (116 done)
+=== invariant digests ===
+1c633e61e328b34b883571ae25a92cf6a390e6f2752871331545d70a5b553afe  LICENSE
+6f3abde78940ac71c104a32305c7a69bc2a9c90a09f6660a332de0eac467f3dc  tests/.baseline.sha256

@@ -938,3 +938,111 @@ class CachedComplianceRunner:
             "scenarios": scenario_summaries,
             "tests": test_stability,
         }
+
+    # ------------------------------------------------------------------ Phase 4 Test Catalog Suite (T1..T14)
+    def execute_catalog_suite(
+        self,
+        df: pd.DataFrame,
+        vsg: VariableSelectionGate,
+        tcp: TestConfigPanel,
+        *,
+        oof_errors_by_target: Mapping[str, Mapping[str, Any]] | None = None,
+        mode: str = "full",
+        allow_hac: bool = True,
+    ) -> dict[str, list[Any]]:
+        """Execute Phase 4 ``T1..T14`` catalog per target after VSG & TCP acceptance, caching raw statistics."""
+        from ..tests_catalog import ALL_CATALOG_TEST_IDS, apply_family_multiplicity, run_full_test_catalog
+
+        tcp.assert_accepted()
+        group_col: str | None = None
+        if vsg.schema is not None:
+            for col_spec in vsg.schema.columns:
+                if col_spec.role.value == "group" and col_spec.name in df.columns:
+                    group_col = col_spec.name
+                    break
+
+        out_by_target: dict[str, list[Any]] = {}
+        for target in vsg.targets:
+            preds = list(vsg.included_variables(target))
+            oof_map = (oof_errors_by_target or {}).get(target)
+            stage_payload = {
+                "allow_hac": allow_hac,
+                "dataset_sha256": vsg.dataset_sha256,
+                "enabled": {tid: p.enabled for tid, p in tcp.test_panels.items()},
+                "group_col": group_col,
+                "mode": mode,
+                "oof_models": sorted(oof_map.keys()) if oof_map else [],
+                "params": {tid: p.parameters for tid, p in tcp.test_panels.items()},
+                "predictors": preds,
+                "target": target,
+            }
+            cat_list, _, _ = self.cache.get_or_compute_stage(
+                f"phase4_catalog:{target}",
+                stage_payload,
+                lambda t=target, pr=preds, om=oof_map: run_full_test_catalog(
+                    df,
+                    target_col=t,
+                    predictor_cols=pr,
+                    group_col=group_col,
+                    oof_errors_by_model=om,
+                    panel=tcp,
+                    mode=mode,
+                    allow_hac=allow_hac,
+                    seed=self.seed,
+                ),
+            )
+            out_by_target[target] = apply_family_multiplicity(
+                cat_list,
+                correction=tcp.correction,
+                alpha=tcp.alpha,
+                decision_rule=tcp.decision_rule,
+            )
+            _ = ALL_CATALOG_TEST_IDS
+        self._last_catalog_by_target = out_by_target
+        return out_by_target
+
+    def what_if_catalog(
+        self,
+        catalog_results: Sequence[Any],
+        *,
+        alpha: float = 0.05,
+        correction: str = MultipleTestingCorrection.HOLM.value,
+        decision_rule: str = DecisionRule.P_ONLY.value,
+        min_effect_size: float | None = None,
+    ) -> dict[str, Any]:
+        """Re-evaluate ``TestContractResult`` list under new ``alpha``/``correction``/``decision_rule`` with 0 engine calls."""
+        from ..tests_catalog import apply_family_multiplicity
+
+        calls_before = self.engine_call_count
+        updated = apply_family_multiplicity(
+            list(catalog_results),
+            correction=correction,
+            alpha=alpha,
+            decision_rule=decision_rule,
+            min_effect_size=min_effect_size,
+        )
+        delta_calls = self.engine_call_count - calls_before
+        if delta_calls != 0:
+            raise RuntimeError(f"CACHE-2 violation: what_if_catalog invoked {delta_calls} engine calls.")
+        flips = [
+            {
+                "new_decision": n_r.decision,
+                "new_p_adj": n_r.p_adj,
+                "old_decision": o_r.decision,
+                "old_p_adj": o_r.p_adj,
+                "p_raw": n_r.p_raw,
+                "test_id": n_r.test_id,
+            }
+            for o_r, n_r in zip(catalog_results, updated)
+            if o_r.decision != n_r.decision
+        ]
+        return {
+            "alpha": alpha,
+            "correction": correction,
+            "decision_rule": decision_rule,
+            "engine_calls_delta": delta_calls,
+            "flip_count": len(flips),
+            "flipped_decisions": flips,
+            "results": updated,
+        }
+
