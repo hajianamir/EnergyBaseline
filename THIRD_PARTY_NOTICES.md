@@ -27,6 +27,7 @@ Per ratified decision `D5 = A` and standing assumption `S7`:
 | `pandas` | `3.1.1` | BSD-3-Clause | https://pandas.pydata.org |
 | `pillow` | `12.2.0` | MIT-CMU | https://python-pillow.org |
 | `psycopg2-binary` | `2.9.11` | LGPL-3.0-with-linking-exception | https://www.psycopg.org |
+| `pyarrow` | `24.0.0` | Apache-2.0 | https://arrow.apache.org |
 | `pydantic` | `2.14.3` | MIT | https://docs.pydantic.dev |
 | `PyInstaller` | `6.19.0` | GPL-2.0-or-later WITH Bootloader-Exception | https://pyinstaller.org |
 | `PyMySQL` | `1.1.2` | MIT | https://github.com/PyMySQL/PyMySQL |

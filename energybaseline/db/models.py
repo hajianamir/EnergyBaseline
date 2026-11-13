@@ -123,3 +123,47 @@ class Connection(Base):
     options_json: Mapped[str] = mapped_column(Text, default="{}")
     secret_blob: Mapped[str] = mapped_column(Text, default="")  # encrypted password + query templates
     created_at: Mapped[dt.datetime] = mapped_column(DateTime, default=_now)
+
+
+class DatasetSchemaRecord(Base):
+    __tablename__ = "dataset_schemas"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    dataset_id: Mapped[int | None] = mapped_column(
+        ForeignKey("datasets.id", ondelete="CASCADE"),
+        nullable=True,
+        index=True,
+    )
+    name: Mapped[str] = mapped_column(String(300), default="")
+    schema_version: Mapped[str] = mapped_column(String(20), default="2.0")
+    dataset_sha256: Mapped[str] = mapped_column(String(64), default="")
+    schema_sha256: Mapped[str] = mapped_column(String(64), default="")
+    time_column: Mapped[str] = mapped_column(String(200), default="")
+    targets_json: Mapped[str] = mapped_column(Text, default="[]")
+    outlier_policy: Mapped[str] = mapped_column(String(30), default="flag_only")
+    schema_json: Mapped[str] = mapped_column(Text, default="{}")
+    ingestion_summary_json: Mapped[str] = mapped_column(Text, default="{}")
+    created_at: Mapped[dt.datetime] = mapped_column(DateTime, default=_now)
+    updated_at: Mapped[dt.datetime] = mapped_column(DateTime, default=_now)
+
+
+class NonRoutineEvent(Base):
+    __tablename__ = "non_routine_events"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    dataset_id: Mapped[int | None] = mapped_column(
+        ForeignKey("datasets.id", ondelete="CASCADE"),
+        nullable=True,
+        index=True,
+    )
+    schema_id: Mapped[int | None] = mapped_column(
+        ForeignKey("dataset_schemas.id", ondelete="CASCADE"),
+        nullable=True,
+        index=True,
+    )
+    name: Mapped[str] = mapped_column(String(200), default="")
+    start_ts: Mapped[str] = mapped_column(String(64), default="")
+    end_ts: Mapped[str] = mapped_column(String(64), default="")
+    action: Mapped[str] = mapped_column(String(30), default="exclude")
+    affected_targets_json: Mapped[str] = mapped_column(Text, default="[]")
+    reason: Mapped[str] = mapped_column(Text, default="")
+    created_at: Mapped[dt.datetime] = mapped_column(DateTime, default=_now)
+

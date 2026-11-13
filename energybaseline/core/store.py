@@ -16,6 +16,7 @@ from ..config import ensure_dirs
 from ..db import models as M
 from ..db.session import session_scope
 from .pipeline import RunResult
+from .schema import DatasetSchema, NonRoutineEventSpec, SchemaIntegrityError, SchemaValidationError
 
 log = logging.getLogger("energybaseline.store")
 
@@ -176,3 +177,217 @@ def load_snapshot(snapshot_id: int) -> pd.DataFrame:
         sn = s.get(M.Snapshot, snapshot_id)
         raw = gzip.decompress(sn.payload).decode("utf-8")
     return pd.read_csv(io.StringIO(raw), index_col=0, parse_dates=True)
+
+
+# ------------------------------------------------------------------ Phase 2 dataset schema & NRE persistence (DAT-2, DAT-5, DAT-8)
+def save_dataset_schema(
+    schema: DatasetSchema,
+    *,
+    dataset_id: int | None = None,
+    name: str | None = None,
+    ingestion_summary: dict | None = None,
+) -> int:
+    """Validate and persist ``DatasetSchema`` + SHA-256 + Non-Routine Events to SQLite/DB."""
+    if not isinstance(schema, DatasetSchema):
+        raise SchemaValidationError("save_dataset_schema expects a DatasetSchema instance.")
+    schema.validate()
+    payload = schema.canonical_payload()
+    canonical_json = json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True)
+    sha = schema.compute_sha256()
+    summary_json = json.dumps(ingestion_summary or {}, sort_keys=True, default=str)
+    now = dt.datetime.now(dt.timezone.utc).replace(tzinfo=None)
+    eff_name = (name if name is not None else schema.dataset_name) or "dataset_schema"
+
+    with session_scope() as s:
+        rec = M.DatasetSchemaRecord(
+            dataset_id=dataset_id,
+            name=eff_name,
+            schema_version=schema.schema_version,
+            dataset_sha256=schema.dataset_sha256,
+            schema_sha256=sha,
+            time_column=schema.time_column,
+            targets_json=json.dumps(schema.target_columns),
+            outlier_policy=schema.outlier_policy.value,
+            schema_json=canonical_json,
+            ingestion_summary_json=summary_json,
+            created_at=now,
+            updated_at=now,
+        )
+        s.add(rec)
+        s.flush()
+        sid = rec.id
+        for ev in schema.non_routine_events:
+            s.add(
+                M.NonRoutineEvent(
+                    dataset_id=dataset_id,
+                    schema_id=sid,
+                    name=ev.name,
+                    start_ts=ev.start,
+                    end_ts=ev.end,
+                    action=ev.action,
+                    affected_targets_json=json.dumps(list(ev.affected_targets)),
+                    reason=ev.reason,
+                    created_at=now,
+                )
+            )
+    audit(
+        f"Dataset schema #{sid} saved for '{eff_name}' (sha256={sha[:12]}, targets={schema.target_columns})",
+        "schema",
+        detail={"schema_id": sid, "dataset_id": dataset_id, "schema_sha256": sha},
+    )
+    return sid
+
+
+def load_dataset_schema(
+    schema_id: int | None = None,
+    *,
+    dataset_id: int | None = None,
+    verify_sha256: bool = True,
+) -> DatasetSchema:
+    """Load ``DatasetSchema`` by ``schema_id`` or latest ``dataset_id`` and verify SHA-256 (DAT-5, DAT-8)."""
+    if schema_id is None and dataset_id is None:
+        raise ValueError("Specify either schema_id or dataset_id to load a DatasetSchema.")
+
+    with session_scope() as s:
+        if schema_id is not None:
+            rec = s.get(M.DatasetSchemaRecord, schema_id)
+        else:
+            rec = (
+                s.execute(
+                    select(M.DatasetSchemaRecord)
+                    .where(M.DatasetSchemaRecord.dataset_id == dataset_id)
+                    .order_by(M.DatasetSchemaRecord.id.desc())
+                    .limit(1)
+                )
+                .scalars()
+                .first()
+            )
+        if rec is None:
+            raise FileNotFoundError(
+                f"No persisted DatasetSchema found (schema_id={schema_id}, dataset_id={dataset_id})."
+            )
+        raw_json = rec.schema_json or ""
+        stored_sha = (rec.schema_sha256 or "").strip().lower()
+        nre_rows = (
+            s.execute(
+                select(M.NonRoutineEvent)
+                .where(M.NonRoutineEvent.schema_id == rec.id)
+                .order_by(M.NonRoutineEvent.id)
+            )
+            .scalars()
+            .all()
+        )
+        nre_dicts = [
+            {
+                "name": r.name,
+                "start": r.start_ts,
+                "end": r.end_ts,
+                "action": r.action,
+                "affected_targets": json.loads(r.affected_targets_json or "[]"),
+                "reason": r.reason,
+            }
+            for r in nre_rows
+        ]
+
+    if verify_sha256:
+        import hashlib
+
+        if not stored_sha:
+            raise SchemaIntegrityError("Persisted DatasetSchema row is missing schema_sha256.")
+        actual_sha = hashlib.sha256(raw_json.encode("utf-8")).hexdigest()
+        if actual_sha != stored_sha:
+            raise SchemaIntegrityError(
+                f"Persisted DatasetSchema SHA-256 mismatch: expected {stored_sha}, computed {actual_sha}."
+            )
+
+    try:
+        parsed = json.loads(raw_json)
+    except json.JSONDecodeError as exc:
+        raise SchemaIntegrityError(f"Persisted DatasetSchema JSON is corrupt: {exc}") from exc
+
+    schema = DatasetSchema.from_dict(parsed)
+    if nre_dicts and not schema.non_routine_events:
+        schema = DatasetSchema(
+            columns=schema.columns,
+            dataset_name=schema.dataset_name,
+            dataset_sha256=schema.dataset_sha256,
+            timezone=schema.timezone,
+            storage_timezone=schema.storage_timezone,
+            outlier_policy=schema.outlier_policy,
+            non_routine_events=[NonRoutineEventSpec.from_dict(d) for d in nre_dicts],
+            schema_version=schema.schema_version,
+        )
+    if verify_sha256 and schema.compute_sha256() != stored_sha:
+        raise SchemaIntegrityError(
+            f"Persisted DatasetSchema canonical SHA-256 mismatch: expected {stored_sha}, got {schema.compute_sha256()}."
+        )
+    return schema
+
+
+def list_dataset_schemas(dataset_id: int | None = None) -> list[dict]:
+    with session_scope() as s:
+        q = select(M.DatasetSchemaRecord).order_by(M.DatasetSchemaRecord.id.desc())
+        if dataset_id is not None:
+            q = q.where(M.DatasetSchemaRecord.dataset_id == dataset_id)
+        return [
+            {
+                "id": r.id,
+                "dataset_id": r.dataset_id,
+                "name": r.name,
+                "schema_version": r.schema_version,
+                "dataset_sha256": r.dataset_sha256,
+                "schema_sha256": r.schema_sha256,
+                "time_column": r.time_column,
+                "targets": json.loads(r.targets_json or "[]"),
+                "outlier_policy": r.outlier_policy,
+                "created_at": str(r.created_at),
+            }
+            for r in s.execute(q).scalars()
+        ]
+
+
+def load_ingestion_summary(schema_id: int | None = None, *, dataset_id: int | None = None) -> dict:
+    with session_scope() as s:
+        if schema_id is not None:
+            rec = s.get(M.DatasetSchemaRecord, schema_id)
+        else:
+            rec = (
+                s.execute(
+                    select(M.DatasetSchemaRecord)
+                    .where(M.DatasetSchemaRecord.dataset_id == dataset_id)
+                    .order_by(M.DatasetSchemaRecord.id.desc())
+                    .limit(1)
+                )
+                .scalars()
+                .first()
+            )
+        if rec is None:
+            raise FileNotFoundError(
+                f"No persisted DatasetSchema summary found (schema_id={schema_id}, dataset_id={dataset_id})."
+            )
+        return json.loads(rec.ingestion_summary_json or "{}")
+
+
+def load_non_routine_events(
+    *,
+    dataset_id: int | None = None,
+    schema_id: int | None = None,
+) -> list[NonRoutineEventSpec]:
+    with session_scope() as s:
+        q = select(M.NonRoutineEvent).order_by(M.NonRoutineEvent.id)
+        if schema_id is not None:
+            q = q.where(M.NonRoutineEvent.schema_id == schema_id)
+        elif dataset_id is not None:
+            q = q.where(M.NonRoutineEvent.dataset_id == dataset_id)
+        return [
+            NonRoutineEventSpec(
+                name=r.name,
+                start=r.start_ts,
+                end=r.end_ts,
+                action=r.action,
+                affected_targets=tuple(json.loads(r.affected_targets_json or "[]")),
+                reason=r.reason,
+            )
+            for r in s.execute(q).scalars()
+        ]
+

@@ -177,14 +177,18 @@ requirements:
 - id: AC-06
   priority: M
   phase: 2
-  status: planned
+  status: done
   title: Read-only SQL connector rejects DDL/DML/multi-statement queries via sqlglot AST and driver read-only
     mode.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/sqlsource.py
+  test_ids:
+  - tests/gates/test_phase2_ingest_and_sql.py::test_sqlglot_ast_accepts_pure_select_and_cte_queries
+  - tests/gates/test_phase2_ingest_and_sql.py::test_sqlglot_ast_rejects_adversarial_sql_constructs
+  - tests/gates/test_phase2_ingest_and_sql.py::test_sqlite_driver_enforces_readonly_mode_even_with_spaces_in_path
 - id: AC-07
   priority: M
-  phase: 2
+  phase: 3
   status: planned
   title: Variable Selection Gate runs pre-modeling and logs per-driver decisions with user override audit.
   code_refs: []
@@ -347,10 +351,16 @@ requirements:
 - id: AC-28
   priority: M
   phase: 2
-  status: planned
+  status: done
   title: Ingestion handles CSV/TSV/Excel encodings, DST transitions, duplicate timestamps, and unit metadata.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/ingest.py
+  - energybaseline/core/temporal.py
+  test_ids:
+  - tests/gates/test_phase2_ingest_and_sql.py::test_encoding_delimiter_european_decimal_and_tsv_ingest
+  - tests/gates/test_phase2_ingest_and_sql.py::test_excel_multisheet_best_sheet_heuristic
+  - tests/gates/test_phase2_ingest_and_sql.py::test_unit_registry_is_immutable_and_converts_accurately
+  - tests/gates/test_phase2_temporal_and_dst.py::test_dst_four_zones_wall_clock_disambiguation_and_energy_conservation
 - id: AC-29
   priority: M
   phase: 3
@@ -498,7 +508,7 @@ requirements:
   - tests/gates/test_phase0_contracts.py::test_manifests_exact_pins_and_hashes
 - id: PIPE-1
   priority: M
-  phase: 2
+  phase: 3
   status: planned
   title: Typed stage contract connecting Ingest -> VSG -> TCP -> Candidate Gen -> Fit/CV -> Score -> UQ
     -> Report.
@@ -905,66 +915,114 @@ requirements:
 - id: DAT-1
   priority: M
   phase: 2
-  status: planned
+  status: done
   title: CSV, TSV, and Excel (.xlsx) ingestion with encoding, delimiter, decimal, and sheet auto-detection.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/ingest.py
+  test_ids:
+  - tests/gates/test_phase2_ingest_and_sql.py::test_encoding_delimiter_european_decimal_and_tsv_ingest
+  - tests/gates/test_phase2_ingest_and_sql.py::test_excel_multisheet_best_sheet_heuristic
+  - tests/gates/test_phase2_ingest_and_sql.py::test_streamed_csv_chunking_and_parquet_cache_tamper_invalidation
 - id: DAT-2
   priority: M
   phase: 2
-  status: planned
+  status: done
   title: Timestamp parsing supporting ISO-8601, locale formats, explicit timezone/DST handling, and monotonicity
     sort.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/temporal.py
+  test_ids:
+  - tests/gates/test_phase2_temporal_and_dst.py::test_dst_four_zones_wall_clock_disambiguation_and_energy_conservation
+  - tests/gates/test_phase2_temporal_and_dst.py::test_spring_forward_nonexistent_wall_time_audited_not_silently_corrupted
+  - tests/gates/test_phase2_temporal_and_dst.py::test_hypothesis_four_zones_utc_monotonicity_and_flow_conservation
 - id: DAT-3
   priority: M
   phase: 2
-  status: planned
+  status: done
   title: Duplicate timestamp, irregular interval, and gap classification (short gap vs extended shutdown).
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/temporal.py
+  test_ids:
+  - tests/gates/test_phase2_temporal_and_dst.py::test_aggregation_dispatch_is_immutable_and_getattr_free
+  - tests/gates/test_phase2_temporal_and_dst.py::test_quantity_type_aware_aggregation_math
+  - tests/gates/test_phase2_temporal_and_dst.py::test_time_weighted_irregular_subinterval_integral
+  - tests/gates/test_phase2_temporal_and_dst.py::test_disaggregation_refused_with_data_refused_error
+  - tests/gates/test_phase2_temporal_and_dst.py::test_gap_classification_single_multi_and_extended_outage
 - id: DAT-4
   priority: M
   phase: 2
-  status: planned
+  status: done
   title: Column role assignment (timestamp, EnPI target(s), weather/production drivers, static factors,
     exclusions).
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/schema.py
+  - energybaseline/core/store.py
+  - energybaseline/gui/pages_setup.py
+  - energybaseline/cli.py
+  test_ids:
+  - tests/gates/test_phase2_schema_and_db.py::test_column_spec_and_dataset_schema_invariants
+  - tests/gates/test_phase2_schema_and_db.py::test_dataset_schema_rejects_invalid_configurations
+  - tests/gates/test_phase2_quality_and_cli.py::test_pipeline_run_analysis_accepts_dataset_schema
+  - tests/gates/test_phase2_quality_and_cli.py::test_cli_schema_suggest_edit_validate_and_temporal_preview
+  - tests/gui/test_phase2_gui_schema.py::test_setup_page_schema_editor_json_db_roundtrip_and_parquet_import
 - id: DAT-5
   priority: M
   phase: 2
-  status: planned
+  status: done
   title: Leak-free missing-value policy (bounded linear/time interpolation for short gaps, MICE/flagging
     for drivers, never imputing targets across long shutdowns).
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/quality.py
+  - energybaseline/db/models.py
+  - alembic/versions/0002_phase2_schema_and_nre.py
+  test_ids:
+  - tests/gates/test_phase2_quality_and_cli.py::test_target_never_fabricated_and_verifier_catches_fabrication
+  - tests/gates/test_phase2_quality_and_cli.py::test_leak_free_predictor_missing_policy_never_peeks_at_holdout
+  - tests/gates/test_phase2_quality_and_cli.py::test_outlier_action_policies_flag_only_ask_user_and_auto_apply
+  - tests/gates/test_phase2_quality_and_cli.py::test_non_routine_event_exclusion_and_indicator_in_preprocessing
 - id: DAT-6
   priority: M
   phase: 2
-  status: planned
+  status: done
   title: Physical unit metadata registry and deterministic energy/temperature unit conversion.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/ingest.py
+  - energybaseline/cli.py
+  - energybaseline/gui/pages_setup.py
+  test_ids:
+  - tests/gates/test_phase2_ingest_and_sql.py::test_unit_registry_is_immutable_and_converts_accurately
+  - tests/gates/test_phase2_quality_and_cli.py::test_cli_schema_suggest_edit_validate_and_temporal_preview
+  - tests/gui/test_phase2_gui_schema.py::test_setup_page_schema_editor_json_db_roundtrip_and_parquet_import
 - id: DAT-7
   priority: M
   phase: 2
-  status: planned
+  status: done
   title: Read-only external SQL ingestion validated by sqlglot AST (SELECT/WITH only), row limit, and
     query timeout.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/sqlsource.py
+  - energybaseline/core/schema.py
+  test_ids:
+  - tests/gates/test_phase2_ingest_and_sql.py::test_sqlglot_ast_rejects_adversarial_sql_constructs
+  - tests/gates/test_phase2_ingest_and_sql.py::test_sqlite_driver_enforces_readonly_mode_even_with_spaces_in_path
+  - tests/gates/test_phase2_schema_and_db.py::test_dataset_schema_rejects_invalid_configurations
 - id: DAT-8
   priority: M
   phase: 2
-  status: planned
+  status: done
   title: SHA-256 raw dataset fingerprinting and immutable ingestion summary persisted with run metadata.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/schema.py
+  - energybaseline/core/store.py
+  - energybaseline/core/ingest.py
+  - alembic/versions/0002_phase2_schema_and_nre.py
+  test_ids:
+  - tests/gates/test_phase2_schema_and_db.py::test_schema_json_sha256_roundtrip_and_tamper_detection
+  - tests/gates/test_phase2_schema_and_db.py::test_alembic_0002_reversible_ladder_and_db_schema_tamper_detection
+  - tests/gates/test_phase2_ingest_and_sql.py::test_streamed_csv_chunking_and_parquet_cache_tamper_invalidation
 - id: VSG-1
   priority: M
-  phase: 2
+  phase: 3
   status: planned
   title: Pre-modeling Variable Selection Gate screening candidate drivers before feature engineering and
     fitting.
@@ -972,28 +1030,28 @@ requirements:
   test_ids: []
 - id: VSG-2
   priority: M
-  phase: 2
+  phase: 3
   status: planned
   title: Driver missingness threshold gate rejecting or flagging columns exceeding maximum missing fraction.
   code_refs: []
   test_ids: []
 - id: VSG-3
   priority: M
-  phase: 2
+  phase: 3
   status: planned
   title: Zero and near-zero variance (constant / quasi-constant) driver rejection.
   code_refs: []
   test_ids: []
 - id: VSG-4
   priority: M
-  phase: 2
+  phase: 3
   status: planned
   title: Bivariate linear (Pearson) and monotonic (Spearman) relevance screening against target.
   code_refs: []
   test_ids: []
 - id: VSG-5
   priority: M
-  phase: 2
+  phase: 3
   status: planned
   title: Multicollinearity screening via iterative Variance Inflation Factor (VIF) pruning with domain
     priority.
@@ -1001,28 +1059,28 @@ requirements:
   test_ids: []
 - id: VSG-6
   priority: M
-  phase: 2
+  phase: 3
   status: planned
   title: Target leakage / identity detector catching scaled/lag-zero copies of the EnPI target.
   code_refs: []
   test_ids: []
 - id: VSG-7
   priority: M
-  phase: 2
+  phase: 3
   status: planned
   title: Non-linear mutual information relevance check preserving degree-day / threshold drivers.
   code_refs: []
   test_ids: []
 - id: VSG-8
   priority: M
-  phase: 2
+  phase: 3
   status: planned
   title: Consensus driver disposition (keep, drop, collinear-grouped) with structured plain-English reason.
   code_refs: []
   test_ids: []
 - id: VSG-9
   priority: M
-  phase: 2
+  phase: 3
   status: planned
   title: Interactive engineer override of VSG decisions recorded with mandatory audit trail.
   code_refs: []

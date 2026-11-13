@@ -67,6 +67,10 @@ def make_shortcuts(force: bool = False) -> list[str]:
 
 def main() -> None:
     multiprocessing.freeze_support()
+    if len(sys.argv) > 1 and sys.argv[1] == "cli":
+        from energybaseline.cli import main as cli_main
+
+        sys.exit(cli_main(sys.argv[2:]))
     base = _base()
     try:
         base.mkdir(parents=True, exist_ok=True)

@@ -6,7 +6,7 @@
 ## Summary
 
 - **Total tracked IDs:** 249 (Priorities: `[M]`=243, `[S]`=4, `[O]`=2)
-- **Status breakdown:** `done`=41 · `in_progress`=14 · `planned`=193 · `deferred`=1
+- **Status breakdown:** `done`=51 · `in_progress`=14 · `planned`=183 · `deferred`=1
 
 ## Matrix
 
@@ -27,8 +27,8 @@
 | `AC-03` | `M` | `1` | `planned` | Credentials encrypted via Windows DPAPI or PBKDF2-Fernet with zero plaintext secrets on disk or logs. | — | — |
 | `AC-04` | `M` | `1/6` | `planned` | Zero pickle.loads in model store; artifacts persisted via joblib with verified SHA-256 manifest. | — | — |
 | `AC-05` | `M` | `0/1` | `done` | Zero web servers, listening ports, browser views, or outbound telemetry calls. | `scripts/gates/guard_web_free.py`, `energybaseline/core/pool.py`, `energybaseline/db/session.py` | `tests/gates/test_guard_web_free.py::test_repo_is_web_free`, `tests/gates/test_phase1_db_ladder.py::test_db_matrix_unwritable_app_home_falls_back_to_temp_rung`, `tests/gates/test_phase1_db_ladder.py::test_db_matrix_unwritable_app_home_and_temp_falls_back_to_in_memory_red_banner` |
-| `AC-06` | `M` | `2` | `planned` | Read-only SQL connector rejects DDL/DML/multi-statement queries via sqlglot AST and driver read-only mode. | — | — |
-| `AC-07` | `M` | `2` | `planned` | Variable Selection Gate runs pre-modeling and logs per-driver decisions with user override audit. | — | — |
+| `AC-06` | `M` | `2` | `done` | Read-only SQL connector rejects DDL/DML/multi-statement queries via sqlglot AST and driver read-only mode. | `energybaseline/core/sqlsource.py` | `tests/gates/test_phase2_ingest_and_sql.py::test_sqlglot_ast_accepts_pure_select_and_cte_queries`, `tests/gates/test_phase2_ingest_and_sql.py::test_sqlglot_ast_rejects_adversarial_sql_constructs`, `tests/gates/test_phase2_ingest_and_sql.py::test_sqlite_driver_enforces_readonly_mode_even_with_spaces_in_path` |
+| `AC-07` | `M` | `3` | `planned` | Variable Selection Gate runs pre-modeling and logs per-driver decisions with user override audit. | — | — |
 | `AC-08` | `M` | `3` | `planned` | Target Characterization Profile computes all 14 dimensions and persists JSON prior to candidate generation. | — | — |
 | `AC-09` | `M` | `3` | `planned` | Every Auto decision logs rule, inputs, outputs, and rationale in AutoDecisionLog. | — | — |
 | `AC-10` | `M` | `4` | `planned` | Statistical Test Catalog T1..T14 returns typed TestResult objects with assumption checks and fallbacks. | — | — |
@@ -49,7 +49,7 @@
 | `AC-25` | `M` | `8` | `planned` | ISO 50006 report exports deterministic ReportLab PDF and self-contained offline HTML. | — | — |
 | `AC-26` | `M` | `9` | `planned` | Clean-VM packaged EnergyBaseline.exe passes E3 end-to-end smoke test without Python installed. | — | — |
 | `AC-27` | `M` | `1` | `done` | Alembic migrations run exclusively at startup with automatic pre-migration SQLite backup. | `energybaseline/db/session.py`, `energybaseline/db/backup.py`, `energybaseline/db/migrate.py` | `tests/gates/test_phase1_db_ladder.py::test_pre_migration_online_backup_and_validated_restore_on_failure` |
-| `AC-28` | `M` | `2` | `planned` | Ingestion handles CSV/TSV/Excel encodings, DST transitions, duplicate timestamps, and unit metadata. | — | — |
+| `AC-28` | `M` | `2` | `done` | Ingestion handles CSV/TSV/Excel encodings, DST transitions, duplicate timestamps, and unit metadata. | `energybaseline/core/ingest.py`, `energybaseline/core/temporal.py` | `tests/gates/test_phase2_ingest_and_sql.py::test_encoding_delimiter_european_decimal_and_tsv_ingest`, `tests/gates/test_phase2_ingest_and_sql.py::test_excel_multisheet_best_sheet_heuristic`, `tests/gates/test_phase2_ingest_and_sql.py::test_unit_registry_is_immutable_and_converts_accurately`, `tests/gates/test_phase2_temporal_and_dst.py::test_dst_four_zones_wall_clock_disambiguation_and_energy_conservation` |
 | `AC-29` | `M` | `3` | `planned` | Structural break detection (Chow, Quandt-Andrews, Pettitt, Bai-Perron/PELT) integrated into TCP. | — | — |
 | `AC-30` | `M` | `5` | `planned` | Degree-day / 3P-4P-5P ASHRAE Guideline 14 change-point models fitted with knot uncertainty. | — | — |
 | `AC-31` | `M` | `6` | `planned` | SHAP and standardized coefficient attributions exported consistently for selected baseline. | — | — |
@@ -68,7 +68,7 @@
 | `G-9` | `M` | `6` | `planned` | Safe serialization only (JSON, SQLite, joblib with SHA-256 verification; no pickle). | — | — |
 | `G-10` | `M` | `0` | `in_progress` | Phase gate discipline with immutable baseline test hashes and negative gate tests. | `scripts/gates/guard_tests_integrity.py` | `tests/gates/test_guard_tests_integrity.py::test_rejects_one_byte_test_tampering` |
 | `G-11` | `M` | `0` | `in_progress` | Supply-chain hygiene: exact pins, SHA-256 lockfile, pip-audit, and CycloneDX SBOM. | `requirements.lock`, `.github/workflows/ci.yml` | `tests/gates/test_phase0_contracts.py::test_manifests_exact_pins_and_hashes` |
-| `PIPE-1` | `M` | `2` | `planned` | Typed stage contract connecting Ingest -> VSG -> TCP -> Candidate Gen -> Fit/CV -> Score -> UQ -> Report. | — | — |
+| `PIPE-1` | `M` | `3` | `planned` | Typed stage contract connecting Ingest -> VSG -> TCP -> Candidate Gen -> Fit/CV -> Score -> UQ -> Report. | — | — |
 | `PIPE-2` | `M` | `3` | `planned` | Immutable stage artifacts with dataset SHA-256 provenance across pipeline stages. | — | — |
 | `PIPE-3` | `M` | `7` | `planned` | Per-target pipeline isolation ensuring failure on one EnPI target never aborts sibling targets. | — | — |
 | `DB-1` | `M` | `1` | `done` | Default SQLite database under %LOCALAPPDATA%\EnergyBaseline\data or portable mode without env vars. | `energybaseline/config/settings.py`, `energybaseline/db/session.py`, `energybaseline/io/paths.py` | `tests/gates/test_phase1_db_ladder.py::test_db_matrix_no_env_and_whitespace_env_and_pragmas`, `tests/gates/test_phase1_paths_and_commands.py::test_resolve_app_home_precedence` |
@@ -110,23 +110,23 @@
 | `SCR-5` | `M` | `1` | `planned` | Explicit credential deletion (Forget Password) wiping stored secret from DPAPI/keyring/vault. | — | — |
 | `SCR-6` | `M` | `1` | `planned` | TLS/SSL connection options (require SSL, custom CA bundle path) for external SQL connectors. | — | — |
 | `SCR-7` | `M` | `1` | `done` | In-memory secret handling minimizing lifetime of plaintext password strings during SQL connection setup. | `energybaseline/gui/commands.py`, `energybaseline/core/pool.py` | `tests/gates/test_phase1_paths_and_commands.py::test_command_registries_are_compile_time_immutable_and_reject_unknown`, `tests/gates/test_phase1_paths_and_commands.py::test_no_eval_exec_or_getattr_in_command_dispatchers` |
-| `DAT-1` | `M` | `2` | `planned` | CSV, TSV, and Excel (.xlsx) ingestion with encoding, delimiter, decimal, and sheet auto-detection. | — | — |
-| `DAT-2` | `M` | `2` | `planned` | Timestamp parsing supporting ISO-8601, locale formats, explicit timezone/DST handling, and monotonicity sort. | — | — |
-| `DAT-3` | `M` | `2` | `planned` | Duplicate timestamp, irregular interval, and gap classification (short gap vs extended shutdown). | — | — |
-| `DAT-4` | `M` | `2` | `planned` | Column role assignment (timestamp, EnPI target(s), weather/production drivers, static factors, exclusions). | — | — |
-| `DAT-5` | `M` | `2` | `planned` | Leak-free missing-value policy (bounded linear/time interpolation for short gaps, MICE/flagging for drivers, never imputing targets across long shutdowns). | — | — |
-| `DAT-6` | `M` | `2` | `planned` | Physical unit metadata registry and deterministic energy/temperature unit conversion. | — | — |
-| `DAT-7` | `M` | `2` | `planned` | Read-only external SQL ingestion validated by sqlglot AST (SELECT/WITH only), row limit, and query timeout. | — | — |
-| `DAT-8` | `M` | `2` | `planned` | SHA-256 raw dataset fingerprinting and immutable ingestion summary persisted with run metadata. | — | — |
-| `VSG-1` | `M` | `2` | `planned` | Pre-modeling Variable Selection Gate screening candidate drivers before feature engineering and fitting. | — | — |
-| `VSG-2` | `M` | `2` | `planned` | Driver missingness threshold gate rejecting or flagging columns exceeding maximum missing fraction. | — | — |
-| `VSG-3` | `M` | `2` | `planned` | Zero and near-zero variance (constant / quasi-constant) driver rejection. | — | — |
-| `VSG-4` | `M` | `2` | `planned` | Bivariate linear (Pearson) and monotonic (Spearman) relevance screening against target. | — | — |
-| `VSG-5` | `M` | `2` | `planned` | Multicollinearity screening via iterative Variance Inflation Factor (VIF) pruning with domain priority. | — | — |
-| `VSG-6` | `M` | `2` | `planned` | Target leakage / identity detector catching scaled/lag-zero copies of the EnPI target. | — | — |
-| `VSG-7` | `M` | `2` | `planned` | Non-linear mutual information relevance check preserving degree-day / threshold drivers. | — | — |
-| `VSG-8` | `M` | `2` | `planned` | Consensus driver disposition (keep, drop, collinear-grouped) with structured plain-English reason. | — | — |
-| `VSG-9` | `M` | `2` | `planned` | Interactive engineer override of VSG decisions recorded with mandatory audit trail. | — | — |
+| `DAT-1` | `M` | `2` | `done` | CSV, TSV, and Excel (.xlsx) ingestion with encoding, delimiter, decimal, and sheet auto-detection. | `energybaseline/core/ingest.py` | `tests/gates/test_phase2_ingest_and_sql.py::test_encoding_delimiter_european_decimal_and_tsv_ingest`, `tests/gates/test_phase2_ingest_and_sql.py::test_excel_multisheet_best_sheet_heuristic`, `tests/gates/test_phase2_ingest_and_sql.py::test_streamed_csv_chunking_and_parquet_cache_tamper_invalidation` |
+| `DAT-2` | `M` | `2` | `done` | Timestamp parsing supporting ISO-8601, locale formats, explicit timezone/DST handling, and monotonicity sort. | `energybaseline/core/temporal.py` | `tests/gates/test_phase2_temporal_and_dst.py::test_dst_four_zones_wall_clock_disambiguation_and_energy_conservation`, `tests/gates/test_phase2_temporal_and_dst.py::test_spring_forward_nonexistent_wall_time_audited_not_silently_corrupted`, `tests/gates/test_phase2_temporal_and_dst.py::test_hypothesis_four_zones_utc_monotonicity_and_flow_conservation` |
+| `DAT-3` | `M` | `2` | `done` | Duplicate timestamp, irregular interval, and gap classification (short gap vs extended shutdown). | `energybaseline/core/temporal.py` | `tests/gates/test_phase2_temporal_and_dst.py::test_aggregation_dispatch_is_immutable_and_getattr_free`, `tests/gates/test_phase2_temporal_and_dst.py::test_quantity_type_aware_aggregation_math`, `tests/gates/test_phase2_temporal_and_dst.py::test_time_weighted_irregular_subinterval_integral`, `tests/gates/test_phase2_temporal_and_dst.py::test_disaggregation_refused_with_data_refused_error`, `tests/gates/test_phase2_temporal_and_dst.py::test_gap_classification_single_multi_and_extended_outage` |
+| `DAT-4` | `M` | `2` | `done` | Column role assignment (timestamp, EnPI target(s), weather/production drivers, static factors, exclusions). | `energybaseline/core/schema.py`, `energybaseline/core/store.py`, `energybaseline/gui/pages_setup.py`, `energybaseline/cli.py` | `tests/gates/test_phase2_schema_and_db.py::test_column_spec_and_dataset_schema_invariants`, `tests/gates/test_phase2_schema_and_db.py::test_dataset_schema_rejects_invalid_configurations`, `tests/gates/test_phase2_quality_and_cli.py::test_pipeline_run_analysis_accepts_dataset_schema`, `tests/gates/test_phase2_quality_and_cli.py::test_cli_schema_suggest_edit_validate_and_temporal_preview`, `tests/gui/test_phase2_gui_schema.py::test_setup_page_schema_editor_json_db_roundtrip_and_parquet_import` |
+| `DAT-5` | `M` | `2` | `done` | Leak-free missing-value policy (bounded linear/time interpolation for short gaps, MICE/flagging for drivers, never imputing targets across long shutdowns). | `energybaseline/core/quality.py`, `energybaseline/db/models.py`, `alembic/versions/0002_phase2_schema_and_nre.py` | `tests/gates/test_phase2_quality_and_cli.py::test_target_never_fabricated_and_verifier_catches_fabrication`, `tests/gates/test_phase2_quality_and_cli.py::test_leak_free_predictor_missing_policy_never_peeks_at_holdout`, `tests/gates/test_phase2_quality_and_cli.py::test_outlier_action_policies_flag_only_ask_user_and_auto_apply`, `tests/gates/test_phase2_quality_and_cli.py::test_non_routine_event_exclusion_and_indicator_in_preprocessing` |
+| `DAT-6` | `M` | `2` | `done` | Physical unit metadata registry and deterministic energy/temperature unit conversion. | `energybaseline/core/ingest.py`, `energybaseline/cli.py`, `energybaseline/gui/pages_setup.py` | `tests/gates/test_phase2_ingest_and_sql.py::test_unit_registry_is_immutable_and_converts_accurately`, `tests/gates/test_phase2_quality_and_cli.py::test_cli_schema_suggest_edit_validate_and_temporal_preview`, `tests/gui/test_phase2_gui_schema.py::test_setup_page_schema_editor_json_db_roundtrip_and_parquet_import` |
+| `DAT-7` | `M` | `2` | `done` | Read-only external SQL ingestion validated by sqlglot AST (SELECT/WITH only), row limit, and query timeout. | `energybaseline/core/sqlsource.py`, `energybaseline/core/schema.py` | `tests/gates/test_phase2_ingest_and_sql.py::test_sqlglot_ast_rejects_adversarial_sql_constructs`, `tests/gates/test_phase2_ingest_and_sql.py::test_sqlite_driver_enforces_readonly_mode_even_with_spaces_in_path`, `tests/gates/test_phase2_schema_and_db.py::test_dataset_schema_rejects_invalid_configurations` |
+| `DAT-8` | `M` | `2` | `done` | SHA-256 raw dataset fingerprinting and immutable ingestion summary persisted with run metadata. | `energybaseline/core/schema.py`, `energybaseline/core/store.py`, `energybaseline/core/ingest.py`, `alembic/versions/0002_phase2_schema_and_nre.py` | `tests/gates/test_phase2_schema_and_db.py::test_schema_json_sha256_roundtrip_and_tamper_detection`, `tests/gates/test_phase2_schema_and_db.py::test_alembic_0002_reversible_ladder_and_db_schema_tamper_detection`, `tests/gates/test_phase2_ingest_and_sql.py::test_streamed_csv_chunking_and_parquet_cache_tamper_invalidation` |
+| `VSG-1` | `M` | `3` | `planned` | Pre-modeling Variable Selection Gate screening candidate drivers before feature engineering and fitting. | — | — |
+| `VSG-2` | `M` | `3` | `planned` | Driver missingness threshold gate rejecting or flagging columns exceeding maximum missing fraction. | — | — |
+| `VSG-3` | `M` | `3` | `planned` | Zero and near-zero variance (constant / quasi-constant) driver rejection. | — | — |
+| `VSG-4` | `M` | `3` | `planned` | Bivariate linear (Pearson) and monotonic (Spearman) relevance screening against target. | — | — |
+| `VSG-5` | `M` | `3` | `planned` | Multicollinearity screening via iterative Variance Inflation Factor (VIF) pruning with domain priority. | — | — |
+| `VSG-6` | `M` | `3` | `planned` | Target leakage / identity detector catching scaled/lag-zero copies of the EnPI target. | — | — |
+| `VSG-7` | `M` | `3` | `planned` | Non-linear mutual information relevance check preserving degree-day / threshold drivers. | — | — |
+| `VSG-8` | `M` | `3` | `planned` | Consensus driver disposition (keep, drop, collinear-grouped) with structured plain-English reason. | — | — |
+| `VSG-9` | `M` | `3` | `planned` | Interactive engineer override of VSG decisions recorded with mandatory audit trail. | — | — |
 | `AUTO-1` | `M` | `3` | `planned` | Every automatic parameter supports Auto \| Manual override in both API config and desktop UI. | — | — |
 | `AUTO-2` | `M` | `3` | `planned` | Structured AutoDecisionEntry recording parameter, chosen value, candidate space, rule, metric evidence, and timestamp. | — | — |
 | `AUTO-3` | `M` | `3` | `planned` | Deterministic Auto rule evaluation depending solely on training-window statistics and TCP. | — | — |

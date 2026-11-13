@@ -1,0 +1,3 @@
+=== pip-audit -r requirements.lock ===
+=== cyclonedx-py SBOM ===
+SBOM components: 166 sha256: 01876eb6a9162e20a8ba96f502e61c3efd71fa36ccc628694f66b040c752d81b

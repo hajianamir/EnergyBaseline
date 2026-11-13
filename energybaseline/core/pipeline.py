@@ -24,6 +24,7 @@ from .features import FeatureSpec, build_spec, select_features
 from .mining import run_mining
 from .models import Blend, Ctx, build_portfolio, diagnostics, evaluate_candidate, make_folds, metrics, plausibility
 from .quality import preprocess_target
+from .schema import DatasetSchema, coerce_dataset_schema
 from .scoring import build_shortlist, decision_rationale, nn_gate, score_models, thresholds
 from .temporal import prepare_temporal
 
@@ -181,12 +182,14 @@ def _importance(model, X: pd.DataFrame, y: np.ndarray, seed: int, with_shap: boo
 
 def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: list[str], config: dict, seed: int,
                    auto_root: AutoLog, n_jobs: int, progress: Progress, cancel: Callable[[], bool],
-                   formulas_artifact: Callable[[str, str], str] | None = None) -> tuple[TargetResult, dict]:
+                   formulas_artifact: Callable[[str, str], str] | None = None,
+                   *, schema: DatasetSchema | dict | None = None) -> tuple[TargetResult, dict]:
     t0 = time.time()
     res = TargetResult(target)
     bundles: dict = {}
     cfg = {k: v for k, v in config.items() if k != "per_target"}
     cfg.update((config.get("per_target") or {}).get(target, {}))
+    resolved_schema = coerce_dataset_schema(schema or cfg.get("dataset_schema"))
     auto = AutoLog(cfg, target)
     auto.records = auto_root.records
 
@@ -197,10 +200,10 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
 
     try:
         emit(2, "Temporal configuration")
-        tdf, trep, g = prepare_temporal(df, time_col, auto)
+        tdf, trep, g = prepare_temporal(df, time_col, auto, schema=resolved_schema)
         res.temporal, res.granularity, res.freq = trep.as_dict(), g.label, g.freq
         emit(8, "Quality & preprocessing")
-        prep = preprocess_target(tdf, target, all_targets, g, auto, seed, trep.n_duplicates)
+        prep = preprocess_target(tdf, target, all_targets, g, auto, seed, trep.n_duplicates, schema=resolved_schema)
         res.exclusions, res.quality, res.notes, res.outliers = prep.exclusions, prep.quality, prep.notes, prep.outliers
         emit(14, "Exploratory analysis")
         res.eda = run_eda(prep.df, target, prep.predictors, g)
@@ -359,9 +362,13 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
 
 
 def run_analysis(df: pd.DataFrame, time_col: str, targets: list[str], config: dict | None = None, *, dataset_sha: str | None = None,
-                 dataset_info: dict | None = None, progress: Progress | None = None, cancel: Callable[[], bool] | None = None,
+                 dataset_info: dict | None = None, schema: DatasetSchema | dict | None = None,
+                 progress: Progress | None = None, cancel: Callable[[], bool] | None = None,
                  artifact_fn: Callable[[str, str], str] | None = None) -> tuple[RunResult, dict]:
     config = dict(config or {})
+    resolved_schema = coerce_dataset_schema(schema or config.get("dataset_schema"))
+    if resolved_schema is not None:
+        config["dataset_schema"] = resolved_schema.to_dict()
     progress = progress or (lambda t, p, m: None)
     cancel = cancel or (lambda: False)
     auto = AutoLog(config)
@@ -375,7 +382,7 @@ def run_analysis(df: pd.DataFrame, time_col: str, targets: list[str], config: di
     bundles: dict[str, dict] = {}
 
     def work(t):
-        return analyze_target(df, time_col, t, targets, config, seed, auto, n_jobs, progress, cancel, artifact_fn)
+        return analyze_target(df, time_col, t, targets, config, seed, auto, n_jobs, progress, cancel, artifact_fn, schema=resolved_schema)
 
     cancelled = False
     try:

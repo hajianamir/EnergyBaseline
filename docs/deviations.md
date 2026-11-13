@@ -67,3 +67,16 @@ Verified directly in `.venv` against `statsmodels==0.15.0` and `scipy==1.17.1` (
    `statsmodels==0.15.0` emits `FutureWarning` announcing a future `ResultsStore` return object; Phase 4 adapters must unpack positional tuple fields explicitly or normalize both tuple and result-store forms.
 5. **`scipy.stats.brunnermunzel` `midrank` parameter deprecation (`T3`):**
    `scipy==1.17.1` deprecates `midrank` on `brunnermunzel`; Phase 4 callers must use the current signature (`distribution='t'` / `nan_policy='propagate'`).
+
+---
+
+## 4. Phase 2 Deltas & Dependency Additions (`Gate G2`)
+
+1. **`DEV-05` — Addition of `pyarrow==24.0.0` (`Apache-2.0`) for Parquet Ingestion & Verified Sidecar Cache (`DAT-1`, `DAT-8`, `Gate G2`):**
+   - Pinned `pyarrow==24.0.0` across `requirements.in`, `requirements.txt`, `requirements.lock` (all 50 PyPI wheel + sdist SHA-256 digests), `THIRD_PARTY_NOTICES.md`, and `scripts/build_exe.py` (`HIDDEN = [..., "pyarrow", "pyarrow.parquet", "sqlglot"]`).
+   - `pyarrow` is loaded lazily via `pandas.read_parquet(..., engine="pyarrow")` / `DataFrame.to_parquet(..., engine="pyarrow")` inside `energybaseline/core/ingest.py` rather than at module import time, preserving fast cold/warm desktop startup (`startup_time.ps1`).
+   - Verified zero CVEs via `pip-audit -r requirements.lock`.
+2. **Traceability Phase Alignment (`docs/requirements.yaml` vs `docs/EXECUTION_PLAN.md` §Phase 2–3):**
+   - Marked all 10 Phase 2 requirements (`DAT-1..DAT-8`, `AC-06`, `AC-28`) `status: done` with verified `code_refs` and `test_ids`.
+   - Aligned `VSG-1..VSG-9`, `AC-07`, and `PIPE-1` to `phase: 3` in `docs/requirements.yaml` matching `docs/EXECUTION_PLAN.md` §Phase 3 (`Scope: §10 (VSG-1..9), §12 (AUTO-1..6), §13 (TCP-1..14), PIPE-1..3`).
+
