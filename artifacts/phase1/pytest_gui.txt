@@ -1,0 +1,15 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.2, pytest-9.2.0, pluggy-1.7.0 -- /home/user/EnergyBaseline/.venv/bin/python
+cachedir: .pytest_cache
+hypothesis profile 'default'
+PySide6 6.9.3 -- Qt runtime 6.9.3 -- Qt compiled 6.9.3
+rootdir: /home/user/EnergyBaseline
+configfile: pytest.ini
+plugins: platformdirs-4.14.5, hypothesis-6.170.15, qt-4.5.0, cov-7.1.0
+collecting ... collected 3 items
+
+tests/gui/test_phase1_gui.py::test_single_instance_guard_activates_primary_and_rejects_second PASSED [ 33%]
+tests/gui/test_phase1_gui.py::test_main_window_commands_path_guard_status_page_and_banners PASSED [ 66%]
+tests/gui/test_qapp_smoke.py::test_qapplication_smoke PASSED             [100%]
+
+============================== 3 passed in 4.30s ===============================

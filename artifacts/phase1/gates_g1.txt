@@ -1,0 +1,30 @@
+$ python scripts/gates/guard_web_free.py
+OK [guard_web_free] clean (/home/user/EnergyBaseline)
+exit=0
+
+$ python scripts/gates/guard_env_readers.py
+OK [guard_env_readers] clean (/home/user/EnergyBaseline)
+exit=0
+
+$ python scripts/gates/guard_tests_integrity.py
+OK [guard_tests_integrity] verified 4 baseline test files
+exit=0
+
+$ python scripts/gates/guard_no_qthread_compute.py
+OK [guard_no_qthread_compute] clean (/home/user/EnergyBaseline)
+exit=0
+
+$ grep -rn 'os.environ["DATABASE_URL"]' energybaseline/launcher.py
+(empty; exit=0)
+
+$ ruff check . && ruff format --check . && pyflakes energybaseline
+All checks passed!
+38 files already formatted
+exit=0
+
+$ python scripts/gen_matrix.py --check
+OK [gen_matrix] verified 249 requirement IDs (38 done)
+exit=0
+
+$ python -m alembic upgrade head && python -m alembic downgrade base && python -m alembic upgrade head
+exit=0

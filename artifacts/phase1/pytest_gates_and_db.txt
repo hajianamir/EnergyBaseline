@@ -1,0 +1,64 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.2, pytest-9.2.0, pluggy-1.7.0 -- /home/user/EnergyBaseline/.venv/bin/python
+cachedir: .pytest_cache
+hypothesis profile 'default'
+PySide6 6.9.3 -- Qt runtime 6.9.3 -- Qt compiled 6.9.3
+rootdir: /home/user/EnergyBaseline
+configfile: pytest.ini
+plugins: platformdirs-4.14.5, hypothesis-6.170.15, qt-4.5.0, cov-7.1.0
+collecting ... collected 52 items
+
+tests/gates/test_gen_matrix.py::test_matrix_check_passes_on_repo PASSED  [  1%]
+tests/gates/test_gen_matrix.py::test_rejects_done_without_tests PASSED   [  3%]
+tests/gates/test_gen_matrix.py::test_rejects_missing_mandatory_id PASSED [  5%]
+tests/gates/test_gen_matrix.py::test_rejects_ac_without_phase PASSED     [  7%]
+tests/gates/test_guard_env_readers.py::test_repo_env_readers_clean PASSED [  9%]
+tests/gates/test_guard_env_readers.py::test_allows_canonical_settings_reader PASSED [ 11%]
+tests/gates/test_guard_env_readers.py::test_rejects_unauthorized_env_reader PASSED [ 13%]
+tests/gates/test_guard_env_readers.py::test_rejects_getenv_and_loop_readers PASSED [ 15%]
+tests/gates/test_guard_tests_integrity.py::test_repo_baseline_tests_intact PASSED [ 17%]
+tests/gates/test_guard_tests_integrity.py::test_rejects_one_byte_test_tampering PASSED [ 19%]
+tests/gates/test_guard_tests_integrity.py::test_rejects_deleted_baseline_test PASSED [ 21%]
+tests/gates/test_guard_web_free.py::test_repo_is_web_free PASSED         [ 23%]
+tests/gates/test_guard_web_free.py::test_rejects_banned_import_ast PASSED [ 25%]
+tests/gates/test_guard_web_free.py::test_rejects_webengine_and_http_imports PASSED [ 26%]
+tests/gates/test_guard_web_free.py::test_rejects_banned_manifest_dependency PASSED [ 28%]
+tests/gates/test_guard_web_free.py::test_rejects_tracked_web_stack_file PASSED [ 30%]
+tests/gates/test_phase0_contracts.py::test_manifests_exact_pins_and_hashes PASSED [ 32%]
+tests/gates/test_phase0_contracts.py::test_ci_workflows_structure PASSED [ 34%]
+tests/gates/test_phase0_contracts.py::test_process_documents_present_and_english PASSED [ 36%]
+tests/gates/test_phase0_contracts.py::test_gitignore_and_repo_hygiene PASSED [ 38%]
+tests/gates/test_phase0_contracts.py::test_evidence_bundle_and_license_intact PASSED [ 40%]
+tests/gates/test_phase1_db_ladder.py::test_launcher_does_not_override_database_url PASSED [ 42%]
+tests/gates/test_phase1_db_ladder.py::test_db_matrix_no_env_and_whitespace_env_and_pragmas PASSED [ 44%]
+tests/gates/test_phase1_db_ladder.py::test_db_matrix_unreachable_postgres_probe_audits_and_warns PASSED [ 46%]
+tests/gates/test_phase1_db_ladder.py::test_db_matrix_unwritable_app_home_falls_back_to_temp_rung PASSED [ 48%]
+tests/gates/test_phase1_db_ladder.py::test_db_matrix_unwritable_app_home_and_temp_falls_back_to_in_memory_red_banner PASSED [ 50%]
+tests/gates/test_phase1_db_ladder.py::test_pre_migration_online_backup_and_validated_restore_on_failure PASSED [ 51%]
+tests/gates/test_phase1_paths_and_commands.py::test_validate_path_accepts_inside_allowed_root PASSED [ 53%]
+tests/gates/test_phase1_paths_and_commands.py::test_validate_path_rejects_traversal_and_unc[../secret.csv] PASSED [ 55%]
+tests/gates/test_phase1_paths_and_commands.py::test_validate_path_rejects_traversal_and_unc[sub/../../outside.csv] PASSED [ 57%]
+tests/gates/test_phase1_paths_and_commands.py::test_validate_path_rejects_traversal_and_unc[sub\\..\\..\\outside.csv] PASSED [ 59%]
+tests/gates/test_phase1_paths_and_commands.py::test_validate_path_rejects_traversal_and_unc[\\\\evilserver\\share\\data.csv] PASSED [ 61%]
+tests/gates/test_phase1_paths_and_commands.py::test_validate_path_rejects_traversal_and_unc[//evilserver/share/data.csv] PASSED [ 63%]
+tests/gates/test_phase1_paths_and_commands.py::test_validate_path_rejects_traversal_and_unc[\\\\?\\UNC\\evilserver\\share\\data.csv] PASSED [ 65%]
+tests/gates/test_phase1_paths_and_commands.py::test_validate_path_rejects_outside_allowed_roots PASSED [ 67%]
+tests/gates/test_phase1_paths_and_commands.py::test_validate_path_rejects_leaf_and_intermediate_symlinks PASSED [ 69%]
+tests/gates/test_phase1_paths_and_commands.py::test_resolve_app_home_precedence PASSED [ 71%]
+tests/gates/test_phase1_paths_and_commands.py::test_command_registries_are_compile_time_immutable_and_reject_unknown PASSED [ 73%]
+tests/gates/test_phase1_paths_and_commands.py::test_no_eval_exec_or_getattr_in_command_dispatchers PASSED [ 75%]
+tests/gates/test_phase1_paths_and_commands.py::test_guard_no_qthread_compute_passes_repo_and_catches_synthetic PASSED [ 76%]
+tests/gates/test_phase1_paths_and_commands.py::test_cyclonedx_sbom_generation PASSED [ 78%]
+tests/gates/test_phase1_pool_and_lifecycle.py::test_compute_max_workers_formula PASSED [ 80%]
+tests/gates/test_phase1_pool_and_lifecycle.py::test_payload_over_1mib_uses_cache_file_ref_and_checks_sha256 PASSED [ 82%]
+tests/gates/test_phase1_pool_and_lifecycle.py::test_cancel_token_callbacks_raise_interrupted_error PASSED [ 84%]
+tests/gates/test_phase1_pool_and_lifecycle.py::test_pool_handshake_shl5_worker_db_guard_and_hard_kill PASSED [ 86%]
+tests/gates/test_phase1_pool_and_lifecycle.py::test_run_in_pool_executes_analysis_end_to_end_and_clean_shutdown PASSED [ 88%]
+tests/test_config_db.py::test_import_never_raises_without_env PASSED     [ 90%]
+tests/test_config_db.py::test_whitespace_env_falls_back PASSED           [ 92%]
+tests/test_config_db.py::test_env_is_honoured_and_masked PASSED          [ 94%]
+tests/test_config_db.py::test_unreachable_external_db_degrades_to_sqlite PASSED [ 96%]
+tests/test_config_db.py::test_init_and_selftest PASSED                   [ 98%]
+tests/test_config_db.py::test_alembic_upgrade_on_clean_machine PASSED    [100%]
+
+============================= 52 passed in 48.77s ==============================

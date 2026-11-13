@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0",
+  "script": "scripts/evidence/dpi_matrix.ps1",
+  "timestamp_utc": "2026-11-13T00:33:07.0013706Z",
+  "environment_label": "CI, non-normative",
+  "d2_note": "Synthetic QT_SCALE_FACTOR sweep on GitHub Actions virtual display; non-normative per Decision D2 (physical 1920x1080 Windows 11 display scaling remains required for human visual sign-off).",
+  "target_kind": "pyinstaller_onedir_exe",
+  "target_executable": "D:\\a\\EnergyBaseline\\EnergyBaseline\\dist\\EnergyBaseline\\EnergyBaseline.exe",
+  "scales": [
+    {
+      "requested_scale_percent": 100,
+      "requested_qt_scale_factor": 1.0,
+      "reported_device_pixel_ratio": 1.0,
+      "exit_code": 0,
+      "first_paint_ms": 1678.02,
+      "window_geometry": {
+        "width": 1000,
+        "height": 672,
+        "frame_width": 1000,
+        "frame_height": 703,
+        "screen_width": 1024,
+        "screen_height": 720,
+        "fits_width": true,
+        "fits_height": true
+      },
+      "pass": true
+    },
+    {
+      "requested_scale_percent": 125,
+      "requested_qt_scale_factor": 1.25,
+      "reported_device_pixel_ratio": 1.25,
+      "exit_code": 0,
+      "first_paint_ms": 1610.66,
+      "window_geometry": {
+        "width": 795,
+        "height": 528,
+        "frame_width": 795,
+        "frame_height": 553,
+        "screen_width": 819,
+        "screen_height": 576,
+        "fits_width": true,
+        "fits_height": true
+      },
+      "pass": true
+    },
+    {
+      "requested_scale_percent": 150,
+      "requested_qt_scale_factor": 1.5,
+      "reported_device_pixel_ratio": 1.5,
+      "exit_code": 0,
+      "first_paint_ms": 1637.97,
+      "window_geometry": {
+        "width": 659,
+        "height": 432,
+        "frame_width": 659,
+        "frame_height": 453,
+        "screen_width": 683,
+        "screen_height": 480,
+        "fits_width": true,
+        "fits_height": true
+      },
+      "pass": true
+    },
+    {
+      "requested_scale_percent": 175,
+      "requested_qt_scale_factor": 1.75,
+      "reported_device_pixel_ratio": 1.75,
+      "exit_code": 0,
+      "first_paint_ms": 1621.2,
+      "window_geometry": {
+        "width": 561,
+        "height": 363,
+        "frame_width": 561,
+        "frame_height": 381,
+        "screen_width": 585,
+        "screen_height": 411,
+        "fits_width": true,
+        "fits_height": true
+      },
+      "pass": true
+    }
+  ],
+  "pass": true
+}

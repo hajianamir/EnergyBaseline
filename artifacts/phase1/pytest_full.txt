@@ -1,0 +1,53 @@
+.....................................................................    [100%]
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.11.2-final-0 ________________
+
+Name                                     Stmts   Miss  Cover
+------------------------------------------------------------
+energybaseline/__init__.py                   2      0   100%
+energybaseline/__main__.py                   2      2     0%
+energybaseline/config/__init__.py            2      0   100%
+energybaseline/config/settings.py          119     15    87%
+energybaseline/core/auto.py                 67      7    90%
+energybaseline/core/eda.py                 106     32    70%
+energybaseline/core/features.py            251     39    84%
+energybaseline/core/ingest.py              149     55    63%
+energybaseline/core/mining.py              264     47    82%
+energybaseline/core/models.py              515     79    85%
+energybaseline/core/monitor.py             121     25    79%
+energybaseline/core/nn.py                  250     28    89%
+energybaseline/core/pipeline.py            331     35    89%
+energybaseline/core/pool.py                651    220    66%
+energybaseline/core/quality.py             264     62    77%
+energybaseline/core/report.py              329     65    80%
+energybaseline/core/report_template.py       1      0   100%
+energybaseline/core/schema.py               18      0   100%
+energybaseline/core/scoring.py             149     17    89%
+energybaseline/core/secrets.py              71     27    62%
+energybaseline/core/sqlsource.py           154     61    60%
+energybaseline/core/store.py               134     10    93%
+energybaseline/core/temporal.py            166     34    80%
+energybaseline/db/__init__.py                4      0   100%
+energybaseline/db/backup.py                 87     10    89%
+energybaseline/db/migrate.py                15      0   100%
+energybaseline/db/models.py                100      0   100%
+energybaseline/db/session.py               277     38    86%
+energybaseline/gui/advanced.py             129     96    26%
+energybaseline/gui/app.py                  137    113    18%
+energybaseline/gui/commands.py              34      2    94%
+energybaseline/gui/main_window.py          201     32    84%
+energybaseline/gui/page_monitor.py         471    235    50%
+energybaseline/gui/page_status.py          173     25    86%
+energybaseline/gui/pages_results.py        313    215    31%
+energybaseline/gui/pages_setup.py          440    228    48%
+energybaseline/gui/single_instance.py       81     23    72%
+energybaseline/gui/sql_dialog.py           147    130    12%
+energybaseline/gui/state.py                 31      5    84%
+energybaseline/gui/theme.py                 25     20    20%
+energybaseline/gui/widgets.py              119     45    62%
+energybaseline/io/__init__.py                2      0   100%
+energybaseline/io/paths.py                 180     54    70%
+energybaseline/launcher.py                  59     59     0%
+------------------------------------------------------------
+TOTAL                                     7141   2190    69%
+69 passed in 147.94s (0:02:27)
