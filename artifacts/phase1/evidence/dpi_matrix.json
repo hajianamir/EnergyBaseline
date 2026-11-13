@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "script": "scripts/evidence/dpi_matrix.ps1",
-  "timestamp_utc": "2026-11-13T00:33:07.0013706Z",
+  "timestamp_utc": "2026-11-13T07:19:22.2487785Z",
   "environment_label": "CI, non-normative",
   "d2_note": "Synthetic QT_SCALE_FACTOR sweep on GitHub Actions virtual display; non-normative per Decision D2 (physical 1920x1080 Windows 11 display scaling remains required for human visual sign-off).",
   "target_kind": "pyinstaller_onedir_exe",
@@ -12,7 +12,7 @@
       "requested_qt_scale_factor": 1.0,
       "reported_device_pixel_ratio": 1.0,
       "exit_code": 0,
-      "first_paint_ms": 1678.02,
+      "first_paint_ms": 2169.67,
       "window_geometry": {
         "width": 1000,
         "height": 672,
@@ -30,7 +30,7 @@
       "requested_qt_scale_factor": 1.25,
       "reported_device_pixel_ratio": 1.25,
       "exit_code": 0,
-      "first_paint_ms": 1610.66,
+      "first_paint_ms": 2162.95,
       "window_geometry": {
         "width": 795,
         "height": 528,
@@ -48,7 +48,7 @@
       "requested_qt_scale_factor": 1.5,
       "reported_device_pixel_ratio": 1.5,
       "exit_code": 0,
-      "first_paint_ms": 1637.97,
+      "first_paint_ms": 2146.58,
       "window_geometry": {
         "width": 659,
         "height": 432,
@@ -66,7 +66,7 @@
       "requested_qt_scale_factor": 1.75,
       "reported_device_pixel_ratio": 1.75,
       "exit_code": 0,
-      "first_paint_ms": 1621.2,
+      "first_paint_ms": 2173.73,
       "window_geometry": {
         "width": 561,
         "height": 363,

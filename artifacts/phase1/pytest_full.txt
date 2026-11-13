@@ -1,4 +1,4 @@
-.....................................................................    [100%]
+.......................................................................  [100%]
 ================================ tests coverage ================================
 _______________ coverage: platform linux, python 3.11.2-final-0 ________________
 
@@ -17,7 +17,7 @@ energybaseline/core/models.py              515     79    85%
 energybaseline/core/monitor.py             121     25    79%
 energybaseline/core/nn.py                  250     28    89%
 energybaseline/core/pipeline.py            331     35    89%
-energybaseline/core/pool.py                651    220    66%
+energybaseline/core/pool.py                651    221    66%
 energybaseline/core/quality.py             264     62    77%
 energybaseline/core/report.py              329     65    80%
 energybaseline/core/report_template.py       1      0   100%
@@ -31,7 +31,7 @@ energybaseline/db/__init__.py                4      0   100%
 energybaseline/db/backup.py                 87     10    89%
 energybaseline/db/migrate.py                15      0   100%
 energybaseline/db/models.py                100      0   100%
-energybaseline/db/session.py               277     38    86%
+energybaseline/db/session.py               277     33    88%
 energybaseline/gui/advanced.py             129     96    26%
 energybaseline/gui/app.py                  137    113    18%
 energybaseline/gui/commands.py              34      2    94%
@@ -49,5 +49,5 @@ energybaseline/io/__init__.py                2      0   100%
 energybaseline/io/paths.py                 180     54    70%
 energybaseline/launcher.py                  59     59     0%
 ------------------------------------------------------------
-TOTAL                                     7141   2190    69%
-69 passed in 147.94s (0:02:27)
+TOTAL                                     7141   2186    69%
+71 passed in 120.92s (0:02:00)

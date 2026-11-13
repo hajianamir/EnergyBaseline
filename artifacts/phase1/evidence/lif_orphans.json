@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "script": "scripts/evidence/lif_orphans.ps1",
-  "timestamp_utc": "2026-11-13T00:32:45.6239971Z",
+  "timestamp_utc": "2026-11-13T07:18:38.3192815Z",
   "target_kind": "pyinstaller_exe",
   "target_executable": "D:\\a\\EnergyBaseline\\EnergyBaseline\\dist\\EnergyBaseline\\EnergyBaseline.exe",
   "hardware": {
@@ -10,28 +10,28 @@
     "normative_per_d2": false,
     "os_caption": "Microsoft Windows Server 2025 Datacenter",
     "os_build": "26100",
-    "cpu_name": "AMD EPYC 9V45 96-Core Processor                ",
+    "cpu_name": "AMD EPYC 9V74 80-Core Processor                ",
     "logical_processors": 4,
     "ram_gb": 15.99
   },
   "clean_quit_scenario": {
     "parent_exit_code": 0,
     "spawned_worker_pids": [
-      2068
+      6652
     ],
-    "cleanup_elapsed_seconds": 0.046,
+    "cleanup_elapsed_seconds": 0.0553,
     "surviving_orphan_pids": [],
     "wal_checkpointed": true
   },
   "abrupt_kill_scenario": {
     "job_object_active": true,
     "job_object_assigned_pids": [
-      2432
+      4184
     ],
     "tracked_child_pids": [
-      2432
+      4184
     ],
-    "cleanup_elapsed_seconds": 0.0391,
+    "cleanup_elapsed_seconds": 0.0407,
     "surviving_orphan_pids": []
   },
   "orphan_count": 0,

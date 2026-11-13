@@ -1,15 +1,14 @@
  .github/workflows/ci.yml                      |   50 +-
  CHANGELOG.md                                  |   18 +-
  alembic/env.py                                |    3 +
- docs/requirements.yaml                        |  994 ++++++++++++++--------
- docs/requirements_matrix.md                   |   64 +-
- energybaseline/config/__init__.py             |    6 +
+ docs/requirements.yaml                        |  722 ++++++++++------
+ docs/requirements_matrix.md                   |   70 +-
  energybaseline/config/settings.py             |  117 ++-
  energybaseline/core/pool.py                   | 1115 +++++++++++++++++++++++++
  energybaseline/db/__init__.py                 |   31 +-
  energybaseline/db/backup.py                   |  156 ++++
  energybaseline/db/migrate.py                  |    9 +-
- energybaseline/db/session.py                  |  489 +++++++++--
+ energybaseline/db/session.py                  |  491 +++++++++--
  energybaseline/gui/app.py                     |  196 ++++-
  energybaseline/gui/commands.py                |   81 ++
  energybaseline/gui/main_window.py             |  213 ++++-
@@ -18,15 +17,15 @@
  energybaseline/gui/single_instance.py         |  113 +++
  energybaseline/io/__init__.py                 |   21 +
  energybaseline/io/paths.py                    |  272 ++++++
- energybaseline/launcher.py                    |   54 +-
+ energybaseline/launcher.py                    |   50 +-
  scripts/build_exe.py                          |  384 +++++++--
  scripts/evidence/dpi_matrix.ps1               |   99 +++
  scripts/evidence/installer_smoke.ps1          |  146 ++++
  scripts/evidence/lif_orphans.ps1              |  164 ++++
- scripts/evidence/startup_time.ps1             |  121 +++
+ scripts/evidence/startup_time.ps1             |  170 ++++
  scripts/gates/guard_no_qthread_compute.py     |  182 ++++
- tests/gates/test_phase1_db_ladder.py          |  235 ++++++
+ tests/gates/test_phase1_db_ladder.py          |  309 +++++++
  tests/gates/test_phase1_paths_and_commands.py |  197 +++++
  tests/gates/test_phase1_pool_and_lifecycle.py |  172 ++++
  tests/gui/test_phase1_gui.py                  |  101 +++
- 31 files changed, 5756 insertions(+), 722 deletions(-)
+ 30 files changed, 5697 insertions(+), 630 deletions(-)

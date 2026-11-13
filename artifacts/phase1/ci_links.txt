@@ -1,4 +1,4 @@
-Phase 1 Code Commit (verified green on 2-OS CI): f37af6aa4be1272566304e8e1eb51d6282a91ca3 (short: f37af6a)
-Workflow Run: https://github.com/hajianamir/EnergyBaseline/actions/runs/43336572378 (status: completed, conclusion: success)
-- Phase 1 Gate G1 (windows-latest): https://github.com/hajianamir/EnergyBaseline/actions/runs/43336572378/job/131594140697 (conclusion: success)
-- Phase 1 Gate G1 (ubuntu-latest):  https://github.com/hajianamir/EnergyBaseline/actions/runs/43336572378/job/131594141112 (conclusion: success)
+Phase 1 Code Commit (verified green on 2-OS CI): 046eab2230c6429066a0c5bef01fcd4290256efd (short: 046eab2)
+Workflow Run: https://github.com/hajianamir/EnergyBaseline/actions/runs/43383391459 (status: completed, conclusion: success)
+- Phase 1 Gate G1 (windows-latest): https://github.com/hajianamir/EnergyBaseline/actions/runs/43383391459/job/131746122973 (conclusion: success)
+- Phase 1 Gate G1 (ubuntu-latest):  https://github.com/hajianamir/EnergyBaseline/actions/runs/43383391459/job/131746122913 (conclusion: success)
