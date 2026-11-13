@@ -159,6 +159,28 @@ dynamic `eval`/`getattr` in the dispatcher · loading pickle without SHA-256.
 `pytest -q` green · `pyflakes` clean · `requirements_matrix.md` updated (no `done` row without tests) ·
 `deviations.md` updated · a runnable artifact (not a mock) · no regression in earlier phase tests.
 
+### 4.6 Canonical Gate G1 block (byte-identical with `docs/PHASE0_BRIEF.md`)
+
+Every command below must exit 0. The `test -z "$(…)"` lines assert empty output on purpose: a bare `grep`
+exits 1 on a clean tree, which would contradict "must exit 0".
+
+```bash
+python -m pytest -q
+python -m pytest -q tests/gates
+python -m ruff check . && python -m ruff format --check .
+python -m pyflakes energybaseline
+python scripts/gates/guard_web_free.py
+python scripts/gates/guard_env_readers.py
+python scripts/gates/guard_tests_integrity.py
+python scripts/gen_matrix.py --check
+python -m pytest -q --cov=energybaseline/core --cov-fail-under=60
+python -m pytest -q tests/gui -p no:cacheprovider
+test -z "$(git ls-files | grep -Ei 'package.json|tsconfig|\.tsx?$|next\.config|drizzle|eslint|postcss')"
+test -z "$(git ls-files | grep -E '__pycache__|\.pyc$')"
+test -z "$(grep -rn 'weasyprint' energybaseline scripts requirements.txt requirements.in requirements.lock)"
+test -z "$(grep -rn 'os.environ\[\"DATABASE_URL\"\]' energybaseline/launcher.py)"
+```
+
 ---
 
 ## 5. Phase plan
