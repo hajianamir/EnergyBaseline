@@ -136,7 +136,7 @@ def build_per_user_installer(*, dist_app_dir: Path, out_dir: Path, version: str,
         src_glob = str(dist_app_dir.resolve()) + r"\*"
         ico_line = f"SetupIconFile={ico.resolve()}" if ico.is_file() else ""
         iss = f"""[Setup]
-AppId={{{{7B45F92C-9E66-4D4B-9C4D-EB6000100001}}
+AppId=EnergyBaseline_PerUser_v6
 AppName=EnergyBaseline
 AppVersion={version}
 AppPublisher=EnergyBaseline
@@ -237,13 +237,17 @@ def main(argv: list[str] | None = None) -> int:
         print(f"SBOM ready -> {sbom} (sha256={_sha256(sbom)})")
         return 0
 
+    make_icon_script = ROOT / "scripts" / "make_icon.py"
+    if make_icon_script.is_file():
+        subprocess.check_call([sys.executable, str(make_icon_script)], cwd=ROOT)
+
     sep = ";" if sys.platform == "win32" else ":"
-    datas = [
-        f"assets{sep}assets",
-        f"alembic{sep}alembic",
-        f"alembic.ini{sep}.",
-        f"docs{sep}docs",
-        f"samples{sep}samples",
+    data_pairs = [
+        ("assets", "assets"),
+        ("alembic", "alembic"),
+        ("alembic.ini", "."),
+        ("docs", "docs"),
+        ("samples", "samples"),
     ]
     ico = ROOT / "assets" / "energybaseline.ico"
     layout_flag = "--onefile" if args.onefile else "--onedir"
@@ -263,20 +267,33 @@ def main(argv: list[str] | None = None) -> int:
         str(ROOT / "build" / "pyinstaller"),
         "--specpath",
         str(ROOT / "build" / "pyinstaller"),
+        "--paths",
+        str(ROOT),
     ]
     if ico.exists():
         cmd += ["--icon", str(ico)]
-    for d in datas:
-        cmd += ["--add-data", d]
+    for src_rel, dst_rel in data_pairs:
+        src_abs = ROOT / src_rel
+        if src_abs.exists():
+            cmd += ["--add-data", f"{src_abs}{sep}{dst_rel}"]
+
     hidden_imports = [
-        "scipy._cyutility",
-        "scipy.special._ufuncs_cxx",
+        "sqlalchemy.dialects.sqlite",
+        "alembic.runtime.migration",
+        "alembic.ddl.sqlite",
+        "alembic.script.revision",
         "sklearn.utils._typedefs",
         "sklearn.neighbors._partition_nodes",
-        "sqlalchemy.dialects.sqlite",
-        "alembic.script.revision",
+        "statsmodels.tsa.statespace._filters",
+        "scipy.special._cdflib",
+        "scipy._cyutility",
+        "scipy.special._ufuncs_cxx",
+        "pymysql",
+        "psycopg2",
+        "pyodbc",
         "openpyxl",
         "xlrd",
+        "jinja2",
         "cryptography",
         "PySide6.QtNetwork",
         "joblib",
@@ -285,6 +302,12 @@ def main(argv: list[str] | None = None) -> int:
         hidden_imports += ["win32api", "win32con", "win32job", "pywintypes"]
     for hidden in hidden_imports:
         cmd += ["--hidden-import", hidden]
+
+    for pkg in ("sklearn", "statsmodels"):
+        cmd += ["--collect-submodules", pkg]
+    for data_pkg in ("matplotlib", "sklearn"):
+        cmd += ["--collect-data", data_pkg]
+
     if args.profile == "lite":
         cmd += ["--exclude-module", "torch", "--exclude-module", "torchvision", "--exclude-module", "torchaudio"]
     for ex in ("tkinter", "PyQt5", "PyQt6", "pytest", "IPython", "notebook"):

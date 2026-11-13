@@ -44,7 +44,7 @@ $env:EB_NONINTERACTIVE = "1"
 
 try {
     # 1. Silent per-user install (no elevation)
-    $instArgs = @("/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART", "/CURRENTUSER", "/DIR=$installRoot")
+    $instArgs = @("/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART", "/CURRENTUSER", "/DIR=`"$installRoot`"")
     $instProc = Start-Process -FilePath $installerPath -ArgumentList $instArgs -Wait -PassThru
     if ($instProc.ExitCode -ne 0) {
         # NSIS fallback flag syntax if NSIS was used

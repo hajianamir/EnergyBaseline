@@ -13,9 +13,12 @@ import subprocess
 import sys
 from pathlib import Path
 
+if not __package__:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 
 def _base() -> Path:
-    from .config import get_base_dir
+    from energybaseline.config import get_base_dir
 
     return get_base_dir()
 
@@ -77,7 +80,7 @@ def main(argv: list[str] | None = None) -> None:
             make_shortcuts()
         except Exception:
             pass
-    from .gui.app import main as gui_main
+    from energybaseline.gui.app import main as gui_main
 
     sys.exit(gui_main(argv))
 
