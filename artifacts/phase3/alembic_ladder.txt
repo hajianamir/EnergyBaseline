@@ -1,0 +1,2 @@
+$ python -m alembic upgrade head && python -m alembic downgrade base && python -m alembic upgrade head && python -m alembic current
+0003 (head)

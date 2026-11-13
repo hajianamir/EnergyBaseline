@@ -6,7 +6,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QCheckBox, QComboBox, QDialog, QDialogButtonBox, QGridLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton,
                                QScrollArea, QTabWidget, QVBoxLayout, QWidget)
 
-from ..core.auto import is_auto
+from ..core.auto import compute_auto_log_hash, inspect_auto_log, is_auto
 from ..core.schema import AUTO, CATEGORIES, SETTINGS
 from ..core import store
 from .widgets import fill_table, make_table
@@ -105,7 +105,7 @@ class AdvancedDialog(QDialog):
 
 
 class AutoPanel(QWidget):
-    """Read-only 'AUTO Resolutions' panel."""
+    """Read-only 'AUTO Resolutions' inspector panel with deterministic SHA-256 hash (AUTO-6, AC-33)."""
 
     def __init__(self):
         super().__init__()
@@ -116,21 +116,37 @@ class AutoPanel(QWidget):
         self.combo.addItem("(all)")
         self.combo.currentTextChanged.connect(self._render)
         top.addWidget(self.combo, 1)
+        self.search_box = QLineEdit()
+        self.search_box.setPlaceholderText("Filter setting / signal / rule…")
+        self.search_box.textChanged.connect(self._render)
+        top.addWidget(self.search_box, 1)
         self.only_auto = QCheckBox("AUTO only")
         self.only_auto.toggled.connect(self._render)
         top.addWidget(self.only_auto)
         lay.addLayout(top)
+        self.lbl_hash = QLabel("AUTO-log SHA-256: (no resolutions recorded)")
+        lay.addWidget(self.lbl_hash)
         self.tbl = make_table()
         lay.addWidget(self.tbl)
         self.records: list[dict] = []
+        self.auto_log_hash: str = ""
 
     def set_records(self, records: list[dict]) -> None:
-        self.records = records
+        self.records = list(records)
+        self.auto_log_hash = compute_auto_log_hash(self.records) if self.records else ""
+        summary = inspect_auto_log(self.records) if self.records else None
+        if summary is not None:
+            self.lbl_hash.setText(
+                f"AUTO-log SHA-256: {self.auto_log_hash}  "
+                f"({summary['auto_entries']} AUTO, {summary['override_entries']} overrides)"
+            )
+        else:
+            self.lbl_hash.setText("AUTO-log SHA-256: (no resolutions recorded)")
         cur = self.combo.currentText()
         self.combo.blockSignals(True)
         self.combo.clear()
         self.combo.addItem("(all)")
-        for t in sorted({r["target"] or "global" for r in records}):
+        for t in sorted({r.get("target") or "global" for r in self.records}):
             self.combo.addItem(t)
         i = self.combo.findText(cur)
         self.combo.setCurrentIndex(max(0, i))
@@ -139,8 +155,15 @@ class AutoPanel(QWidget):
 
     def _render(self, *_):
         t = self.combo.currentText()
-        rows = [r for r in self.records if t in ("(all)", "") or (r["target"] or "global") == t]
+        q = self.search_box.text().strip().lower()
+        rows = [r for r in self.records if t in ("(all)", "") or (r.get("target") or "global") == t]
         if self.only_auto.isChecked():
-            rows = [r for r in rows if r["mode"] == "AUTO"]
+            rows = [r for r in rows if r.get("mode") == "AUTO"]
+        if q:
+            rows = [
+                r
+                for r in rows
+                if any(q in str(r.get(f, "")).lower() for f in ("setting", "value", "signals", "rule", "target"))
+            ]
         df = pd.DataFrame(rows, columns=["target", "setting", "mode", "value", "signals", "rule"])
         fill_table(self.tbl, df)

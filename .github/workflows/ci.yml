@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   verify:
-    name: Phase 2 Gate G2 (${{ matrix.os }})
+    name: Phase 3 Gate G3 (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -72,19 +72,19 @@ jobs:
         run: |
           python -m pytest -q tests/gates/ tests/test_config_db.py
 
-      - name: Full test suite and coverage gate (S5 >= 60%, Phase 2 Core >= 75%)
+      - name: Full test suite and coverage gate (S5 >= 60%, Phase 3 Core >= 80%)
         run: |
           python -m pytest -q --junitxml=pytest-core.xml --cov=energybaseline/core --cov-report=xml:coverage.xml --cov-report=term --cov-fail-under=60
-          python -m coverage report --fail-under=75
+          python -m coverage report --fail-under=80
 
       - name: Emit pytest failure annotations on error
         if: failure()
         run: |
           python scripts/ci_junit_annotations.py pytest-core.xml
 
-      - name: GUI smoke, Phase 1 shell & Phase 2 schema editor tests (GUI >= 48%)
+      - name: GUI smoke, Phase 1 shell, Phase 2 schema & Phase 3 VSG/TCP tests (GUI >= 52%)
         run: |
-          python -m pytest -q tests/gui -p no:cacheprovider --cov=energybaseline/gui --cov-report=term --cov-fail-under=48
+          python -m pytest -q tests/gui -p no:cacheprovider --cov=energybaseline/gui --cov-report=term --cov-fail-under=52
 
       - name: Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
         if: matrix.os == 'windows-latest'

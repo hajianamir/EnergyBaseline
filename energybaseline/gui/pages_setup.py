@@ -29,6 +29,7 @@ from PySide6.QtWidgets import (
     QMessageBox,
     QProgressBar,
     QPushButton,
+    QScrollArea,
     QSplitter,
     QTableWidgetItem,
     QTabWidget,
@@ -39,7 +40,10 @@ from PySide6.QtWidgets import (
 
 from ..core import ingest, store
 from ..core.auto import AutoLog
+from ..core.cache import CachedComplianceRunner
+from ..core.integrity import IntegrityViolationError
 from ..core.pool import PoolJobHandle, get_pool_manager
+from ..core.provenance import ProvenancePhase
 from ..core.schema import (
     AUTO,
     Availability,
@@ -53,7 +57,19 @@ from ..core.schema import (
     SchemaValidationError,
     suggest_dataset_schema,
 )
+from ..core.tcp import (
+    ALPHA_PRESETS,
+    CONFIDENCE_PRESETS,
+    DecisionRule,
+    FamilyDefinition,
+    MultipleTestingCorrection,
+    PreregistrationLockedError,
+    TCPValidationError,
+    TestConfigPanel,
+    compute_impact_preview,
+)
 from ..core.temporal import TemporalError, prepare_temporal
+from ..core.vsg import VALID_PRESETS, VariableSelectionGate, VSGValidationError
 from ..io.paths import PathGuardError, resolve_picked_path
 from .widgets import PasteTable, fill_table, make_table
 
@@ -87,6 +103,82 @@ AVAILABILITY_OPTS = [a.value for a in Availability]
 
 def _is_interactive() -> bool:
     return os.environ.get("EB_NONINTERACTIVE") != "1"
+
+
+def format_limitations_badges(provenance_payload: dict[str, Any] | None) -> list[str]:
+    """UI-only Limitations formatter mapping ``phase == 'post_test'`` to ``post_hoc`` disclosure badges (VSG-6).
+
+    Presentation labels stay strictly inside ``energybaseline.gui`` and never enter serialized
+    provenance or stored database records.
+    """
+    if not provenance_payload:
+        return []
+    badges: list[str] = []
+    for rec in provenance_payload.get("records", []):
+        if str(rec.get("phase", "")) == ProvenancePhase.POST_TEST.value:
+            ent = f"{rec.get('entity_type', 'item')}:{rec.get('entity_id', '')}"
+            rsn = str(rec.get("reason", "") or "modified after testing")
+            badges.append(f"Limitations [post_hoc]: {ent} ({rsn})")
+    return badges
+
+
+class ImpactPreviewPanel(QGroupBox):
+    """Live Impact Preview showing variables, tests, family sizes, and Fast vs Full runtime estimates (VSG-3)."""
+
+    def __init__(self, parent: QWidget | None = None) -> None:
+        super().__init__("Impact Preview (Variables · Hypothesis Families · Fast vs Full)", parent)
+        self.last_preview: dict[str, Any] = {}
+        lay = QVBoxLayout(self)
+        lay.setContentsMargins(8, 6, 8, 6)
+        self.lbl_variables = QLabel("Variables: load a dataset to preview screening counts.")
+        self.lbl_variables.setWordWrap(True)
+        self.lbl_tests = QLabel("Inferential tests: —")
+        self.lbl_tests.setWordWrap(True)
+        self.lbl_families = QLabel("Hypothesis families: —")
+        self.lbl_families.setWordWrap(True)
+        self.lbl_estimates = QLabel("Fast vs Full runtime estimate: —")
+        self.lbl_estimates.setWordWrap(True)
+        for w in (self.lbl_variables, self.lbl_tests, self.lbl_families, self.lbl_estimates):
+            lay.addWidget(w)
+
+    def refresh_from_models(
+        self,
+        vsg: VariableSelectionGate | None,
+        tcp: TestConfigPanel | None = None,
+        *,
+        n_rows: int | None = None,
+    ) -> dict[str, Any]:
+        if vsg is None:
+            self.last_preview = {}
+            self.lbl_variables.setText("Variables: load a dataset to preview screening counts.")
+            self.lbl_tests.setText("Inferential tests: —")
+            self.lbl_families.setText("Hypothesis families: —")
+            self.lbl_estimates.setText("Fast vs Full runtime estimate: —")
+            return {}
+
+        prev = compute_impact_preview(vsg, tcp, n_rows=n_rows)
+        self.last_preview = prev
+        parts = [
+            f"{t}: {counts['included']} included / {counts['excluded']} excluded / {counts['collinear_grouped']} grouped"
+            for t, counts in prev["per_target_variables"].items()
+        ]
+        self.lbl_variables.setText("Variables — " + "; ".join(parts))
+        self.lbl_tests.setText(
+            f"Tests — total {prev['total_tests']} "
+            f"(pre-model {prev['pre_model_tests']}, post-model {prev['post_model_tests']}, "
+            f"causal-group {prev['causal_group_tests']})"
+        )
+        fs = prev["family_sizes"]
+        self.lbl_families.setText(
+            f"Families ({prev['family_definition']}) — {prev['family_count']} families; "
+            f"size min={fs['min']}, median={fs['median']:.1f}, max={fs['max']}"
+        )
+        ff = prev["fast_vs_full"]
+        self.lbl_estimates.setText(
+            f"Estimate (n={prev['n_rows']} rows) — Fast: {ff['fast_estimated_seconds']:.2f} s "
+            f"vs Full: {ff['full_estimated_seconds']:.2f} s ({ff['speedup_ratio']:.1f}x faster)"
+        )
+        return prev
 
 
 class ManualEntryDialog(QDialog):
@@ -195,6 +287,96 @@ class SetupPage(QWidget):
         self.schema_tbl.itemChanged.connect(self._on_schema_item_changed)
         sl.addWidget(self.schema_tbl, 1)
         self.left_tabs.addTab(schema_tab, "Column Metadata (Schema)")
+
+        # Tab 3: Variable Selection Gate (VSG-1..6) wrapped in QScrollArea for High-DPI safety
+        vsg_scroll = QScrollArea()
+        vsg_scroll.setWidgetResizable(True)
+        vsg_tab = QWidget()
+        vl = QVBoxLayout(vsg_tab)
+        vbar = QHBoxLayout()
+        vbar.addWidget(QLabel("Target:"))
+        self.vsg_target_combo = QComboBox()
+        self.vsg_target_combo.currentTextChanged.connect(self._render_vsg_tab)
+        vbar.addWidget(self.vsg_target_combo)
+        self.vsg_preset_combo = self._combo(sorted(VALID_PRESETS))
+        self.vsg_preset_combo.setCurrentText("auto_recommended")
+        vbar.addWidget(self.vsg_preset_combo)
+        self.btn_apply_preset = QPushButton("Apply Preset")
+        self.btn_apply_preset.clicked.connect(self._on_apply_vsg_preset)
+        vbar.addWidget(self.btn_apply_preset)
+        self.btn_copy_vsg = QPushButton("Copy to Sibling Targets")
+        self.btn_copy_vsg.clicked.connect(self._on_copy_vsg_across_targets)
+        vbar.addWidget(self.btn_copy_vsg)
+        self.btn_accept_vsg = QPushButton("Accept VSG Gate")
+        self.btn_accept_vsg.clicked.connect(self.accept_vsg_gate)
+        vbar.addWidget(self.btn_accept_vsg)
+        vl.addLayout(vbar)
+        self.vsg_status = QLabel("VSG status: not initialized (load a dataset).")
+        self.vsg_status.setWordWrap(True)
+        vl.addWidget(self.vsg_status)
+        self.impact_preview = ImpactPreviewPanel(vsg_tab)
+        vl.addWidget(self.impact_preview)
+        self.vsg_tbl = make_table(False)
+        vl.addWidget(self.vsg_tbl, 2)
+        vl.addWidget(QLabel("<b>Non-disableable Integrity Conflicts</b>"))
+        self.integrity_tbl = make_table(False)
+        vl.addWidget(self.integrity_tbl, 1)
+        vsg_scroll.setWidget(vsg_tab)
+        self.left_tabs.addTab(vsg_scroll, "Variable Selection Gate (VSG)")
+
+        # Tab 4: Test Control Panel (TCP-1..5) + Zero-Recompute What-If + UI Limitations
+        tcp_scroll = QScrollArea()
+        tcp_scroll.setWidgetResizable(True)
+        tcp_tab = QWidget()
+        tl = QVBoxLayout(tcp_tab)
+        tf = QFormLayout()
+        self.tcp_alpha_combo = self._combo([str(a) for a in ALPHA_PRESETS], True)
+        self.tcp_alpha_combo.setCurrentText("0.05")
+        self.tcp_alpha_combo.currentTextChanged.connect(self._on_tcp_controls_edited)
+        tf.addRow("Significance alpha (0.001–0.20)", self.tcp_alpha_combo)
+        self.lbl_alpha_warning = QLabel("")
+        self.lbl_alpha_warning.setStyleSheet("color: #B45309; font-weight: 600;")
+        self.lbl_alpha_warning.setVisible(False)
+        tf.addRow("", self.lbl_alpha_warning)
+        self.tcp_conf_combo = self._combo(list(CONFIDENCE_PRESETS), True)
+        self.tcp_conf_combo.setCurrentText("95")
+        self.tcp_conf_combo.currentTextChanged.connect(self._on_tcp_controls_edited)
+        tf.addRow("Confidence level (%)", self.tcp_conf_combo)
+        self.tcp_corr_combo = self._combo([c.value for c in MultipleTestingCorrection])
+        self.tcp_corr_combo.currentTextChanged.connect(self._on_tcp_controls_edited)
+        tf.addRow("Multiple-testing correction", self.tcp_corr_combo)
+        self.tcp_fam_combo = self._combo([f.value for f in FamilyDefinition])
+        self.tcp_fam_combo.currentTextChanged.connect(self._on_tcp_controls_edited)
+        tf.addRow("Family definition", self.tcp_fam_combo)
+        self.tcp_rule_combo = self._combo([d.value for d in DecisionRule])
+        self.tcp_rule_combo.currentTextChanged.connect(self._on_tcp_controls_edited)
+        tf.addRow("Decision rule", self.tcp_rule_combo)
+        tl.addLayout(tf)
+
+        tbar = QHBoxLayout()
+        self.btn_accept_tcp = QPushButton("Accept && Lock Pre-Registration")
+        self.btn_accept_tcp.clicked.connect(self.accept_and_lock_tcp)
+        self.btn_what_if = QPushButton("What-If Re-evaluate (0 Engine Calls)")
+        self.btn_what_if.clicked.connect(self.run_what_if_ui)
+        self.btn_amend_tcp = QPushButton("Unlock for Post-Test Amendment")
+        self.btn_amend_tcp.clicked.connect(lambda: self.unlock_tcp_for_amendment("Engineer requested amendment"))
+        tbar.addWidget(self.btn_accept_tcp)
+        tbar.addWidget(self.btn_what_if)
+        tbar.addWidget(self.btn_amend_tcp)
+        tl.addLayout(tbar)
+        self.tcp_status = QLabel("TCP status: awaiting VSG acceptance.")
+        self.tcp_status.setWordWrap(True)
+        tl.addWidget(self.tcp_status)
+        self.lbl_limitations = QLabel("")
+        self.lbl_limitations.setWordWrap(True)
+        self.lbl_limitations.setStyleSheet("color: #991B1B; font-weight: 600;")
+        self.lbl_limitations.setVisible(False)
+        tl.addWidget(self.lbl_limitations)
+        self.tcp_results_tbl = make_table(False)
+        tl.addWidget(self.tcp_results_tbl, 1)
+        tcp_scroll.setWidget(tcp_tab)
+        self.left_tabs.addTab(tcp_scroll, "Test Control Panel (TCP)")
+
         split.addWidget(self.left_tabs)
 
         # Right column: roles + temporal + outlier policy
@@ -393,8 +575,259 @@ class SetupPage(QWidget):
         )
         self.report.setHtml(html)
         self.info.setText(f"{name}: {len(df)} rows, {df.shape[1]} columns (raw copy retained under data/uploads)")
+        self.rebuild_compliance_models()
         s.data_changed.emit()
         self.main.log_msg(f"Dataset loaded: {name}")
+
+    # ------------------------------------------------------------ VSG & TCP compliance UI
+    def rebuild_compliance_models(self) -> None:
+        """Initialize or refresh ``state.vsg``, ``state.tcp``, and ``ImpactPreviewPanel`` from active dataset."""
+        s = self.state
+        if s.df is None or not s.targets:
+            s.vsg = None
+            s.tcp = None
+            s.compliance_runner = None
+            self.impact_preview.refresh_from_models(None)
+            return
+
+        vsg = VariableSelectionGate(
+            s.df,
+            targets=s.targets,
+            time_col=s.time_col,
+            schema=s.dataset_schema,
+            dataset_sha256=s.dataset_sha,
+            config=s.config,
+        )
+        tcp = TestConfigPanel(vsg, config=s.config)
+        s.vsg = vsg
+        s.tcp = tcp
+        s.compliance_runner = CachedComplianceRunner(seed=42)
+
+        self.vsg_target_combo.blockSignals(True)
+        self.vsg_target_combo.clear()
+        self.vsg_target_combo.addItems(list(vsg.targets))
+        self.vsg_target_combo.blockSignals(False)
+
+        self._sync_tcp_widgets_from_model()
+        self._render_vsg_tab()
+        self._refresh_limitations_banner()
+        if self.main is not None and hasattr(self.main, "auto_panel"):
+            self.main.auto_panel.set_records(vsg.auto_log.as_dicts())
+
+    def _sync_tcp_widgets_from_model(self) -> None:
+        tcp = self.state.tcp
+        if tcp is None:
+            return
+        for w in (
+            self.tcp_alpha_combo,
+            self.tcp_conf_combo,
+            self.tcp_corr_combo,
+            self.tcp_fam_combo,
+            self.tcp_rule_combo,
+        ):
+            w.blockSignals(True)
+        try:
+            self.tcp_alpha_combo.setCurrentText(f"{tcp.alpha:g}")
+            self.tcp_conf_combo.setCurrentText(
+                tcp.confidence_preset if tcp.confidence_preset != "custom" else f"{tcp.confidence_level * 100:g}"
+            )
+            self.tcp_corr_combo.setCurrentText(tcp.correction)
+            self.tcp_fam_combo.setCurrentText(tcp.family_definition)
+            self.tcp_rule_combo.setCurrentText(tcp.decision_rule)
+        finally:
+            for w in (
+                self.tcp_alpha_combo,
+                self.tcp_conf_combo,
+                self.tcp_corr_combo,
+                self.tcp_fam_combo,
+                self.tcp_rule_combo,
+            ):
+                w.blockSignals(False)
+        self._update_alpha_warning_ui(tcp.alpha)
+
+    def _update_alpha_warning_ui(self, alpha_val: float) -> None:
+        if alpha_val > 0.10 + 1e-12:
+            self.lbl_alpha_warning.setText(
+                f"Warning: alpha={alpha_val:.3f} exceeds 0.10 (elevated false-positive risk)."
+            )
+            self.lbl_alpha_warning.setVisible(True)
+        else:
+            self.lbl_alpha_warning.setText("")
+            self.lbl_alpha_warning.setVisible(False)
+
+    def _refresh_limitations_banner(self) -> None:
+        vsg = self.state.vsg
+        badges = format_limitations_badges(vsg.provenance.to_dict() if vsg is not None else None)
+        if badges:
+            self.lbl_limitations.setText(" · ".join(badges))
+            self.lbl_limitations.setVisible(True)
+        else:
+            self.lbl_limitations.setText("")
+            self.lbl_limitations.setVisible(False)
+
+    def _render_vsg_tab(self, *_args: Any) -> None:
+        vsg = self.state.vsg
+        tcp = self.state.tcp
+        if vsg is None:
+            return
+        tgt = self.vsg_target_combo.currentText() or vsg.targets[0]
+        if tgt not in vsg.profiles_by_target:
+            tgt = vsg.targets[0]
+
+        self.impact_preview.refresh_from_models(vsg, tcp)
+        rows: list[dict[str, Any]] = []
+        for col, prof in vsg.profiles_by_target[tgt].items():
+            dec = vsg.decisions_by_target[tgt][col]
+            rows.append(
+                {
+                    "variable": col,
+                    "disposition": dec.resolved_disposition,
+                    "mode": dec.mode,
+                    "missing_%": prof.missing_pct,
+                    "unique": prof.unique_count,
+                    "pearson_r": prof.pearson_r,
+                    "mutual_info": prof.mutual_info,
+                    "vif": prof.vif,
+                    "leakage": prof.leakage_suspicion,
+                    "availability": prof.availability,
+                    "histogram": prof.mini_histogram.get("sparkline", ""),
+                    "reason": dec.reason,
+                }
+            )
+        fill_table(self.vsg_tbl, pd.DataFrame(rows))
+        c_rows = vsg.integrity_by_target[tgt].to_conflict_rows()
+        fill_table(
+            self.integrity_tbl,
+            pd.DataFrame(
+                c_rows,
+                columns=["rule_id", "variable", "severity", "message", "remediation"],
+            ),
+        )
+        acc_txt = "ACCEPTED" if vsg.is_accepted() else "PENDING ACCEPTANCE"
+        self.vsg_status.setText(f"VSG [{acc_txt}] · SHA-256: {vsg.vsg_sha256[:16]}…")
+
+    def _on_apply_vsg_preset(self) -> None:
+        vsg = self.state.vsg
+        if vsg is None:
+            return
+        tgt = self.vsg_target_combo.currentText() or vsg.targets[0]
+        preset = self.vsg_preset_combo.currentText()
+        phase = self.state.tcp.phase if self.state.tcp is not None else ProvenancePhase.PRE_TEST.value
+        vsg.apply_preset(tgt, preset, phase=phase)
+        self._render_vsg_tab()
+        self._refresh_limitations_banner()
+
+    def _on_copy_vsg_across_targets(self) -> None:
+        vsg = self.state.vsg
+        if vsg is None or len(vsg.targets) < 2:
+            return
+        src = self.vsg_target_combo.currentText() or vsg.targets[0]
+        phase = self.state.tcp.phase if self.state.tcp is not None else ProvenancePhase.PRE_TEST.value
+        for dst in vsg.targets:
+            if dst != src:
+                vsg.copy_target_decisions(src, dst, phase=phase)
+        self._render_vsg_tab()
+        self._refresh_limitations_banner()
+
+    def accept_vsg_gate(self) -> bool:
+        vsg = self.state.vsg
+        if vsg is None:
+            return False
+        try:
+            phase = self.state.tcp.phase if self.state.tcp is not None else ProvenancePhase.PRE_TEST.value
+            vsg.accept(phase=phase)
+            self.state.vsg_id = store.save_vsg_state(vsg.to_dict(), dataset_id=self.state.dataset_id)
+            self._render_vsg_tab()
+            self._refresh_limitations_banner()
+            self.tcp_status.setText("VSG accepted. Ready to accept & lock TCP.")
+            return True
+        except (IntegrityViolationError, VSGValidationError) as exc:
+            self.vsg_status.setText(f"VSG blocked: {exc}")
+            if _is_interactive():
+                QMessageBox.critical(self, "VSG Integrity Conflict", str(exc))
+            return False
+
+    def _on_tcp_controls_edited(self, *_args: Any) -> None:
+        tcp = self.state.tcp
+        if tcp is None or tcp.is_locked:
+            return
+        try:
+            alpha_f = float(self.tcp_alpha_combo.currentText().strip())
+            tcp.set_alpha(alpha_f)
+            self._update_alpha_warning_ui(tcp.alpha)
+            conf_txt = self.tcp_conf_combo.currentText().strip()
+            if conf_txt in ("80", "90", "95", "99"):
+                tcp.set_confidence(conf_txt)
+            else:
+                tcp.set_confidence("custom", float(conf_txt))
+            tcp.set_correction(self.tcp_corr_combo.currentText())
+            tcp.set_family_definition(self.tcp_fam_combo.currentText())
+            tcp.set_decision_rule(self.tcp_rule_combo.currentText())
+            self.impact_preview.refresh_from_models(self.state.vsg, tcp)
+            self._refresh_limitations_banner()
+        except (TCPValidationError, ValueError) as exc:
+            self.tcp_status.setText(f"TCP validation warning: {exc}")
+
+    def accept_and_lock_tcp(self) -> str:
+        s = self.state
+        if s.vsg is None or s.tcp is None:
+            return ""
+        if not s.vsg.is_accepted() and not self.accept_vsg_gate():
+            return ""
+        try:
+            digest = s.tcp.lock_preregistration()
+            s.tcp_id = store.save_tcp_config(
+                s.tcp.to_dict(),
+                dataset_id=s.dataset_id,
+                vsg_id=s.vsg_id,
+            )
+            store.save_provenance_ledger(s.vsg.provenance.to_dict(), dataset_id=s.dataset_id)
+            if s.df is not None and s.compliance_runner is not None:
+                eval_rows = s.compliance_runner.execute_tests(s.df, s.vsg, s.tcp)
+                fill_table(self.tcp_results_tbl, pd.DataFrame([r.to_dict() for r in eval_rows]))
+            self.tcp_status.setText(f"TCP LOCKED · Pre-registration SHA-256: {digest[:16]}…")
+            self._refresh_limitations_banner()
+            return digest
+        except (TCPValidationError, IntegrityViolationError) as exc:
+            self.tcp_status.setText(f"TCP lock failed: {exc}")
+            return ""
+
+    def unlock_tcp_for_amendment(self, reason: str = "Post-test amendment") -> None:
+        tcp = self.state.tcp
+        if tcp is None:
+            return
+        tcp.unlock_for_amendment(reason=reason)
+        self.tcp_status.setText("TCP unlocked for post-test amendment (Limitations disclosure active).")
+        self._refresh_limitations_banner()
+
+    def run_what_if_ui(self) -> dict[str, Any]:
+        s = self.state
+        if s.tcp is None or s.compliance_runner is None:
+            return {}
+        try:
+            alpha_f = float(self.tcp_alpha_combo.currentText().strip())
+            conf_txt = self.tcp_conf_combo.currentText().strip()
+            c_preset = conf_txt if conf_txt in ("80", "90", "95", "99") else "custom"
+            c_custom = None if c_preset != "custom" else float(conf_txt)
+            probe = s.tcp.clone_for_what_if(
+                alpha=alpha_f,
+                confidence_preset=c_preset,
+                confidence_custom=c_custom,
+                correction=self.tcp_corr_combo.currentText(),
+                family_definition=self.tcp_fam_combo.currentText(),
+                decision_rule=self.tcp_rule_combo.currentText(),
+            )
+            self._update_alpha_warning_ui(probe.alpha)
+            res = s.compliance_runner.what_if(probe)
+            fill_table(self.tcp_results_tbl, pd.DataFrame(res["evaluated_results"]))
+            self.tcp_status.setText(
+                f"What-If evaluated: {res['flip_count']} flip(s), "
+                f"engine_calls_delta={res['engine_calls_delta']}"
+            )
+            return res
+        except (PreregistrationLockedError, TCPValidationError, RuntimeError, ValueError) as exc:
+            self.tcp_status.setText(f"What-If error: {exc}")
+            return {}
 
     # ------------------------------------------------------------ schema editor
     def populate_schema_table(self, schema: DatasetSchema) -> None:
@@ -957,6 +1390,24 @@ class AnalysisPage(QWidget):
         if not s.time_col:
             if _is_interactive():
                 QMessageBox.information(self, "Run analysis", "Select the timestamp column on the Setup tab.")
+            return
+        if s.vsg is not None and not s.vsg.is_accepted():
+            self.status.setText("Blocked: accept Variable Selection Gate (VSG) first.")
+            if _is_interactive():
+                QMessageBox.warning(
+                    self,
+                    "Compliance gate required",
+                    "Accept the Variable Selection Gate (VSG) and Test Control Panel (TCP) on the Setup tab before running analysis.",
+                )
+            return
+        if s.tcp is not None and not s.tcp.is_accepted():
+            self.status.setText("Blocked: accept Test Control Panel (TCP) first.")
+            if _is_interactive():
+                QMessageBox.warning(
+                    self,
+                    "Compliance gate required",
+                    "Accept the Test Control Panel (TCP) on the Setup tab before running analysis.",
+                )
             return
 
         df = self.main.setup_page.apply_units(s.df)

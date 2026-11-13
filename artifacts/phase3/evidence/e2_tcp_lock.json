@@ -1,0 +1,415 @@
+{
+  "auto_log_hash": "f814ac7a5ba212ef80ad061bbf191ef236e3c74cd6b60a6855aac0bfb68892b4",
+  "characterization_by_target": {
+    "Energy_kWh": {
+      "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+      "dimensions": {
+        "dim_01_sample_and_span": {
+          "dominant_granularity": "sub_hourly",
+          "n_effective": 36,
+          "n_total": 36,
+          "span_days": 1064.0
+        },
+        "dim_02_missingness_and_gaps": {
+          "gap_count": 0,
+          "max_gap": 0,
+          "missing_fraction": 0.0
+        },
+        "dim_03_distribution_shape": {
+          "kurtosis": -1.2374,
+          "positivity_min": 11246.0,
+          "skewness": -0.2661,
+          "zero_fraction": 0.0
+        },
+        "dim_04_outlier_prevalence": {
+          "iqr_outliers": 0,
+          "mad_outliers": 0,
+          "outlier_rate": 0.0
+        },
+        "dim_05_trend_and_persistence": {
+          "lag1_persistence": 0.4352,
+          "linear_trend_r2": 0.0384
+        },
+        "dim_06_seasonality": {
+          "dominant_period_steps": 6,
+          "spectral_seasonal_strength": 0.5917
+        },
+        "dim_07_autocorrelation_memory": {
+          "acf_by_lag": {
+            "lag_1": 0.4195,
+            "lag_10": -0.2167,
+            "lag_11": 0.2884,
+            "lag_12": 0.5483,
+            "lag_2": -0.281,
+            "lag_3": -0.5504,
+            "lag_4": -0.1611,
+            "lag_5": 0.1724,
+            "lag_6": 0.23,
+            "lag_7": 0.0544,
+            "lag_8": -0.2468,
+            "lag_9": -0.4145
+          },
+          "memory_horizon_lags": 4
+        },
+        "dim_08_variance_nonstationarity": {
+          "half_sample_variance_ratio": 1.0421,
+          "heteroscedastic_flag": false
+        },
+        "dim_09_structural_break_signal": {
+          "half_sample_mean_shift_z": 0.22,
+          "regime_shift_flag": false
+        },
+        "dim_10_driver_nonlinearity": {
+          "piecewise_r2_gain": 0.6271,
+          "piecewise_recommended": true
+        },
+        "dim_11_exogenous_drivers": {
+          "contemporaneous_r": {
+            "Avg_Temp_C": -0.4253
+          },
+          "numeric_driver_count": 1
+        },
+        "dim_12_operational_modes": {
+          "bimodality_index": 0.6075,
+          "multimodal_flag": true
+        },
+        "dim_13_snr_and_forecastability": {
+          "normalized_entropy": 0.9591,
+          "signal_to_noise_ratio": 0.7871
+        },
+        "dim_14_gating_manifest": {
+          "cv_strategy": "forward_chaining",
+          "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+          "recommended_families": [
+            "linear",
+            "piecewise_degree_day"
+          ],
+          "target": "Energy_kWh"
+        }
+      },
+      "profile_sha256": "a0e182d79c84356dd94f8ddb082cc549108cc5cd5ff0666c134cbd62a11701a2",
+      "target": "Energy_kWh"
+    }
+  },
+  "preregistration_sha256": "5f9032ba287826132eb31d940dab64fd8c0ab931f0ec22f7ef0aaa639b34bd93",
+  "provenance": {
+    "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+    "has_post_test_modifications": false,
+    "ledger_sha256": "d8a0e5f2e4ed306620121b59fabfb812f40e7c300d513f542ad6642d0bf555f6",
+    "records": [
+      {
+        "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+        "entity_id": "Avg_Temp_C",
+        "entity_type": "vsg_variable",
+        "new_value": "include",
+        "phase": "pre_test",
+        "previous_record_sha256": "",
+        "previous_value": null,
+        "reason": "Included via nonlinear mutual-information relevance (MI=0.653, info_corr=0.854 > linear |r|=0.425; preserves piecewise/degree-day response).",
+        "record_sha256": "0b014e5bebee932a2d55fe6e8a45719cad28fc3e20ee88dbdbd8d85c95f0a6f6",
+        "requires_limitations_disclosure": false,
+        "seq": 1,
+        "source": "auto_rule",
+        "target": "Energy_kWh"
+      },
+      {
+        "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+        "entity_id": "vsg_accepted",
+        "entity_type": "pipeline_stage",
+        "new_value": "c378766b9955bcc62c1de499d3ff86fc6791b6a5d8b7c3abdfe4de12dddf43ce",
+        "phase": "pre_test",
+        "previous_record_sha256": "0b014e5bebee932a2d55fe6e8a45719cad28fc3e20ee88dbdbd8d85c95f0a6f6",
+        "previous_value": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+        "reason": "stage receipt for vsg_accepted",
+        "record_sha256": "2ff45cbd9011666b2629c2096ee867615b70efc25da6cc5f3aefc6dc37759f5d",
+        "requires_limitations_disclosure": false,
+        "seq": 2,
+        "source": "pipeline_stage",
+        "target": "Energy_kWh"
+      },
+      {
+        "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+        "entity_id": "tcp_accepted",
+        "entity_type": "pipeline_stage",
+        "new_value": "5169c9a15e11ba0f948e84c4cf1e4383e6bf8ac567112b13977b24ee9885641f",
+        "phase": "pre_test",
+        "previous_record_sha256": "2ff45cbd9011666b2629c2096ee867615b70efc25da6cc5f3aefc6dc37759f5d",
+        "previous_value": "242b59cee88253c3b61a18627c2211ab3b63f4a7d60c5e68523d3a1b57900869",
+        "reason": "stage receipt for tcp_accepted",
+        "record_sha256": "4423aa8f2ddcdc91094084c838e93e341afe154cd2e4aea082bb26fa9b508dda",
+        "requires_limitations_disclosure": false,
+        "seq": 3,
+        "source": "pipeline_stage",
+        "target": ""
+      },
+      {
+        "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+        "entity_id": "tcp_preregistration_locked",
+        "entity_type": "pipeline_stage",
+        "new_value": "47305fac8596b5acac37e7929509d1168e4b9d124792c7cdbdfff141d79b6062",
+        "phase": "pre_test",
+        "previous_record_sha256": "4423aa8f2ddcdc91094084c838e93e341afe154cd2e4aea082bb26fa9b508dda",
+        "previous_value": "c3097bb5887e83252f96de76e3a02c76dbf0962b00df826c491face6e009be49",
+        "reason": "stage receipt for tcp_preregistration_locked",
+        "record_sha256": "899e220027913bd0e26c5347c7a0b44f19440d039cfd486f61cc4288028ffc88",
+        "requires_limitations_disclosure": false,
+        "seq": 4,
+        "source": "pipeline_stage",
+        "target": ""
+      }
+    ],
+    "stage_receipts": [
+      {
+        "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+        "phase": "pre_test",
+        "stage_name": "vsg_accepted",
+        "stage_payload_sha256": "9322627b1089ce861f5487cdcccc00637b8820b2e2ccc56f125e93235ca06191",
+        "stage_sha256": "c378766b9955bcc62c1de499d3ff86fc6791b6a5d8b7c3abdfe4de12dddf43ce",
+        "target": "Energy_kWh",
+        "upstream_stage_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c"
+      },
+      {
+        "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+        "phase": "pre_test",
+        "stage_name": "tcp_accepted",
+        "stage_payload_sha256": "c3097bb5887e83252f96de76e3a02c76dbf0962b00df826c491face6e009be49",
+        "stage_sha256": "5169c9a15e11ba0f948e84c4cf1e4383e6bf8ac567112b13977b24ee9885641f",
+        "target": "",
+        "upstream_stage_sha256": "242b59cee88253c3b61a18627c2211ab3b63f4a7d60c5e68523d3a1b57900869"
+      },
+      {
+        "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+        "phase": "pre_test",
+        "stage_name": "tcp_preregistration_locked",
+        "stage_payload_sha256": "28ac8b59f6e6f8f281fb6e0de3fbda6b47c8412d23c2aab8f62f349668e3b88e",
+        "stage_sha256": "47305fac8596b5acac37e7929509d1168e4b9d124792c7cdbdfff141d79b6062",
+        "target": "",
+        "upstream_stage_sha256": "c3097bb5887e83252f96de76e3a02c76dbf0962b00df826c491face6e009be49"
+      }
+    ]
+  },
+  "tcp": {
+    "accepted": true,
+    "alpha": 0.05,
+    "confidence_level": 0.95,
+    "confidence_preset": "95",
+    "correction": "benjamini_hochberg",
+    "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+    "decision_rule": "p_only",
+    "expected_signs": {
+      "Energy_kWh": {
+        "Avg_Temp_C": "piecewise_v"
+      }
+    },
+    "family_definition": "per_test_family",
+    "locked": true,
+    "min_effect_size": 0.1667,
+    "phase": "pre_test",
+    "preregistration_sha256": "5f9032ba287826132eb31d940dab64fd8c0ab931f0ec22f7ef0aaa639b34bd93",
+    "scope_matrices": {
+      "Energy_kWh": {
+        "Avg_Temp_C": {
+          "breaks_regimes": {
+            "in_scope": true,
+            "status": "in_scope"
+          },
+          "dependence_collinearity": {
+            "in_scope": true,
+            "status": "in_scope"
+          },
+          "missingness_balance": {
+            "in_scope": true,
+            "status": "in_scope"
+          },
+          "model_comparison": {
+            "in_scope": true,
+            "status": "in_scope"
+          },
+          "residual_diagnostics": {
+            "in_scope": true,
+            "status": "in_scope"
+          },
+          "stationarity_trend": {
+            "in_scope": true,
+            "status": "in_scope"
+          }
+        }
+      }
+    },
+    "scope_overrides": {},
+    "tcp_sha256": "c3097bb5887e83252f96de76e3a02c76dbf0962b00df826c491face6e009be49",
+    "test_panels": {
+      "T1": {
+        "action_policy": "fallback_robust",
+        "enabled": true,
+        "gate_role": "soft_gate",
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "null_value": 0.0,
+        "parameters": {
+          "max_lags": 3
+        },
+        "test_id": "T1"
+      },
+      "T10": {
+        "action_policy": "flag_in_report",
+        "enabled": true,
+        "gate_role": "diagnostic_only",
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "null_value": 0.0,
+        "parameters": {
+          "max_lags": 3
+        },
+        "test_id": "T10"
+      },
+      "T11": {
+        "action_policy": "flag_in_report",
+        "enabled": true,
+        "gate_role": "diagnostic_only",
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "null_value": 0.0,
+        "parameters": {
+          "max_lags": 3
+        },
+        "test_id": "T11"
+      },
+      "T12": {
+        "action_policy": "flag_in_report",
+        "enabled": true,
+        "gate_role": "diagnostic_only",
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "null_value": 0.0,
+        "parameters": {
+          "max_lags": 3
+        },
+        "test_id": "T12"
+      },
+      "T13": {
+        "action_policy": "flag_in_report",
+        "enabled": true,
+        "gate_role": "diagnostic_only",
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "null_value": 0.0,
+        "parameters": {
+          "max_lags": 3
+        },
+        "test_id": "T13"
+      },
+      "T14": {
+        "action_policy": "warn_and_continue",
+        "enabled": false,
+        "gate_role": "hard_gate",
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "null_value": 0.0,
+        "parameters": {
+          "max_lags": 3
+        },
+        "test_id": "T14"
+      },
+      "T2": {
+        "action_policy": "fallback_robust",
+        "enabled": true,
+        "gate_role": "soft_gate",
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "null_value": 0.0,
+        "parameters": {
+          "max_lags": 3
+        },
+        "test_id": "T2"
+      },
+      "T3": {
+        "action_policy": "fallback_robust",
+        "enabled": true,
+        "gate_role": "soft_gate",
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "null_value": 0.0,
+        "parameters": {
+          "max_lags": 3
+        },
+        "test_id": "T3"
+      },
+      "T4": {
+        "action_policy": "flag_in_report",
+        "enabled": true,
+        "gate_role": "diagnostic_only",
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "null_value": 0.0,
+        "parameters": {
+          "max_lags": 3
+        },
+        "test_id": "T4"
+      },
+      "T5": {
+        "action_policy": "warn_and_continue",
+        "enabled": true,
+        "gate_role": "soft_gate",
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "null_value": 0.0,
+        "parameters": {
+          "max_lags": 3
+        },
+        "test_id": "T5"
+      },
+      "T6": {
+        "action_policy": "warn_and_continue",
+        "enabled": true,
+        "gate_role": "soft_gate",
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "null_value": 0.0,
+        "parameters": {
+          "max_lags": 3
+        },
+        "test_id": "T6"
+      },
+      "T7": {
+        "action_policy": "flag_in_report",
+        "enabled": true,
+        "gate_role": "diagnostic_only",
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "null_value": 0.0,
+        "parameters": {
+          "max_lags": 3
+        },
+        "test_id": "T7"
+      },
+      "T8": {
+        "action_policy": "warn_and_continue",
+        "enabled": true,
+        "gate_role": "soft_gate",
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "null_value": 0.0,
+        "parameters": {
+          "max_lags": 3
+        },
+        "test_id": "T8"
+      },
+      "T9": {
+        "action_policy": "warn_and_continue",
+        "enabled": true,
+        "gate_role": "soft_gate",
+        "min_effect_size": 0.0,
+        "mode": "full",
+        "null_value": 0.0,
+        "parameters": {
+          "max_lags": 3
+        },
+        "test_id": "T9"
+      }
+    },
+    "vsg_sha256": "242b59cee88253c3b61a18627c2211ab3b63f4a7d60c5e68523d3a1b57900869",
+    "warnings": []
+  },
+  "vsg_sha256": "242b59cee88253c3b61a18627c2211ab3b63f4a7d60c5e68523d3a1b57900869"
+}

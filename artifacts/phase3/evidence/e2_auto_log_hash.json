@@ -1,0 +1,123 @@
+{
+  "all_auto_have_empirical_signals": true,
+  "auto_entries": 11,
+  "auto_log_hash_run1": "f814ac7a5ba212ef80ad061bbf191ef236e3c74cd6b60a6855aac0bfb68892b4",
+  "auto_log_hash_run2": "f814ac7a5ba212ef80ad061bbf191ef236e3c74cd6b60a6855aac0bfb68892b4",
+  "byte_identical": true,
+  "override_entries": 0,
+  "preregistration_sha256_run1": "5f9032ba287826132eb31d940dab64fd8c0ab931f0ec22f7ef0aaa639b34bd93",
+  "preregistration_sha256_run2": "5f9032ba287826132eb31d940dab64fd8c0ab931f0ec22f7ef0aaa639b34bd93",
+  "records": [
+    {
+      "candidate_space": "[0.001, 0.01, 0.05, 0.1, 0.2]",
+      "mode": "AUTO",
+      "rule": "alpha=0.01 for large n>=2000 (guards trivial rejection), 0.10 for very small n<30, 0.05 otherwise",
+      "setting": "tcp_alpha",
+      "signals": "n=36, est_tests=10",
+      "stage": "tcp",
+      "target": "",
+      "value": "0.05"
+    },
+    {
+      "candidate_space": "80|90|95|99|custom",
+      "mode": "AUTO",
+      "rule": "nominal confidence level matched to 1 - alpha (bounded to [0.80, 0.999])",
+      "setting": "tcp_confidence",
+      "signals": "alpha=0.05, n=36",
+      "stage": "tcp",
+      "target": "",
+      "value": "0.95"
+    },
+    {
+      "candidate_space": "['none', 'bonferroni', 'holm', 'benjamini_hochberg', 'benjamini_yekutieli']",
+      "mode": "AUTO",
+      "rule": "Holm FWER for small families (m<=8), BY FDR under strong dependence (|r|>=0.65), BH FDR otherwise",
+      "setting": "tcp_correction",
+      "signals": "est_family_m=10, mean_abs_r=0.425",
+      "stage": "tcp",
+      "target": "",
+      "value": "benjamini_hochberg"
+    },
+    {
+      "candidate_space": "['per_target', 'per_test_family', 'per_variable', 'global']",
+      "mode": "AUTO",
+      "rule": "group hypotheses by statistical test family for single target, per-target when multiple EnPIs compete",
+      "setting": "tcp_family_definition",
+      "signals": "n_targets=1, est_family_m=10",
+      "stage": "tcp",
+      "target": "",
+      "value": "per_test_family"
+    },
+    {
+      "candidate_space": "['p_only', 'p_and_effect_size', 'ci_excludes_null', 'composite_strict']",
+      "mode": "AUTO",
+      "rule": "require practical effect-size floor alongside p_adj<=alpha when n>=500 to prevent trivial rejections",
+      "setting": "tcp_decision_rule",
+      "signals": "n=36",
+      "stage": "tcp",
+      "target": "",
+      "value": "p_only"
+    },
+    {
+      "candidate_space": "[0.0, 1.0]",
+      "mode": "AUTO",
+      "rule": "minimum standardized effect size 1/sqrt(n) clamped to [0.02, 0.20]",
+      "setting": "tcp_min_effect_size",
+      "signals": "n=36, rule=p_only",
+      "stage": "tcp",
+      "target": "",
+      "value": "0.1667"
+    },
+    {
+      "candidate_space": "fast|full",
+      "mode": "AUTO",
+      "rule": "full bootstrap/exact mode for n<=10000, fast asymptotic subsampling mode for n>10000",
+      "setting": "tcp_execution_mode",
+      "signals": "n=36",
+      "stage": "tcp",
+      "target": "",
+      "value": "full"
+    },
+    {
+      "candidate_space": "[10.0, 60.0]",
+      "mode": "AUTO",
+      "rule": "maximum predictor missingness adapts to sample length (25% n<60, 40% n<1000, 50% n>=1000)",
+      "setting": "vsg_max_missing_pct",
+      "signals": "n=36, p=1, median_missing_pct=0.00%",
+      "stage": "vsg",
+      "target": "Energy_kWh",
+      "value": "25"
+    },
+    {
+      "candidate_space": "[1e-10, 1e-4]",
+      "mode": "AUTO",
+      "rule": "near-constant relative-variance floor scaled by sample size",
+      "setting": "vsg_min_rel_variance",
+      "signals": "n=36, candidate_count=1",
+      "stage": "vsg",
+      "target": "Energy_kWh",
+      "value": "1e-06"
+    },
+    {
+      "candidate_space": "[2.5, 20.0]",
+      "mode": "AUTO",
+      "rule": "iterative VIF multicollinearity ceiling (5.0 for n<100, 10.0 for n>=100)",
+      "setting": "vsg_vif_limit",
+      "signals": "n=36, candidate_count=1",
+      "stage": "vsg",
+      "target": "Energy_kWh",
+      "value": "5"
+    },
+    {
+      "candidate_space": "",
+      "mode": "AUTO",
+      "rule": "Included via nonlinear mutual-information relevance (MI=0.653, info_corr=0.854 > linear |r|=0.425; preserves piecewise/degree-day response).",
+      "setting": "vsg.Avg_Temp_C",
+      "signals": "miss=0.00%, uniq=36, r=-0.425, rho=-0.411, mi=0.653, vif=1.00",
+      "stage": "vsg",
+      "target": "Energy_kWh",
+      "value": "include"
+    }
+  ],
+  "total_entries": 11
+}

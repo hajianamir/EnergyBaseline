@@ -15,8 +15,8 @@ requirements:
   priority: M
   phase: 0
   status: done
-  title: Pin exact runtime/dev dependencies, compile SHA-256 requirements.lock, remove WeasyPrint, and
-    publish SUPPORT_MATRIX.
+  title: Pin exact runtime/dev dependencies, compile SHA-256 requirements.lock, remove WeasyPrint, and publish
+    SUPPORT_MATRIX.
   code_refs:
   - requirements.in
   - requirements.txt
@@ -66,8 +66,8 @@ requirements:
   priority: M
   phase: 0
   status: done
-  title: Author deviations, assumptions, not_implemented, SECURITY, THIRD_PARTY_NOTICES, SUPPORT_MATRIX,
-    CHANGELOG, and sign script.
+  title: Author deviations, assumptions, not_implemented, SECURITY, THIRD_PARTY_NOTICES, SUPPORT_MATRIX, CHANGELOG,
+    and sign script.
   code_refs:
   - docs/deviations.md
   - docs/assumptions.md
@@ -127,8 +127,7 @@ requirements:
   priority: M
   phase: 0/1
   status: done
-  title: Zero-config offline startup on fresh Windows creating local SQLite DB without env vars or cloud
-    services.
+  title: Zero-config offline startup on fresh Windows creating local SQLite DB without env vars or cloud services.
   code_refs:
   - energybaseline/config/settings.py
   - energybaseline/db/session.py
@@ -150,8 +149,7 @@ requirements:
   priority: M
   phase: 1
   status: planned
-  title: Credentials encrypted via Windows DPAPI or PBKDF2-Fernet with zero plaintext secrets on disk
-    or logs.
+  title: Credentials encrypted via Windows DPAPI or PBKDF2-Fernet with zero plaintext secrets on disk or logs.
   code_refs: []
   test_ids: []
 - id: AC-04
@@ -189,31 +187,43 @@ requirements:
 - id: AC-07
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: Variable Selection Gate runs pre-modeling and logs per-driver decisions with user override audit.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/vsg.py
+  - energybaseline/core/pipeline.py
+  test_ids:
+  - tests/gates/test_phase3_vsg_integrity_provenance.py::test_pipe1_blocks_inferential_tests_before_vsg_and_tcp_acceptance
+  - tests/gates/test_phase3_vsg_integrity_provenance.py::test_vsg_pre_test_profile_mi_degree_day_and_vif_grouping
 - id: AC-08
   priority: M
   phase: 3
-  status: planned
-  title: Target Characterization Profile computes all 14 dimensions and persists JSON prior to candidate
-    generation.
-  code_refs: []
-  test_ids: []
+  status: done
+  title: Target Characterization Profile computes all 14 dimensions and persists JSON prior to candidate generation.
+  code_refs:
+  - energybaseline/core/tcp.py
+  - energybaseline/core/integrity.py
+  - energybaseline/core/store.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_14d_characterization_and_sqlite_persistence_tamper_guards
+  - tests/gates/test_phase3_vsg_integrity_provenance.py::test_integrity_rules_cannot_be_disabled_and_catch_all_four_classes
 - id: AC-09
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: Every Auto decision logs rule, inputs, outputs, and rationale in AutoDecisionLog.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/auto.py
+  - energybaseline/core/vsg.py
+  - energybaseline/core/tcp.py
+  test_ids:
+  - tests/gates/test_phase3_auto_and_fuzz.py::test_auto_log_rejects_hidden_constants_and_adapts_to_data_signals
+  - tests/gates/test_phase3_auto_and_fuzz.py::test_pipeline_twice_produces_byte_identical_auto_log_hash
 - id: AC-10
   priority: M
   phase: 4
   status: planned
-  title: Statistical Test Catalog T1..T14 returns typed TestResult objects with assumption checks and
-    fallbacks.
+  title: Statistical Test Catalog T1..T14 returns typed TestResult objects with assumption checks and fallbacks.
   code_refs: []
   test_ids: []
 - id: AC-11
@@ -234,8 +244,8 @@ requirements:
   priority: M
   phase: 5
   status: planned
-  title: Model registry evaluates F1..F10 families gated by TCP and sample-size minimums with explicit
-    status register.
+  title: Model registry evaluates F1..F10 families gated by TCP and sample-size minimums with explicit status
+    register.
   code_refs: []
   test_ids: []
 - id: AC-14
@@ -257,8 +267,8 @@ requirements:
   priority: M
   phase: 6
   status: planned
-  title: Uncertainty quantification calibrates 80%/95% prediction intervals via MAPIE EnbPI/ACI within
-    +/-5 pp coverage.
+  title: Uncertainty quantification calibrates 80%/95% prediction intervals via MAPIE EnbPI/ACI within +/-5
+    pp coverage.
   code_refs: []
   test_ids: []
 - id: AC-17
@@ -286,8 +296,7 @@ requirements:
   priority: M
   phase: 7
   status: planned
-  title: Multi-target runs isolate pipelines per target with independent VSG, TCP, models, and failure
-    containment.
+  title: Multi-target runs isolate pipelines per target with independent VSG, TCP, models, and failure containment.
   code_refs: []
   test_ids: []
 - id: AC-21
@@ -303,26 +312,32 @@ requirements:
   priority: M
   phase: 1/9
   status: in_progress
-  title: In-flight Cancel terminates worker processes cleanly within 2 seconds without corrupting SQLite
-    state.
+  title: In-flight Cancel terminates worker processes cleanly within 2 seconds without corrupting SQLite state.
   code_refs:
   - energybaseline/gui/main_window.py
   test_ids: []
 - id: AC-23
   priority: M
-  phase: 7
-  status: planned
+  phase: 3/7
+  status: in_progress
   title: Performance budgets met on D2 reference machine across 1k, 10k, and 100k row synthetic benchmarks.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/cache.py
+  - energybaseline/core/integrity.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_cache_selective_invalidation_and_zero_recomputation_what_if
 - id: AC-24
   priority: M
-  phase: 8
-  status: planned
-  title: Desktop UX satisfies wizard flow, keyboard accessibility, WCAG AA contrast, and 100%/125%/150%
-    DPI scaling.
-  code_refs: []
-  test_ids: []
+  phase: 3/8
+  status: in_progress
+  title: Desktop UX satisfies wizard flow, keyboard accessibility, WCAG AA contrast, and 100%/125%/150% DPI
+    scaling.
+  code_refs:
+  - energybaseline/core/cache.py
+  - energybaseline/gui/pages_setup.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_cache_selective_invalidation_and_zero_recomputation_what_if
+  - tests/gui/test_phase3_gui_vsg_tcp.py::test_gui_impact_preview_vsg_tcp_whatif_and_post_hoc_ui_badge
 - id: AC-25
   priority: M
   phase: 8
@@ -364,10 +379,12 @@ requirements:
 - id: AC-29
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: Structural break detection (Chow, Quandt-Andrews, Pettitt, Bai-Perron/PELT) integrated into TCP.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/tcp.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_14d_characterization_and_sqlite_persistence_tamper_guards
 - id: AC-30
   priority: M
   phase: 5
@@ -386,17 +403,21 @@ requirements:
   priority: M
   phase: 7
   status: planned
-  title: Drift detector triggers re-baselining advisories on covariate shift (PSI/KS) and residual regime
-    shift.
+  title: Drift detector triggers re-baselining advisories on covariate shift (PSI/KS) and residual regime shift.
   code_refs: []
   test_ids: []
 - id: AC-33
   priority: M
-  phase: 8
-  status: planned
+  phase: 3/8
+  status: in_progress
   title: Audit bundle export packages config, AutoDecisionLog, TestResult catalog, and SHA-256 manifest.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/auto.py
+  - energybaseline/core/provenance.py
+  - energybaseline/cli.py
+  test_ids:
+  - tests/gates/test_phase3_auto_and_fuzz.py::test_pipeline_twice_produces_byte_identical_auto_log_hash
+  - tests/gates/test_phase3_vsg_integrity_provenance.py::test_provenance_ledger_hash_chain_and_zero_post_hoc_outside_gui
 - id: AC-34
   priority: M
   phase: 9
@@ -460,10 +481,16 @@ requirements:
 - id: G-6
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: Every Auto decision is deterministic, auditable, and overridable by the engineer.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/auto.py
+  - energybaseline/core/vsg.py
+  - energybaseline/core/tcp.py
+  test_ids:
+  - tests/gates/test_phase3_auto_and_fuzz.py::test_auto_log_rejects_hidden_constants_and_adapts_to_data_signals
+  - tests/gates/test_phase3_auto_and_fuzz.py::test_pipeline_twice_produces_byte_identical_auto_log_hash
+  - tests/gates/test_phase3_vsg_integrity_provenance.py::test_vsg_bulk_presets_cross_target_copy_and_excluded_profiles
 - id: G-7
   priority: M
   phase: 0
@@ -509,31 +536,45 @@ requirements:
 - id: PIPE-1
   priority: M
   phase: 3
-  status: planned
-  title: Typed stage contract connecting Ingest -> VSG -> TCP -> Candidate Gen -> Fit/CV -> Score -> UQ
-    -> Report.
-  code_refs: []
-  test_ids: []
+  status: done
+  title: Typed stage contract connecting Ingest -> VSG -> TCP -> Candidate Gen -> Fit/CV -> Score -> UQ ->
+    Report.
+  code_refs:
+  - energybaseline/core/vsg.py
+  - energybaseline/core/tcp.py
+  - energybaseline/core/cache.py
+  - energybaseline/core/pipeline.py
+  test_ids:
+  - tests/gates/test_phase3_vsg_integrity_provenance.py::test_pipe1_blocks_inferential_tests_before_vsg_and_tcp_acceptance
 - id: PIPE-2
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: Immutable stage artifacts with dataset SHA-256 provenance across pipeline stages.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/provenance.py
+  - energybaseline/core/cache.py
+  - energybaseline/core/store.py
+  test_ids:
+  - tests/gates/test_phase3_vsg_integrity_provenance.py::test_provenance_ledger_hash_chain_and_zero_post_hoc_outside_gui
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_14d_characterization_and_sqlite_persistence_tamper_guards
 - id: PIPE-3
   priority: M
-  phase: 7
-  status: planned
+  phase: 3/7
+  status: in_progress
   title: Per-target pipeline isolation ensuring failure on one EnPI target never aborts sibling targets.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/tcp.py
+  - energybaseline/core/pipeline.py
+  - energybaseline/core/auto.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_scope_matrix_guard_rails_lock_immutability_and_impact_preview
+  - tests/gates/test_phase3_auto_and_fuzz.py::test_pipeline_twice_produces_byte_identical_auto_log_hash
 - id: DB-1
   priority: M
   phase: 1
   status: done
-  title: Default SQLite database under %LOCALAPPDATA%\EnergyBaseline\data or portable mode without env
-    vars.
+  title: Default SQLite database under %LOCALAPPDATA%\EnergyBaseline\data or portable mode without env vars.
   code_refs:
   - energybaseline/config/settings.py
   - energybaseline/db/session.py
@@ -597,8 +638,7 @@ requirements:
   priority: M
   phase: 1
   status: planned
-  title: Transactional unit-of-work writes ensuring cancelled or failed runs leave zero partial orphan
-    rows.
+  title: Transactional unit-of-work writes ensuring cancelled or failed runs leave zero partial orphan rows.
   code_refs: []
   test_ids: []
 - id: DB-8
@@ -714,8 +754,7 @@ requirements:
   priority: M
   phase: 1
   status: planned
-  title: Persistent user preferences (recent projects, default confidence level, worker count) in local
-    config.
+  title: Persistent user preferences (recent projects, default confidence level, worker count) in local config.
   code_refs: []
   test_ids: []
 - id: SHL-8
@@ -729,8 +768,7 @@ requirements:
   priority: M
   phase: 1
   status: done
-  title: Application Help/About dialog displaying exact version, commit SHA, Python runtime, and license
-    notices.
+  title: Application Help/About dialog displaying exact version, commit SHA, Python runtime, and license notices.
   code_refs:
   - energybaseline/gui/main_window.py
   - energybaseline/gui/page_status.py
@@ -751,8 +789,7 @@ requirements:
   priority: M
   phase: 1
   status: done
-  title: Typed serializable job request and result envelopes across process boundaries (no Qt objects
-    in workers).
+  title: Typed serializable job request and result envelopes across process boundaries (no Qt objects in workers).
   code_refs:
   - energybaseline/core/pool.py
   test_ids:
@@ -781,8 +818,7 @@ requirements:
   priority: M
   phase: 1
   status: done
-  title: 'Crash isolation: child worker segfault or MemoryError surfaces structured error without killing
-    GUI.'
+  title: 'Crash isolation: child worker segfault or MemoryError surfaces structured error without killing GUI.'
   code_refs:
   - energybaseline/core/pool.py
   test_ids:
@@ -831,8 +867,7 @@ requirements:
   priority: M
   phase: 1
   status: done
-  title: Graceful shutdown prompt when closing window during an active analysis run, terminating workers
-    cleanly.
+  title: Graceful shutdown prompt when closing window during an active analysis run, terminating workers cleanly.
   code_refs:
   - energybaseline/gui/main_window.py
   - energybaseline/gui/app.py
@@ -867,8 +902,7 @@ requirements:
   priority: M
   phase: 1
   status: planned
-  title: Cross-platform / fallback credential encryption using PBKDF2-HMAC-SHA256 (>= 600k iterations)
-    + Fernet.
+  title: Cross-platform / fallback credential encryption using PBKDF2-HMAC-SHA256 (>= 600k iterations) + Fernet.
   code_refs: []
   test_ids: []
 - id: SCR-3
@@ -952,8 +986,7 @@ requirements:
   priority: M
   phase: 2
   status: done
-  title: Column role assignment (timestamp, EnPI target(s), weather/production drivers, static factors,
-    exclusions).
+  title: Column role assignment (timestamp, EnPI target(s), weather/production drivers, static factors, exclusions).
   code_refs:
   - energybaseline/core/schema.py
   - energybaseline/core/store.py
@@ -969,8 +1002,8 @@ requirements:
   priority: M
   phase: 2
   status: done
-  title: Leak-free missing-value policy (bounded linear/time interpolation for short gaps, MICE/flagging
-    for drivers, never imputing targets across long shutdowns).
+  title: Leak-free missing-value policy (bounded linear/time interpolation for short gaps, MICE/flagging for
+    drivers, never imputing targets across long shutdowns).
   code_refs:
   - energybaseline/core/quality.py
   - energybaseline/db/models.py
@@ -997,8 +1030,8 @@ requirements:
   priority: M
   phase: 2
   status: done
-  title: Read-only external SQL ingestion validated by sqlglot AST (SELECT/WITH only), row limit, and
-    query timeout.
+  title: Read-only external SQL ingestion validated by sqlglot AST (SELECT/WITH only), row limit, and query
+    timeout.
   code_refs:
   - energybaseline/core/sqlsource.py
   - energybaseline/core/schema.py
@@ -1023,222 +1056,330 @@ requirements:
 - id: VSG-1
   priority: M
   phase: 3
-  status: planned
-  title: Pre-modeling Variable Selection Gate screening candidate drivers before feature engineering and
-    fitting.
-  code_refs: []
-  test_ids: []
+  status: done
+  title: Pre-modeling Variable Selection Gate screening candidate drivers before feature engineering and fitting.
+  code_refs:
+  - energybaseline/core/vsg.py
+  - energybaseline/gui/pages_setup.py
+  test_ids:
+  - tests/gates/test_phase3_vsg_integrity_provenance.py::test_pipe1_blocks_inferential_tests_before_vsg_and_tcp_acceptance
+  - tests/gui/test_phase3_gui_vsg_tcp.py::test_gui_impact_preview_vsg_tcp_whatif_and_post_hoc_ui_badge
 - id: VSG-2
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: Driver missingness threshold gate rejecting or flagging columns exceeding maximum missing fraction.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/vsg.py
+  test_ids:
+  - tests/gates/test_phase3_vsg_integrity_provenance.py::test_vsg_pre_test_profile_mi_degree_day_and_vif_grouping
+  - tests/gates/test_phase3_auto_and_fuzz.py::test_hypothesis_fuzz_vsg_and_integrity_invariants
 - id: VSG-3
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: Zero and near-zero variance (constant / quasi-constant) driver rejection.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/vsg.py
+  - energybaseline/core/tcp.py
+  - energybaseline/gui/pages_setup.py
+  test_ids:
+  - tests/gates/test_phase3_vsg_integrity_provenance.py::test_vsg_pre_test_profile_mi_degree_day_and_vif_grouping
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_scope_matrix_guard_rails_lock_immutability_and_impact_preview
+  - tests/gui/test_phase3_gui_vsg_tcp.py::test_gui_impact_preview_vsg_tcp_whatif_and_post_hoc_ui_badge
 - id: VSG-4
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: Bivariate linear (Pearson) and monotonic (Spearman) relevance screening against target.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/vsg.py
+  test_ids:
+  - tests/gates/test_phase3_vsg_integrity_provenance.py::test_vsg_pre_test_profile_mi_degree_day_and_vif_grouping
+  - tests/gates/test_phase3_vsg_integrity_provenance.py::test_vsg_bulk_presets_cross_target_copy_and_excluded_profiles
 - id: VSG-5
   priority: M
   phase: 3
-  status: planned
-  title: Multicollinearity screening via iterative Variance Inflation Factor (VIF) pruning with domain
-    priority.
-  code_refs: []
-  test_ids: []
+  status: done
+  title: Multicollinearity screening via iterative Variance Inflation Factor (VIF) pruning with domain priority.
+  code_refs:
+  - energybaseline/core/vsg.py
+  - energybaseline/core/integrity.py
+  test_ids:
+  - tests/gates/test_phase3_vsg_integrity_provenance.py::test_vsg_pre_test_profile_mi_degree_day_and_vif_grouping
+  - tests/gates/test_phase3_vsg_integrity_provenance.py::test_integrity_rules_cannot_be_disabled_and_catch_all_four_classes
 - id: VSG-6
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: Target leakage / identity detector catching scaled/lag-zero copies of the EnPI target.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/integrity.py
+  - energybaseline/core/provenance.py
+  - energybaseline/gui/pages_setup.py
+  test_ids:
+  - tests/gates/test_phase3_vsg_integrity_provenance.py::test_integrity_rules_cannot_be_disabled_and_catch_all_four_classes
+  - tests/gates/test_phase3_vsg_integrity_provenance.py::test_provenance_ledger_hash_chain_and_zero_post_hoc_outside_gui
+  - tests/gui/test_phase3_gui_vsg_tcp.py::test_gui_impact_preview_vsg_tcp_whatif_and_post_hoc_ui_badge
 - id: VSG-7
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: Non-linear mutual information relevance check preserving degree-day / threshold drivers.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/vsg.py
+  test_ids:
+  - tests/gates/test_phase3_vsg_integrity_provenance.py::test_vsg_pre_test_profile_mi_degree_day_and_vif_grouping
 - id: VSG-8
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: Consensus driver disposition (keep, drop, collinear-grouped) with structured plain-English reason.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/vsg.py
+  test_ids:
+  - tests/gates/test_phase3_vsg_integrity_provenance.py::test_vsg_pre_test_profile_mi_degree_day_and_vif_grouping
+  - tests/gates/test_phase3_auto_and_fuzz.py::test_hypothesis_fuzz_vsg_and_integrity_invariants
 - id: VSG-9
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: Interactive engineer override of VSG decisions recorded with mandatory audit trail.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/vsg.py
+  - energybaseline/gui/pages_setup.py
+  test_ids:
+  - tests/gates/test_phase3_vsg_integrity_provenance.py::test_vsg_bulk_presets_cross_target_copy_and_excluded_profiles
+  - tests/gui/test_phase3_gui_vsg_tcp.py::test_gui_impact_preview_vsg_tcp_whatif_and_post_hoc_ui_badge
 - id: AUTO-1
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: Every automatic parameter supports Auto | Manual override in both API config and desktop UI.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/auto.py
+  - energybaseline/core/vsg.py
+  - energybaseline/core/tcp.py
+  test_ids:
+  - tests/gates/test_phase3_auto_and_fuzz.py::test_auto_log_rejects_hidden_constants_and_adapts_to_data_signals
+  - tests/gates/test_phase3_vsg_integrity_provenance.py::test_vsg_bulk_presets_cross_target_copy_and_excluded_profiles
 - id: AUTO-2
   priority: M
   phase: 3
-  status: planned
-  title: Structured AutoDecisionEntry recording parameter, chosen value, candidate space, rule, metric
-    evidence, and timestamp.
-  code_refs: []
-  test_ids: []
+  status: done
+  title: Structured AutoDecisionEntry recording parameter, chosen value, candidate space, rule, metric evidence,
+    and timestamp.
+  code_refs:
+  - energybaseline/core/auto.py
+  test_ids:
+  - tests/gates/test_phase3_auto_and_fuzz.py::test_auto_log_rejects_hidden_constants_and_adapts_to_data_signals
+  - tests/gates/test_phase3_auto_and_fuzz.py::test_pipeline_twice_produces_byte_identical_auto_log_hash
 - id: AUTO-3
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: Deterministic Auto rule evaluation depending solely on training-window statistics and TCP.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/auto.py
+  - energybaseline/core/pipeline.py
+  test_ids:
+  - tests/gates/test_phase3_auto_and_fuzz.py::test_auto_log_rejects_hidden_constants_and_adapts_to_data_signals
+  - tests/gates/test_phase3_auto_and_fuzz.py::test_pipeline_twice_produces_byte_identical_auto_log_hash
 - id: AUTO-4
   priority: M
   phase: 3
-  status: planned
-  title: Granularity, aggregation rule (sum vs mean), and seasonal period auto-detection with confidence
-    score.
-  code_refs: []
-  test_ids: []
+  status: done
+  title: Granularity, aggregation rule (sum vs mean), and seasonal period auto-detection with confidence score.
+  code_refs:
+  - energybaseline/core/quality.py
+  - energybaseline/core/temporal.py
+  test_ids:
+  - tests/gates/test_phase3_auto_and_fuzz.py::test_pipeline_twice_produces_byte_identical_auto_log_hash
 - id: AUTO-5
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: Automatic degree-day base temperature grid search and change-point knot initialization on training
     fold.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/features.py
+  - energybaseline/core/tcp.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_14d_characterization_and_sqlite_persistence_tamper_guards
+  - tests/gates/test_phase3_auto_and_fuzz.py::test_pipeline_twice_produces_byte_identical_auto_log_hash
 - id: AUTO-6
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: Complete AutoDecisionLog rendered in GUI results inspector and ISO 50006 PDF/HTML reports.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/auto.py
+  - energybaseline/gui/advanced.py
+  - energybaseline/cli.py
+  test_ids:
+  - tests/gates/test_phase3_auto_and_fuzz.py::test_pipeline_twice_produces_byte_identical_auto_log_hash
+  - tests/gui/test_phase3_gui_vsg_tcp.py::test_gui_impact_preview_vsg_tcp_whatif_and_post_hoc_ui_badge
 - id: TCP-1
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: 'TCP Dimension 1: Effective sample size, temporal span, and dominant sampling granularity.'
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/tcp.py
+  - energybaseline/core/store.py
+  - energybaseline/gui/pages_setup.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_alpha_bounds_presets_warning_and_confidence_modes
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_14d_characterization_and_sqlite_persistence_tamper_guards
+  - tests/gui/test_phase3_gui_vsg_tcp.py::test_gui_impact_preview_vsg_tcp_whatif_and_post_hoc_ui_badge
 - id: TCP-2
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: 'TCP Dimension 2: Missingness fraction, gap-length distribution, and MCAR/MAR indicator.'
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/tcp.py
+  - energybaseline/core/store.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_five_multiple_testing_corrections_exact_values_and_dual_storage
+  - tests/gates/test_phase3_auto_and_fuzz.py::test_hypothesis_fuzz_tcp_five_corrections_monotonicity_and_dominance
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_14d_characterization_and_sqlite_persistence_tamper_guards
 - id: TCP-3
   priority: M
   phase: 3
-  status: planned
-  title: 'TCP Dimension 3: Marginal distribution shape (skewness, kurtosis, zero-inflation, positivity
-    bounds).'
-  code_refs: []
-  test_ids: []
+  status: done
+  title: 'TCP Dimension 3: Marginal distribution shape (skewness, kurtosis, zero-inflation, positivity bounds).'
+  code_refs:
+  - energybaseline/core/tcp.py
+  - energybaseline/core/store.py
+  - energybaseline/gui/pages_setup.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_scope_matrix_guard_rails_lock_immutability_and_impact_preview
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_14d_characterization_and_sqlite_persistence_tamper_guards
+  - tests/gui/test_phase3_gui_vsg_tcp.py::test_gui_impact_preview_vsg_tcp_whatif_and_post_hoc_ui_badge
 - id: TCP-4
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: 'TCP Dimension 4: Outlier and extreme-event prevalence (robust MAD / IQR / STL residual spikes).'
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/tcp.py
+  - energybaseline/core/store.py
+  - energybaseline/gui/pages_setup.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_scope_matrix_guard_rails_lock_immutability_and_impact_preview
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_14d_characterization_and_sqlite_persistence_tamper_guards
+  - tests/gui/test_phase3_gui_vsg_tcp.py::test_gui_impact_preview_vsg_tcp_whatif_and_post_hoc_ui_badge
 - id: TCP-5
   priority: M
   phase: 3
-  status: planned
-  title: 'TCP Dimension 5: Trend strength and deterministic vs stochastic unit-root profile (ADF + KPSS
-    joint matrix).'
-  code_refs: []
-  test_ids: []
+  status: done
+  title: 'TCP Dimension 5: Trend strength and deterministic vs stochastic unit-root profile (ADF + KPSS joint
+    matrix).'
+  code_refs:
+  - energybaseline/core/tcp.py
+  - energybaseline/core/store.py
+  - energybaseline/gui/pages_setup.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_scope_matrix_guard_rails_lock_immutability_and_impact_preview
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_14d_characterization_and_sqlite_persistence_tamper_guards
+  - tests/gui/test_phase3_gui_vsg_tcp.py::test_gui_impact_preview_vsg_tcp_whatif_and_post_hoc_ui_badge
 - id: TCP-6
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: 'TCP Dimension 6: Single and multiple seasonality periods and spectral/STL seasonal strength.'
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/tcp.py
+  - energybaseline/core/store.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_14d_characterization_and_sqlite_persistence_tamper_guards
 - id: TCP-7
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: 'TCP Dimension 7: Autocorrelation and partial autocorrelation memory horizon (ACF/PACF/Ljung-Box).'
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/tcp.py
+  - energybaseline/core/store.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_14d_characterization_and_sqlite_persistence_tamper_guards
 - id: TCP-8
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: 'TCP Dimension 8: Conditional heteroscedasticity and variance non-stationarity (ARCH-LM / Breusch-Pagan).'
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/tcp.py
+  - energybaseline/core/store.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_14d_characterization_and_sqlite_persistence_tamper_guards
 - id: TCP-9
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: 'TCP Dimension 9: Structural breaks and regime shifts (Chow, Quandt-Andrews, Pettitt, PELT).'
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/tcp.py
+  - energybaseline/core/store.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_14d_characterization_and_sqlite_persistence_tamper_guards
 - id: TCP-10
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: 'TCP Dimension 10: Driver-response nonlinearity and piecewise change-point signal (3P/4P/5P suitability).'
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/tcp.py
+  - energybaseline/core/store.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_14d_characterization_and_sqlite_persistence_tamper_guards
 - id: TCP-11
   priority: M
   phase: 3
-  status: planned
-  title: 'TCP Dimension 11: Exogenous driver availability, lag cross-correlation, and Granger predictive
-    content.'
-  code_refs: []
-  test_ids: []
+  status: done
+  title: 'TCP Dimension 11: Exogenous driver availability, lag cross-correlation, and Granger predictive content.'
+  code_refs:
+  - energybaseline/core/tcp.py
+  - energybaseline/core/store.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_14d_characterization_and_sqlite_persistence_tamper_guards
 - id: TCP-12
   priority: M
   phase: 3
-  status: planned
-  title: 'TCP Dimension 12: Operational modes / multimodal clustering (baseload vs production vs shutdown
-    regimes).'
-  code_refs: []
-  test_ids: []
+  status: done
+  title: 'TCP Dimension 12: Operational modes / multimodal clustering (baseload vs production vs shutdown regimes).'
+  code_refs:
+  - energybaseline/core/tcp.py
+  - energybaseline/core/store.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_14d_characterization_and_sqlite_persistence_tamper_guards
 - id: TCP-13
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: 'TCP Dimension 13: Signal-to-noise ratio and forecastability / entropy bound.'
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/tcp.py
+  - energybaseline/core/store.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_14d_characterization_and_sqlite_persistence_tamper_guards
 - id: TCP-14
   priority: M
   phase: 3
-  status: planned
+  status: done
   title: 'TCP Dimension 14: Persisted JSON Target Characterization Profile gating candidate model families
     and CV strategy.'
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/core/tcp.py
+  - energybaseline/core/store.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_14d_characterization_and_sqlite_persistence_tamper_guards
 - id: T1
   priority: M
   phase: 4
   status: planned
-  title: 'Missingness mechanism test: Little''s MCAR chi-square test with missingness-pattern correlation
-    fallback.'
+  title: 'Missingness mechanism test: Little''s MCAR chi-square test with missingness-pattern correlation fallback.'
   code_refs: []
   test_ids: []
 - id: T2
@@ -1312,32 +1453,30 @@ requirements:
   priority: M
   phase: 4
   status: planned
-  title: 'Multicollinearity diagnostic suite: Variance Inflation Factor (VIF) and design-matrix condition
-    number.'
+  title: 'Multicollinearity diagnostic suite: Variance Inflation Factor (VIF) and design-matrix condition number.'
   code_refs: []
   test_ids: []
 - id: T12
   priority: M
   phase: 4
   status: planned
-  title: 'Outlier and influential observation suite: Studentized residuals with Bonferroni bound, Cook''s
-    distance, and Grubbs/ESD.'
+  title: 'Outlier and influential observation suite: Studentized residuals with Bonferroni bound, Cook''s distance,
+    and Grubbs/ESD.'
   code_refs: []
   test_ids: []
 - id: T13
   priority: M
   phase: 4
   status: planned
-  title: 'Forecast accuracy equivalence suite: Harvey-Leybourne-Newbold Diebold-Mariano test and Model
-    Confidence Set (MCS).'
+  title: 'Forecast accuracy equivalence suite: Harvey-Leybourne-Newbold Diebold-Mariano test and Model Confidence
+    Set (MCS).'
   code_refs: []
   test_ids: []
 - id: T14
   priority: M
   phase: 4
   status: planned
-  title: 'Lead-lag causality suite: Lagged cross-correlation significance and bivariate Granger causality
-    F-test.'
+  title: 'Lead-lag causality suite: Lagged cross-correlation significance and bivariate Granger causality F-test.'
   code_refs: []
   test_ids: []
 - id: TC-1
@@ -1352,24 +1491,24 @@ requirements:
   priority: M
   phase: 4
   status: planned
-  title: Minimum sample size and degeneracy pre-checks returning structured skipped/insufficient-data
-    TestResult instead of NaN/exception.
+  title: Minimum sample size and degeneracy pre-checks returning structured skipped/insufficient-data TestResult
+    instead of NaN/exception.
   code_refs: []
   test_ids: []
 - id: TC-3
   priority: M
   phase: 4
   status: planned
-  title: Automatic assumption verification before parametric tests with transparent switch to documented
-    non-parametric fallback.
+  title: Automatic assumption verification before parametric tests with transparent switch to documented non-parametric
+    fallback.
   code_refs: []
   test_ids: []
 - id: TC-4
   priority: M
   phase: 4
   status: planned
-  title: Benjamini-Hochberg False Discovery Rate (BH-FDR) multiplicity adjustment per hypothesis family
-    preserving both p_raw and p_adj.
+  title: Benjamini-Hochberg False Discovery Rate (BH-FDR) multiplicity adjustment per hypothesis family preserving
+    both p_raw and p_adj.
   code_refs: []
   test_ids: []
 - id: TC-5
@@ -1397,16 +1536,16 @@ requirements:
   priority: M
   phase: 4
   status: planned
-  title: PR staleness gate (test_reference_staleness.py) verifying SHA-256 parity between each .R script
-    and its .json fixture.
+  title: PR staleness gate (test_reference_staleness.py) verifying SHA-256 parity between each .R script and
+    its .json fixture.
   code_refs: []
   test_ids: []
 - id: CI-1
   priority: M
   phase: 0
   status: in_progress
-  title: Two-OS GitHub Actions matrix (windows-latest, ubuntu-latest) executing hashed lockfile install,
-    linters, gates, coverage, and GUI smoke.
+  title: Two-OS GitHub Actions matrix (windows-latest, ubuntu-latest) executing hashed lockfile install, linters,
+    gates, coverage, and GUI smoke.
   code_refs:
   - .github/workflows/ci.yml
   test_ids:
@@ -1415,8 +1554,8 @@ requirements:
   priority: M
   phase: 0
   status: in_progress
-  title: 'Automated supply-chain checks on every CI run: pip-audit vulnerability scan and reproducible
-    CycloneDX SBOM upload.'
+  title: 'Automated supply-chain checks on every CI run: pip-audit vulnerability scan and reproducible CycloneDX
+    SBOM upload.'
   code_refs:
   - .github/workflows/ci.yml
   - requirements.lock
@@ -1434,8 +1573,8 @@ requirements:
   priority: M
   phase: 9
   status: planned
-  title: Automated Windows PyInstaller packaging workflow producing Full/Lite bundles, SHA256SUMS, and
-    self-signed verification receipt.
+  title: Automated Windows PyInstaller packaging workflow producing Full/Lite bundles, SHA256SUMS, and self-signed
+    verification receipt.
   code_refs: []
   test_ids: []
 - id: F1
@@ -1449,16 +1588,15 @@ requirements:
   priority: M
   phase: 5
   status: planned
-  title: ASHRAE Guideline 14 / ISO 50006 piecewise change-point models (2P, 3P-cooling, 3P-heating, 4P,
-    5P) and variable-base HDD/CDD.
+  title: ASHRAE Guideline 14 / ISO 50006 piecewise change-point models (2P, 3P-cooling, 3P-heating, 4P, 5P)
+    and variable-base HDD/CDD.
   code_refs: []
   test_ids: []
 - id: F3
   priority: M
   phase: 5
   status: planned
-  title: 'Regularized and robust linear models: Ridge, Lasso, ElasticNet, HuberRegressor, and Quantile
-    Regression.'
+  title: 'Regularized and robust linear models: Ridge, Lasso, ElasticNet, HuberRegressor, and Quantile Regression.'
   code_refs: []
   test_ids: []
 - id: F4
@@ -1472,8 +1610,8 @@ requirements:
   priority: M
   phase: 5
   status: planned
-  title: 'Tree and gradient-boosted ensembles: RandomForest, ExtraTrees, XGBoost, LightGBM, and CatBoost
-    with monotonic constraints.'
+  title: 'Tree and gradient-boosted ensembles: RandomForest, ExtraTrees, XGBoost, LightGBM, and CatBoost with
+    monotonic constraints.'
   code_refs: []
   test_ids: []
 - id: F6
@@ -1488,24 +1626,23 @@ requirements:
   priority: M
   phase: 5
   status: planned
-  title: 'Dynamic regression and classical time-series models: SARIMAX / ARIMAX with exogenous drivers
-    and ETS/Holt-Winters.'
+  title: 'Dynamic regression and classical time-series models: SARIMAX / ARIMAX with exogenous drivers and
+    ETS/Holt-Winters.'
   code_refs: []
   test_ids: []
 - id: F8
   priority: M
   phase: 5
   status: planned
-  title: Regime-switching / operational-mode segmented baselines stratified by plant state or calendar
-    regime.
+  title: Regime-switching / operational-mode segmented baselines stratified by plant state or calendar regime.
   code_refs: []
   test_ids: []
 - id: F9
   priority: S
   phase: 5
   status: planned
-  title: Decomposition + regression hybrid baselines (STL/Fourier + regressor; optional Prophet adapter
-    when installed).
+  title: Decomposition + regression hybrid baselines (STL/Fourier + regressor; optional Prophet adapter when
+    installed).
   code_refs: []
   test_ids: []
 - id: F10
@@ -1519,16 +1656,16 @@ requirements:
   priority: M
   phase: 5
   status: planned
-  title: Strict chronological train/validation/holdout splitting (random k-fold shuffling forbidden on
-    time series).
+  title: Strict chronological train/validation/holdout splitting (random k-fold shuffling forbidden on time
+    series).
   code_refs: []
   test_ids: []
 - id: VAL-2
   priority: M
   phase: 5
   status: planned
-  title: Expanding and rolling walk-forward cross-validation with configurable horizon and embargo/gap
-    matching max lag.
+  title: Expanding and rolling walk-forward cross-validation with configurable horizon and embargo/gap matching
+    max lag.
   code_refs: []
   test_ids: []
 - id: VAL-3
@@ -1542,32 +1679,32 @@ requirements:
   priority: M
   phase: 5
   status: planned
-  title: Pipeline-encapsulated preprocessing (imputation, scaling, degree-day knots, target lags) fitted
-    exclusively per fold.
+  title: Pipeline-encapsulated preprocessing (imputation, scaling, degree-day knots, target lags) fitted exclusively
+    per fold.
   code_refs: []
   test_ids: []
 - id: VAL-5
   priority: M
   phase: 5
   status: planned
-  title: Automated data-leakage canary test verifying future target perturbations never alter historical
-    fold predictions.
+  title: Automated data-leakage canary test verifying future target perturbations never alter historical fold
+    predictions.
   code_refs: []
   test_ids: []
 - id: VAL-6
   priority: M
   phase: 5
   status: planned
-  title: 'ASHRAE Guideline 14 compliance metrics computed out-of-sample: CV(RMSE), NMBE, R2, MAE, MAPE,
-    sMAPE, WAPE.'
+  title: 'ASHRAE Guideline 14 compliance metrics computed out-of-sample: CV(RMSE), NMBE, R2, MAE, MAPE, sMAPE,
+    WAPE.'
   code_refs: []
   test_ids: []
 - id: VAL-7
   priority: M
   phase: 5
   status: planned
-  title: Complete Model Evaluation Register logging every candidate's metrics, fit duration, status, and
-    rejection/skip reason.
+  title: Complete Model Evaluation Register logging every candidate's metrics, fit duration, status, and rejection/skip
+    reason.
   code_refs: []
   test_ids: []
 - id: SC-1
@@ -1590,24 +1727,24 @@ requirements:
   priority: M
   phase: 6
   status: planned
-  title: Residual diagnostic penalty terms incorporating autocorrelation (T7), heteroscedasticity (T8),
-    and extreme bias.
+  title: Residual diagnostic penalty terms incorporating autocorrelation (T7), heteroscedasticity (T8), and
+    extreme bias.
   code_refs: []
   test_ids: []
 - id: SC-4
   priority: M
   phase: 6
   status: planned
-  title: Parsimony and interpretability tie-breaking favoring simpler physical/linear baselines within
-    the Model Confidence Set (T13).
+  title: Parsimony and interpretability tie-breaking favoring simpler physical/linear baselines within the
+    Model Confidence Set (T13).
   code_refs: []
   test_ids: []
 - id: SC-5
   priority: M
   phase: 6
   status: planned
-  title: Physical plausibility verifier checking expected driver signs (e.g. HDD/CDD/production >= 0)
-    and extrapolation stability.
+  title: Physical plausibility verifier checking expected driver signs (e.g. HDD/CDD/production >= 0) and extrapolation
+    stability.
   code_refs: []
   test_ids: []
 - id: SC-6
@@ -1636,16 +1773,16 @@ requirements:
   priority: M
   phase: 6
   status: planned
-  title: Baseline validity domain envelope recording min/max/convex-hull quantiles of training drivers
-    for extrapolation warnings.
+  title: Baseline validity domain envelope recording min/max/convex-hull quantiles of training drivers for
+    extrapolation warnings.
   code_refs: []
   test_ids: []
 - id: SC-10
   priority: M
   phase: 6
   status: planned
-  title: Pickle-free model artifact persistence using joblib + JSON metadata + verified SHA-256 digest
-    before load.
+  title: Pickle-free model artifact persistence using joblib + JSON metadata + verified SHA-256 digest before
+    load.
   code_refs: []
   test_ids: []
 - id: UQ-1
@@ -1660,8 +1797,8 @@ requirements:
   priority: M
   phase: 6
   status: planned
-  title: Parametric OLS/HAC prediction intervals and quantile-regression intervals cross-checked against
-    conformal bounds.
+  title: Parametric OLS/HAC prediction intervals and quantile-regression intervals cross-checked against conformal
+    bounds.
   code_refs: []
   test_ids: []
 - id: UQ-3
@@ -1684,8 +1821,8 @@ requirements:
   priority: M
   phase: 6
   status: planned
-  title: Fractional Savings Uncertainty (FSU) calculation at user-selected confidence level (default 90%
-    / 95%).
+  title: Fractional Savings Uncertainty (FSU) calculation at user-selected confidence level (default 90% /
+    95%).
   code_refs: []
   test_ids: []
 - id: PM-1
@@ -1699,16 +1836,15 @@ requirements:
   priority: M
   phase: 7
   status: planned
-  title: Adjusted baseline energy calculation E_adj(X_reporting) + routine and non-routine static factor
-    adjustments.
+  title: Adjusted baseline energy calculation E_adj(X_reporting) + routine and non-routine static factor adjustments.
   code_refs: []
   test_ids: []
 - id: PM-3
   priority: M
   phase: 7
   status: planned
-  title: Period-by-period and cumulative EnPI ratio, absolute savings (E_adj - E_actual), and propagated
-    confidence bands.
+  title: Period-by-period and cumulative EnPI ratio, absolute savings (E_adj - E_actual), and propagated confidence
+    bands.
   code_refs: []
   test_ids: []
 - id: PM-4
@@ -1729,8 +1865,7 @@ requirements:
   priority: M
   phase: 7
   status: planned
-  title: Driver validity-domain check flagging reporting rows that extrapolate beyond baseline training
-    range.
+  title: Driver validity-domain check flagging reporting rows that extrapolate beyond baseline training range.
   code_refs: []
   test_ids: []
 - id: PM-7
@@ -1744,16 +1879,15 @@ requirements:
   priority: M
   phase: 7
   status: planned
-  title: Covariate distribution drift monitoring on drivers using Population Stability Index (PSI) and
-    two-sample KS/Wasserstein tests.
+  title: Covariate distribution drift monitoring on drivers using Population Stability Index (PSI) and two-sample
+    KS/Wasserstein tests.
   code_refs: []
   test_ids: []
 - id: DR-2
   priority: M
   phase: 7
   status: planned
-  title: Residual mean/variance regime-shift detection via rolling window Page-Hinkley / Pettitt / CUSUM
-    tests.
+  title: Residual mean/variance regime-shift detection via rolling window Page-Hinkley / Pettitt / CUSUM tests.
   code_refs: []
   test_ids: []
 - id: DR-3
@@ -1798,8 +1932,8 @@ requirements:
   priority: M
   phase: 7
   status: planned
-  title: 'Fault isolation: data or convergence failure on one target records target-scoped error while
-    remaining targets complete.'
+  title: 'Fault isolation: data or convergence failure on one target records target-scoped error while remaining
+    targets complete.'
   code_refs: []
   test_ids: []
 - id: MT-4
@@ -1864,8 +1998,8 @@ requirements:
   priority: M
   phase: 7
   status: planned
-  title: Deterministic seed derivation from dataset SHA-256 + target + explicit user seed propagated to
-    NumPy, scikit-learn, GBDTs, Optuna, and PyTorch.
+  title: Deterministic seed derivation from dataset SHA-256 + target + explicit user seed propagated to NumPy,
+    scikit-learn, GBDTs, Optuna, and PyTorch.
   code_refs: []
   test_ids: []
 - id: REP-2
@@ -1879,88 +2013,87 @@ requirements:
   priority: M
   phase: 7
   status: planned
-  title: Complete provenance manifest per run recording package versions, OS, CPU count, dataset SHA-256,
-    config JSON, and commit SHA.
+  title: Complete provenance manifest per run recording package versions, OS, CPU count, dataset SHA-256, config
+    JSON, and commit SHA.
   code_refs: []
   test_ids: []
 - id: REP-4
   priority: M
   phase: 7
   status: planned
-  title: One-click audit archive export (.zip) containing config, AutoDecisionLog, TestResult catalog,
-    metrics, and SHA256SUMS.
+  title: One-click audit archive export (.zip) containing config, AutoDecisionLog, TestResult catalog, metrics,
+    and SHA256SUMS.
   code_refs: []
   test_ids: []
 - id: REP-5
   priority: M
   phase: 7
   status: planned
-  title: Audit archive verifier re-validating file hashes and reproducing report tables from persisted
-    run state.
+  title: Audit archive verifier re-validating file hashes and reproducing report tables from persisted run
+    state.
   code_refs: []
   test_ids: []
 - id: RPT-1
   priority: M
   phase: 8
   status: planned
-  title: Pure-Python ISO 50006 / IPMVP PDF report renderer built exclusively on ReportLab Platypus (D5=A;
-    zero GTK/WeasyPrint).
+  title: Pure-Python ISO 50006 / IPMVP PDF report renderer built exclusively on ReportLab Platypus (D5=A; zero
+    GTK/WeasyPrint).
   code_refs: []
   test_ids: []
 - id: RPT-2
   priority: M
   phase: 8
   status: planned
-  title: Self-contained single-file offline HTML report with embedded base64/SVG charts and zero external
-    CDN links.
+  title: Self-contained single-file offline HTML report with embedded base64/SVG charts and zero external CDN
+    links.
   code_refs: []
   test_ids: []
 - id: RPT-3
   priority: M
   phase: 8
   status: planned
-  title: 'Mandatory report sections: Executive Summary, Data & VSG Audit, TCP, Statistical Test Catalog
-    (p_raw & p_adj), Model Register, Selected Baseline & UQ, Monitoring/CUSUM, and AutoDecisionLog.'
+  title: 'Mandatory report sections: Executive Summary, Data & VSG Audit, TCP, Statistical Test Catalog (p_raw
+    & p_adj), Model Register, Selected Baseline & UQ, Monitoring/CUSUM, and AutoDecisionLog.'
   code_refs: []
   test_ids: []
 - id: RPT-4
   priority: M
   phase: 8
   status: planned
-  title: Publication-grade vector/high-DPI matplotlib diagnostic charts (Actual vs Predicted, Residual
-    ACF/QQ, CUSUM, Driver Partial Response, Prediction Intervals).
+  title: Publication-grade vector/high-DPI matplotlib diagnostic charts (Actual vs Predicted, Residual ACF/QQ,
+    CUSUM, Driver Partial Response, Prediction Intervals).
   code_refs: []
   test_ids: []
 - id: RPT-5
   priority: M
   phase: 8
   status: planned
-  title: Deterministic PDF generation (fixed ReportLab creation timestamp/ID metadata in reproducible
-    mode for regression testing).
+  title: Deterministic PDF generation (fixed ReportLab creation timestamp/ID metadata in reproducible mode
+    for regression testing).
   code_refs: []
   test_ids: []
 - id: RPT-6
   priority: M
   phase: 8
   status: planned
-  title: Machine-readable CSV/Excel/JSON companion export of predictions, intervals, residuals, and CUSUM
-    series.
+  title: Machine-readable CSV/Excel/JSON companion export of predictions, intervals, residuals, and CUSUM series.
   code_refs: []
   test_ids: []
 - id: RPT-7
   priority: M
   phase: 8
   status: planned
-  title: Explicit disclosure banner in every report listing any manual overrides, skipped model families,
-    or assumption fallbacks.
+  title: Explicit disclosure banner in every report listing any manual overrides, skipped model families, or
+    assumption fallbacks.
   code_refs: []
   test_ids: []
 - id: UX-1
   priority: M
   phase: 8
   status: planned
-  title: Guided workflow wizard with clear prerequisite gating so users cannot run modeling before valid
-    target/time selection.
+  title: Guided workflow wizard with clear prerequisite gating so users cannot run modeling before valid target/time
+    selection.
   code_refs: []
   test_ids: []
 - id: UX-2
@@ -1983,32 +2116,31 @@ requirements:
   priority: M
   phase: 8
   status: planned
-  title: Interactive Matplotlib QtAgg canvas panels with zoom/pan toolbar, hover readouts, and PNG/SVG
-    export.
+  title: Interactive Matplotlib QtAgg canvas panels with zoom/pan toolbar, hover readouts, and PNG/SVG export.
   code_refs: []
   test_ids: []
 - id: UX-5
   priority: M
   phase: 8
   status: planned
-  title: Model Evaluation Register table displaying every candidate family, metrics, composite score,
-    MCS membership, and status badge.
+  title: Model Evaluation Register table displaying every candidate family, metrics, composite score, MCS membership,
+    and status badge.
   code_refs: []
   test_ids: []
 - id: UX-6
   priority: M
   phase: 8
   status: planned
-  title: Statistical Test Catalog explorer showing statistic, p_raw, p_adj (BH-FDR), assumption status,
-    and plain-English interpretation.
+  title: Statistical Test Catalog explorer showing statistic, p_raw, p_adj (BH-FDR), assumption status, and
+    plain-English interpretation.
   code_refs: []
   test_ids: []
 - id: UX-7
   priority: M
   phase: 8
   status: planned
-  title: AutoDecisionLog inspector allowing filter/search across all automatic rules and one-click switch
-    to Manual override.
+  title: AutoDecisionLog inspector allowing filter/search across all automatic rules and one-click switch to
+    Manual override.
   code_refs: []
   test_ids: []
 - id: UX-8
@@ -2029,32 +2161,31 @@ requirements:
   priority: M
   phase: 8
   status: planned
-  title: Actionable plain-English error dialogs (what happened, why, and how to fix) replacing raw Python
-    tracebacks.
+  title: Actionable plain-English error dialogs (what happened, why, and how to fix) replacing raw Python tracebacks.
   code_refs: []
   test_ids: []
 - id: UX-11
   priority: M
   phase: 8
   status: planned
-  title: Clean HiDPI layout rendering verified at 100%, 125%, and 150% Windows display scaling without
-    clipped text.
+  title: Clean HiDPI layout rendering verified at 100%, 125%, and 150% Windows display scaling without clipped
+    text.
   code_refs: []
   test_ids: []
 - id: UX-12
   priority: M
   phase: 8
   status: planned
-  title: Automated pytest-qt widget test suite covering navigation, validation states, cancel flow, and
-    results views.
+  title: Automated pytest-qt widget test suite covering navigation, validation states, cancel flow, and results
+    views.
   code_refs: []
   test_ids: []
 - id: DOM-1
   priority: M
   phase: 6
   status: planned
-  title: 'ISO 50006 terminology and workflow alignment: EnB (Energy Baseline), EnPI, relevant variables,
-    static factors, and baseline period vs reporting period.'
+  title: 'ISO 50006 terminology and workflow alignment: EnB (Energy Baseline), EnPI, relevant variables, static
+    factors, and baseline period vs reporting period.'
   code_refs: []
   test_ids: []
 - id: DOM-2
@@ -2069,16 +2200,16 @@ requirements:
   priority: M
   phase: 7
   status: planned
-  title: Explicit separation of routine adjustments (weather/production model) and documented non-routine
-    adjustments (static factor events).
+  title: Explicit separation of routine adjustments (weather/production model) and documented non-routine adjustments
+    (static factor events).
   code_refs: []
   test_ids: []
 - id: PKG-1
   priority: M
   phase: 9
   status: in_progress
-  title: Reproducible one-folder Windows PyInstaller build (scripts/build_exe.py --profile full|lite)
-    producing EnergyBaseline.exe + _internal/.
+  title: Reproducible one-folder Windows PyInstaller build (scripts/build_exe.py --profile full|lite) producing
+    EnergyBaseline.exe + _internal/.
   code_refs:
   - scripts/build_exe.py
   - scripts/evidence/installer_smoke.ps1
@@ -2088,8 +2219,7 @@ requirements:
   priority: M
   phase: 9
   status: in_progress
-  title: Clean Windows 10/11 VM execution (E3) with zero pre-installed Python, VC++ surprises, or network
-    access.
+  title: Clean Windows 10/11 VM execution (E3) with zero pre-installed Python, VC++ surprises, or network access.
   code_refs:
   - scripts/build_exe.py
   - scripts/evidence/installer_smoke.ps1
@@ -2099,8 +2229,8 @@ requirements:
   priority: S
   phase: 9
   status: in_progress
-  title: Authenticode signing pipeline (scripts/sign/sign_artifacts.ps1); reclassified [S] per D1=B with
-    mandatory production cert trigger before external distribution.
+  title: Authenticode signing pipeline (scripts/sign/sign_artifacts.ps1); reclassified [S] per D1=B with mandatory
+    production cert trigger before external distribution.
   code_refs:
   - scripts/sign/sign_artifacts.ps1
   - docs/deviations.md
@@ -2110,8 +2240,8 @@ requirements:
   priority: M
   phase: 9
   status: planned
-  title: Installer / portable archive packaging including LICENSE, THIRD_PARTY_NOTICES.md, USER_GUIDE.md,
-    and sample generator.
+  title: Installer / portable archive packaging including LICENSE, THIRD_PARTY_NOTICES.md, USER_GUIDE.md, and
+    sample generator.
   code_refs: []
   test_ids: []
 - id: PKG-5
@@ -2133,3 +2263,28 @@ requirements:
   test_ids:
   - tests/gates/test_phase0_contracts.py::test_manifests_exact_pins_and_hashes
   - tests/gates/test_phase1_paths_and_commands.py::test_cyclonedx_sbom_generation
+- id: CACHE-1
+  priority: M
+  phase: 3
+  status: done
+  title: Deterministic result cache keyed by (data_hash, variable_set, test_id, parameters, seed, library_versions)
+    with selective stage invalidation.
+  code_refs:
+  - energybaseline/core/cache.py
+  - energybaseline/core/store.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_cache_selective_invalidation_and_zero_recomputation_what_if
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_tcp_14d_characterization_and_sqlite_persistence_tamper_guards
+- id: CACHE-2
+  priority: M
+  phase: 3
+  status: done
+  title: Zero-recomputation What-If re-evaluation (alpha, correction, decision rule, gate policy) and decision-sensitivity
+    table.
+  code_refs:
+  - energybaseline/core/cache.py
+  - energybaseline/gui/pages_setup.py
+  - energybaseline/cli.py
+  test_ids:
+  - tests/gates/test_phase3_tcp_cache_whatif.py::test_cache_selective_invalidation_and_zero_recomputation_what_if
+  - tests/gui/test_phase3_gui_vsg_tcp.py::test_gui_impact_preview_vsg_tcp_whatif_and_post_hoc_ui_badge

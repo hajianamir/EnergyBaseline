@@ -24,6 +24,7 @@ from PySide6.QtWidgets import (
 from .. import __version__
 from ..config import get_resource_dir
 from ..core import store
+from ..core.telemetry import build_system_health, build_system_sbom
 from ..db.session import db_status
 from .advanced import AdvancedDialog, AutoPanel
 from .commands import CommandRegistry
@@ -189,6 +190,8 @@ class MainWindow(QMainWindow):
                 "view.theme_dark": lambda: apply_theme(QApplication.instance(), "dark"),
                 "view.show_log": lambda: (self.log_dock.show(), self.log_dock.raise_()),
                 "status.refresh": lambda: self.status_page.refresh(run_selftest=True),
+                "system.health": lambda: build_system_health(run_db_selftest=True),
+                "system.sbom": build_system_sbom,
                 "help.guide": self.guide,
                 "help.about": self.about,
             }

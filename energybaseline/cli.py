@@ -12,7 +12,9 @@ from typing import Any
 
 from .config import ensure_dirs
 from .core import ingest, store
-from .core.auto import AutoLog
+from .core.auto import AutoLog, inspect_auto_log
+from .core.cache import CachedComplianceRunner
+from .core.integrity import IntegrityError
 from .core.quality import preprocess_target
 from .core.schema import (
     ColumnRole,
@@ -26,7 +28,16 @@ from .core.schema import (
     SchemaValidationError,
     suggest_dataset_schema,
 )
+from .core.tcp import (
+    MultipleTestingCorrection,
+    TCPValidationError,
+    TestConfigPanel,
+    compute_impact_preview,
+    compute_target_characterization_profile,
+)
+from .core.telemetry import build_system_health, build_system_sbom
 from .core.temporal import TemporalError, prepare_temporal
+from .core.vsg import ComplianceGateError, VSGValidationError, VariableSelectionGate
 from .db.session import init_database
 
 
@@ -278,12 +289,169 @@ def _cmd_temporal_preview(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_system_health(args: argparse.Namespace) -> int:
+    ensure_dirs()
+    init_database()
+    payload = build_system_health(run_db_selftest=True)
+    _write_or_print(payload, args.out)
+    return 0
+
+
+def _cmd_system_sbom(args: argparse.Namespace) -> int:
+    payload = build_system_sbom()
+    _write_or_print(payload, args.out)
+    return 0
+
+
+def _load_dataset_and_vsg(
+    dataset_path: str,
+    targets_arg: str = "",
+    preset: str = "",
+) -> tuple[Any, str, VariableSelectionGate]:
+    df = ingest.load_file(dataset_path)
+    sha = ingest.sha256_file(dataset_path)
+    time_col = ingest.guess_time_column(df)
+    explicit_targets = [t.strip() for t in (targets_arg or "").split(",") if t.strip()]
+    schema = suggest_dataset_schema(
+        df,
+        time_col=time_col,
+        targets=explicit_targets or None,
+        dataset_name=Path(dataset_path).name,
+        dataset_sha256=sha,
+    )
+    vsg = VariableSelectionGate(
+        df,
+        targets=schema.target_columns,
+        time_col=schema.time_column,
+        schema=schema,
+        dataset_sha256=sha,
+    )
+    if preset:
+        for t in vsg.targets:
+            vsg.apply_preset(t, preset)
+    return df, sha, vsg
+
+
+def _cmd_vsg_inspect(args: argparse.Namespace) -> int:
+    _, _, vsg = _load_dataset_and_vsg(args.dataset, args.targets, args.preset or "")
+    if args.accept:
+        vsg.accept()
+    tcp = TestConfigPanel(vsg)
+    payload = {
+        "impact_preview": compute_impact_preview(vsg, tcp),
+        "vsg": vsg.to_dict(),
+    }
+    _write_or_print(payload, args.out)
+    return 0
+
+
+def _cmd_tcp_lock(args: argparse.Namespace) -> int:
+    df, sha, vsg = _load_dataset_and_vsg(args.dataset, args.targets)
+    vsg.accept()
+    tcp = TestConfigPanel(vsg)
+    if args.alpha is not None:
+        tcp.set_alpha(args.alpha)
+    if args.correction is not None:
+        tcp.set_correction(args.correction)
+    lock_sha = tcp.lock_preregistration()
+    char_profiles = {
+        t: compute_target_characterization_profile(
+            df,
+            target=t,
+            predictors=vsg.included_variables(t),
+            time_col=vsg.time_col,
+            dataset_sha256=sha,
+        )
+        for t in vsg.targets
+    }
+    payload = {
+        "auto_log_hash": vsg.auto_log.compute_hash(),
+        "characterization_by_target": char_profiles,
+        "preregistration_sha256": lock_sha,
+        "provenance": vsg.provenance.to_dict(),
+        "tcp": tcp.to_dict(),
+        "vsg_sha256": vsg.vsg_sha256,
+    }
+    _write_or_print(payload, args.out)
+    return 0
+
+
+def _cmd_what_if(args: argparse.Namespace) -> int:
+    df, _, vsg = _load_dataset_and_vsg(args.dataset, args.targets)
+    vsg.accept()
+    tcp = TestConfigPanel(vsg)
+    tcp.lock_preregistration()
+    runner = CachedComplianceRunner(seed=42)
+    initial = runner.execute_tests(df, vsg, tcp)
+    calls_after_initial = runner.engine_call_count
+
+    probe_tcp = tcp.clone_for_what_if(
+        alpha=args.alpha,
+        correction=args.correction,
+    )
+    what_if_res = runner.what_if(probe_tcp)
+    sens = runner.decision_sensitivity_table(tcp)
+    payload = {
+        "baseline_alpha": tcp.alpha,
+        "baseline_correction": tcp.correction,
+        "baseline_test_count": len(initial),
+        "initial_engine_calls": calls_after_initial,
+        "post_what_if_engine_calls": runner.engine_call_count,
+        "sensitivity_summary": {
+            "engine_calls_delta": sens["engine_calls_delta"],
+            "fragile_test_count": sens["fragile_test_count"],
+            "scenario_count": len(sens["scenarios"]),
+        },
+        "what_if": what_if_res,
+    }
+    _write_or_print(payload, args.out)
+    return 0
+
+
+def _cmd_auto_log_hash(args: argparse.Namespace) -> int:
+    _, _, vsg1 = _load_dataset_and_vsg(args.dataset, args.targets)
+    vsg1.accept()
+    tcp1 = TestConfigPanel(vsg1)
+    prereg1 = tcp1.lock_preregistration()
+    hash1 = vsg1.auto_log.compute_hash()
+
+    _, _, vsg2 = _load_dataset_and_vsg(args.dataset, args.targets)
+    vsg2.accept()
+    tcp2 = TestConfigPanel(vsg2)
+    prereg2 = tcp2.lock_preregistration()
+    hash2 = vsg2.auto_log.compute_hash()
+
+    insp = inspect_auto_log(vsg1.auto_log.records)
+    payload = {
+        "all_auto_have_empirical_signals": insp["all_auto_have_empirical_signals"],
+        "auto_entries": insp["auto_entries"],
+        "auto_log_hash_run1": hash1,
+        "auto_log_hash_run2": hash2,
+        "byte_identical": hash1 == hash2 and prereg1 == prereg2,
+        "override_entries": insp["override_entries"],
+        "preregistration_sha256_run1": prereg1,
+        "preregistration_sha256_run2": prereg2,
+        "records": insp["records"],
+        "total_entries": insp["total_entries"],
+    }
+    _write_or_print(payload, args.out)
+    return 0
+
+
 CLI_COMMAND_HANDLERS: Mapping[str, Callable[[argparse.Namespace], int]] = MappingProxyType(
     {
         "schema-suggest": _cmd_schema_suggest,
         "schema-edit": _cmd_schema_edit,
         "schema-validate": _cmd_schema_validate,
         "temporal-preview": _cmd_temporal_preview,
+        "system.health": _cmd_system_health,
+        "system-health": _cmd_system_health,
+        "system.sbom": _cmd_system_sbom,
+        "system-sbom": _cmd_system_sbom,
+        "vsg-inspect": _cmd_vsg_inspect,
+        "tcp-lock": _cmd_tcp_lock,
+        "what-if": _cmd_what_if,
+        "auto-log-hash": _cmd_auto_log_hash,
     }
 )
 
@@ -351,6 +519,50 @@ def build_parser() -> argparse.ArgumentParser:
     )
     p_prev.add_argument("--out", default=None, help="Write machine-readable E2 JSON report to path.")
 
+    for name in ("system.health", "system-health"):
+        p_h = sub.add_parser(name, help="Emit machine-readable runtime system.health JSON.")
+        p_h.add_argument("--out", default=None, help="Write JSON output to path.")
+
+    for name in ("system.sbom", "system-sbom"):
+        p_s = sub.add_parser(name, help="Emit CycloneDX 1.5 runtime system.sbom JSON.")
+        p_s.add_argument("--out", default=None, help="Write JSON output to path.")
+
+    p_vsg = sub.add_parser("vsg-inspect", help="Run Variable Selection Gate profiling and Impact Preview.")
+    p_vsg.add_argument("dataset", help="Path to dataset file.")
+    p_vsg.add_argument("--targets", default="", help="Optional comma-separated target columns.")
+    p_vsg.add_argument("--preset", default="", help="Optional VSG preset name.")
+    p_vsg.add_argument("--accept", action="store_true", help="Mark VSG gate accepted if integrity passes.")
+    p_vsg.add_argument("--out", default=None, help="Write JSON output to path.")
+
+    p_tcp = sub.add_parser("tcp-lock", help="Accept VSG/TCP and emit pre-registration lock SHA-256 + 14-D profile.")
+    p_tcp.add_argument("dataset", help="Path to dataset file.")
+    p_tcp.add_argument("--targets", default="", help="Optional comma-separated target columns.")
+    p_tcp.add_argument("--alpha", type=float, default=None, help="Optional significance alpha in [0.001, 0.20].")
+    p_tcp.add_argument(
+        "--correction",
+        default=None,
+        choices=[c.value for c in MultipleTestingCorrection],
+        help="Optional multiple-testing correction.",
+    )
+    p_tcp.add_argument("--out", default=None, help="Write JSON output to path.")
+
+    p_wi = sub.add_parser("what-if", help="Run zero-recomputation What-If re-evaluation and sensitivity sweep.")
+    p_wi.add_argument("dataset", help="Path to dataset file.")
+    p_wi.add_argument("--targets", default="", help="Optional comma-separated target columns.")
+    p_wi.add_argument("--alpha", type=float, default=0.01, help="What-if significance alpha.")
+    p_wi.add_argument(
+        "--correction",
+        default=MultipleTestingCorrection.BONFERRONI.value,
+        choices=[c.value for c in MultipleTestingCorrection],
+        help="What-if multiple-testing correction.",
+    )
+    p_wi.add_argument("--out", default=None, help="Write JSON output to path.")
+
+    p_ah = sub.add_parser("auto-log-hash", help="Verify deterministic AUTO-log SHA-256 across two runs.")
+    p_ah.add_argument("dataset", help="Path to dataset file.")
+    p_ah.add_argument("--targets", default="", help="Optional comma-separated target columns.")
+    p_ah.add_argument("--out", default=None, help="Write JSON output to path.")
+
     return parser
 
 
@@ -363,7 +575,16 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 2
     try:
         return handler(args)
-    except (SchemaIntegrityError, SchemaValidationError, TemporalError, ingest.IngestError) as exc:
+    except (
+        SchemaIntegrityError,
+        SchemaValidationError,
+        TemporalError,
+        ingest.IngestError,
+        VSGValidationError,
+        TCPValidationError,
+        ComplianceGateError,
+        IntegrityError,
+    ) as exc:
         err_payload = {"valid": False, "error_type": type(exc).__name__, "error": str(exc)}
         sys.stderr.write(json.dumps(err_payload) + "\n")
         return 2

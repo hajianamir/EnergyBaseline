@@ -23,6 +23,11 @@ class AppState(QObject):
         self.dataset_id: int | None = None
         self.dataset_schema: DatasetSchema | None = None
         self.schema_id: int | None = None
+        self.vsg = None  # VariableSelectionGate | None
+        self.vsg_id: int | None = None
+        self.tcp = None  # TestConfigPanel | None
+        self.tcp_id: int | None = None
+        self.compliance_runner = None  # CachedComplianceRunner | None
         self.data_dictionary: pd.DataFrame | None = None
         self.time_col: str | None = None
         self.targets: list[str] = []
@@ -40,4 +45,10 @@ class AppState(QObject):
             cfg["per_target"] = self.setup_config["per_target"]
         if self.dataset_schema is not None:
             cfg["dataset_schema"] = self.dataset_schema.to_dict()
+        if self.vsg is not None:
+            cfg["vsg_sha256"] = self.vsg.vsg_sha256
+        if self.tcp is not None:
+            cfg["tcp_sha256"] = self.tcp.tcp_sha256
+            if self.tcp.preregistration_sha256:
+                cfg["preregistration_sha256"] = self.tcp.preregistration_sha256
         return cfg

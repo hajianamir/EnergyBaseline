@@ -1,0 +1,198 @@
+{
+  "impact_preview": {
+    "causal_group_tests": 0,
+    "family_count": 6,
+    "family_definition": "per_test_family",
+    "family_sizes": {
+      "by_family": {
+        "Energy_kWh:breaks_regimes": 3,
+        "Energy_kWh:dependence_collinearity": 3,
+        "Energy_kWh:missingness_balance": 1,
+        "Energy_kWh:model_comparison": 3,
+        "Energy_kWh:residual_diagnostics": 2,
+        "Energy_kWh:stationarity_trend": 1
+      },
+      "max": 3,
+      "median": 2.5,
+      "min": 1
+    },
+    "fast_vs_full": {
+      "fast_estimated_seconds": 0.056,
+      "fast_test_evaluations": 13,
+      "full_estimated_seconds": 0.321,
+      "full_test_evaluations": 13,
+      "speedup_ratio": 5.73
+    },
+    "n_rows": 36,
+    "per_target_variables": {
+      "Energy_kWh": {
+        "collinear_grouped": 0,
+        "excluded": 0,
+        "included": 1,
+        "total_candidates": 1
+      }
+    },
+    "post_model_tests": 3,
+    "pre_model_tests": 10,
+    "total_included_variables": 1,
+    "total_tests": 13
+  },
+  "vsg": {
+    "accepted_by_target": {
+      "Energy_kWh": true
+    },
+    "auto_log_hash": "f814ac7a5ba212ef80ad061bbf191ef236e3c74cd6b60a6855aac0bfb68892b4",
+    "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+    "decisions_by_target": {
+      "Energy_kWh": {
+        "Avg_Temp_C": {
+          "collinear_leader": "",
+          "integrity_blocked": false,
+          "mode": "AUTO",
+          "reason": "Included via nonlinear mutual-information relevance (MI=0.653, info_corr=0.854 > linear |r|=0.425; preserves piecewise/degree-day response).",
+          "requested_disposition": "AUTO",
+          "resolved_disposition": "include",
+          "signals": "miss=0.00%, uniq=36, r=-0.425, rho=-0.411, mi=0.653, vif=1.00",
+          "target": "Energy_kWh",
+          "variable": "Avg_Temp_C"
+        }
+      }
+    },
+    "excluded_profiles_by_target": {
+      "Energy_kWh": []
+    },
+    "integrity_by_target": {
+      "Energy_kWh": {
+        "blocking_count": 0,
+        "bypass_attempts_blocked": 0,
+        "checked_rules": [
+          "TARGET_AS_PREDICTOR",
+          "TARGET_LEAKAGE_MT2",
+          "TIME_ORDER_VIOLATION",
+          "DST_DUPLICATE_TIMESTAMPS"
+        ],
+        "conflicts": [],
+        "n_rows": 36,
+        "passed": true,
+        "report_sha256": "0a85509f117aa6f8be31b0a670e89d38d0e43045ba10991f70515a65df856692",
+        "target": "Energy_kWh",
+        "warning_count": 0
+      }
+    },
+    "profiles_by_target": {
+      "Energy_kWh": {
+        "Avg_Temp_C": {
+          "availability": "always",
+          "dtype": "float64",
+          "inclusion": "observed_only",
+          "info_correlation": 0.853915,
+          "integrity_blocking": false,
+          "is_constant": false,
+          "is_near_constant": false,
+          "leakage_reason": "",
+          "leakage_suspicion": false,
+          "max": 24.04,
+          "mean": 11.945278,
+          "median": 11.935,
+          "min": 0.01,
+          "mini_histogram": {
+            "bin_edges": [
+              0.01,
+              3.01375,
+              6.0175,
+              9.02125,
+              12.025,
+              15.02875,
+              18.0325,
+              21.03625,
+              24.04
+            ],
+            "counts": [
+              6,
+              6,
+              3,
+              3,
+              3,
+              4,
+              5,
+              6
+            ],
+            "kind": "numeric",
+            "sparkline": "\u2588\u2588\u2585\u2585\u2585\u2586\u2587\u2588"
+          },
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "mutual_info": 0.653133,
+          "n_total": 36,
+          "n_valid": 36,
+          "pearson_r": -0.425322,
+          "q25": 4.2075,
+          "q75": 19.375,
+          "relative_variance": 0.439162441054,
+          "role": "predictor",
+          "spearman_rho": -0.410553,
+          "std": 7.916056,
+          "target": "Energy_kWh",
+          "unique_count": 36,
+          "unit": "degC",
+          "variable": "Avg_Temp_C",
+          "variance": 62.66393992,
+          "vif": 1.0
+        }
+      }
+    },
+    "provenance": {
+      "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+      "has_post_test_modifications": false,
+      "ledger_sha256": "8c6e73ab76c03f601de3fd659999cc7fbd193422da8e60fa50d22de136219ae7",
+      "records": [
+        {
+          "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+          "entity_id": "Avg_Temp_C",
+          "entity_type": "vsg_variable",
+          "new_value": "include",
+          "phase": "pre_test",
+          "previous_record_sha256": "",
+          "previous_value": null,
+          "reason": "Included via nonlinear mutual-information relevance (MI=0.653, info_corr=0.854 > linear |r|=0.425; preserves piecewise/degree-day response).",
+          "record_sha256": "0b014e5bebee932a2d55fe6e8a45719cad28fc3e20ee88dbdbd8d85c95f0a6f6",
+          "requires_limitations_disclosure": false,
+          "seq": 1,
+          "source": "auto_rule",
+          "target": "Energy_kWh"
+        },
+        {
+          "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+          "entity_id": "vsg_accepted",
+          "entity_type": "pipeline_stage",
+          "new_value": "c378766b9955bcc62c1de499d3ff86fc6791b6a5d8b7c3abdfe4de12dddf43ce",
+          "phase": "pre_test",
+          "previous_record_sha256": "0b014e5bebee932a2d55fe6e8a45719cad28fc3e20ee88dbdbd8d85c95f0a6f6",
+          "previous_value": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+          "reason": "stage receipt for vsg_accepted",
+          "record_sha256": "2ff45cbd9011666b2629c2096ee867615b70efc25da6cc5f3aefc6dc37759f5d",
+          "requires_limitations_disclosure": false,
+          "seq": 2,
+          "source": "pipeline_stage",
+          "target": "Energy_kWh"
+        }
+      ],
+      "stage_receipts": [
+        {
+          "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+          "phase": "pre_test",
+          "stage_name": "vsg_accepted",
+          "stage_payload_sha256": "9322627b1089ce861f5487cdcccc00637b8820b2e2ccc56f125e93235ca06191",
+          "stage_sha256": "c378766b9955bcc62c1de499d3ff86fc6791b6a5d8b7c3abdfe4de12dddf43ce",
+          "target": "Energy_kWh",
+          "upstream_stage_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c"
+        }
+      ]
+    },
+    "targets": [
+      "Energy_kWh"
+    ],
+    "time_col": "Month",
+    "vsg_sha256": "242b59cee88253c3b61a18627c2211ab3b63f4a7d60c5e68523d3a1b57900869"
+  }
+}

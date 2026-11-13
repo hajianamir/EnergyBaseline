@@ -46,6 +46,8 @@ STATIC_UI_COMMAND_SPECS: MappingProxyType[str, CommandSpec] = MappingProxyType(
         "view.theme_dark": CommandSpec("view.theme_dark", "view", "Apply dark UI theme"),
         "view.show_log": CommandSpec("view.show_log", "view", "Raise live log dock"),
         "status.refresh": CommandSpec("status.refresh", "status", "Refresh live Status page telemetry"),
+        "system.health": CommandSpec("system.health", "status", "Emit machine-readable runtime health snapshot"),
+        "system.sbom": CommandSpec("system.sbom", "status", "Emit CycloneDX 1.5 runtime SBOM JSON"),
         "help.guide": CommandSpec("help.guide", "help", "Open offline user guide"),
         "help.about": CommandSpec("help.about", "help", "Display About dialog"),
     }

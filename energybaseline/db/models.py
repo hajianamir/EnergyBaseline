@@ -167,3 +167,84 @@ class NonRoutineEvent(Base):
     reason: Mapped[str] = mapped_column(Text, default="")
     created_at: Mapped[dt.datetime] = mapped_column(DateTime, default=_now)
 
+
+class VSGStateRecord(Base):
+    __tablename__ = "vsg_states"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    dataset_id: Mapped[int | None] = mapped_column(
+        ForeignKey("datasets.id", ondelete="CASCADE"),
+        nullable=True,
+        index=True,
+    )
+    dataset_sha256: Mapped[str] = mapped_column(String(64), default="")
+    vsg_sha256: Mapped[str] = mapped_column(String(64), default="")
+    auto_log_hash: Mapped[str] = mapped_column(String(64), default="")
+    accepted: Mapped[bool] = mapped_column(Boolean, default=False)
+    targets_json: Mapped[str] = mapped_column(Text, default="[]")
+    state_json: Mapped[str] = mapped_column(Text, default="{}")
+    payload_sha256: Mapped[str] = mapped_column(String(64), default="")
+    created_at: Mapped[dt.datetime] = mapped_column(DateTime, default=_now)
+    updated_at: Mapped[dt.datetime] = mapped_column(DateTime, default=_now)
+
+
+class TCPConfigRecord(Base):
+    __tablename__ = "tcp_configs"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    dataset_id: Mapped[int | None] = mapped_column(
+        ForeignKey("datasets.id", ondelete="CASCADE"),
+        nullable=True,
+        index=True,
+    )
+    vsg_id: Mapped[int | None] = mapped_column(
+        ForeignKey("vsg_states.id", ondelete="CASCADE"),
+        nullable=True,
+        index=True,
+    )
+    tcp_sha256: Mapped[str] = mapped_column(String(64), default="")
+    preregistration_sha256: Mapped[str] = mapped_column(String(64), default="")
+    accepted: Mapped[bool] = mapped_column(Boolean, default=False)
+    locked: Mapped[bool] = mapped_column(Boolean, default=False)
+    config_json: Mapped[str] = mapped_column(Text, default="{}")
+    characterization_json: Mapped[str] = mapped_column(Text, default="{}")
+    payload_sha256: Mapped[str] = mapped_column(String(64), default="")
+    created_at: Mapped[dt.datetime] = mapped_column(DateTime, default=_now)
+    updated_at: Mapped[dt.datetime] = mapped_column(DateTime, default=_now)
+
+
+class ProvenanceEntryRecord(Base):
+    __tablename__ = "provenance_records"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    dataset_id: Mapped[int | None] = mapped_column(
+        ForeignKey("datasets.id", ondelete="CASCADE"),
+        nullable=True,
+        index=True,
+    )
+    run_id: Mapped[int | None] = mapped_column(Integer, nullable=True, index=True)
+    seq: Mapped[int] = mapped_column(Integer, default=1)
+    entity_type: Mapped[str] = mapped_column(String(80), default="")
+    entity_id: Mapped[str] = mapped_column(String(200), default="")
+    target: Mapped[str] = mapped_column(String(200), default="")
+    source: Mapped[str] = mapped_column(String(60), default="")
+    phase: Mapped[str] = mapped_column(String(20), default="pre_test")
+    dataset_sha256: Mapped[str] = mapped_column(String(64), default="")
+    previous_record_sha256: Mapped[str] = mapped_column(String(64), default="")
+    record_sha256: Mapped[str] = mapped_column(String(64), default="")
+    payload_json: Mapped[str] = mapped_column(Text, default="{}")
+    created_at: Mapped[dt.datetime] = mapped_column(DateTime, default=_now)
+
+
+class ResultCacheRecord(Base):
+    __tablename__ = "result_cache_entries"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    cache_key_sha256: Mapped[str] = mapped_column(String(64), unique=True, index=True)
+    data_hash: Mapped[str] = mapped_column(String(64), default="", index=True)
+    variable_set_json: Mapped[str] = mapped_column(Text, default="[]")
+    test_id: Mapped[str] = mapped_column(String(40), default="", index=True)
+    parameters_json: Mapped[str] = mapped_column(Text, default="{}")
+    seed: Mapped[int] = mapped_column(Integer, default=0)
+    library_versions_json: Mapped[str] = mapped_column(Text, default="{}")
+    artifact_json: Mapped[str] = mapped_column(Text, default="{}")
+    artifact_sha256: Mapped[str] = mapped_column(String(64), default="")
+    created_at: Mapped[dt.datetime] = mapped_column(DateTime, default=_now)
+
+

@@ -669,10 +669,17 @@ def preprocess_target(
                 )
     nums = [c for c in keep if c not in cats]
 
-    # ---- missing rate
+    # ---- missing rate (adapted to sample size n and empirical predictor missingness)
+    n = len(work)
+    emp_miss_rates = [float(work[c].isna().mean()) for c in nums] if nums else [0.0]
+    med_miss = float(np.median(emp_miss_rates))
     max_missing = auto.decide(
         "max_missing_rate",
-        lambda: (0.40, "default engineering limit", "columns >40 % missing carry too little information"),
+        lambda: (
+            (0.25 if n < 60 else 0.40 if n < 1000 else 0.50),
+            f"n={n}, p_num={len(nums)}, median_missing={med_miss:.3f}",
+            "stricter 25% missingness cap for short series (n<60), 40% for medium series, 50% when n>=1000",
+        ),
     )
     for c in list(nums):
         r = work[c].isna().mean()
@@ -680,10 +687,20 @@ def preprocess_target(
             nums.remove(c)
             _excl(log, c, "missing", f"Missing rate {r:.1%} exceeds the limit {max_missing:.0%}.", r)
 
-    # ---- constant / near-constant
+    # ---- constant / near-constant (adapted to target scale and sample size n)
+    _y_nonnull = work[target].dropna()
+    y_rel_var = (
+        float((_y_nonnull.std() ** 2) / (max(abs(float(_y_nonnull.mean())), 1e-12) ** 2 + 1e-12))
+        if len(_y_nonnull) > 1
+        else 0.0
+    )
     min_var = auto.decide(
         "min_variance",
-        lambda: (1e-8, "default numerical tolerance", "relative variance below 1e-8 means constant"),
+        lambda: (
+            (1e-6 if n < 50 else 1e-8),
+            f"n={n}, target_rel_var={y_rel_var:.3e}",
+            "near-constant relative-variance floor scaled by sample size (1e-6 for n<50, 1e-8 for n>=50)",
+        ),
     )
     for c in list(nums):
         if c in nre_indicator_cols:
@@ -712,7 +729,11 @@ def preprocess_target(
     # ---- leakage (energy-like, almost perfect correlation with target)
     leak_thr = auto.decide(
         "leakage_threshold",
-        lambda: (0.99, "default", "|r|>=0.99 with target AND energy-like name => leakage"),
+        lambda: (
+            (0.985 if n < 60 else 0.99),
+            f"n={n}, candidate_predictors={len(nums)}",
+            "small-sample |r|>=0.985 (n<60) or |r|>=0.99 (n>=60) with target and energy-like name => leakage",
+        ),
     )
     for c in list(nums):
         pair = work[[c, target]].dropna()
@@ -898,7 +919,14 @@ def preprocess_target(
     verify_no_target_fabrication(raw_target_snapshot, work[target])
 
     # ---- multicollinearity
-    corr_thr = auto.decide("corr_threshold", lambda: (0.95, "default", "|r|>=0.95 => redundant pair"))
+    corr_thr = auto.decide(
+        "corr_threshold",
+        lambda: (
+            (0.90 if n < 100 else 0.95),
+            f"n={n}, p_num={len(nums)}",
+            "stricter |r|>=0.90 redundancy pruning for n<100, |r|>=0.95 for n>=100",
+        ),
+    )
     vif_thr = auto.decide(
         "vif_threshold",
         lambda: (
