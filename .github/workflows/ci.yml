@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   verify:
-    name: Phase 4 Gate G4 (${{ matrix.os }})
+    name: Phase 5 Gate G5 (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -79,9 +79,14 @@ jobs:
           python -m pytest -q tests/gates/test_phase4_g4b_t5_t9.py
           python -m pytest -q tests/gates/test_phase4_g4c_t10_t14.py
 
-      - name: Full test suite and coverage gate (S5 >= 60%, Phase 4 Core + TestsCatalog >= 80%)
+      - name: Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
         run: |
-          python -m pytest -q --junitxml=pytest-core.xml --cov=energybaseline/core --cov=energybaseline/tests_catalog --cov-report=xml:coverage.xml --cov-report=term --cov-fail-under=60
+          python -m pytest -q tests/gates/test_phase5_f1_f10_models.py tests/gates/test_phase5_mining_isolation_and_perf.py
+          python scripts/benchmarks/bench_1m.py --out artifacts/phase5/ci_bench_1m.json
+
+      - name: Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models >= 80%)
+        run: |
+          python -m pytest -q --junitxml=pytest-core.xml --cov=energybaseline/core --cov=energybaseline/tests_catalog --cov=energybaseline/mining --cov=energybaseline/models --cov-report=xml:coverage.xml --cov-report=term --cov-fail-under=60
           python -m coverage report --fail-under=80
 
       - name: Emit pytest failure annotations on error
@@ -89,9 +94,9 @@ jobs:
         run: |
           python scripts/ci_junit_annotations.py pytest-core.xml
 
-      - name: GUI smoke, Phase 1 shell, Phase 2 schema & Phase 3 VSG/TCP tests (GUI >= 52%)
+      - name: GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
         run: |
-          python -m pytest -q tests/gui -p no:cacheprovider --cov=energybaseline/gui --cov-report=term --cov-fail-under=52
+          python -m pytest -q tests/gui -p no:cacheprovider --cov=energybaseline/gui --cov-report=term --cov-fail-under=56
 
       - name: Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
         if: matrix.os == 'windows-latest'

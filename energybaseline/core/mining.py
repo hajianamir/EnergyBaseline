@@ -39,8 +39,8 @@ def run_mining(df: pd.DataFrame, target: str, predictors: list[str], g: Granular
     d = df[cols].dropna()
     if len(d) < 30 or len(cols) < 2:
         return [_rec("all", {}, {}, "Too few complete observations (<30) or variables (<2) for data mining.", "none", "skipped")]
-    if len(d) > 4000:
-        d = d.iloc[:: int(np.ceil(len(d) / 4000))]
+    if len(d) > 25000:
+        d = d.iloc[:: int(np.ceil(len(d) / 25000))]
     Z = ((d - d.mean()) / d.std(ddof=0).replace(0, 1)).values
     Zp = Z[:, 1:] if Z.shape[1] > 1 else Z
 
@@ -54,20 +54,31 @@ def run_mining(df: pd.DataFrame, target: str, predictors: list[str], g: Granular
                     "Informs the collinearity guard (VIF/correlation pruning is applied independently).")
 
     def kmeans():
-        from sklearn.cluster import KMeans
-        from sklearn.metrics import silhouette_score
-        best = (-1, 2, None)
-        for k in range(2, 7):
-            km = KMeans(k, n_init=5, random_state=seed).fit(Z)
-            s = silhouette_score(Z, km.labels_, sample_size=min(len(Z), 1500), random_state=seed)
-            if s > best[0]:
-                best = (s, k, km)
-        s, k, km = best
-        prof = pd.DataFrame(km.cluster_centers_ * d.std(ddof=0).values + d.mean().values, columns=cols).round(3)
-        lab = pd.Series(km.labels_)
-        return _rec("K-Means (regime discovery)", {"k_range": "2-6", "selected_k": k}, {"silhouette": round(float(s), 3), "cluster_sizes": lab.value_counts().sort_index().tolist(), "centers_target_mean": prof[target].tolist()},
-                    f"{k} operating regimes found (silhouette {s:.2f}); regime centres differ in mean {target} by {prof[target].max() - prof[target].min():.3g}.",
-                    "Reported for engineering insight; regime labels are NOT used as model inputs (they are derived from the target = leakage).") , km.labels_
+        from ..mining.clustering import discover_operating_regimes
+
+        rep = discover_operating_regimes(d, predictors, method="kmeans", k_range=(2, 6), n_boot=16, seed=seed)
+        lab_arr = np.asarray(rep.labels, dtype=int)
+        t_means = [round(float(d[target].iloc[lab_arr == j].mean()), 3) for j in range(rep.selected_k)]
+        return (
+            _rec(
+                "K-Means (regime discovery)",
+                {"k_range": "2-6", "selected_k": rep.selected_k, "predictors_only": True},
+                {
+                    "silhouette": round(rep.validity.silhouette, 4),
+                    "calinski_harabasz": round(rep.validity.calinski_harabasz, 2),
+                    "davies_bouldin": round(rep.validity.davies_bouldin, 4),
+                    "bootstrap_mean_ari": round(rep.stability.mean_ari, 4),
+                    "bootstrap_ari_ci": [round(rep.stability.ci_low, 4), round(rep.stability.ci_high, 4)],
+                    "stability_grade": rep.stability.stability_grade,
+                    "cluster_sizes": list(rep.validity.cluster_sizes),
+                    "centers_target_mean": t_means,
+                },
+                f"{rep.selected_k} operating regimes found on predictors (silhouette {rep.validity.silhouette:.2f}, "
+                f"bootstrap ARI {rep.stability.mean_ari:.2f} [{rep.stability.stability_grade}]).",
+                "Descriptive insight only; regime labels are barred from all model inputs per MT-5.",
+            ),
+            lab_arr,
+        )
 
     labels_holder: dict = {}
 
@@ -242,7 +253,7 @@ def run_mining(df: pd.DataFrame, target: str, predictors: list[str], g: Granular
             res.append(_rec(name, {"engine": how}, {"n_change_points": len(cps), "timestamps": [str(y.index[min(i, len(y) - 1)]) for i in cps]},
                             "Structural shifts in the level of the target (retrofit, schedule or process changes?)." if cps else "No significant level shifts.",
                             "Candidate break dates; if present, consider restricting the baseline window."))
-        if 40 < len(y) <= 3000:
+        if len(y) > 40:
             from statsmodels.tsa.statespace.sarimax import SARIMAX
             yy = y.iloc[-min(len(y), 500):]
             s = per if per and per <= 24 and len(yy) > 3 * per else 0

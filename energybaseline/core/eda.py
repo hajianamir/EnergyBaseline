@@ -56,7 +56,7 @@ def run_eda(df: pd.DataFrame, target: str, predictors: list[str], g: Granularity
     desc["kurtosis"] = [float(stats.kurtosis(num[c].dropna())) if num[c].notna().sum() > 3 else np.nan for c in num]
     out["descriptive"] = desc.round(4).reset_index().rename(columns={"index": "variable"})
     yv = y.dropna()
-    sample = yv.sample(min(len(yv), 4000), random_state=0) if len(yv) > 4000 else yv
+    sample = yv.sample(min(len(yv), 5000), random_state=0) if len(yv) > 5000 else yv
     sh = stats.shapiro(sample) if 3 <= len(sample) <= 5000 else None
     out["distribution"] = {"skew": float(stats.skew(yv)), "kurtosis": float(stats.kurtosis(yv)),
                            "shapiro_p": float(sh.pvalue) if sh else None, "normal_at_5pct": bool(sh and sh.pvalue > 0.05),
@@ -75,7 +75,8 @@ def run_eda(df: pd.DataFrame, target: str, predictors: list[str], g: Granularity
         try:
             from sklearn.feature_selection import mutual_info_regression
             sub = df[predictors + [target]].dropna()
-            sub = sub.iloc[:: max(1, len(sub) // 3000)]
+            if len(sub) > 50000:
+                sub = sub.iloc[:: max(1, len(sub) // 50000)]
             mi = mutual_info_regression(sub[corr["variable"].tolist()].values, sub[target].values, random_state=0)
             corr["mutual_info"] = mi
         except Exception:

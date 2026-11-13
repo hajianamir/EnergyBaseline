@@ -1,0 +1,77 @@
+........................................................................ [ 35%]
+........................................................................ [ 71%]
+.........................................................                [100%]
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.11.2-final-0 ________________
+
+Name                                                                 Stmts   Miss  Cover
+----------------------------------------------------------------------------------------
+energybaseline/core/auto.py                                            164     15    91%
+energybaseline/core/cache.py                                           499     64    87%
+energybaseline/core/eda.py                                             107     33    69%
+energybaseline/core/features.py                                        251     38    85%
+energybaseline/core/ingest.py                                          369     69    81%
+energybaseline/core/integrity.py                                       230     26    89%
+energybaseline/core/mining.py                                          257     42    84%
+energybaseline/core/models.py                                          517     79    85%
+energybaseline/core/monitor.py                                         121     25    79%
+energybaseline/core/nn.py                                              250     28    89%
+energybaseline/core/pipeline.py                                        392     42    89%
+energybaseline/core/pool.py                                            651    221    66%
+energybaseline/core/provenance.py                                      151     10    93%
+energybaseline/core/quality.py                                         540    115    79%
+energybaseline/core/report.py                                          331     57    83%
+energybaseline/core/report_template.py                                   1      0   100%
+energybaseline/core/schema.py                                          467     71    85%
+energybaseline/core/scoring.py                                         151     17    89%
+energybaseline/core/secrets.py                                          71     27    62%
+energybaseline/core/sqlsource.py                                       222     82    63%
+energybaseline/core/store.py                                           320     40    88%
+energybaseline/core/tcp.py                                             646     62    90%
+energybaseline/core/telemetry.py                                        41      1    98%
+energybaseline/core/temporal.py                                        518     95    82%
+energybaseline/core/vsg.py                                             494     44    91%
+energybaseline/mining/__init__.py                                        5      0   100%
+energybaseline/mining/clustering.py                                    193      9    95%
+energybaseline/mining/downsample.py                                    122     11    91%
+energybaseline/mining/eda_attach.py                                     98      8    92%
+energybaseline/models/__init__.py                                      105      9    91%
+energybaseline/models/base.py                                          108     22    80%
+energybaseline/models/f1_baseline.py                                   108     11    90%
+energybaseline/models/f2_ashrae.py                                     181     10    94%
+energybaseline/models/f3_regularized.py                                 90      5    94%
+energybaseline/models/f4_basis.py                                      117      8    93%
+energybaseline/models/f5_ensemble.py                                    74      2    97%
+energybaseline/models/f6_neural.py                                     160      4    98%
+energybaseline/models/f7_timeseries.py                                 108     18    83%
+energybaseline/models/f8_regime.py                                     183     21    89%
+energybaseline/models/f9_decomposition.py                              101      3    97%
+energybaseline/models/f10_stacking.py                                  115      5    96%
+energybaseline/tests_catalog/__init__.py                               127      8    94%
+energybaseline/tests_catalog/ci_method.py                              166     13    92%
+energybaseline/tests_catalog/monte_carlo.py                            224      5    98%
+energybaseline/tests_catalog/r_reference_validator.py                  149     22    85%
+energybaseline/tests_catalog/t1_stationarity.py                         79      6    92%
+energybaseline/tests_catalog/t2_seasonality.py                         121      5    96%
+energybaseline/tests_catalog/t3_autocorrelation.py                      67      4    94%
+energybaseline/tests_catalog/t4_normality.py                            75     12    84%
+energybaseline/tests_catalog/t5_heteroskedasticity.py                  113     13    88%
+energybaseline/tests_catalog/t6_multicollinearity.py                    83      8    90%
+energybaseline/tests_catalog/t7_structural_break_chow.py               131      4    97%
+energybaseline/tests_catalog/t8_structural_break_quandt_andrews.py     122      5    96%
+energybaseline/tests_catalog/t9_pettitt.py                              85      3    96%
+energybaseline/tests_catalog/t10_diebold_mariano.py                    163     22    87%
+energybaseline/tests_catalog/t11_nemenyi.py                            111     15    86%
+energybaseline/tests_catalog/t12_little_mcar.py                        175     15    91%
+energybaseline/tests_catalog/t13_outlier_influence.py                  153      5    97%
+energybaseline/tests_catalog/t14_causal_group.py                       170     28    84%
+energybaseline/tests_catalog/tc_assumptions.py                         222     27    88%
+----------------------------------------------------------------------------------------
+TOTAL                                                                12165   1669    86%
+Required test coverage of 60% reached. Total coverage: 86.28%
+201 passed in 295.42s (0:04:55)
+energybaseline/core/telemetry.py            41      1    98%
+energybaseline/core/temporal.py            518     95    82%
+energybaseline/core/vsg.py                 494     44    91%
+------------------------------------------------------------
+TOTAL                                     7761   1303    83%

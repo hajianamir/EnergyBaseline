@@ -557,7 +557,7 @@ def build_portfolio(ctx: Ctx, n: int) -> tuple[list[Candidate], list[dict]]:
         Candidate("TOWT (time-of-week & temperature)", L, 2, "linear", lambda c: TOWTDesign(c), lambda p, c: RidgeCV(alphas=np.logspace(-4, 1, 6))),
         Candidate("GAM (B-spline additive)", L, 2, "linear", lambda c: SplineDesign(4), lambda p, c: RidgeCV(alphas=alphas)),
         Candidate("Bayesian ridge", L, 1, "linear", lambda c: ColsDesign(), lambda p, c: BayesianRidge()),
-        Candidate("Quantile regression (median)", L, 2, "linear", lambda c: ColsDesign(), lambda p, c: QuantileRegressor(quantile=0.5, alpha=0.0, solver="highs"), cap=3000),
+        Candidate("Quantile regression (median)", L, 2, "linear", lambda c: ColsDesign(), lambda p, c: QuantileRegressor(quantile=0.5, alpha=0.0, solver="highs")),
     ]
     T = "Tree-based"
     d = lambda c: AllDesign()  # noqa: E731
@@ -583,7 +583,7 @@ def build_portfolio(ctx: Ctx, n: int) -> tuple[list[Candidate], list[dict]]:
         missing.append({"model": "LightGBM", "reason": "package 'lightgbm' not installed in this environment"})
     if _have("catboost"):
         from catboost import CatBoostRegressor
-        cands.append(Candidate("CatBoost", T, 4, "tree", d, lambda p, c: CatBoostRegressor(**{**dict(iterations=250, depth=6, learning_rate=0.06, random_seed=seed, verbose=0, thread_count=nj), **p}),
+        cands.append(Candidate("CatBoost", T, 4, "tree", d, lambda p, c: CatBoostRegressor(**{**dict(iterations=250, depth=6, learning_rate=0.06, random_seed=seed, verbose=0, allow_writing_files=False, thread_count=nj), **p}),
                                space=lambda t: dict(iterations=t.suggest_int("iterations", 100, 400), depth=t.suggest_int("depth", 4, 8), learning_rate=t.suggest_float("learning_rate", 0.02, 0.2, log=True)), scale=False, fam_key="tree"))
     else:
         missing.append({"model": "CatBoost", "reason": "package 'catboost' not installed in this environment"})
@@ -640,6 +640,9 @@ def plausibility(f, X: pd.DataFrame, y: np.ndarray) -> tuple[float, list[str]]:
 
 
 def evaluate_candidate(cand: Candidate, X: pd.DataFrame, y: np.ndarray, folds, ctx: Ctx) -> dict:
+    from ..mining.clustering import assert_no_cluster_labels_in_model_inputs
+
+    assert_no_cluster_labels_in_model_inputs(X)
     t0 = time.time()
     n = len(y)
     oof = np.full(n, np.nan)

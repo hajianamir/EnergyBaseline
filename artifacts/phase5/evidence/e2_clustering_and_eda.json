@@ -1,0 +1,217 @@
+{
+  "clustering": {
+    "allowed_as_model_input": false,
+    "candidate_k_summary": [
+      {
+        "calinski_harabasz": 159.047,
+        "composite_selection_score": 0.864676,
+        "davies_bouldin": 0.403,
+        "k": 2,
+        "mean_bootstrap_ari": 1.0,
+        "silhouette": 0.69928,
+        "stability_grade": "stable"
+      },
+      {
+        "calinski_harabasz": 183.6718,
+        "composite_selection_score": 0.838951,
+        "davies_bouldin": 0.4919,
+        "k": 3,
+        "mean_bootstrap_ari": 1.0,
+        "silhouette": 0.642113,
+        "stability_grade": "stable"
+      },
+      {
+        "calinski_harabasz": 316.3534,
+        "composite_selection_score": 0.859985,
+        "davies_bouldin": 0.3397,
+        "k": 4,
+        "mean_bootstrap_ari": 0.992361,
+        "silhouette": 0.698193,
+        "stability_grade": "stable"
+      }
+    ],
+    "classification": "descriptive_regime_discovery",
+    "method": "kmeans",
+    "mt5_isolation_note": "Regime discovery labels are strictly descriptive and barred from all F1..F10 model inputs (MT-5).",
+    "predictor_columns": [
+      "Avg_Temp_C"
+    ],
+    "selected_k": 2,
+    "stability": {
+      "ci_high": 1.0,
+      "ci_low": 1.0,
+      "mean_ari": 1.0,
+      "median_ari": 1.0,
+      "method": "kmeans",
+      "n_boot": 20,
+      "n_clusters": 2,
+      "sample_fraction": 0.85,
+      "stability_grade": "stable",
+      "std_ari": 0.0
+    },
+    "validity": {
+      "calinski_harabasz": 159.046977,
+      "cluster_sizes": [
+        18,
+        18
+      ],
+      "davies_bouldin": 0.403028,
+      "n_clusters": 2,
+      "n_samples": 36,
+      "silhouette": 0.69928
+    }
+  },
+  "dataset_sha256": "e790afd2b8c23073c893f475d49ae6213840530d4fcabeb08861f6e29ef7410c",
+  "eda_attachment": {
+    "association_table": [
+      {
+        "abs_max_association": 0.425322,
+        "label": "descriptive, not inferential",
+        "n_paired": 36,
+        "sample_pearson_r": -0.425322,
+        "sample_spearman_rho": -0.410553,
+        "variable": "Avg_Temp_C"
+      }
+    ],
+    "classification": "descriptive, not inferential",
+    "disclaimer": "Automated exploratory profile \u2014 descriptive, not inferential. Values summarize sample distributions and co-variation only without hypothesis tests or causal claims.",
+    "downsampled_preview": {
+      "compression_ratio": 1.0,
+      "label": "descriptive, not inferential",
+      "method": "lttb",
+      "n_input": 36,
+      "n_output": 36
+    },
+    "inferential_claims": false,
+    "label": "descriptive, not inferential",
+    "missingness_table": [
+      {
+        "column": "Energy_kWh",
+        "label": "descriptive, not inferential",
+        "missing_count": 0,
+        "missing_pct": 0.0,
+        "present_count": 36
+      },
+      {
+        "column": "Avg_Temp_C",
+        "label": "descriptive, not inferential",
+        "missing_count": 0,
+        "missing_pct": 0.0,
+        "present_count": 36
+      }
+    ],
+    "n_rows": 36,
+    "notes": [
+      "Classification: descriptive, not inferential.",
+      "Profiled 2 numeric column(s) across 36 row(s) without inferential hypothesis testing."
+    ],
+    "predictor_columns": [
+      "Avg_Temp_C"
+    ],
+    "sections": {
+      "associations": {
+        "label": "descriptive, not inferential",
+        "rows": [
+          {
+            "abs_max_association": 0.425322,
+            "label": "descriptive, not inferential",
+            "n_paired": 36,
+            "sample_pearson_r": -0.425322,
+            "sample_spearman_rho": -0.410553,
+            "variable": "Avg_Temp_C"
+          }
+        ]
+      },
+      "missingness": {
+        "label": "descriptive, not inferential",
+        "rows": [
+          {
+            "column": "Energy_kWh",
+            "label": "descriptive, not inferential",
+            "missing_count": 0,
+            "missing_pct": 0.0,
+            "present_count": 36
+          },
+          {
+            "column": "Avg_Temp_C",
+            "label": "descriptive, not inferential",
+            "missing_count": 0,
+            "missing_pct": 0.0,
+            "present_count": 36
+          }
+        ]
+      },
+      "univariate_summary": {
+        "label": "descriptive, not inferential",
+        "rows": [
+          {
+            "column": "Energy_kWh",
+            "count": 36,
+            "iqr": 5117.75,
+            "kurtosis_excess": -1.234277,
+            "label": "descriptive, not inferential",
+            "max": 21392.0,
+            "mean": 16943.583333,
+            "median": 17132.5,
+            "min": 11246.0,
+            "p05": 12123.75,
+            "p95": 20969.75,
+            "skewness": -0.254874,
+            "std": 3171.830633
+          },
+          {
+            "column": "Avg_Temp_C",
+            "count": 36,
+            "iqr": 15.1675,
+            "kurtosis_excess": -1.448449,
+            "label": "descriptive, not inferential",
+            "max": 24.04,
+            "mean": 11.945278,
+            "median": 11.935,
+            "min": 0.01,
+            "p05": 1.1275,
+            "p95": 23.375,
+            "skewness": 0.003473,
+            "std": 7.916056
+          }
+        ]
+      }
+    },
+    "summary_table": [
+      {
+        "column": "Energy_kWh",
+        "count": 36,
+        "iqr": 5117.75,
+        "kurtosis_excess": -1.234277,
+        "label": "descriptive, not inferential",
+        "max": 21392.0,
+        "mean": 16943.583333,
+        "median": 17132.5,
+        "min": 11246.0,
+        "p05": 12123.75,
+        "p95": 20969.75,
+        "skewness": -0.254874,
+        "std": 3171.830633
+      },
+      {
+        "column": "Avg_Temp_C",
+        "count": 36,
+        "iqr": 15.1675,
+        "kurtosis_excess": -1.448449,
+        "label": "descriptive, not inferential",
+        "max": 24.04,
+        "mean": 11.945278,
+        "median": 11.935,
+        "min": 0.01,
+        "p05": 1.1275,
+        "p95": 23.375,
+        "skewness": 0.003473,
+        "std": 7.916056
+      }
+    ],
+    "target_column": "Energy_kWh"
+  },
+  "f8_feature_consensus": null,
+  "ok": true,
+  "target": "Energy_kWh"
+}

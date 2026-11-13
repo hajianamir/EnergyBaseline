@@ -78,8 +78,10 @@ def main() -> None:
         (base / "logs").mkdir(exist_ok=True)
     except OSError:
         pass
-    os.environ.setdefault("QT_API", "pyside6")
-    if os.environ.get("EB_NONINTERACTIVE") != "1":
+    from energybaseline.config.runtime_env import configure_qt_runtime_env, is_interactive_ui
+
+    configure_qt_runtime_env(enable_highdpi=False)
+    if is_interactive_ui():
         try:
             make_shortcuts()
         except Exception:

@@ -151,7 +151,9 @@ def resolve_app_home(
     3. ``%LOCALAPPDATA%\\EnergyBaseline`` on Windows (or when ``LOCALAPPDATA`` is set),
        otherwise ``$XDG_DATA_HOME/EnergyBaseline`` or ``~/.local/share/EnergyBaseline``.
     """
-    environ = os.environ if env is None else env
+    from ..config.runtime_env import get_process_environ
+
+    environ = get_process_environ() if env is None else env
     is_frozen = getattr(sys, "frozen", False) if frozen is None else frozen
     exe_path = Path(sys.executable if executable is None else executable)
     src_root = (Path(__file__).resolve().parents[2] if repo_root is None else repo_root).resolve()
