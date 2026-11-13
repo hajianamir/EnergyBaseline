@@ -1,7 +1,8 @@
 param(
     [string]$ExePath = "",
     [string]$PythonExe = ".venv\Scripts\python.exe",
-    [int]$WarmIterations = 3,
+    [int]$ColdIterations = 5,
+    [int]$WarmIterations = 5,
     [string]$OutputPath = "artifacts\phase1\evidence\startup_time.json"
 )
 
@@ -40,11 +41,41 @@ function Resolve-TargetCommand {
     return @{ FilePath = $pyFull; PrefixArgs = @("-m", "energybaseline"); TargetKind = "python_module" }
 }
 
-function Invoke-TimedLaunch([hashtable]$Target, [string]$WorkDir, [string]$Label) {
+function Get-Percentile([double[]]$SortedValues, [double]$Percentile) {
+    if (-not $SortedValues -or $SortedValues.Count -eq 0) {
+        return 0.0
+    }
+    if ($SortedValues.Count -eq 1) {
+        return [math]::Round([double]$SortedValues[0], 2)
+    }
+    $pos = ($SortedValues.Count - 1) * $Percentile
+    $lower = [int][math]::Floor($pos)
+    $upper = [int][math]::Ceiling($pos)
+    if ($lower -eq $upper) {
+        return [math]::Round([double]$SortedValues[$lower], 2)
+    }
+    $weight = $pos - $lower
+    $interp = ($SortedValues[$lower] * (1.0 - $weight)) + ($SortedValues[$upper] * $weight)
+    return [math]::Round([double]$interp, 2)
+}
+
+function Get-LatencySummary([object[]]$Runs) {
+    $sorted = @($Runs | ForEach-Object { [double]$_.first_paint_ms } | Sort-Object)
+    return [ordered]@{
+        count = [int]$sorted.Count
+        min_ms = [math]::Round([double]$sorted[0], 2)
+        median_ms = Get-Percentile -SortedValues $sorted -Percentile 0.50
+        p95_ms = Get-Percentile -SortedValues $sorted -Percentile 0.95
+        max_ms = [math]::Round([double]$sorted[$sorted.Count - 1], 2)
+    }
+}
+
+function Invoke-TimedLaunch([hashtable]$Target, [string]$WorkDir, [string]$EbHomeDir, [string]$Label) {
     $telPath = Join-Path $WorkDir ("tel_" + $Label + ".json")
     $instKey = "eb_startup_" + $Label + "_" + [guid]::NewGuid().ToString("N").Substring(0, 6)
-    $launchArgs = @($Target.PrefixArgs + @("--instance-key", $instKey, "--auto-close-ms", "120", "--telemetry-out", $telPath))
+    $launchArgs = @($Target.PrefixArgs + @("--instance-key", $instKey, "--auto-close-ms", "100", "--telemetry-out", $telPath))
 
+    $env:EB_HOME = $EbHomeDir
     $sw = [System.Diagnostics.Stopwatch]::StartNew()
     $p = Start-Process -FilePath $Target.FilePath -ArgumentList $launchArgs -WorkingDirectory $RepoRoot -PassThru
     $done = $p.WaitForExit(60000)
@@ -73,18 +104,28 @@ New-Item -ItemType Directory -Force -Path $workRoot | Out-Null
 
 $prevEbHome = $env:EB_HOME
 $prevNonInt = $env:EB_NONINTERACTIVE
-$env:EB_HOME = Join-Path $workRoot "app_home"
 $env:EB_NONINTERACTIVE = "1"
 
 try {
-    $cold = Invoke-TimedLaunch -Target $target -WorkDir $workRoot -Label "cold_1"
+    # 5 cold starts: each uses a brand-new uninitialized EB_HOME directory (fresh SQLite DB + Alembic head)
+    $coldRuns = @()
+    for ($i = 1; $i -le $ColdIterations; $i++) {
+        $coldHome = Join-Path $workRoot "cold_home_$i"
+        $coldRuns += (Invoke-TimedLaunch -Target $target -WorkDir $workRoot -EbHomeDir $coldHome -Label "cold_$i")
+    }
+
+    # 5 warm starts: reuse an already-initialized EB_HOME directory
+    $warmHome = Join-Path $workRoot "cold_home_$ColdIterations"
     $warmRuns = @()
     for ($i = 1; $i -le $WarmIterations; $i++) {
-        $warmRuns += (Invoke-TimedLaunch -Target $target -WorkDir $workRoot -Label "warm_$i")
+        $warmRuns += (Invoke-TimedLaunch -Target $target -WorkDir $workRoot -EbHomeDir $warmHome -Label "warm_$i")
     }
-    $sortedWarm = @($warmRuns | ForEach-Object { [double]$_.first_paint_ms } | Sort-Object)
-    $mid = [int][math]::Floor($sortedWarm.Count / 2)
-    $warmMedianMs = if ($sortedWarm.Count -gt 0) { $sortedWarm[$mid] } else { $cold.first_paint_ms }
+
+    $coldStats = Get-LatencySummary -Runs $coldRuns
+    $warmStats = Get-LatencySummary -Runs $warmRuns
+
+    $allColdOk = ($coldRuns | Where-Object { $_.exit_code -ne 0 -or (-not $_.db_ok) }).Count -eq 0
+    $allWarmOk = ($warmRuns | Where-Object { $_.exit_code -ne 0 -or (-not $_.db_ok) }).Count -eq 0
 
     $report = [ordered]@{
         schema_version = "1.0"
@@ -93,15 +134,23 @@ try {
         target_kind = $target.TargetKind
         target_executable = $target.FilePath
         hardware = Get-HardwareMeta
-        cold_first_paint_ms = [double]$cold.first_paint_ms
-        warm_first_paint_median_ms = [double]$warmMedianMs
+        cold_iterations = [int]$ColdIterations
+        warm_iterations = [int]$WarmIterations
+        cold_median_ms = [double]$coldStats.median_ms
+        cold_p95_ms = [double]$coldStats.p95_ms
+        warm_median_ms = [double]$warmStats.median_ms
+        warm_p95_ms = [double]$warmStats.p95_ms
+        cold_first_paint_ms = [double]$coldStats.median_ms
+        warm_first_paint_median_ms = [double]$warmStats.median_ms
+        cold_stats = $coldStats
+        warm_stats = $warmStats
         normative_budgets_ms = [ordered]@{
             cold_max_ms_on_d2_ref_hw = 4000.0
             warm_max_ms_on_d2_ref_hw = 1500.0
         }
-        cold_run = $cold
+        cold_runs = $coldRuns
         warm_runs = $warmRuns
-        pass = ($cold.exit_code -eq 0 -and $cold.db_ok -and ($warmRuns | Where-Object { $_.exit_code -ne 0 }).Count -eq 0)
+        pass = ($allColdOk -and $allWarmOk -and $coldRuns.Count -eq $ColdIterations -and $warmRuns.Count -eq $WarmIterations)
     }
 
     $outFull = if ([System.IO.Path]::IsPathRooted($OutputPath)) { $OutputPath } else { Join-Path $RepoRoot $OutputPath }

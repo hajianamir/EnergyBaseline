@@ -233,3 +233,77 @@ def test_pre_migration_online_backup_and_validated_restore_on_failure(
         bkp.verify_backup_manifest(tampered_bkp, st["last_backup"]["manifest_path"])
 
     ses.reset_engine()
+
+
+def test_db_matrix_sentinel_selftest_and_failure_detection(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Explicit sentinel self-test matrix check (write + read-back into health, plus failure detection)."""
+    eb = tmp_path / "eb_sentinel"
+    eb.mkdir()
+    monkeypatch.setenv("EB_HOME", str(eb))
+    _clear_db_env(monkeypatch)
+    ses.set_temp_root_for_testing(None)
+    ses.reset_engine()
+
+    init_res = ses.init_database()
+    assert init_res["ok"] is True
+    assert init_res["writable"] is True
+
+    with ses.session_scope() as s:
+        before_count = len(s.execute(select(M.Health)).scalars().all())
+
+    probe_res = ses.self_test()
+    assert probe_res["ok"] is True
+    assert probe_res["writable"] is True
+    assert probe_res["rung"] == "eb_home"
+
+    with ses.session_scope() as s:
+        rows = s.execute(select(M.Health)).scalars().all()
+    assert len(rows) == before_count + 1
+    assert rows[-1].note == "startup-selftest"
+
+    # Negative check: drop health table and confirm self_test reports ok=False cleanly without raising
+    db_file = eb / "data" / "app.db"
+    ses.reset_engine()
+    con = sqlite3.connect(str(db_file))
+    try:
+        con.execute("DROP TABLE health")
+        con.commit()
+    finally:
+        con.close()
+
+    ses.get_engine()
+    broken_res = ses.self_test()
+    assert broken_res["ok"] is False
+    assert broken_res["writable"] is False
+    assert "error" in broken_res
+    ses.reset_engine()
+
+
+def test_file_backed_startup_uses_alembic_without_create_all(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Verify file-backed startup stamps alembic_version and never calls Base.metadata.create_all (DB-3)."""
+    eb = tmp_path / "eb_alembic_only"
+    eb.mkdir()
+    monkeypatch.setenv("EB_HOME", str(eb))
+    _clear_db_env(monkeypatch)
+    ses.set_temp_root_for_testing(None)
+    ses.reset_engine()
+
+    create_all_called = False
+
+    def _forbid_create_all(*args, **kwargs):
+        nonlocal create_all_called
+        create_all_called = True
+        raise AssertionError("Base.metadata.create_all must not run on file-backed SQLite startup")
+
+    monkeypatch.setattr(M.Base.metadata, "create_all", _forbid_create_all)
+    res = ses.init_database()
+    assert res["ok"] is True
+    assert create_all_called is False
+
+    con = sqlite3.connect(str(eb / "data" / "app.db"))
+    try:
+        ver = con.execute("SELECT version_num FROM alembic_version").fetchone()
+    finally:
+        con.close()
+    assert ver is not None and ver[0]
+    ses.reset_engine()

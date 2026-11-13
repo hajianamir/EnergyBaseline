@@ -16,7 +16,7 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import StaticPool
 
-from ..config import (
+from ..config.settings import (
     DEFAULT_SQLITE_URL,
     ensure_dirs,
     get_base_dir_info,
@@ -116,7 +116,9 @@ def query_sqlite_pragmas(eng: Engine | None = None) -> dict:
     return out
 
 
-def _probe_external_engine(eng_url: str, timeout_s: float = EXTERNAL_PROBE_TIMEOUT_SECONDS) -> tuple[Engine | None, str, float]:
+def _probe_external_engine(
+    eng_url: str, timeout_s: float = EXTERNAL_PROBE_TIMEOUT_SECONDS
+) -> tuple[Engine | None, str, float]:
     holder: dict = {"eng": None, "err": ""}
     t0 = time.monotonic()
 

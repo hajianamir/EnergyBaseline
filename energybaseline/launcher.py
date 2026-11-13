@@ -65,7 +65,7 @@ def make_shortcuts(force: bool = False) -> list[str]:
     return made
 
 
-def main(argv: list[str] | None = None) -> None:
+def main() -> None:
     multiprocessing.freeze_support()
     base = _base()
     try:
@@ -82,7 +82,7 @@ def main(argv: list[str] | None = None) -> None:
             pass
     from energybaseline.gui.app import main as gui_main
 
-    sys.exit(gui_main(argv))
+    sys.exit(gui_main())
 
 
 if __name__ == "__main__":
