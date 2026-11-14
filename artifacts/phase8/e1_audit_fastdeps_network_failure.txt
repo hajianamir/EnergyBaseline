@@ -1,0 +1,21 @@
+ERROR:pip_audit._virtual_env:internal pip failure: WARNING: pip is using lazily downloaded wheels using HTTP range requests to obtain dependency information. This experimental feature is enabled through --use-feature=fast-deps and it is not ready for production.
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 1)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 2)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 3)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 4)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 5)
+  WARNING: Connection interrupted while downloading.
+error: incomplete-download
+
+× Download failed after 6 attempts because not enough bytes were received (253.2 MB/285.8 MB)
+╰─> URL: https://files.pythonhosted.org/packages/05/73/51e1466f2941ed36dbe57d1f88f772ba6afe669e5ba1e24eaf148b7ec0e1/triton-3.9.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
+
+note: This is an issue with network connectivity, not pip.
+hint: Use --resume-retries to configure resume attempt limit.
+
+ERROR:pip_audit._cli:Failed to install packages: ['/tmp/tmpa_ngf0j4/bin/python3.11', '-m', 'pip', 'install', '--no-input', '--keyring-provider=subprocess', '--dry-run', '--report', '/tmp/tmpwuut10zy/tmp7wruzypt', '-r', 'requirements.lock']

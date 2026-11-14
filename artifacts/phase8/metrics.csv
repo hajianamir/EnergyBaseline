@@ -1,0 +1,21 @@
+artifact_id,label,value,unit
+metric.t1.n_obs,Energy_kWh / Observations,36,observations
+metric.t1.quality,Energy_kWh / Quality score,100.0,score
+metric.t1.completeness,Energy_kWh / Completeness,1.0,fraction
+metric.t1.validity,Energy_kWh / Validity,1.0,fraction
+metric.t1.uniqueness,Energy_kWh / Uniqueness,1.0,fraction
+metric.t1.cvrmse,Energy_kWh / CV(RMSE),3.938894923882289,%
+metric.t1.nmbe,Energy_kWh / NMBE,1.3608802161860205,%
+metric.t1.r_squared,Energy_kWh / R-squared,0.9548356980149817,dimensionless
+metric.t1.rmse,Energy_kWh / RMSE,653.6464829685196,kWh
+metric.t1.mae,Energy_kWh / MAE,564.856481488332,kWh
+metric.t1.mape,Energy_kWh / MAPE,3.6939938348498997,%
+metric.t1.smape,Energy_kWh / sMAPE,3.7047109254919044,%
+metric.t1.aic,Energy_kWh / AIC,,score
+metric.t1.bic,Energy_kWh / BIC,,score
+metric.t1.n_params,Energy_kWh / Parameter count,3,parameters
+metric.t1.score,Energy_kWh / Composite score,95.94587809945104,score
+metric.t1.n_models,Energy_kWh / Evaluated models,19,models
+metric.t1.n_qualified,Energy_kWh / Qualified models,15,models
+metric.t1.n_features,Energy_kWh / Selected features,5,features
+metric.t1.actual_mean,Energy_kWh / Observed mean,16943.583333333332,kWh

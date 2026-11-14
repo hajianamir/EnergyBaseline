@@ -1,0 +1,59 @@
++ python -m ruff check .
+All checks passed!
++ python -m ruff format --check .
+78 files already formatted
++ python -m pyflakes energybaseline
++ python scripts/gates/guard_web_free.py
+OK [guard_web_free] clean (/home/user/EnergyBaseline)
++ python scripts/gates/guard_env_readers.py
+OK [guard_env_readers] clean (/home/user/EnergyBaseline)
++ python scripts/gates/guard_tests_integrity.py
+OK [guard_tests_integrity] verified 4 baseline test files
++ python scripts/gates/guard_no_qthread_compute.py
+OK [guard_no_qthread_compute] clean (/home/user/EnergyBaseline)
++ python scripts/gen_matrix.py --check
+OK [gen_matrix] verified 251 requirement IDs (188 done)
+++ git ls-files
+++ grep -Ei 'package.json|tsconfig|\.tsx?$|next\.config|drizzle|eslint|postcss'
++ test -z ''
+++ git ls-files
+++ grep -E '__pycache__|\.pyc$'
++ test -z ''
+++ grep -rn weasyprint energybaseline scripts requirements.txt requirements.in requirements.lock
++ test -z ''
+++ grep -rn 'os.environ\[\"DATABASE_URL\"\]' energybaseline/launcher.py
++ test -z ''
+++ grep -rn pickle.load energybaseline/
++ test -z ''
+++ grep -rn 'from flask\|from fastapi\|import uvicorn' energybaseline/
++ test -z ''
+++ grep -rn QWebEngineView energybaseline/
++ test -z ''
+++ grep -rn RunResult energybaseline/report/
++ test -z ''
+++ grep -rn hardcoded energybaseline/report/template.py energybaseline/report/narrative.py
++ test -z ''
++ python -m alembic upgrade head
++ python -m alembic downgrade base
++ python -m alembic upgrade head
++ python -m pip-audit -r requirements.lock
+ERROR:pip_audit._virtual_env:internal pip failure:   WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 1)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 2)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 3)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 4)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 5)
+  WARNING: Connection interrupted while downloading.
+error: incomplete-download
+
+× Download failed after 6 attempts because not enough bytes were received (253.2 MB/285.8 MB)
+╰─> URL: https://files.pythonhosted.org/packages/05/73/51e1466f2941ed36dbe57d1f88f772ba6afe669e5ba1e24eaf148b7ec0e1/triton-3.9.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
+
+note: This is an issue with network connectivity, not pip.
+hint: Use --resume-retries to configure resume attempt limit.
+
+ERROR:pip_audit._cli:Failed to install packages: ['/tmp/tmpr9e0vk59/bin/python3.11', '-m', 'pip', 'install', '--no-input', '--keyring-provider=subprocess', '--dry-run', '--report', '/tmp/tmp8ma62u95/tmp6b95ph8w', '-r', 'requirements.lock']
