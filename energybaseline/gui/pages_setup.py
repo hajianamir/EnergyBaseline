@@ -65,6 +65,7 @@ from ..core.tcp import (
     FamilyDefinition,
     MultipleTestingCorrection,
     PreregistrationLockedError,
+    TEST_CATALOG_SPECS,
     TCPValidationError,
     TestConfigPanel,
     compute_impact_preview,
@@ -334,6 +335,12 @@ class SetupPage(QWidget):
         self.tcp_alpha_combo = self._combo([str(a) for a in ALPHA_PRESETS], True)
         self.tcp_alpha_combo.setCurrentText("0.05")
         self.tcp_alpha_combo.currentTextChanged.connect(self._on_tcp_controls_edited)
+        self.tcp_alpha_combo.setToolTip(
+            "Significance level α: probability threshold below which a null hypothesis "
+            "is rejected. Lower α (e.g. 0.01) reduces false positives but lowers power; "
+            "higher α (e.g. 0.10) increases power but raises false-positive risk. "
+            "Used by T1–T14 pre/post-model tests to compute adjusted p-values."
+        )
         tf.addRow("Significance alpha (0.001–0.20)", self.tcp_alpha_combo)
         self.lbl_alpha_warning = QLabel("")
         self.lbl_alpha_warning.setStyleSheet("color: #B45309; font-weight: 600;")
@@ -342,6 +349,11 @@ class SetupPage(QWidget):
         self.tcp_conf_combo = self._combo(list(CONFIDENCE_PRESETS), True)
         self.tcp_conf_combo.setCurrentText("95")
         self.tcp_conf_combo.currentTextChanged.connect(self._on_tcp_controls_edited)
+        self.tcp_conf_combo.setToolTip(
+            "Confidence level (1 − α): coverage probability for confidence/prediction intervals. "
+            "95 % means the interval contains the true value in 95 of 100 repeated samples. "
+            "Used for uncertainty bands around the baseline and for MCS/test decisions."
+        )
         tf.addRow("Confidence level (%)", self.tcp_conf_combo)
         self.tcp_corr_combo = self._combo([c.value for c in MultipleTestingCorrection])
         self.tcp_corr_combo.currentTextChanged.connect(self._on_tcp_controls_edited)
@@ -365,6 +377,35 @@ class SetupPage(QWidget):
         tbar.addWidget(self.btn_what_if)
         tbar.addWidget(self.btn_amend_tcp)
         tl.addLayout(tbar)
+
+        # Test catalog panel: user can see every T1–T14 test, its stage, gate role,
+        # and whether it is disableable. Hard-gate tests are read-only.
+        g_tc = QGroupBox("Statistical test catalog (T1–T14) — tests applied to data and baseline")
+        f_tc = QFormLayout(g_tc)
+        self.tc_checks: dict[str, QCheckBox] = {}
+        for tid, spec in sorted(TEST_CATALOG_SPECS.items()):
+            row = QHBoxLayout()
+            cb = QCheckBox(f"{tid} · {spec.name}")
+            cb.setChecked(True)
+            is_hard = spec.default_gate_role == "hard_gate"
+            if is_hard:
+                cb.setEnabled(False)
+                cb.setToolTip("Non-disableable (hard gate — always runs).")
+            else:
+                cb.setToolTip(
+                    f"Stage: {spec.stage} · family: {spec.family} · gate: {spec.default_gate_role} · "
+                    f"per-variable: {spec.per_variable}"
+                )
+            row.addWidget(cb)
+            row.addStretch(1)
+            lbl = QLabel(spec.description or "")
+            lbl.setWordWrap(True)
+            lbl.setStyleSheet("color: #667085; font-size: 11px;")
+            row.addWidget(lbl, 1)
+            f_tc.addRow(row)
+            self.tc_checks[tid] = cb
+        tl.addWidget(g_tc)
+
         self.tcp_status = QLabel("TCP status: awaiting VSG acceptance.")
         self.tcp_status.setWordWrap(True)
         tl.addWidget(self.tcp_status)
@@ -523,9 +564,11 @@ class SetupPage(QWidget):
         self._syncing_schema = True
         try:
             self.time_combo.clear()
-            self.time_combo.addItems(list(df.columns))
-            if s.time_col:
+            self.time_combo.addItems(["(none)"] + list(df.columns))
+            if s.time_col and self.time_combo.findText(s.time_col) >= 0:
                 self.time_combo.setCurrentText(s.time_col)
+            else:
+                self.time_combo.setCurrentText("(none)")
             self.target_list.blockSignals(True)
             self.target_list.clear()
             for c in df.columns:
@@ -534,13 +577,20 @@ class SetupPage(QWidget):
                     it.setFlags(it.flags() | Qt.ItemFlag.ItemIsUserCheckable)
                     it.setCheckState(Qt.CheckState.Unchecked)
                     self.target_list.addItem(it)
-            for i in range(self.target_list.count()):
-                if any(
-                    k in self.target_list.item(i).text().lower()
-                    for k in ("kwh", "energy", "elec", "gas", "consum", "m3")
-                ):
-                    self.target_list.item(i).setCheckState(Qt.CheckState.Checked)
-                    break
+            # Auto-select a plausible target ONLY when the user has not already
+            # chosen one (preserves explicit user choice across reloads).
+            already_checked = any(
+                self.target_list.item(i).checkState() == Qt.CheckState.Checked
+                for i in range(self.target_list.count())
+            )
+            if not already_checked:
+                for i in range(self.target_list.count()):
+                    if any(
+                        k in self.target_list.item(i).text().lower()
+                        for k in ("kwh", "energy", "elec", "gas", "consum", "m3")
+                    ):
+                        self.target_list.item(i).setCheckState(Qt.CheckState.Checked)
+                        break
             self.target_list.blockSignals(False)
             self._update_overrides_table()
         finally:
@@ -1225,7 +1275,8 @@ class SetupPage(QWidget):
     def collect(self) -> None:
         """Push the Setup choices into state (AUTO entries do NOT override Advanced settings)."""
         s = self.state
-        s.time_col = self.time_combo.currentText() or s.time_col
+        tc = self.time_combo.currentText()
+        s.time_col = None if tc in ("", "(none)") else tc
         s.targets = self.checked_targets()
         units = self._parse_units_line()
         cfg: dict[str, Any] = {}
@@ -1388,10 +1439,14 @@ class AnalysisPage(QWidget):
             if _is_interactive():
                 QMessageBox.information(self, "Run analysis", "Tick at least one TARGET column on the Setup tab.")
             return
-        if not s.time_col:
-            if _is_interactive():
-                QMessageBox.information(self, "Run analysis", "Select the timestamp column on the Setup tab.")
-            return
+        # time_col is optional: datasets without a timestamp column run as
+        # non-temporal (row-order) baselines.
+        if s.df is not None and s.time_col is None and _is_interactive():
+            QMessageBox.information(
+                self,
+                "Run analysis",
+                "No timestamp column selected — analysis will run in non-temporal (row-order) mode.",
+            )
         if s.vsg is not None and not s.vsg.is_accepted():
             self.status.setText("Blocked: accept Variable Selection Gate (VSG) first.")
             if _is_interactive():
