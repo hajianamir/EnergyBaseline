@@ -14,6 +14,7 @@ from PySide6.QtCore import Qt, QTimer
 
 from ..config.runtime_env import is_interactive_ui
 from PySide6.QtWidgets import (
+    QCheckBox,
     QComboBox,
     QDialog,
     QDialogButtonBox,
@@ -398,7 +399,7 @@ class SetupPage(QWidget):
                 )
             row.addWidget(cb)
             row.addStretch(1)
-            lbl = QLabel(spec.description or "")
+            lbl = QLabel(spec.name or "")
             lbl.setWordWrap(True)
             lbl.setStyleSheet("color: #667085; font-size: 11px;")
             row.addWidget(lbl, 1)
