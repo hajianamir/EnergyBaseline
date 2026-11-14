@@ -12,10 +12,11 @@ permissions:
 jobs:
   r-reference-nightly:
     name: Live R vs Versioned JSON Parity & Staleness Check
-    runs-on: ubuntu-latest
+    # Keep the runner and Python build aligned; 3.11.9 has no Ubuntu 26.04 build.
+    runs-on: ubuntu-26.04
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up R 4.4.1
         uses: r-lib/actions/setup-r@v2
@@ -31,10 +32,10 @@ jobs:
             any::trend
             any::forecast
 
-      - name: Set up Python 3.11.9
-        uses: actions/setup-python@v5
+      - name: Set up Python 3.11.18 (Ubuntu 26.04)
+        uses: actions/setup-python@v6
         with:
-          python-version: "3.11.9"
+          python-version: "3.11.18"
 
       - name: Install locked Python runtime & dev dependencies
         run: |
@@ -86,7 +87,7 @@ jobs:
 
       - name: Open GitHub issue on R reference divergence or staleness failure
         if: failure()
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const title = `[CI-3] Nightly R Reference Divergence / Staleness Alert (${new Date().toISOString().slice(0, 10)})`;
