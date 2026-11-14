@@ -125,3 +125,51 @@ python scripts/evidence/phase7.py --out-dir artifacts/phase7/reproduced
 ```
 
 D2 physical hardware and human visual acceptance remain separate from CI evidence.
+
+## Phase 8: reports and audit archives
+
+Every supported export and the in-app report preview consume the same persisted
+JSON report model. Analysis objects cross a single adapter boundary; renderers do
+not fit models, run hypothesis tests or read the original analysis object.
+
+The report offers **Executive**, **Standard** and **Full** depth with linked
+contents in PDF, Excel and HTML. Executive tables show a small excerpt; complete
+persisted tables remain in the Full export/audit companion. The Executive PDF
+never ships above its page budget: an oversized summary is explicitly rejected
+so the user can choose a deeper report or a smaller summary input. Missing evidence
+is shown as unavailable, never filled with report-only metric values.
+
+The preview provides exact key-metric cells, static Agg charts, an interactive
+QtAgg chart selector/toolbar, and **Export audit archive**. Charts carry units,
+source-row sample counts and alt text. Point-prediction and residual figures are
+explicit rank-one diagnostics unless a persisted selected-model series is
+provided; a selection override does not relabel another model's predictions.
+CI bands appear only when persisted lower/upper bounds are present.
+
+```bash
+python -m energybaseline.cli report-export report-model.json --directory exports --depth full
+python -m energybaseline.cli audit-verify exports/audit.zip --sha256 EXPECTED_ARCHIVE_SHA256
+```
+
+The self-contained HTML embeds all images and makes no external content requests.
+PDF generation is exclusively ReportLab Platypus with invariant metadata. Excel
+exports source numbers in numeric cells and imported strings as inert text, not
+formulas. The supplementary formula workbook adapter is separate and accepts
+only an integrity-verified locked baseline.
+
+Audit ZIP members include report-model JSON, configuration, provenance, all source
+tables (including AUTO/TestResult records), metric CSV, PDF, Excel, HTML and a hash
+manifest. Verification revalidates every member and reconstructs tables from the
+persisted report model, then reads metric values back from the actual exports.
+This proves persisted evidence integrity and reproducible tables, not a fresh
+statistical re-analysis or a signed chain of custody. Retain the expected archive
+digest separately when adversarial replacement matters. Archive reads are bounded
+and never extracted into the filesystem.
+
+Numeric narrative statements and disclosure annotations carry artifact references.
+Unresolved references or numbers disagreeing with their sources fail model
+construction before any export is written. Connection material and active/remote
+content are rejected from report state. Provenance records the source dataset
+hash, per-target seed lineage, user configuration, packages, OS/CPU and source
+commit. Repeated PDFs from identical persisted state are byte-identical in the
+same environment; changed provenance intentionally changes report identity.

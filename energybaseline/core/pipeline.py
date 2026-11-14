@@ -687,8 +687,12 @@ def run_analysis(df: pd.DataFrame, time_col: str, targets: list[str], config: di
     bundles: dict[str, dict] = {}
     target_logs: dict[str, AutoLog] = {t: auto.for_target(t, isolated=True) for t in targets}
 
+    from ..report.provenance import derive_seed, provenance_manifest
+    lineage_sha = dataset_sha if dataset_sha and len(dataset_sha) == 64 and all(c in "0123456789abcdef" for c in dataset_sha) else hashlib.sha256(pd.util.hash_pandas_object(df, index=True).values.tobytes()).hexdigest()
+    target_seeds = {target: derive_seed(lineage_sha, target, seed) for target in targets}
+
     def work(t):
-        return analyze_target(df, time_col, t, targets, config, seed, target_logs[t], n_jobs, progress, cancel, artifact_fn, schema=resolved_schema)
+        return analyze_target(df, time_col, t, targets, config, target_seeds[t], target_logs[t], n_jobs, progress, cancel, artifact_fn, schema=resolved_schema)
 
     cancelled = False
     try:
@@ -732,4 +736,6 @@ def run_analysis(df: pd.DataFrame, time_col: str, targets: list[str], config: di
         vsg_summary=vsg.to_dict() if vsg is not None else {},
         tcp_summary=tcp.to_dict() if tcp is not None else {},
     )
+    run.provenance["seed_lineage"] = {"dataset_sha256": lineage_sha, "user_seed": seed, "target_seeds": target_seeds}
+    run.provenance["runtime_manifest"] = provenance_manifest(lineage_sha, config, target_seeds=target_seeds)
     return run, bundles

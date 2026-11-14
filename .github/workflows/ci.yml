@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   verify:
-    name: Phase 7 Gate G7 (${{ matrix.os }})
+    name: Phase 8 Gate G8 (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -94,9 +94,14 @@ jobs:
           python -m pytest -q tests/gates
           python scripts/evidence/phase7.py --out-dir artifacts/phase7/ci
 
+      - name: Gate G8 shared reports, renderer agreement and audit verification
+        run: |
+          python -m pytest -q --junitxml=pytest-g8.xml tests/gates/test_phase8_reporting_and_audit.py
+          python scripts/evidence/phase8.py --out-dir artifacts/phase8/ci
+
       - name: Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
         run: |
-          python -m pytest -q --junitxml=pytest-core.xml --cov=energybaseline/core --cov=energybaseline/tests_catalog --cov=energybaseline/mining --cov=energybaseline/models --cov=energybaseline/scoring --cov=energybaseline/validation --cov=energybaseline/lock --cov=energybaseline/uq --cov=energybaseline/monitoring --cov=energybaseline/causal --cov-report=xml:coverage.xml --cov-report=term --cov-fail-under=60
+          python -m pytest -q --junitxml=pytest-core.xml --cov=energybaseline/core --cov=energybaseline/tests_catalog --cov=energybaseline/mining --cov=energybaseline/models --cov=energybaseline/scoring --cov=energybaseline/validation --cov=energybaseline/lock --cov=energybaseline/uq --cov=energybaseline/monitoring --cov=energybaseline/causal --cov=energybaseline/report --cov-report=xml:coverage.xml --cov-report=term --cov-fail-under=60
           python -m coverage report --fail-under=80
 
       - name: Emit pytest failure annotations on error
@@ -146,7 +151,7 @@ jobs:
 
       - name: Vulnerability audit (pip-audit)
         run: |
-          pip-audit -r requirements.lock
+          python -m pip-audit -r requirements.lock
 
       - name: Generate CycloneDX SBOM
         run: |

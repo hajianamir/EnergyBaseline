@@ -57,3 +57,7 @@ Per ratified decision `D5 = A` and standing assumption `S7`:
 | `pyflakes` | `4.1.0` | MIT | Unused-symbol / undefined-name static analysis |
 | `pytest` / `pytest-cov` / `pytest-qt` | `9.2.0` / `7.1.0` / `4.5.0` | MIT | Automated test runner, coverage, and Qt harness |
 | `ruff` | `0.17.5` | MIT | Python linter and formatter |
+
+Phase 8 verification/runtime audit parser: `pypdf==7.1.0` (BSD-3-Clause,
+https://github.com/py-pdf/pypdf), used to read actual exported PDF values and links.
+Report generation remains exclusively ReportLab Platypus.

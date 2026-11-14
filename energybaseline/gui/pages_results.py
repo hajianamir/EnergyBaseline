@@ -9,7 +9,7 @@ from typing import Any, Sequence
 import numpy as np
 import pandas as pd
 from PySide6.QtCore import Qt, QUrl
-from PySide6.QtGui import QDesktopServices, QFont, QImage, QKeySequence, QShortcut, QTextDocument
+from PySide6.QtGui import QDesktopServices, QFont, QKeySequence, QShortcut
 from PySide6.QtWidgets import (
     QButtonGroup,
     QCheckBox,
@@ -352,9 +352,11 @@ class ResultsPage(QWidget):
         self.rep_status.setAccessibleName("Report generation status")
         h.addWidget(self.rep_status, 1)
         layout.addLayout(h)
-        self.browser = QTextBrowser()
+        from .report_preview import ReportPreview
+        self.report_preview = ReportPreview()
+        self.browser = self.report_preview.browser
         self.browser.setAccessibleName("Report preview browser")
-        layout.addWidget(self.browser, 1)
+        layout.addWidget(self.report_preview, 1)
         return w
 
     def _update_preview_hint(self):
@@ -572,14 +574,9 @@ class ResultsPage(QWidget):
         run = self.state.run
         if not run:
             return
-        html, charts = report.render_html(
-            run, self._selections(), store.audit_entries(self.state.run_id), self.state.data_dictionary, embed=False
-        )
-        doc = self.browser.document()
-        doc.clear()
-        for name, png in charts.items():
-            doc.addResource(QTextDocument.ResourceType.ImageResource, QUrl(name), QImage.fromData(png))
-        self.browser.setHtml(html)
+        from ..core.report_adapter import model_from_analysis
+        model = model_from_analysis(run, self._selections(), store.audit_entries(self.state.run_id), self.state.data_dictionary)
+        self.report_preview.set_report(model)
 
     def open_folder(self):
         from ..config import ensure_dirs

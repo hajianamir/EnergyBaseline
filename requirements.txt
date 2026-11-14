@@ -167,3 +167,4 @@ xgboost==3.2.0
 zipp==4.1.2
 econml==0.17.0
 sparse==0.19.3
+pypdf==7.1.0
