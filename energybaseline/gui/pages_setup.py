@@ -14,6 +14,7 @@ from PySide6.QtCore import Qt, QTimer
 
 from ..config.runtime_env import is_interactive_ui
 from PySide6.QtWidgets import (
+    QCheckBox,
     QComboBox,
     QDialog,
     QDialogButtonBox,
