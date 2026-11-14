@@ -2300,99 +2300,135 @@ requirements:
   test_ids: []
 - id: REP-1
   priority: M
-  phase: 7
-  status: planned
+  phase: 8
+  status: done
   title: Deterministic seed derivation from dataset SHA-256 + target + explicit user seed propagated to
     NumPy, scikit-learn, GBDTs, Optuna, and PyTorch.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/report/provenance.py
+  - energybaseline/core/pipeline.py
+  test_ids:
+  - tests/gates/test_phase8_reporting_and_audit.py::test_seed_determinism_target_user_dataset_and_runtime
+  - tests/gates/test_phase8_reporting_and_audit.py::test_pipeline_actual_target_seed_lineage_and_repeatability
 - id: REP-2
   priority: M
-  phase: 7
-  status: planned
+  phase: 8
+  status: done
   title: Bitwise/numerical repeatability within <= 1e-12 across repeated runs on the same OS/Python environment.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/report/sections.py
+  - energybaseline/report/pdf.py
+  test_ids:
+  - tests/gates/test_phase8_reporting_and_audit.py::test_rep2_rpt3_mandatory_sections
+  - tests/gates/test_phase8_reporting_and_audit.py::test_pdf_deterministic_and_empty_report_all_depths
+  - tests/test_pipeline.py::test_determinism
 - id: REP-3
   priority: M
-  phase: 7
-  status: planned
+  phase: 8
+  status: done
   title: Complete provenance manifest per run recording package versions, OS, CPU count, dataset SHA-256,
     config JSON, and commit SHA.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/report/provenance.py
+  test_ids:
+  - tests/gates/test_phase8_reporting_and_audit.py::test_provenance_manifest_complete_and_no_connection_material
 - id: REP-4
   priority: M
-  phase: 7
-  status: planned
+  phase: 8
+  status: done
   title: One-click audit archive export (.zip) containing config, AutoDecisionLog, TestResult catalog,
     metrics, and SHA256SUMS.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/report/archive.py
+  - energybaseline/gui/report_preview.py
+  test_ids:
+  - tests/gates/test_phase8_reporting_and_audit.py::test_archive_hashes_tables_and_renderer_agreement
+  - tests/gui/test_phase8_report_preview.py::test_three_renderer_agreement_twenty_metrics_and_one_click_archive
 - id: REP-5
   priority: M
-  phase: 7
-  status: planned
+  phase: 8
+  status: done
   title: Audit archive verifier re-validating file hashes and reproducing report tables from persisted
     run state.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/report/archive.py
+  test_ids:
+  - tests/gates/test_phase8_reporting_and_audit.py::test_archive_hashes_tables_and_renderer_agreement
 - id: RPT-1
   priority: M
   phase: 8
-  status: planned
+  status: done
   title: Pure-Python ISO 50006 / IPMVP PDF report renderer built exclusively on ReportLab Platypus (D5=A;
     zero GTK/WeasyPrint).
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/report/pdf.py
+  - energybaseline/report/template.py
+  test_ids:
+  - tests/gates/test_phase8_reporting_and_audit.py::test_renderers_twenty_metrics_links_and_page_budget
 - id: RPT-2
   priority: M
   phase: 8
-  status: planned
+  status: done
   title: Self-contained single-file offline HTML report with embedded base64/SVG charts and zero external
     CDN links.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/report/html.py
+  test_ids:
+  - tests/gates/test_phase8_reporting_and_audit.py::test_renderers_twenty_metrics_links_and_page_budget
 - id: RPT-3
   priority: M
   phase: 8
-  status: planned
+  status: done
   title: 'Mandatory report sections: Executive Summary, Data & VSG Audit, TCP, Statistical Test Catalog
     (p_raw & p_adj), Model Register, Selected Baseline & UQ, Monitoring/CUSUM, and AutoDecisionLog.'
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/report/sections.py
+  test_ids:
+  - tests/gates/test_phase8_reporting_and_audit.py::test_rep2_rpt3_mandatory_sections
 - id: RPT-4
   priority: M
   phase: 8
-  status: planned
+  status: done
   title: Publication-grade vector/high-DPI matplotlib diagnostic charts (Actual vs Predicted, Residual
     ACF/QQ, CUSUM, Driver Partial Response, Prediction Intervals).
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/report/charts.py
+  test_ids:
+  - tests/gates/test_phase8_reporting_and_audit.py::test_rpt4_chart_units_sample_size_palette_bands_and_alt_text
 - id: RPT-5
   priority: M
   phase: 8
-  status: planned
+  status: done
   title: Deterministic PDF generation (fixed ReportLab creation timestamp/ID metadata in reproducible
     mode for regression testing).
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/report/pdf.py
+  test_ids:
+  - tests/gates/test_phase8_reporting_and_audit.py::test_pdf_deterministic_and_empty_report_all_depths
 - id: RPT-6
   priority: M
   phase: 8
-  status: planned
+  status: done
   title: Machine-readable CSV/Excel/JSON companion export of predictions, intervals, residuals, and CUSUM
     series.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/report/excel.py
+  - energybaseline/report/model.py
+  test_ids:
+  - tests/gates/test_phase8_reporting_and_audit.py::test_companions_and_mandatory_disclosure_banner
+  - tests/gates/test_phase8_reporting_and_audit.py::test_report_model_roundtrip_and_immutable
 - id: RPT-7
   priority: M
   phase: 8
-  status: planned
+  status: done
   title: Explicit disclosure banner in every report listing any manual overrides, skipped model families,
     or assumption fallbacks.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/report/banner.py
+  - energybaseline/report/narrative.py
+  test_ids:
+  - tests/gates/test_phase8_reporting_and_audit.py::test_companions_and_mandatory_disclosure_banner
+  - tests/gates/test_phase8_reporting_and_audit.py::test_numeric_artifact_build_failures_and_no_template_metrics
 - id: UX-1
   priority: M
   phase: 8

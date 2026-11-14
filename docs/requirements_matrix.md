@@ -6,7 +6,7 @@
 ## Summary
 
 - **Total tracked IDs:** 251 (Priorities: `[M]`=245, `[S]`=4, `[O]`=2)
-- **Status breakdown:** `done`=176 · `in_progress`=18 · `planned`=56 · `deferred`=1
+- **Status breakdown:** `done`=188 · `in_progress`=18 · `planned`=44 · `deferred`=1
 
 ## Matrix
 
@@ -228,18 +228,18 @@
 | `PER-4` | `M` | `7` | `planned` | 100,000-row sub-hourly/hourly pipeline completion <= 10 min with peak RSS <= 4 GB on D2 reference machine. | — | — |
 | `PER-5` | `M` | `7` | `planned` | UI main-thread frame responsiveness maintained (no frozen window > 100 ms) throughout heavy runs. | — | — |
 | `PER-6` | `M` | `7` | `planned` | Automated benchmark suite recording wall-clock timing and peak memory against PER-1..5 budgets. | — | — |
-| `REP-1` | `M` | `7` | `planned` | Deterministic seed derivation from dataset SHA-256 + target + explicit user seed propagated to NumPy, scikit-learn, GBDTs, Optuna, and PyTorch. | — | — |
-| `REP-2` | `M` | `7` | `planned` | Bitwise/numerical repeatability within <= 1e-12 across repeated runs on the same OS/Python environment. | — | — |
-| `REP-3` | `M` | `7` | `planned` | Complete provenance manifest per run recording package versions, OS, CPU count, dataset SHA-256, config JSON, and commit SHA. | — | — |
-| `REP-4` | `M` | `7` | `planned` | One-click audit archive export (.zip) containing config, AutoDecisionLog, TestResult catalog, metrics, and SHA256SUMS. | — | — |
-| `REP-5` | `M` | `7` | `planned` | Audit archive verifier re-validating file hashes and reproducing report tables from persisted run state. | — | — |
-| `RPT-1` | `M` | `8` | `planned` | Pure-Python ISO 50006 / IPMVP PDF report renderer built exclusively on ReportLab Platypus (D5=A; zero GTK/WeasyPrint). | — | — |
-| `RPT-2` | `M` | `8` | `planned` | Self-contained single-file offline HTML report with embedded base64/SVG charts and zero external CDN links. | — | — |
-| `RPT-3` | `M` | `8` | `planned` | Mandatory report sections: Executive Summary, Data & VSG Audit, TCP, Statistical Test Catalog (p_raw & p_adj), Model Register, Selected Baseline & UQ, Monitoring/CUSUM, and AutoDecisionLog. | — | — |
-| `RPT-4` | `M` | `8` | `planned` | Publication-grade vector/high-DPI matplotlib diagnostic charts (Actual vs Predicted, Residual ACF/QQ, CUSUM, Driver Partial Response, Prediction Intervals). | — | — |
-| `RPT-5` | `M` | `8` | `planned` | Deterministic PDF generation (fixed ReportLab creation timestamp/ID metadata in reproducible mode for regression testing). | — | — |
-| `RPT-6` | `M` | `8` | `planned` | Machine-readable CSV/Excel/JSON companion export of predictions, intervals, residuals, and CUSUM series. | — | — |
-| `RPT-7` | `M` | `8` | `planned` | Explicit disclosure banner in every report listing any manual overrides, skipped model families, or assumption fallbacks. | — | — |
+| `REP-1` | `M` | `8` | `done` | Deterministic seed derivation from dataset SHA-256 + target + explicit user seed propagated to NumPy, scikit-learn, GBDTs, Optuna, and PyTorch. | `energybaseline/report/provenance.py`, `energybaseline/core/pipeline.py` | `tests/gates/test_phase8_reporting_and_audit.py::test_seed_determinism_target_user_dataset_and_runtime`, `tests/gates/test_phase8_reporting_and_audit.py::test_pipeline_actual_target_seed_lineage_and_repeatability` |
+| `REP-2` | `M` | `8` | `done` | Bitwise/numerical repeatability within <= 1e-12 across repeated runs on the same OS/Python environment. | `energybaseline/report/sections.py`, `energybaseline/report/pdf.py` | `tests/gates/test_phase8_reporting_and_audit.py::test_rep2_rpt3_mandatory_sections`, `tests/gates/test_phase8_reporting_and_audit.py::test_pdf_deterministic_and_empty_report_all_depths`, `tests/test_pipeline.py::test_determinism` |
+| `REP-3` | `M` | `8` | `done` | Complete provenance manifest per run recording package versions, OS, CPU count, dataset SHA-256, config JSON, and commit SHA. | `energybaseline/report/provenance.py` | `tests/gates/test_phase8_reporting_and_audit.py::test_provenance_manifest_complete_and_no_connection_material` |
+| `REP-4` | `M` | `8` | `done` | One-click audit archive export (.zip) containing config, AutoDecisionLog, TestResult catalog, metrics, and SHA256SUMS. | `energybaseline/report/archive.py`, `energybaseline/gui/report_preview.py` | `tests/gates/test_phase8_reporting_and_audit.py::test_archive_hashes_tables_and_renderer_agreement`, `tests/gui/test_phase8_report_preview.py::test_three_renderer_agreement_twenty_metrics_and_one_click_archive` |
+| `REP-5` | `M` | `8` | `done` | Audit archive verifier re-validating file hashes and reproducing report tables from persisted run state. | `energybaseline/report/archive.py` | `tests/gates/test_phase8_reporting_and_audit.py::test_archive_hashes_tables_and_renderer_agreement` |
+| `RPT-1` | `M` | `8` | `done` | Pure-Python ISO 50006 / IPMVP PDF report renderer built exclusively on ReportLab Platypus (D5=A; zero GTK/WeasyPrint). | `energybaseline/report/pdf.py`, `energybaseline/report/template.py` | `tests/gates/test_phase8_reporting_and_audit.py::test_renderers_twenty_metrics_links_and_page_budget` |
+| `RPT-2` | `M` | `8` | `done` | Self-contained single-file offline HTML report with embedded base64/SVG charts and zero external CDN links. | `energybaseline/report/html.py` | `tests/gates/test_phase8_reporting_and_audit.py::test_renderers_twenty_metrics_links_and_page_budget` |
+| `RPT-3` | `M` | `8` | `done` | Mandatory report sections: Executive Summary, Data & VSG Audit, TCP, Statistical Test Catalog (p_raw & p_adj), Model Register, Selected Baseline & UQ, Monitoring/CUSUM, and AutoDecisionLog. | `energybaseline/report/sections.py` | `tests/gates/test_phase8_reporting_and_audit.py::test_rep2_rpt3_mandatory_sections` |
+| `RPT-4` | `M` | `8` | `done` | Publication-grade vector/high-DPI matplotlib diagnostic charts (Actual vs Predicted, Residual ACF/QQ, CUSUM, Driver Partial Response, Prediction Intervals). | `energybaseline/report/charts.py` | `tests/gates/test_phase8_reporting_and_audit.py::test_rpt4_chart_units_sample_size_palette_bands_and_alt_text` |
+| `RPT-5` | `M` | `8` | `done` | Deterministic PDF generation (fixed ReportLab creation timestamp/ID metadata in reproducible mode for regression testing). | `energybaseline/report/pdf.py` | `tests/gates/test_phase8_reporting_and_audit.py::test_pdf_deterministic_and_empty_report_all_depths` |
+| `RPT-6` | `M` | `8` | `done` | Machine-readable CSV/Excel/JSON companion export of predictions, intervals, residuals, and CUSUM series. | `energybaseline/report/excel.py`, `energybaseline/report/model.py` | `tests/gates/test_phase8_reporting_and_audit.py::test_companions_and_mandatory_disclosure_banner`, `tests/gates/test_phase8_reporting_and_audit.py::test_report_model_roundtrip_and_immutable` |
+| `RPT-7` | `M` | `8` | `done` | Explicit disclosure banner in every report listing any manual overrides, skipped model families, or assumption fallbacks. | `energybaseline/report/banner.py`, `energybaseline/report/narrative.py` | `tests/gates/test_phase8_reporting_and_audit.py::test_companions_and_mandatory_disclosure_banner`, `tests/gates/test_phase8_reporting_and_audit.py::test_numeric_artifact_build_failures_and_no_template_metrics` |
 | `UX-1` | `M` | `8` | `planned` | Guided workflow wizard with clear prerequisite gating so users cannot run modeling before valid target/time selection. | — | — |
 | `UX-2` | `M` | `8` | `planned` | Interactive data preview table with column types, missingness badges, unit selectors, and summary sparklines. | — | — |
 | `UX-3` | `M` | `8` | `planned` | Dedicated VSG & Data Quality review screen allowing sorting, filtering, and audited manual override of driver screening. | — | — |

@@ -1,0 +1,5 @@
+# Preserve exported evidence bytes and prevent PDF xref whitespace normalization.
+report.pdf binary
+report.xlsx binary
+audit.zip binary
+metrics.csv -text

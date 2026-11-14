@@ -1,0 +1,40 @@
++ git rev-parse HEAD
+95fdd4a5f82ed5186d9556fc8f91f3018c9d4f48
++ sha256sum
++ git cat-file commit HEAD
+293794b90909e4c7ca9f196b234419d98a6285fec8392c77addfb148428bd8c7  -
++ git diff --name-status 11798dd..95fdd4a -- tests
+A	tests/fixtures/phase8.py
+A	tests/gates/test_phase8_reporting_and_audit.py
+A	tests/gui/test_phase8_report_preview.py
++ git diff --exit-code 11798dd..95fdd4a -- LICENSE artifacts/review_baseline tests/.baseline.sha256
++ .venv/bin/python -m coverage report '--include=*/energybaseline/report/*'
+Name                                  Stmts   Miss  Cover
+---------------------------------------------------------
+energybaseline/report/__init__.py         6      0   100%
+energybaseline/report/agreement.py       32      2    94%
+energybaseline/report/archive.py         76      7    91%
+energybaseline/report/banner.py           3      0   100%
+energybaseline/report/charts.py          85      5    94%
+energybaseline/report/depth.py           16      0   100%
+energybaseline/report/diff.py             8      0   100%
+energybaseline/report/excel.py           81      1    99%
+energybaseline/report/html.py            40      0   100%
+energybaseline/report/model.py           88     10    89%
+energybaseline/report/narrative.py       33      3    91%
+energybaseline/report/pdf.py             82      2    98%
+energybaseline/report/provenance.py      38      4    89%
+energybaseline/report/safety.py          20      0   100%
+energybaseline/report/sections.py        12      0   100%
+energybaseline/report/template.py         9      3    67%
+---------------------------------------------------------
+TOTAL                                   629     37    94%
++ .venv/bin/python -m energybaseline.cli audit-verify artifacts/phase8/audit.zip --sha256 cbb591b8ff40e84ff8a019ea48ea9c5c01315be167bdb651669e3417c55fd33d
+{
+  "files_verified": 8,
+  "metrics_reproduced": 20,
+  "ok": true,
+  "report_id": "d6a7f8786e05adb1c04a74400322edae4240f88eb46a1a9f94201d7d6dd233c5",
+  "sha256": "cbb591b8ff40e84ff8a019ea48ea9c5c01315be167bdb651669e3417c55fd33d",
+  "tables_reproduced": 28
+}

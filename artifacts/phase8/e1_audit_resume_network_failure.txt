@@ -1,0 +1,50 @@
+ERROR:pip_audit._virtual_env:internal pip failure:   WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 1)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 2)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 3)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 4)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 5)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 6)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 7)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 8)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 9)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 10)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 11)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 12)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 13)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 14)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 15)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 16)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 17)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 18)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 19)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (253.2 MB/285.8 MB, attempt 20)
+  WARNING: Connection interrupted while downloading.
+error: incomplete-download
+
+× Download failed after 21 attempts because not enough bytes were received (253.2 MB/285.8 MB)
+╰─> URL: https://files.pythonhosted.org/packages/05/73/51e1466f2941ed36dbe57d1f88f772ba6afe669e5ba1e24eaf148b7ec0e1/triton-3.9.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
+
+note: This is an issue with network connectivity, not pip.
+hint: Use --resume-retries to configure resume attempt limit.
+
+ERROR:pip_audit._cli:Failed to install packages: ['/tmp/tmpqdwhftm5/bin/python3.11', '-m', 'pip', 'install', '--no-input', '--keyring-provider=subprocess', '--dry-run', '--report', '/tmp/tmp9u46ise5/tmpugtfa8pn', '-r', 'requirements.lock']

@@ -874,6 +874,27 @@ def _cmd_monitoring_run(args: argparse.Namespace) -> int:
     return 0
 
 
+
+def _cmd_report_export(args):
+    from .report import ReportModel,render_pdf,render_excel,render_html,export_archive,export_companions
+    model=ReportModel.load(args.model)
+    directory=Path(args.directory);directory.mkdir(parents=True,exist_ok=True)
+    output=export_companions(model,directory)
+    output['pdf']=render_pdf(model,directory/'report.pdf',depth=args.depth)
+    render_excel(model,directory/'report.xlsx',depth=args.depth)
+    (directory/'report.html').write_text(render_html(model,depth=args.depth),encoding='utf-8')
+    output['audit']=export_archive(model,directory/'audit.zip',depth=args.depth)
+    _write_or_print(output,args.out)
+    return 0
+
+
+def _cmd_audit_verify(args):
+    from .report import verify_archive
+    result=verify_archive(args.archive,expected_sha256=args.sha256)
+    _write_or_print(result,args.out)
+    return 0
+
+
 CLI_COMMAND_HANDLERS: Mapping[str, Callable[[argparse.Namespace], int]] = MappingProxyType(
     {
         "schema-suggest": _cmd_schema_suggest,
@@ -896,6 +917,8 @@ CLI_COMMAND_HANDLERS: Mapping[str, Callable[[argparse.Namespace], int]] = Mappin
         "baseline-lock": _cmd_baseline_lock,
         "uq-calibrate": _cmd_uq_calibrate,
         "monitoring-run": _cmd_monitoring_run,
+        "report-export": _cmd_report_export,
+        "audit-verify": _cmd_audit_verify,
     }
 )
 
@@ -1068,6 +1091,16 @@ def build_parser() -> argparse.ArgumentParser:
     p_mon.add_argument("--batch-id", required=True)
     p_mon.add_argument("--confidence", type=float, default=0.95)
     p_mon.add_argument("--out")
+
+    p_report=sub.add_parser("report-export",help="Render a persisted JSON report model and audit ZIP.")
+    p_report.add_argument("model")
+    p_report.add_argument("--directory",required=True)
+    p_report.add_argument("--depth",choices=["executive","standard","full"],default="standard")
+    p_report.add_argument("--out")
+    p_verify=sub.add_parser("audit-verify",help="Verify audit hashes and reproduce persisted report tables.")
+    p_verify.add_argument("archive")
+    p_verify.add_argument("--sha256")
+    p_verify.add_argument("--out")
 
     return parser
 
