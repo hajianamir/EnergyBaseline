@@ -1,0 +1,1339 @@
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 11 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+* Phase 7 Gate G7 (ubuntu-latest) (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 12 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+* Phase 7 Gate G7 (ubuntu-latest) (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 13 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+* Phase 7 Gate G7 (ubuntu-latest) (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 14 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+* Phase 7 Gate G7 (ubuntu-latest) (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 15 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+* Phase 7 Gate G7 (ubuntu-latest) (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 16 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+* Phase 7 Gate G7 (ubuntu-latest) (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 17 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+* Phase 7 Gate G7 (ubuntu-latest) (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 18 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+* Phase 7 Gate G7 (ubuntu-latest) (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 19 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+* Phase 7 Gate G7 (ubuntu-latest) (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 20 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+* Phase 7 Gate G7 (ubuntu-latest) (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 21 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+✓ Phase 7 Gate G7 (ubuntu-latest) in 21m15s (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  ✓ Vulnerability audit (pip-audit)
+  ✓ Generate CycloneDX SBOM
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  ✓ Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 7 Gate G7 (ubuntu-latest): .github#2
+
+- "The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748"
+Phase 7 Gate G7 (ubuntu-latest): .github#1
+
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 22 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+✓ Phase 7 Gate G7 (ubuntu-latest) in 21m15s (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  ✓ Vulnerability audit (pip-audit)
+  ✓ Generate CycloneDX SBOM
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  ✓ Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 7 Gate G7 (ubuntu-latest): .github#2
+
+- "The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748"
+Phase 7 Gate G7 (ubuntu-latest): .github#1
+
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 23 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+✓ Phase 7 Gate G7 (ubuntu-latest) in 21m15s (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  ✓ Vulnerability audit (pip-audit)
+  ✓ Generate CycloneDX SBOM
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  ✓ Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 7 Gate G7 (ubuntu-latest): .github#2
+
+- "The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748"
+Phase 7 Gate G7 (ubuntu-latest): .github#1
+
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 24 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+✓ Phase 7 Gate G7 (ubuntu-latest) in 21m15s (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  ✓ Vulnerability audit (pip-audit)
+  ✓ Generate CycloneDX SBOM
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  ✓ Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 7 Gate G7 (ubuntu-latest): .github#2
+
+- "The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748"
+Phase 7 Gate G7 (ubuntu-latest): .github#1
+
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 25 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+✓ Phase 7 Gate G7 (ubuntu-latest) in 21m15s (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  ✓ Vulnerability audit (pip-audit)
+  ✓ Generate CycloneDX SBOM
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  ✓ Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 7 Gate G7 (ubuntu-latest): .github#2
+
+- "The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748"
+Phase 7 Gate G7 (ubuntu-latest): .github#1
+
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 26 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+✓ Phase 7 Gate G7 (ubuntu-latest) in 21m15s (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  ✓ Vulnerability audit (pip-audit)
+  ✓ Generate CycloneDX SBOM
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  ✓ Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 7 Gate G7 (ubuntu-latest): .github#2
+
+- "The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748"
+Phase 7 Gate G7 (ubuntu-latest): .github#1
+
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 28 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+✓ Phase 7 Gate G7 (ubuntu-latest) in 21m15s (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  ✓ Vulnerability audit (pip-audit)
+  ✓ Generate CycloneDX SBOM
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  ✓ Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 7 Gate G7 (ubuntu-latest): .github#2
+
+- "The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748"
+Phase 7 Gate G7 (ubuntu-latest): .github#1
+
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 29 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+✓ Phase 7 Gate G7 (ubuntu-latest) in 21m15s (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  ✓ Vulnerability audit (pip-audit)
+  ✓ Generate CycloneDX SBOM
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  ✓ Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 7 Gate G7 (ubuntu-latest): .github#2
+
+- "The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748"
+Phase 7 Gate G7 (ubuntu-latest): .github#1
+
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 30 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+✓ Phase 7 Gate G7 (ubuntu-latest) in 21m15s (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  ✓ Vulnerability audit (pip-audit)
+  ✓ Generate CycloneDX SBOM
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  ✓ Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 7 Gate G7 (ubuntu-latest): .github#2
+
+- "The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748"
+Phase 7 Gate G7 (ubuntu-latest): .github#1
+
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 31 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+✓ Phase 7 Gate G7 (ubuntu-latest) in 21m15s (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  ✓ Vulnerability audit (pip-audit)
+  ✓ Generate CycloneDX SBOM
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  ✓ Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 7 Gate G7 (ubuntu-latest): .github#2
+
+- "The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748"
+Phase 7 Gate G7 (ubuntu-latest): .github#1
+
+Refreshing run status every 60 seconds. Press Ctrl+C to quit.
+
+* arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 32 minutes ago
+
+JOBS
+* Phase 7 Gate G7 (windows-latest) (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  ✓ Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  ✓ Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+✓ Phase 7 Gate G7 (ubuntu-latest) in 21m15s (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  ✓ Vulnerability audit (pip-audit)
+  ✓ Generate CycloneDX SBOM
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  ✓ Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 7 Gate G7 (ubuntu-latest): .github#2
+
+- "The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748"
+Phase 7 Gate G7 (ubuntu-latest): .github#1
+
+✓ arena/3611a52f-energybaseline CI · 43537426337
+Triggered via push about 33 minutes ago
+
+JOBS
+✓ Phase 7 Gate G7 (windows-latest) in 32m30s (ID 132269697606)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  ✓ Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  ✓ Self-signed Authenticode signing smoke test (D1=B, Windows)
+  ✓ Vulnerability audit (pip-audit)
+  ✓ Generate CycloneDX SBOM
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  ✓ Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+✓ Phase 7 Gate G7 (ubuntu-latest) in 21m15s (ID 132269697999)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  ✓ Gate G1 unit tests (gates + DB config)
+  ✓ Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  ✓ Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  ✓ Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  ✓ Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  ✓ Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  - Emit pytest failure annotations on error
+  ✓ GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  ✓ Vulnerability audit (pip-audit)
+  ✓ Generate CycloneDX SBOM
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  ✓ Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 7 Gate G7 (ubuntu-latest): .github#2
+
+- "The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748"
+Phase 7 Gate G7 (ubuntu-latest): .github#1
+

@@ -13,3 +13,9 @@ These seven standing assumptions govern EnergyBaseline v6 across Phases 0–9 un
 | **S5** | **Minimum line coverage gate on `energybaseline/core` ratchets by phase:** **60%** at Gate `G0` (baseline reality ~66%) and **80%** from Phase 2 (`G2`) through Phase 9 (`G9`). | `.github/workflows/ci.yml` (`--cov=energybaseline/core --cov-fail-under=60`). |
 | **S6** | **Sample binary `.xlsx` datasets are generated deterministically, never committed to Git.** `samples/generate_samples.py` (`seed=2024`) generates `daily_plant_multitarget.xlsx` during install (`install.bat`) and in temporary pytest session directories (`tests/conftest.py::generated_samples_dir`). | `.gitignore` (`samples/*.xlsx`), `tests/fixtures/synthetic.py`, `tests/conftest.py`. |
 | **S7** | **Repository license remains `Proprietary / Internal` (`LICENSE` untouched).** All third-party runtime dependencies must be permissive (`MIT`, `BSD`, `Apache-2.0`, `PSF`) or dynamically linked `LGPL-3.0` (`PySide6`); zero `GPL` viral runtime libraries are permitted. | `LICENSE` (unmodified), `THIRD_PARTY_NOTICES.md`, `scripts/gates/guard_web_free.py`. |
+
+## Phase 7 assumptions
+
+- A calibrated locked model, driver schema/units and frozen calibration residuals are supplied before strict reporting monitoring. Reporting data are chronological at the baseline granularity; no silent resampling or missing-value repair is performed in the strict interface.
+- Monitoring history has one writer. A different adjustment policy or calibration reference starts a separate history. Static-factor uncertainty is fully correlated across periods; measurement uncertainty is independent unless the caller models it separately.
+- Conformal coverage for autocorrelated or shifted data is empirical. Native DID and EconML estimates require overlap and observational identification assumptions; labels remain possible savings/non-routine events rather than proof of efficiency change.

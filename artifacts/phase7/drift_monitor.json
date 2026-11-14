@@ -1,0 +1,87 @@
+{
+  "model_coefficients_unchanged": true,
+  "possible_improvement": {
+    "advisory": {
+      "action": "engineering review and re-validation; retain locked baseline",
+      "rebaseline_review": true,
+      "standard": "ISO 50006"
+    },
+    "covariates": {
+      "x": {
+        "ks_p": 1.0,
+        "ks_statistic": 0.0,
+        "psi": 0.0,
+        "triggered": false,
+        "wasserstein": 0.0
+      }
+    },
+    "interpretation": "possible efficiency improvement; engineering confirmation required",
+    "miscoverage": null,
+    "model_mutated": false,
+    "possible_efficiency_improvement": true,
+    "residual_regime": {
+      "cusum": true,
+      "mean_shift_sigma": -2.8493491404665225,
+      "page_hinkley": true,
+      "pettitt_p": 4.6292383580969945e-18,
+      "triggered": true,
+      "variance_ratio": 1.0000000000000007
+    }
+  },
+  "shifted": {
+    "advisory": {
+      "action": "engineering review and re-validation; retain locked baseline",
+      "rebaseline_review": true,
+      "standard": "ISO 50006"
+    },
+    "covariates": {
+      "x": {
+        "ks_p": 4.320665778340321e-155,
+        "ks_statistic": 0.865,
+        "psi": 5.02236708105996,
+        "triggered": true,
+        "wasserstein": 2.9999999999999996
+      }
+    },
+    "interpretation": "possible model breakdown / non-routine event",
+    "miscoverage": null,
+    "model_mutated": false,
+    "possible_efficiency_improvement": false,
+    "residual_regime": {
+      "cusum": true,
+      "mean_shift_sigma": 2.8493491404665225,
+      "page_hinkley": true,
+      "pettitt_p": 4.6292383580969945e-18,
+      "triggered": true,
+      "variance_ratio": 1.0
+    }
+  },
+  "stable": {
+    "advisory": {
+      "action": "continue monitoring",
+      "rebaseline_review": false,
+      "standard": "ISO 50006"
+    },
+    "covariates": {
+      "x": {
+        "ks_p": 1.0,
+        "ks_statistic": 0.0,
+        "psi": 0.0,
+        "triggered": false,
+        "wasserstein": 0.0
+      }
+    },
+    "interpretation": "stable",
+    "miscoverage": null,
+    "model_mutated": false,
+    "possible_efficiency_improvement": false,
+    "residual_regime": {
+      "cusum": false,
+      "mean_shift_sigma": 2.1279274638648835e-17,
+      "page_hinkley": false,
+      "pettitt_p": 1.0,
+      "triggered": false,
+      "variance_ratio": 1.0000000000000002
+    }
+  }
+}

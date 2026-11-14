@@ -1,0 +1,10 @@
+CI run 43537426337 for source 074af513e8a07f2ae3ad0aaa7d7a5b52c70a969a:
+GitHub API reports conclusion=success on windows-latest and ubuntu-latest.
+Raw live step-status output is saved in e3_watch.txt; full job/step records and timings are in e3_ci_run.json.
+
+The initial push run was not immediately visible in the run list. A workflow_dispatch attempt returned:
+HTTP 403: Resource not accessible by integration.
+The delayed push-triggered runs subsequently appeared and completed successfully; no reconnect was required for this push-triggered E3 run.
+
+The full job-log ZIP download redirects to an actions.githubusercontent.com host outside the sandbox's permitted outbound host list and failed with EOF. No signed download URL is retained here. Full command logs remain available through the GitHub Actions run UI:
+https://github.com/hajianamir/EnergyBaseline/actions/runs/43537426337

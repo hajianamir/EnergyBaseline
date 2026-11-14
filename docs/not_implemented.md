@@ -21,3 +21,9 @@ Per governance rule `G-4` (`docs/EXECUTION_PLAN.md`), EnergyBaseline never expos
 ## 3. Lite Build Profile (`D3 = A`)
 
 When built with `python scripts/build_exe.py --profile lite` (or installed in a Python environment without `torch`), `F6` (`LSTM`) is not executed; `energybaseline/core/models.py` records status `not evaluated` with reason `PyTorch not installed — skipped cleanly` in the Model Evaluation Register while `MLP` (`scikit-learn`) and all other families continue normally.
+
+## Phase 7 evidence boundaries
+
+Implemented: MAPIE split/cross/bootstrap/quantile/EnbPI/ACI adapters, empirical coverage backtests, OLS/HAC and quantile crosschecks, aggregate uncertainty/FSU, advisory drift, strict API/CLI reporting, incremental audit history, version/input-bound snapshots, native causal diagnostics and installed EconML placebo refutation. See `artifacts/phase7/REPORT.md`.
+
+Not claimed: a runnable DoWhy environment under the current SciPy lock (adapter raises an explicit optional-backend error), a new advanced UQ/drift desktop control suite, physical Win11 D2 timing or human screenshot acceptance, causal identification from diagnostics alone, or Phase 8/9 PDF/project packaging/production signing. The legacy desktop keeps its existing ingestion behavior but now guards snapshot binding and integrity. E3 uses real Qt on Windows and Ubuntu; the local sandbox uses headless-only ABI stubs.

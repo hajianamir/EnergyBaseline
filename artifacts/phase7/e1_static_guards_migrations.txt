@@ -1,0 +1,310 @@
++ git rev-parse HEAD
+074af513e8a07f2ae3ad0aaa7d7a5b52c70a969a
++ python -m ruff check .
+All checks passed!
++ python -m ruff format --check .
+71 files already formatted
++ python -m pyflakes energybaseline
++ python scripts/gates/guard_web_free.py
+OK [guard_web_free] clean (/home/user/EnergyBaseline)
++ python scripts/gates/guard_env_readers.py
+OK [guard_env_readers] clean (/home/user/EnergyBaseline)
++ python scripts/gates/guard_tests_integrity.py
+OK [guard_tests_integrity] verified 4 baseline test files
++ python scripts/gates/guard_no_qthread_compute.py
+OK [guard_no_qthread_compute] clean (/home/user/EnergyBaseline)
++ python scripts/gen_matrix.py --check
+OK [gen_matrix] verified 251 requirement IDs (176 done)
+++ git ls-files
+++ grep -Ei 'package.json|tsconfig|\.tsx?$|next\.config|drizzle|eslint|postcss'
++ test -z ''
+++ git ls-files
+++ grep -E '__pycache__|\.pyc$'
++ test -z ''
+++ grep -rn weasyprint energybaseline scripts requirements.txt requirements.in requirements.lock
++ test -z ''
+++ grep -rn 'os.environ\[\"DATABASE_URL\"\]' energybaseline/launcher.py
++ test -z ''
+++ grep -rn pickle.load energybaseline/
++ test -z ''
+++ grep -rn 'from flask\|from fastapi\|import uvicorn' energybaseline/
++ test -z ''
+++ grep -rniE 'password|secret|api_key|credential' energybaseline/launcher.py energybaseline/config/ energybaseline/db/ --exclude-dir=__pycache__
++ test -z ''
+++ grep -rniE 'drift.*retrain|retrain.*drift|auto.?retrain' energybaseline/monitoring/
++ test -z ''
++ python -m alembic upgrade head
++ python -m alembic downgrade base
++ python -m alembic upgrade head
++ python -m energybaseline.cli r-references-check --out artifacts/phase7/r_references_check.json
+{
+  "freshness": {
+    "checked_at_utc": "2026-11-14T01:30:07.253330+00:00",
+    "directory": "/home/user/EnergyBaseline/energybaseline/tests_catalog/r_references",
+    "entries": {
+      "chow": {
+        "age_days": 2.0626,
+        "cases_count": 2,
+        "date": "2026-11-12T00:00:00Z",
+        "file": "/home/user/EnergyBaseline/energybaseline/tests_catalog/r_references/chow.json",
+        "r_version": "4.4.1",
+        "stale": false,
+        "test_id": "T7"
+      },
+      "diebold_mariano": {
+        "age_days": 2.0626,
+        "cases_count": 2,
+        "date": "2026-11-12T00:00:00Z",
+        "file": "/home/user/EnergyBaseline/energybaseline/tests_catalog/r_references/diebold_mariano.json",
+        "r_version": "4.4.1",
+        "stale": false,
+        "test_id": "T10"
+      },
+      "little_mcar": {
+        "age_days": 2.0626,
+        "cases_count": 2,
+        "date": "2026-11-12T00:00:00Z",
+        "file": "/home/user/EnergyBaseline/energybaseline/tests_catalog/r_references/little_mcar.json",
+        "r_version": "4.4.1",
+        "stale": false,
+        "test_id": "T12"
+      },
+      "mcs": {
+        "age_days": 2.0626,
+        "cases_count": 2,
+        "date": "2026-11-12T00:00:00Z",
+        "file": "/home/user/EnergyBaseline/energybaseline/tests_catalog/r_references/mcs.json",
+        "r_version": "4.4.1",
+        "stale": false,
+        "test_id": "T10_MCS"
+      },
+      "nemenyi": {
+        "age_days": 2.0626,
+        "cases_count": 2,
+        "date": "2026-11-12T00:00:00Z",
+        "file": "/home/user/EnergyBaseline/energybaseline/tests_catalog/r_references/nemenyi.json",
+        "r_version": "4.4.1",
+        "stale": false,
+        "test_id": "T11"
+      },
+      "pettitt": {
+        "age_days": 2.0626,
+        "cases_count": 2,
+        "date": "2026-11-12T00:00:00Z",
+        "file": "/home/user/EnergyBaseline/energybaseline/tests_catalog/r_references/pettitt.json",
+        "r_version": "4.4.1",
+        "stale": false,
+        "test_id": "T9"
+      },
+      "quandt_andrews": {
+        "age_days": 2.0626,
+        "cases_count": 2,
+        "date": "2026-11-12T00:00:00Z",
+        "file": "/home/user/EnergyBaseline/energybaseline/tests_catalog/r_references/quandt_andrews.json",
+        "r_version": "4.4.1",
+        "stale": false,
+        "test_id": "T8"
+      }
+    },
+    "errors": [],
+    "max_age_days": 14,
+    "nightly_run_verified": false,
+    "ok": true
+  },
+  "ok": true,
+  "parity": {
+    "mismatches": [],
+    "ok": true,
+    "results": {
+      "chow": [
+        {
+          "case_id": "chow_stable_regime_null",
+          "err_p": 1.6753265441593612e-13,
+          "err_stat": 3.130497163578161e-13,
+          "py_p": 0.9996971780271675,
+          "py_stat": 0.0003028694706869503,
+          "r_p": 0.999697178027,
+          "r_stat": 0.000302869471
+        },
+        {
+          "case_id": "chow_known_midpoint_break",
+          "err_p": 1.8187818236195085e-38,
+          "err_stat": 3.410605131648481e-13,
+          "py_p": 1.8187818236195085e-38,
+          "py_stat": 595.7678829802023,
+          "r_p": 0.0,
+          "r_stat": 595.767882980202
+        }
+      ],
+      "diebold_mariano": [
+        {
+          "case_id": "dm_equal_predictive_accuracy_h1",
+          "err_p": 1.4277468096679513e-13,
+          "err_stat": 2.9515279109659787e-13,
+          "py_p": 0.9224729583508572,
+          "py_stat": -0.09773631214770485,
+          "r_p": 0.922472958351,
+          "r_stat": -0.097736312148
+        },
+        {
+          "case_id": "dm_superior_model1_h2",
+          "err_p": 7.034660571242455e-14,
+          "err_stat": 7.72715225139109e-14,
+          "py_p": 1.2252260703466057e-06,
+          "py_stat": -5.404892801027077,
+          "r_p": 1.225226e-06,
+          "r_stat": -5.404892801027
+        }
+      ],
+      "little_mcar": [
+        {
+          "case_id": "little_mcar_periodic_index_null",
+          "err_p": 1.0120237980970614e-11,
+          "err_stat": 4.9951709435447356e-11,
+          "py_p": 0.9984928252101203,
+          "py_stat": 0.11186781315004829,
+          "r_p": 0.9984928252,
+          "r_stat": 0.1118678132
+        },
+        {
+          "case_id": "little_mcar_threshold_dependent_mar",
+          "err_p": 2.305696237453651e-11,
+          "err_stat": 2.809485977195436e-11,
+          "py_p": 7.694303762546349e-11,
+          "py_stat": 53.2119769227281,
+          "r_p": 1e-10,
+          "r_stat": 53.2119769227
+        }
+      ],
+      "mcs": [
+        {
+          "case_id": "mcs_three_tied_models",
+          "err_p": 0.0,
+          "err_stat": 0.0,
+          "py_p": 0.7375,
+          "py_stat": 0.62759474,
+          "r_p": 0.7375,
+          "r_stat": 0.62759474
+        },
+        {
+          "case_id": "mcs_naive_mean_eliminated",
+          "err_p": 0.0,
+          "err_stat": 0.0,
+          "py_p": 0.0,
+          "py_stat": 1895.91133445,
+          "r_p": 0.0,
+          "r_stat": 1895.91133445
+        }
+      ],
+      "nemenyi": [
+        {
+          "case_id": "nemenyi_balanced_phase_shifted_null",
+          "err_p": 0.0,
+          "err_stat": 0.0,
+          "py_p": 1.0,
+          "py_stat": 0.0,
+          "r_p": 1.0,
+          "r_stat": 0.0
+        },
+        {
+          "case_id": "nemenyi_clear_rank_hierarchy",
+          "err_p": 0.0,
+          "err_stat": 4.831690603168681e-13,
+          "py_p": 0.0,
+          "py_stat": 12.649110640673516,
+          "r_p": 0.0,
+          "r_stat": 12.649110640674
+        }
+      ],
+      "pettitt": [
+        {
+          "case_id": "pettitt_stationary_null",
+          "err_p": 0.0,
+          "err_stat": 0.0,
+          "py_p": 1.0,
+          "py_stat": 52.0,
+          "r_p": 1.0,
+          "r_stat": 52.0
+        },
+        {
+          "case_id": "pettitt_step_shift_t25",
+          "err_p": 5.810351148790204e-14,
+          "err_stat": 0.0,
+          "py_p": 7.40989418964885e-08,
+          "py_stat": 603.0,
+          "r_p": 7.4099e-08,
+          "r_stat": 603.0
+        }
+      ],
+      "quandt_andrews": [
+        {
+          "case_id": "qa_no_break_null",
+          "err_p": 0.0,
+          "err_stat": 6.927791673660977e-14,
+          "py_p": 0.718,
+          "py_stat": 1.0194399578040694,
+          "r_p": 0.718,
+          "r_stat": 1.019439957804
+        },
+        {
+          "case_id": "qa_interior_regime_shift_t36",
+          "err_p": 0.0,
+          "err_stat": 5.684341886080802e-14,
+          "py_p": 0.002,
+          "py_stat": 481.24852729315296,
+          "r_p": 0.002,
+          "r_stat": 481.248527293153
+        }
+      ]
+    }
+  }
+}
++ python -m pip check
+No broken requirements found.
++ pip-audit -r requirements.lock
+ERROR:pip_audit._virtual_env:internal pip failure:   WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (244.1 MB/285.8 MB, attempt 1)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (244.1 MB/285.8 MB, attempt 2)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (244.1 MB/285.8 MB, attempt 3)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (244.1 MB/285.8 MB, attempt 4)
+  WARNING: Connection interrupted while downloading.
+  WARNING: Attempting to resume incomplete download (244.1 MB/285.8 MB, attempt 5)
+  WARNING: Connection interrupted while downloading.
+error: incomplete-download
+
+× Download failed after 6 attempts because not enough bytes were received (244.1 MB/285.8 MB)
+╰─> URL: https://files.pythonhosted.org/packages/05/73/51e1466f2941ed36dbe57d1f88f772ba6afe669e5ba1e24eaf148b7ec0e1/triton-3.9.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
+
+note: This is an issue with network connectivity, not pip.
+hint: Use --resume-retries to configure resume attempt limit.
+
+ERROR:pip_audit._cli:Failed to install packages: ['/tmp/tmp4d7h3as5/bin/python3.11', '-m', 'pip', 'install', '--no-input', '--keyring-provider=subprocess', '--dry-run', '--report', '/tmp/tmp95r4stut/tmpje4cduve', '-r', 'requirements.lock']
++ pip-audit -r requirements.lock --disable-pip --no-deps
+WARNING:pip_audit._cli:--no-deps is supported, but users are encouraged to fully hash their pinned dependencies
+WARNING:pip_audit._cli:Consider using a tool like `pip-compile`: https://pip-tools.readthedocs.io/en/latest/#using-hashes
+No known vulnerabilities found
++ sha256sum LICENSE tests/.baseline.sha256
+1c633e61e328b34b883571ae25a92cf6a390e6f2752871331545d70a5b553afe  LICENSE
+6f3abde78940ac71c104a32305c7a69bc2a9c90a09f6660a332de0eac467f3dc  tests/.baseline.sha256
++ python -m coverage report '--include=energybaseline/uq/*,energybaseline/monitoring/*,energybaseline/causal/*'
+Name                                       Stmts   Miss  Cover
+--------------------------------------------------------------
+energybaseline/causal/__init__.py              2      0   100%
+energybaseline/causal/mv.py                   96     11    89%
+energybaseline/monitoring/__init__.py          4      0   100%
+energybaseline/monitoring/adjustments.py      24      2    92%
+energybaseline/monitoring/drift.py            62      4    94%
+energybaseline/monitoring/prediction.py      177     11    94%
+energybaseline/monitoring/safety.py           33      4    88%
+energybaseline/uq/__init__.py                 26      2    92%
+energybaseline/uq/calibration.py              34      2    94%
+energybaseline/uq/conformal.py                55      7    87%
+energybaseline/uq/fsu.py                       7      0   100%
+energybaseline/uq/parametric.py               31      0   100%
+energybaseline/uq/savings_uncertainty.py      26      1    96%
+--------------------------------------------------------------
+TOTAL                                        577     44    92%
++ git diff 5b6c7f3..HEAD --name-only --diff-filter=M -- tests

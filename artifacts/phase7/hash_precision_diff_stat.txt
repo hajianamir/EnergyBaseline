@@ -1,0 +1,4 @@
+074af51 Preserve full scalar precision in monitoring input audit hashes
+ energybaseline/monitoring/prediction.py         | 23 +++++++++++++++++++++--
+ tests/gates/test_phase7_uq_monitoring_causal.py | 11 +++++++++++
+ 2 files changed, 32 insertions(+), 2 deletions(-)
