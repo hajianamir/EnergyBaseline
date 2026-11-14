@@ -12,7 +12,6 @@ permissions:
 jobs:
   r-reference-nightly:
     name: Live R vs Versioned JSON Parity & Staleness Check
-    # Keep the runner and Python build aligned; 3.11.9 has no Ubuntu 26.04 build.
     runs-on: ubuntu-26.04
     steps:
       - name: Checkout repository
@@ -32,10 +31,10 @@ jobs:
             any::trend
             any::forecast
 
-      - name: Set up Python 3.11.18 (Ubuntu 26.04)
+      - name: Set up Python 3.12.0 (Ubuntu 26.04)
         uses: actions/setup-python@v6
         with:
-          python-version: "3.11.18"
+          python-version: "3.12.0"
 
       - name: Install locked Python runtime & dev dependencies
         run: |
