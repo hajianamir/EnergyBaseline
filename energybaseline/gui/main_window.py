@@ -166,8 +166,9 @@ class MainWindow(QMainWindow):
             sw = self.mdi.addSubWindow(w)
             sw.setWindowTitle(title)
             sw.setWindowFlags(
-                Qt.WindowType.CustomizeWindowHint
+                Qt.WindowType.Window
                 | Qt.WindowType.WindowTitleHint
+                | Qt.WindowType.WindowSystemMenuHint
                 | Qt.WindowType.WindowMinimizeButtonHint
                 | Qt.WindowType.WindowMaximizeButtonHint
                 | Qt.WindowType.WindowCloseButtonHint
