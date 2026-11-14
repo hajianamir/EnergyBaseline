@@ -20,6 +20,10 @@ QHeaderView::section { padding: 4px; font-weight: 600; }
 """
 
 
+_APP_FONT_FAMILY = "Segoe UI, Tahoma, Geneva, sans-serif"
+_APP_FONT_SIZE = 10
+
+
 def apply_theme(app: QApplication, name: str = "light") -> None:
     app.setStyle("Fusion")
     p = QPalette()
@@ -39,6 +43,23 @@ def apply_theme(app: QApplication, name: str = "light") -> None:
         app.setPalette(p)
     else:
         base, win, text, accent, border, hover, card, muted = "#ffffff", "#f3f5f8", "#1b2430", "#0b6e99", "#c9d3dc", "#e8eef4", "#ffffff", "#667085"
-        app.setPalette(app.style().standardPalette())
+        p.setColor(QPalette.ColorRole.Window, QColor(win))
+        p.setColor(QPalette.ColorRole.WindowText, QColor(text))
+        p.setColor(QPalette.ColorRole.Base, QColor(base))
+        p.setColor(QPalette.ColorRole.AlternateBase, QColor(win))
+        p.setColor(QPalette.ColorRole.Text, QColor(text))
+        p.setColor(QPalette.ColorRole.Button, QColor(win))
+        p.setColor(QPalette.ColorRole.ButtonText, QColor(text))
+        p.setColor(QPalette.ColorRole.ToolTipBase, QColor(base))
+        p.setColor(QPalette.ColorRole.ToolTipText, QColor(text))
+        p.setColor(QPalette.ColorRole.Highlight, QColor(accent))
+        p.setColor(QPalette.ColorRole.HighlightedText, QColor("#ffffff"))
+        app.setPalette(p)
     app.setStyleSheet(_QSS % dict(border=border, hover=hover, accent=accent, card=card, muted=muted))
     app.setProperty("eb_theme", name)
+
+    # Consistent, legible application font across both themes.
+    f = app.font()
+    f.setFamilies([_APP_FONT_FAMILY])
+    f.setPointSize(_APP_FONT_SIZE)
+    app.setFont(f)

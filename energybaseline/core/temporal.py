@@ -108,8 +108,10 @@ def granularity(label: str) -> Granularity:
             max(2, int(round(86400 / sec))),
             "subdaily" if sec < 86400 else "daily",
         )
-    if label not in GRAN:
-        raise TemporalError(f"Unknown sampling granularity '{label}'.")
+    if label == "unknown" or label not in GRAN:
+        # Fall back to daily rather than hard-failing when the detector
+        # cannot determine a granularity (e.g. single row, no time column).
+        return Granularity("daily", "D", 86400.0, 1.0, 7, "daily")
     f, sec, spd, season, tier = GRAN[label]
     return Granularity(label, f, sec, spd, season, tier)
 
@@ -686,8 +688,32 @@ def prepare_temporal(
 
     resolved_schema = coerce_dataset_schema(schema or auto.config.get("dataset_schema"))
     effective_time_col = time_col or (resolved_schema.time_column if resolved_schema is not None else None)
+
+    # Non-temporal mode: no timestamp column → return rows in original order,
+    # skip resampling/aggregation entirely.
     if not effective_time_col or effective_time_col not in raw.columns:
-        raise TemporalError(f"Timestamp column {effective_time_col!r} not found in DataFrame.")
+        out = raw.copy()
+        out.index = pd.RangeIndex(len(out))
+        rpt = TemporalReport(
+            declared="none",
+            detected="none",
+            applied="none",
+            needs_confirmation=False,
+            aggregation={},
+            n_input_rows=len(df),
+            n_output_rows=len(out),
+            n_duplicates=0,
+            n_gaps_filled_as_missing=0,
+            regularity=1.0,
+            timezone="naive",
+            dst="naive",
+            baseline_window=("",""),
+            reporting_window=None,
+            messages=["No timestamp column declared — non-temporal (row-order) mode."],
+            storage_timezone="naive",
+            display_timezone="naive",
+        )
+        return out, rpt, Granularity("daily", "D", 86400.0, 1.0, 7, "daily")
 
     if resolved_schema is None:
         resolved_schema = suggest_dataset_schema(raw, time_col=effective_time_col, auto=auto)

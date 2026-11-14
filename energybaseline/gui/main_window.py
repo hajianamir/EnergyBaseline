@@ -165,7 +165,13 @@ class MainWindow(QMainWindow):
         ):
             sw = self.mdi.addSubWindow(w)
             sw.setWindowTitle(title)
-            sw.setWindowFlags(Qt.WindowType.CustomizeWindowHint | Qt.WindowType.WindowTitleHint)
+            sw.setWindowFlags(
+                Qt.WindowType.CustomizeWindowHint
+                | Qt.WindowType.WindowTitleHint
+                | Qt.WindowType.WindowMinimizeButtonHint
+                | Qt.WindowType.WindowMaximizeButtonHint
+                | Qt.WindowType.WindowCloseButtonHint
+            )
             self.subs[key] = sw
             sw.showMaximized()
 
