@@ -113,6 +113,15 @@ def predict_deviation(df: pd.DataFrame, bundle: dict, time_col: str | None = Non
     out["exceedance"] = ex.fillna(False) & out["actual"].notna()
     out["alert"] = np.where(out["exceedance"], np.where(out["deviation"] > 0, "OVER baseline", "UNDER baseline"), "")
     out.attrs.update({"notes": notes, "n_imputed": n_imp, "alert": a, "target": tgt, "schema": rep})
+    from ..monitoring.prediction import frame_input_hash, cusum_chart, ewma_chart
+    out.attrs["input_sha256"] = frame_input_hash(df)
+    finite = out["normalized_deviation"].dropna().to_numpy()
+    if len(finite):
+        out.attrs["cusum"] = cusum_chart(finite)
+        out.attrs["ewma"] = ewma_chart(finite)
+    out["savings"] = -out["deviation"]
+    out["cumulative_savings"] = -out["cum_deviation"]
+    out["enpi_ratio"] = np.where(out["baseline"].abs()>1e-9,out["actual"]/out["baseline"],np.nan)
     return out
 
 

@@ -390,7 +390,7 @@ def save_profile(p: ConnectionProfile) -> None:
             row.database,
             row.username,
             row.options_json,
-            row.secret_blob,
+            row.protected_payload,
         ) = (p.driver, p.host, p.port, p.database, p.username, opts, blob)
 
 
@@ -399,7 +399,7 @@ def load_profiles() -> list[ConnectionProfile]:
     with session_scope() as s:
         for r in s.query(M.Connection).order_by(M.Connection.name).all():
             try:
-                sec = decrypt_json(r.secret_blob)
+                sec = decrypt_json(r.protected_payload)
             except Exception as exc:
                 log.warning("cannot decrypt credentials of '%s': %s", r.name, exc)
                 sec = {}

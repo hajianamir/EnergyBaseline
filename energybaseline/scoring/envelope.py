@@ -87,6 +87,7 @@ class ValidityDomainEnvelope:
             "hull_drivers": list(self.hull_drivers),
             "hull_vertices": [list(pt) for pt in self.hull_vertices],
             "mahalanobis_center": list(self.mahalanobis_center),
+            "mahalanobis_inv_cov": [list(row) for row in self.mahalanobis_inv_cov],
             "mahalanobis_threshold_99": float(self.mahalanobis_threshold_99),
             "n_training_obs": int(self.n_training_obs),
         }

@@ -301,12 +301,14 @@ requirements:
   - tests/gates/test_phase6_scoring_top5_and_lock.py::test_13_criteria_weights_sensitivity_20pct_deterministic_tiebreak_and_sc4_parsimony
 - id: AC-16
   priority: M
-  phase: 6
-  status: planned
+  phase: 7
+  status: done
   title: Uncertainty quantification calibrates 80%/95% prediction intervals via MAPIE EnbPI/ACI within
     +/-5 pp coverage.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/uq/__init__.py
+  test_ids:
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_uq3_ac16_serial_holdout_calibration
 - id: AC-17
   priority: M
   phase: 6
@@ -451,11 +453,14 @@ requirements:
 - id: AC-32
   priority: M
   phase: 7
-  status: planned
+  status: done
   title: Drift detector triggers re-baselining advisories on covariate shift (PSI/KS) and residual regime
     shift.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/monitoring/drift.py
+  test_ids:
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_dr1_dr2_dr3_dr4_dr5_ac32_readonly_advisories
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_independent_stable_drift_and_injected_mean_variance_shifts
 - id: AC-33
   priority: M
   phase: 3/8
@@ -1625,9 +1630,12 @@ requirements:
   code_refs:
   - energybaseline/tests_catalog/t14_causal_group.py
   - energybaseline/tests_catalog/t13_outlier_influence.py
+  - energybaseline/causal/mv.py
   test_ids:
   - tests/gates/test_phase4_g4c_t10_t14.py::test_t14_causal_group_only_runs_with_group_column_and_pass_fail
   - tests/gates/test_phase4_g4c_t10_t14.py::test_auxiliary_ramsey_reset_granger_and_multigroup_anova_kruskal
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_t14_balance_overlap_trends_effect_refutation
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_t14_optional_backend_honest_status
 - id: TC-1
   priority: M
   phase: 4
@@ -2040,135 +2048,175 @@ requirements:
   - tests/gates/test_phase6_scoring_top5_and_lock.py::test_baseline_lock_immutability_sha256_tamper_rejection_and_excel_formula_roundtrip
 - id: UQ-1
   priority: M
-  phase: 6
-  status: planned
-  title: Distribution-free conformal prediction intervals for time series via MAPIE EnbPI / Adaptive Conformal
-    Inference (ACI).
-  code_refs: []
-  test_ids: []
+  phase: 7
+  status: done
+  title: Empirically calibrated conformal intervals for dependent time series via MAPIE EnbPI / Adaptive
+    Conformal Inference (ACI); exchangeability assumptions disclosed.
+  code_refs:
+  - energybaseline/uq/conformal.py
+  test_ids:
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_uq1_real_mapie_backends
 - id: UQ-2
   priority: M
-  phase: 6
-  status: planned
+  phase: 7
+  status: done
   title: Parametric OLS/HAC prediction intervals and quantile-regression intervals cross-checked against
     conformal bounds.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/uq/parametric.py
+  test_ids:
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_uq2_parametric_quantile_conformal_crosscheck
 - id: UQ-3
   priority: M
-  phase: 6
-  status: planned
+  phase: 7
+  status: done
   title: Empirical holdout coverage calibration diagnostics verifying 80% and 95% nominal intervals within
     +/-5 percentage points.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/uq/calibration.py
+  test_ids:
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_uq3_ac16_serial_holdout_calibration
 - id: UQ-4
   priority: M
-  phase: 6
-  status: planned
+  phase: 7
+  status: done
   title: Cumulative energy savings uncertainty propagation accounting for serial correlation across reporting
     periods (ASHRAE/IPMVP).
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/uq/savings_uncertainty.py
+  test_ids:
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_uq4_uq5_cumulative_serial_uncertainty_and_fsu
 - id: UQ-5
   priority: M
-  phase: 6
-  status: planned
+  phase: 7
+  status: done
   title: Fractional Savings Uncertainty (FSU) calculation at user-selected confidence level (default 90%
     / 95%).
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/uq/fsu.py
+  test_ids:
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_uq4_uq5_cumulative_serial_uncertainty_and_fsu
 - id: PM-1
   priority: M
   phase: 7
-  status: planned
+  status: done
   title: Reporting-period data ingestion validated against baseline column schema, units, and granularity.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/monitoring/prediction.py
+  test_ids:
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_pm1_reporting_fuzz_corpus
 - id: PM-2
   priority: M
   phase: 7
-  status: planned
+  status: done
   title: Adjusted baseline energy calculation E_adj(X_reporting) + routine and non-routine static factor
     adjustments.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/monitoring/prediction.py
+  test_ids:
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_pm2_pm3_pm4_pm5_pm6_dom3_prediction
 - id: PM-3
   priority: M
   phase: 7
-  status: planned
+  status: done
   title: Period-by-period and cumulative EnPI ratio, absolute savings (E_adj - E_actual), and propagated
     confidence bands.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/monitoring/prediction.py
+  test_ids:
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_pm2_pm3_pm4_pm5_pm6_dom3_prediction
 - id: PM-4
   priority: M
   phase: 7
-  status: planned
+  status: done
   title: Tabular CUSUM of energy residuals with V-mask / decision-interval alarm thresholds.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/monitoring/prediction.py
+  test_ids:
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_pm2_pm3_pm4_pm5_pm6_dom3_prediction
 - id: PM-5
   priority: M
   phase: 7
-  status: planned
+  status: done
   title: EWMA control chart of standardized residuals with asymptotic and exact control limits.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/monitoring/prediction.py
+  test_ids:
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_pm2_pm3_pm4_pm5_pm6_dom3_prediction
 - id: PM-6
   priority: M
   phase: 7
-  status: planned
+  status: done
   title: Driver validity-domain check flagging reporting rows that extrapolate beyond baseline training
     range.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/monitoring/prediction.py
+  test_ids:
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_pm2_pm3_pm4_pm5_pm6_dom3_prediction
 - id: PM-7
   priority: M
   phase: 7
-  status: planned
+  status: done
   title: Incremental monitoring batch append persisting audit history per reporting period.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/monitoring/prediction.py
+  test_ids:
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_pm7_snapshot_baseline_input_binding_and_integrity
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_incremental_charts_savings_and_snapshot_no_model_mutation
 - id: DR-1
   priority: M
   phase: 7
-  status: planned
+  status: done
   title: Covariate distribution drift monitoring on drivers using Population Stability Index (PSI) and
     two-sample KS/Wasserstein tests.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/monitoring/drift.py
+  test_ids:
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_dr1_dr2_dr3_dr4_dr5_ac32_readonly_advisories
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_independent_stable_drift_and_injected_mean_variance_shifts
 - id: DR-2
   priority: M
   phase: 7
-  status: planned
+  status: done
   title: Residual mean/variance regime-shift detection via rolling window Page-Hinkley / Pettitt / CUSUM
     tests.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/monitoring/drift.py
+  test_ids:
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_dr1_dr2_dr3_dr4_dr5_ac32_readonly_advisories
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_independent_stable_drift_and_injected_mean_variance_shifts
 - id: DR-3
   priority: M
   phase: 7
-  status: planned
+  status: done
   title: Conformal interval miscoverage monitor tracking rolling empirical coverage degradation.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/monitoring/drift.py
+  test_ids:
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_dr1_dr2_dr3_dr4_dr5_ac32_readonly_advisories
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_independent_stable_drift_and_injected_mean_variance_shifts
 - id: DR-4
   priority: M
   phase: 7
-  status: planned
+  status: done
   title: Distinction between genuine efficiency improvement (sustained negative consumption residual inside
     valid driver domain) and model breakdown.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/monitoring/drift.py
+  test_ids:
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_dr1_dr2_dr3_dr4_dr5_ac32_readonly_advisories
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_independent_stable_drift_and_injected_mean_variance_shifts
 - id: DR-5
   priority: M
   phase: 7
-  status: planned
+  status: done
   title: Structured ISO 50006 re-baselining advisory summarizing triggered drift indicators and recommended
     engineering action.
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/monitoring/drift.py
+  test_ids:
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_dr1_dr2_dr3_dr4_dr5_ac32_readonly_advisories
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_independent_stable_drift_and_injected_mean_variance_shifts
 - id: MT-1
   priority: M
   phase: 7
@@ -2470,11 +2518,13 @@ requirements:
 - id: DOM-3
   priority: M
   phase: 7
-  status: planned
+  status: done
   title: Explicit separation of routine adjustments (weather/production model) and documented non-routine
     adjustments (static factor events).
-  code_refs: []
-  test_ids: []
+  code_refs:
+  - energybaseline/monitoring/adjustments.py
+  test_ids:
+  - tests/gates/test_phase7_uq_monitoring_causal.py::test_pm2_pm3_pm4_pm5_pm6_dom3_prediction
 - id: PKG-1
   priority: M
   phase: 9

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import datetime as dt
 import gzip
+import hashlib
 import io
 import json
 import logging
@@ -227,11 +228,23 @@ def audit_entries(run_id: int | None = None, limit: int = 2000) -> list[dict]:
 
 
 def save_snapshot(run_id: int | None, target: str, name: str, df: pd.DataFrame, kpis: dict) -> int:
+    from ..lock.baseline_lock import BaselineLockManager, monitoring_snapshot
+    from ..monitoring.safety import assert_safe_payload
+    lock_dir = ensure_dirs()["runs"] / f"run_{run_id}" / "locks"
+    manager = BaselineLockManager(lock_dir)
+    baseline = manager.get_active_lock(str(run_id), target)
+    if baseline is None:
+        raise ValueError("Monitoring snapshots require a verified locked baseline")
+    input_hash = df.attrs.get("input_sha256", "")
+    metadata = monitoring_snapshot(baseline, input_hash, dict(kpis))
+    assert_safe_payload(name)
+    bound_kpis = {**kpis, "monitoring_snapshot": metadata}
     buf = io.BytesIO()
     with gzip.GzipFile(fileobj=buf, mode="wb") as gz:
         gz.write(df.to_csv().encode("utf-8"))
+    bound_kpis["payload_sha256"] = hashlib.sha256(buf.getvalue()).hexdigest()
     with session_scope() as s:
-        sn = M.Snapshot(run_id=run_id, target=target, name=name, kpis_json=json.dumps(kpis, default=str), payload=buf.getvalue())
+        sn = M.Snapshot(run_id=run_id, target=target, name=name, kpis_json=json.dumps(bound_kpis, default=str), payload=buf.getvalue())
         s.add(sn)
         s.flush()
         sid = sn.id
@@ -247,8 +260,25 @@ def list_snapshots() -> list[dict]:
 def load_snapshot(snapshot_id: int) -> pd.DataFrame:
     with session_scope() as s:
         sn = s.get(M.Snapshot, snapshot_id)
+        info = json.loads(sn.kpis_json or "{}")
+        if hashlib.sha256(sn.payload).hexdigest() != info.get("payload_sha256"):
+            raise ValueError("Monitoring snapshot payload integrity failure")
         raw = gzip.decompress(sn.payload).decode("utf-8")
-    return pd.read_csv(io.StringIO(raw), index_col=0, parse_dates=True)
+        metadata = info.get("monitoring_snapshot")
+        run_id, target = sn.run_id, sn.target
+    if metadata is None:
+        raise ValueError("Legacy unbound snapshot requires re-validation")
+    from ..lock.baseline_lock import BaselineLockManager
+    manager = BaselineLockManager(ensure_dirs()["runs"] / f"run_{run_id}" / "locks")
+    matches = [r for r in manager.get_history(str(run_id), target)
+               if r.record_sha256 == metadata["baseline_sha256"] and r.version == metadata["baseline_version"]]
+    if len(matches) != 1:
+        raise ValueError("Snapshot baseline version not found")
+    matches[0].verify_integrity()
+    result = pd.read_csv(io.StringIO(raw), index_col=0, parse_dates=True)
+    result.attrs["monitoring_snapshot"] = metadata
+    result.attrs["input_sha256"] = metadata["input_sha256"]
+    return result
 
 
 # ------------------------------------------------------------------ Phase 2 dataset schema & NRE persistence (DAT-2, DAT-5, DAT-8)

@@ -14,6 +14,8 @@ Per ratified decision `D5 = A` and standing assumption `S7`:
 | `alembic` | `1.20.1` | MIT | https://alembic.sqlalchemy.org |
 | `arch` | `9.0.0` | NCSA / BSD-like | https://github.com/bashtage/arch |
 | `catboost` | `1.2.10` | Apache-2.0 | https://catboost.ai |
+| `econml` | `0.17.0` | MIT | https://github.com/py-why/EconML |
+| `sparse` (transitive) | `0.19.3` | BSD-3-Clause | https://github.com/pydata/sparse |
 | `cryptography` | `46.0.7` | Apache-2.0 OR BSD-3-Clause | https://github.com/pyca/cryptography |
 | `Jinja2` | `3.1.6` | BSD-3-Clause | https://palletsprojects.com/p/jinja |
 | `joblib` | `1.6.0` | BSD-3-Clause | https://joblib.readthedocs.io |

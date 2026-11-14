@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   verify:
-    name: Phase 6 Gate G6 (${{ matrix.os }})
+    name: Phase 7 Gate G7 (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -88,9 +88,15 @@ jobs:
         run: |
           python -m pytest -q --junitxml=pytest-g6.xml tests/gates/test_phase6_validation_and_portfolio.py tests/gates/test_phase6_scoring_top5_and_lock.py
 
+      - name: Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+        run: |
+          python -m pytest -q --junitxml=pytest-g7.xml tests/gates/test_phase7_uq_monitoring_causal.py
+          python -m pytest -q tests/gates
+          python scripts/evidence/phase7.py --out-dir artifacts/phase7/ci
+
       - name: Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
         run: |
-          python -m pytest -q --junitxml=pytest-core.xml --cov=energybaseline/core --cov=energybaseline/tests_catalog --cov=energybaseline/mining --cov=energybaseline/models --cov=energybaseline/scoring --cov=energybaseline/validation --cov=energybaseline/lock --cov-report=xml:coverage.xml --cov-report=term --cov-fail-under=60
+          python -m pytest -q --junitxml=pytest-core.xml --cov=energybaseline/core --cov=energybaseline/tests_catalog --cov=energybaseline/mining --cov=energybaseline/models --cov=energybaseline/scoring --cov=energybaseline/validation --cov=energybaseline/lock --cov=energybaseline/uq --cov=energybaseline/monitoring --cov=energybaseline/causal --cov-report=xml:coverage.xml --cov-report=term --cov-fail-under=60
           python -m coverage report --fail-under=80
 
       - name: Emit pytest failure annotations on error

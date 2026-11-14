@@ -121,7 +121,7 @@ class Connection(Base):
     database: Mapped[str] = mapped_column(String(300), default="")
     username: Mapped[str] = mapped_column(String(200), default="")
     options_json: Mapped[str] = mapped_column(Text, default="{}")
-    secret_blob: Mapped[str] = mapped_column(Text, default="")  # encrypted password + query templates
+    protected_payload: Mapped[str] = mapped_column(Text, default="")  # OS-protected connection settings
     created_at: Mapped[dt.datetime] = mapped_column(DateTime, default=_now)
 
 

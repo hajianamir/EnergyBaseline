@@ -44,3 +44,4 @@ statsmodels==0.15.0
 torch==2.15.0
 umap-learn==0.6.0
 xgboost==3.2.0
+econml==0.17.0

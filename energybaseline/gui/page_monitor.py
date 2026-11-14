@@ -501,8 +501,12 @@ class MonitorPage(QWidget):
         name, ok = QInputDialog.getText(self, "Snapshot", "Snapshot name:", text=pd.Timestamp.now().strftime("session %Y-%m-%d %H:%M"))
         if not ok:
             return
-        for t, df in self.results.items():
-            store.save_snapshot(self.state.run_id, t, name, df, monitor.kpis(df))
+        try:
+            for t, df in self.results.items():
+                store.save_snapshot(self.state.run_id, t, name, df, monitor.kpis(df))
+        except ValueError as exc:
+            QMessageBox.warning(self, "Snapshot verification", str(exc))
+            return
         self.main.log_msg(f"Snapshot '{name}' saved to SQLite")
 
     def load_snapshot(self):
@@ -514,7 +518,16 @@ class MonitorPage(QWidget):
         pick, ok = QInputDialog.getItem(self, "Load snapshot", "Snapshot:", labels, 0, False)
         if ok:
             s = snaps[labels.index(pick)]
-            df = store.load_snapshot(s["id"])
+            try:
+                df = store.load_snapshot(s["id"])
+            except ValueError as exc:
+                QMessageBox.warning(self, "Snapshot verification", str(exc))
+                return
+            binding = df.attrs["monitoring_snapshot"]
+            self.schema_box.setPlainText(
+                f"Verified baseline version {binding['baseline_version']} | "
+                f"Input SHA-256 {binding['input_sha256']}"
+            )
             df.attrs.update({"alert": {"mode": "interval", "value": 0}, "rmse": float(df["deviation"].std() or 1.0)})
             self.results = {s["target"]: df}
             self.redraw()

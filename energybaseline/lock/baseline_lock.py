@@ -747,3 +747,20 @@ def verify_excel_formula_roundtrip(
         )
     finally:
         wb.close()
+
+
+def monitoring_snapshot(baseline: LockedBaselineRecord, input_sha256: str,
+                        result: Mapping[str, Any]) -> dict[str, Any]:
+    """Bind monitoring output to a verified immutable model version and input digest."""
+    from ..monitoring.safety import assert_safe_payload
+    if not isinstance(baseline, LockedBaselineRecord):
+        raise ValueError("A locked baseline record is required")
+    baseline.verify_integrity()
+    if not isinstance(input_sha256, str) or re.fullmatch(r"[0-9a-f]{64}", input_sha256) is None:
+        raise ValueError("A canonical SHA-256 input digest is required")
+    payload = {"baseline_version": baseline.version, "baseline_lock_id": baseline.lock_id,
+               "baseline_sha256": baseline.record_sha256, "input_sha256": input_sha256,
+               "result": copy.deepcopy(dict(result))}
+    assert_safe_payload(payload)
+    # Round trip rejects nonfinite numbers and detaches mutable caller state.
+    return json.loads(json.dumps(payload, sort_keys=True, allow_nan=False))

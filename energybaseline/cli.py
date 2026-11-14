@@ -313,10 +313,11 @@ def _load_dataset_and_vsg(
     dataset_path: str,
     targets_arg: str = "",
     preset: str = "",
+    *, time_column: str | None = None,
 ) -> tuple[Any, str, VariableSelectionGate]:
     df = ingest.load_file(dataset_path)
     sha = ingest.sha256_file(dataset_path)
-    time_col = ingest.guess_time_column(df)
+    time_col = time_column or ingest.guess_time_column(df)
     explicit_targets = [t.strip() for t in (targets_arg or "").split(",") if t.strip()]
     schema = suggest_dataset_schema(
         df,
@@ -802,6 +803,77 @@ def _cmd_baseline_lock(args: argparse.Namespace) -> int:
     return 0 if rt.passed else 1
 
 
+
+def _cmd_uq_calibrate(args: argparse.Namespace) -> int:
+    import numpy as np
+    import pandas as pd
+    from .uq import ConformalIntervals, run_uq_catalog
+    from .uq.calibration import vector
+    df, _, vsg = _load_dataset_and_vsg(args.dataset, args.targets, time_column=args.time_col)
+    if not args.time_col or args.time_col not in df:
+        raise SchemaValidationError("A chronological timestamp column is required")
+    ts = pd.to_datetime(df[args.time_col], utc=True, errors="raise")
+    if ts.isna().any() or not ts.is_monotonic_increasing or ts.duplicated().any():
+        raise SchemaValidationError("UQ requires chronological unique timestamps")
+    vsg.accept()
+    tcp = TestConfigPanel(vsg)
+    tcp.lock_preregistration()
+    target = vsg.targets[0]
+    drivers = [c.strip() for c in args.drivers.split(",") if c.strip()]
+    if not drivers or not set(drivers).issubset(vsg.included_variables(target)):
+        raise SchemaValidationError("Explicit drivers must pass VSG")
+    X = df[drivers].to_numpy(dtype=float)
+    y = vector(df[target].to_numpy())
+    if not np.isfinite(X).all() or len(y)<150:
+        raise SchemaValidationError("UQ requires at least 150 complete observations")
+    a,b = int(len(y)*0.5),int(len(y)*0.7)
+    adapter = ConformalIntervals(method=args.method).fit(X[:a],y[:a],X[a:b],y[a:b])
+    result = run_uq_catalog(adapter,X[b:],y[b:],tcp=tcp,sequential=args.method in ("enbpi","aci"))
+    _write_or_print(result,args.out)
+    return 0 if result["ok"] else 1
+
+
+def _cmd_monitoring_run(args: argparse.Namespace) -> int:
+    from .lock.baseline_lock import LockedBaselineRecord, BaselineLockManager
+    from .monitoring import ReportingSchema, MonitoringHistory, predict_reporting, run_drift_monitor
+    from .scoring.envelope import ValidityDomainEnvelope, DriverBounds
+    from .monitoring.safety import assert_safe_payload
+    config = json.loads(Path(args.config).read_text(encoding="utf-8"))
+    assert_safe_payload(config)
+    record = LockedBaselineRecord(**json.loads(Path(args.baseline).read_text(encoding="utf-8")))
+    manager = BaselineLockManager(Path(args.baseline).parent)
+    artifact = manager.load_verified_artifact(record)
+    schema = ReportingSchema(drivers=tuple(config["drivers"]),target=record.target,
+        units=tuple(config["units"].items()),step_seconds=config["step_seconds"],
+        time_column=config.get("time_column","timestamp"))
+    if tuple(record.selected_features)!=schema.drivers:
+        raise SchemaValidationError("Monitoring drivers must match locked selected features")
+    env_data = dict(record.validity_envelope)
+    env_data["bounds"] = {k:DriverBounds(driver=k,min_val=v["min"],max_val=v["max"],
+        p01=v["p01"],p05=v["p05"],median=v["median"],p95=v["p95"],p99=v["p99"])
+        for k,v in env_data["bounds"].items()}
+    envelope = ValidityDomainEnvelope(**env_data)
+    reporting = ingest.load_file(args.reporting)
+    reference, _, vsg = _load_dataset_and_vsg(args.reference,record.target)
+    vsg.accept(); tcp = TestConfigPanel(vsg); tcp.lock_preregistration()
+    from .monitoring import validate_reporting
+    reference = validate_reporting(reference,schema,units=config["units"])
+    validated_reporting = validate_reporting(reporting,schema,units=config["units"])
+    if reference[schema.time_column].iloc[-1] >= validated_reporting[schema.time_column].iloc[0]:
+        raise SchemaValidationError("Calibration reference must precede reporting period")
+    Xref = reference[list(schema.drivers)]
+    residuals = reference[record.target].to_numpy()-artifact.predict(Xref)
+    result = predict_reporting(reporting,schema=schema,units=config["units"],model=artifact,
+        envelope=envelope,calibration_residuals=residuals,level=args.confidence)
+    rows = result["rows"]
+    result["drift"] = run_drift_monitor(Xref,reporting[list(schema.drivers)],residuals,
+        [r["residual"] for r in rows],tcp=tcp,domain_flags=[r["extrapolation"] for r in rows])
+    snapshot = MonitoringHistory(args.history).append(baseline=record,frame=reporting,result=result,
+        batch_id=args.batch_id,schema=schema,units=config["units"],calibration_residuals=residuals)
+    _write_or_print(snapshot,args.out)
+    return 0
+
+
 CLI_COMMAND_HANDLERS: Mapping[str, Callable[[argparse.Namespace], int]] = MappingProxyType(
     {
         "schema-suggest": _cmd_schema_suggest,
@@ -822,6 +894,8 @@ CLI_COMMAND_HANDLERS: Mapping[str, Callable[[argparse.Namespace], int]] = Mappin
         "model-catalog": _cmd_model_catalog,
         "scoring-register": _cmd_scoring_register,
         "baseline-lock": _cmd_baseline_lock,
+        "uq-calibrate": _cmd_uq_calibrate,
+        "monitoring-run": _cmd_monitoring_run,
     }
 )
 
@@ -978,6 +1052,23 @@ def build_parser() -> argparse.ArgumentParser:
     p_bl.add_argument("--lock-dir", default=None, help="Optional directory to store immutable lock manifests & artifacts.")
     p_bl.add_argument("--out", default=None, help="Write JSON output to path.")
 
+    p_uq = sub.add_parser("uq-calibrate", help="Chronological MAPIE calibration and holdout diagnostics.")
+    p_uq.add_argument("dataset")
+    p_uq.add_argument("--targets", required=True)
+    p_uq.add_argument("--drivers", required=True)
+    p_uq.add_argument("--time-col", required=True)
+    p_uq.add_argument("--method", choices=["split", "cross", "jackknife", "enbpi", "aci"], default="enbpi")
+    p_uq.add_argument("--out")
+    p_mon = sub.add_parser("monitoring-run", help="Verified locked-baseline monitoring and audited batch append.")
+    p_mon.add_argument("reporting")
+    p_mon.add_argument("--baseline", required=True, help="Locked baseline manifest.")
+    p_mon.add_argument("--config", required=True, help="JSON drivers, units, step_seconds, time_column.")
+    p_mon.add_argument("--reference", required=True, help="Frozen calibration-period data, not reporting outcomes.")
+    p_mon.add_argument("--history", required=True)
+    p_mon.add_argument("--batch-id", required=True)
+    p_mon.add_argument("--confidence", type=float, default=0.95)
+    p_mon.add_argument("--out")
+
     return parser
 
 
@@ -1000,6 +1091,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         ComplianceGateError,
         IntegrityError,
         StaleRReferenceError,
+        ValueError,
     ) as exc:
         err_payload = {"valid": False, "error_type": type(exc).__name__, "error": str(exc)}
         sys.stderr.write(json.dumps(err_payload) + "\n")
