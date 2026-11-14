@@ -1309,7 +1309,10 @@ class SetupPage(QWidget):
             schema = self.build_schema_from_ui()
             s.dataset_schema = schema
             s.time_col = schema.time_column
-            s.targets = schema.target_columns
+            # Keep the user's explicit target selection from the target list;
+            # do not override it with schema-derived columns (which may be stale
+            # auto-selected values from dataset load).
+            schema.target_columns = list(s.targets)
             merged_units = dict(schema.units_map())
             merged_units.update(units)
             units = merged_units
