@@ -170,10 +170,29 @@ def predict_reporting(frame, *, schema, units, model, envelope, calibration_resi
 
 def frame_input_hash(frame):
     """Hash exact validated columns, units-independent values, dtypes and timestamps."""
+
+    def scalar(value):
+        # Float repr preserves every binary64 bit; ISO timestamps retain nanoseconds.
+        # Ordinary DataFrame JSON rounds both and is unsuitable for audit binding.
+        if isinstance(value, (pd.Timestamp, np.datetime64)):
+            return ["timestamp", pd.Timestamp(value).isoformat()]
+        if isinstance(value, (bool, np.bool_)):
+            return ["bool", bool(value)]
+        if isinstance(value, (float, np.floating)):
+            return [str(type(value)), repr(value)]
+        if isinstance(value, (int, np.integer)):
+            return ["integer", str(value)]
+        if value is None or value is pd.NA or value is pd.NaT:
+            return ["missing", str(value)]
+        if isinstance(value, str):
+            return ["text", value]
+        raise ValueError("Unsupported reporting scalar for audit hashing")
+
     payload = {
-        "columns": list(frame.columns),
+        "columns": [scalar(v) for v in frame.columns],
         "dtypes": [str(d) for d in frame.dtypes],
-        "data": json.loads(frame.to_json(orient="split", date_format="iso", double_precision=15)),
+        "index": [scalar(v) for v in frame.index],
+        "data": [[scalar(v) for v in row] for row in frame.itertuples(index=False, name=None)],
     }
     return hashlib.sha256(
         json.dumps(payload, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()

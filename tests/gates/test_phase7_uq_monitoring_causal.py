@@ -546,3 +546,14 @@ def test_connection_payload_encrypted_and_migration_preserves_bytes(eb_home, tmp
     with engine.connect() as connection:
         assert connection.execute(text("SELECT secret_blob FROM connections")).scalar() == "ciphertext-only"
     engine.dispose()
+
+
+def test_snapshot_hash_distinguishes_float_ulps_and_timestamp_nanoseconds():
+    original = pd.DataFrame({"timestamp": pd.date_range("2025-01-01", periods=3, freq="ns"), "x": [1.0, 2.0, 3.0]})
+    altered = original.copy()
+    altered.loc[0, "x"] = np.nextafter(1.0, 2.0)
+    assert frame_input_hash(original) != frame_input_hash(altered)
+    altered = original.copy()
+    altered.loc[0, "timestamp"] += pd.Timedelta(nanoseconds=1)
+    assert frame_input_hash(original) != frame_input_hash(altered)
+    assert frame_input_hash(original) == frame_input_hash(original.copy())
