@@ -1,0 +1,247 @@
+{
+  "method": "Actual GitHub repository API lookups; metadata discovery is not dependency compatibility, license clearance, algorithm execution or product integration.",
+  "candidates": [
+    {
+      "capability": "fairness",
+      "repository": "fairlearn/fairlearn",
+      "url": "https://github.com/fairlearn/fairlearn",
+      "archived": false,
+      "default_branch": "main",
+      "license_spdx": "MIT",
+      "description": "A Python package to assess and improve fairness of machine learning models.",
+      "status": "research_only_no_new_integration",
+      "compatibility": "Python 3.12, exact hash-lock, offline model/artifact provenance, native-only UI, licensing and Windows/Linux runtime still require verification.",
+      "existing_distribution": {
+        "name": "fairlearn",
+        "installed_version": null
+      }
+    },
+    {
+      "capability": "survival",
+      "repository": "CamDavidsonPilon/lifelines",
+      "url": "https://github.com/CamDavidsonPilon/lifelines",
+      "archived": false,
+      "default_branch": "master",
+      "license_spdx": "MIT",
+      "description": "Survival analysis in Python",
+      "status": "research_only_no_new_integration",
+      "compatibility": "Python 3.12, exact hash-lock, offline model/artifact provenance, native-only UI, licensing and Windows/Linux runtime still require verification.",
+      "existing_distribution": {
+        "name": "lifelines",
+        "installed_version": null
+      }
+    },
+    {
+      "capability": "graph_ml",
+      "repository": "pyg-team/pytorch_geometric",
+      "url": "https://github.com/pyg-team/pytorch_geometric",
+      "archived": false,
+      "default_branch": "master",
+      "license_spdx": "MIT",
+      "description": "Graph Neural Network Library for PyTorch",
+      "status": "research_only_no_new_integration",
+      "compatibility": "Python 3.12, exact hash-lock, offline model/artifact provenance, native-only UI, licensing and Windows/Linux runtime still require verification.",
+      "existing_distribution": {
+        "name": "torch-geometric",
+        "installed_version": null
+      }
+    },
+    {
+      "capability": "nlp",
+      "repository": "huggingface/transformers",
+      "url": "https://github.com/huggingface/transformers",
+      "archived": false,
+      "default_branch": "main",
+      "license_spdx": "Apache-2.0",
+      "description": "\ud83e\udd17 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training. ",
+      "status": "research_only_no_new_integration",
+      "compatibility": "Python 3.12, exact hash-lock, offline model/artifact provenance, native-only UI, licensing and Windows/Linux runtime still require verification.",
+      "existing_distribution": {
+        "name": "transformers",
+        "installed_version": null
+      }
+    },
+    {
+      "capability": "computer_vision",
+      "repository": "pytorch/vision",
+      "url": "https://github.com/pytorch/vision",
+      "archived": false,
+      "default_branch": "main",
+      "license_spdx": "BSD-3-Clause",
+      "description": "Datasets, Transforms and Models specific to Computer Vision",
+      "status": "research_only_no_new_integration",
+      "compatibility": "Python 3.12, exact hash-lock, offline model/artifact provenance, native-only UI, licensing and Windows/Linux runtime still require verification.",
+      "existing_distribution": {
+        "name": "torchvision",
+        "installed_version": null
+      }
+    },
+    {
+      "capability": "recommenders",
+      "repository": "RUCAIBox/RecBole",
+      "url": "https://github.com/RUCAIBox/RecBole",
+      "archived": false,
+      "default_branch": "master",
+      "license_spdx": "MIT",
+      "description": "A unified, comprehensive and efficient recommendation library",
+      "status": "research_only_no_new_integration",
+      "compatibility": "Python 3.12, exact hash-lock, offline model/artifact provenance, native-only UI, licensing and Windows/Linux runtime still require verification.",
+      "existing_distribution": {
+        "name": "recbole",
+        "installed_version": null
+      }
+    },
+    {
+      "capability": "operations_research",
+      "repository": "Pyomo/pyomo",
+      "url": "https://github.com/Pyomo/pyomo",
+      "archived": false,
+      "default_branch": "main",
+      "license_spdx": "NOASSERTION",
+      "description": "An object-oriented algebraic modeling language in Python for structured optimization problems.",
+      "status": "research_only_no_new_integration",
+      "compatibility": "Python 3.12, exact hash-lock, offline model/artifact provenance, native-only UI, licensing and Windows/Linux runtime still require verification.",
+      "existing_distribution": {
+        "name": "pyomo",
+        "installed_version": null
+      }
+    },
+    {
+      "capability": "discrete_event_simulation",
+      "repository": "simpx/simpy",
+      "url": "https://github.com/simpx/simpy",
+      "archived": false,
+      "default_branch": "master",
+      "license_spdx": "MIT",
+      "description": "fork from https://gitlab.com/team-simpy/simpy.git",
+      "status": "research_only_no_new_integration",
+      "compatibility": "Python 3.12, exact hash-lock, offline model/artifact provenance, native-only UI, licensing and Windows/Linux runtime still require verification.",
+      "existing_distribution": {
+        "name": "simpy",
+        "installed_version": null
+      }
+    },
+    {
+      "capability": "lime",
+      "repository": "marcotcr/lime",
+      "url": "https://github.com/marcotcr/lime",
+      "archived": false,
+      "default_branch": "master",
+      "license_spdx": "BSD-2-Clause",
+      "description": "Lime: Explaining the predictions of any machine learning classifier",
+      "status": "research_only_no_new_integration",
+      "compatibility": "Python 3.12, exact hash-lock, offline model/artifact provenance, native-only UI, licensing and Windows/Linux runtime still require verification.",
+      "existing_distribution": {
+        "name": "lime",
+        "installed_version": null
+      }
+    },
+    {
+      "capability": "ale_counterfactuals",
+      "repository": "SeldonIO/alibi",
+      "url": "https://github.com/SeldonIO/alibi",
+      "archived": false,
+      "default_branch": "master",
+      "license_spdx": "NOASSERTION",
+      "description": "Algorithms for explaining machine learning models",
+      "status": "research_only_no_new_integration",
+      "compatibility": "Python 3.12, exact hash-lock, offline model/artifact provenance, native-only UI, licensing and Windows/Linux runtime still require verification.",
+      "existing_distribution": {
+        "name": "alibi",
+        "installed_version": null
+      }
+    },
+    {
+      "capability": "automl",
+      "repository": "microsoft/FLAML",
+      "url": "https://github.com/microsoft/FLAML",
+      "archived": false,
+      "default_branch": "main",
+      "license_spdx": "MIT",
+      "description": "A fast library for AutoML and tuning. Join our Discord: https://discord.gg/Cppx2vSPVP.",
+      "status": "research_only_no_new_integration",
+      "compatibility": "Python 3.12, exact hash-lock, offline model/artifact provenance, native-only UI, licensing and Windows/Linux runtime still require verification.",
+      "existing_distribution": {
+        "name": "flaml",
+        "installed_version": null
+      }
+    },
+    {
+      "capability": "deep_forecasting",
+      "repository": "Nixtla/neuralforecast",
+      "url": "https://github.com/Nixtla/neuralforecast",
+      "archived": false,
+      "default_branch": "main",
+      "license_spdx": "Apache-2.0",
+      "description": "Scalable and user friendly neural :brain: forecasting algorithms.",
+      "status": "research_only_no_new_integration",
+      "compatibility": "Python 3.12, exact hash-lock, offline model/artifact provenance, native-only UI, licensing and Windows/Linux runtime still require verification.",
+      "existing_distribution": {
+        "name": "neuralforecast",
+        "installed_version": null
+      }
+    },
+    {
+      "capability": "causal_identification",
+      "repository": "py-why/dowhy",
+      "url": "https://github.com/py-why/dowhy",
+      "archived": false,
+      "default_branch": "main",
+      "license_spdx": "MIT",
+      "description": "DoWhy is a Python library for causal inference that supports explicit modeling and testing of causal assumptions. DoWhy is based on a unified language for causal inference, combining causal graphical models and potential outcomes frameworks. ",
+      "status": "research_only_no_new_integration",
+      "compatibility": "Python 3.12, exact hash-lock, offline model/artifact provenance, native-only UI, licensing and Windows/Linux runtime still require verification.",
+      "existing_distribution": {
+        "name": "dowhy",
+        "installed_version": null
+      },
+      "existing_product_scope": "Existing optional causal/mv.py library adapter only; this research does not add causal forests/IV/RD/synthetic control or GUI integration."
+    },
+    {
+      "capability": "causal_effect_models",
+      "repository": "py-why/EconML",
+      "url": "https://github.com/py-why/EconML",
+      "archived": false,
+      "default_branch": "main",
+      "license_spdx": "NOASSERTION",
+      "description": "ALICE (Automated Learning and Intelligence for Causation and Economics) is a Microsoft Research project aimed at applying Artificial Intelligence concepts to economic decision making. One of its  goals is to build a toolkit that combines state-of-the-art machine learning techniques with econometrics in order to bring automation to complex causal inference problems. To date, the ALICE Python SDK (econml) implements orthogonal machine learning algorithms such as the double machine learning work of Chernozhukov et al. This toolkit is designed to measure the causal effect of some treatment variable(s) t on an outcome variable y, controlling for a set of features x.",
+      "status": "research_only_no_new_integration",
+      "compatibility": "Python 3.12, exact hash-lock, offline model/artifact provenance, native-only UI, licensing and Windows/Linux runtime still require verification.",
+      "existing_distribution": {
+        "name": "econml",
+        "installed_version": "0.17.0"
+      },
+      "existing_product_scope": "Existing optional causal/mv.py library adapter only; this research does not add causal forests/IV/RD/synthetic control or GUI integration."
+    },
+    {
+      "capability": "bayesian_mcmc_vi",
+      "repository": "pyro-ppl/pyro",
+      "url": "https://github.com/pyro-ppl/pyro",
+      "archived": false,
+      "default_branch": "dev",
+      "license_spdx": "Apache-2.0",
+      "description": "Deep universal probabilistic programming with Python and PyTorch",
+      "status": "research_only_no_new_integration",
+      "compatibility": "Python 3.12, exact hash-lock, offline model/artifact provenance, native-only UI, licensing and Windows/Linux runtime still require verification.",
+      "existing_distribution": {
+        "name": "pyro-ppl",
+        "installed_version": null
+      }
+    },
+    {
+      "capability": "general_validation",
+      "repository": "unionai-oss/pandera",
+      "url": "https://github.com/unionai-oss/pandera",
+      "archived": false,
+      "default_branch": "main",
+      "license_spdx": "MIT",
+      "description": "A light-weight, flexible, and expressive statistical data testing library",
+      "status": "research_only_no_new_integration",
+      "compatibility": "Python 3.12, exact hash-lock, offline model/artifact provenance, native-only UI, licensing and Windows/Linux runtime still require verification.",
+      "existing_distribution": {
+        "name": "pandera",
+        "installed_version": null
+      }
+    }
+  ]
+}

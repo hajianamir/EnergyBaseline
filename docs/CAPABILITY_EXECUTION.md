@@ -14,7 +14,7 @@ The installed SciPy, sklearn, and statsmodels backends already provide MILP/LP, 
 
 ## Stage 1: six-axis read-only quality evidence
 
-Implementation: `energybaseline/core/quality_audit.py::audit_quality`.
+Implementation: `energybaseline/core/quality_audit.py::audit_quality`. Stage 1 targets scalar tabular business data; numeric rules are defined for real-valued numeric columns, not complex-valued data or arbitrary Python objects.
 
 Execution paths:
 
@@ -28,7 +28,7 @@ Execution paths:
 | Uniqueness | Rows with nonmissing declared keys and no preceding duplicate key / rows; default key is the entire selected row. |
 | Validity | Passed row-rule evaluations / all row-rule evaluations. Supported declarative rules: `not_null`, numeric `finite`, closed numeric `range`, and `allowed` values. Missing values fail applicable validity rules. |
 | Consistency | Passed row-rule evaluations / all row-rule evaluations. Cross-column comparisons `eq/ne/lt/le/gt/ge`, and composite foreign-key membership in an explicitly supplied reference table. Missing keys fail membership; missing compared values fail comparison. |
-| Accuracy | Agreement with nonmissing reference truth on declared columns, after one-to-one key matching, with optional nonnegative numeric `atol`/`rtol`. Unknown/missing reference truth is unassessed, not correct. Reference coverage is reported independently. Missing observations with known truth fail. |
+| Accuracy | Agreement with nonmissing reference truth (also finite for numeric truth) on declared columns, after one-to-one key matching, with optional nonnegative numeric `atol`/`rtol`. Unknown/missing reference truth is unassessed, not correct. Reference coverage is reported independently. Missing observations with known truth fail. |
 | Timeliness | Rows whose parsed timestamp age lies in the explicit SLA interval `[-future_tolerance_seconds, max_age_seconds]` relative to an explicit timezone-aware as-of time. Invalid, stale and excessively future timestamps fail. This is a row-age SLA, not merely the newest record's freshness. |
 
 These are documented operational definitions, not universal definitions of data quality. Reference agreement does not certify the reliability of the supplied reference itself. This engine does not replace Pandera/Great Expectations or claim a general business-rule DSL.
@@ -74,7 +74,7 @@ The legacy four-component preprocessing score in `core/quality.py::quality_score
 
 Focused unit/CLI and real Qt integration tests are under `tests/test_quality_audit.py` and `tests/gui/test_quality_audit_gui.py`. They cover reference matching, absence of evidence, null/duplicate keys, malformed policies, row-level SLAs, failure positions, explicit timezone normalization, privacy, input immutability, structured CLI errors/thresholds, GUI reachability, dataset reload, path guards, and preservation of accepted gate objects and engine call counts.
 
-Final local and fresh two-OS results are recorded in `artifacts/capabilities/quality-stage1/README.md` after execution. Stage 1 must not be called verified on the strength of the previous VSG-fix workflow.
+Stage 1 verification on source `ef78c2b6bd0e2a8b81ef7220007950337b3d73cf`: **48 focused tests, 25 complete GUI-directory tests, and 552 full-suite local tests passed**, all with exit 0 and no skips. Fresh [Windows/Linux workflow 43724721792](https://github.com/hajianamir/EnergyBaseline/actions/runs/43724721792) completed successfully on both OSes, including full-suite/coverage and GUI/coverage steps. Raw logs, JUnit, actual hosted API receipts and source binding are in `artifacts/capabilities/quality-stage1/README.md`. Earlier-source runs are not substituted for this final implementation. The follow-up documentation/evidence commit does not change tested product, tests, dependencies or workflows. This verifies Stage 1, **not completion of the broader program**.
 
 ## Remaining implementation stages (not yet implemented by this program)
 

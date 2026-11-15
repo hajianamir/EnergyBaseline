@@ -1,0 +1,29 @@
+{
+  "tested_commit": "ef78c2b6bd0e2a8b81ef7220007950337b3d73cf",
+  "runs": {
+    "focused": {
+      "tests": 48,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "duration_seconds": 7.002,
+      "process_exit_code": 0
+    },
+    "gui": {
+      "tests": 25,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "duration_seconds": 50.169,
+      "process_exit_code": 0
+    },
+    "full-suite": {
+      "tests": 552,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "duration_seconds": 569.024,
+      "process_exit_code": 0
+    }
+  }
+}

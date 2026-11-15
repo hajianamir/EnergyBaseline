@@ -1,0 +1,140 @@
+{
+  "aggregation": "Equal dimension weights; overall score requires all six dimensions fully assessed.",
+  "as_of_utc": "2026-01-01T04:00:00+00:00",
+  "assessed_score": 1.0,
+  "data_modified": false,
+  "descriptive_only": true,
+  "dimensions": {
+    "accuracy": {
+      "assessed": 3,
+      "checks": [
+        {
+          "assessed": 3,
+          "failed_row_positions": [],
+          "id": "accuracy_0",
+          "passed": 3,
+          "positions_truncated": false
+        }
+      ],
+      "coverage": 1.0,
+      "failed": 0,
+      "passed": 3,
+      "possible": 3,
+      "score": 1.0,
+      "status": "assessed"
+    },
+    "completeness": {
+      "assessed": 15,
+      "checks": [
+        {
+          "assessed": 15,
+          "failed_row_positions": [],
+          "id": "nonmissing_cells",
+          "passed": 15,
+          "position_kind": "row_major_cell_offset",
+          "positions_truncated": false
+        }
+      ],
+      "coverage": 1.0,
+      "failed": 0,
+      "passed": 15,
+      "possible": 15,
+      "score": 1.0,
+      "status": "assessed"
+    },
+    "consistency": {
+      "assessed": 6,
+      "checks": [
+        {
+          "assessed": 3,
+          "failed_row_positions": [],
+          "id": "consistency_0",
+          "passed": 3,
+          "positions_truncated": false
+        },
+        {
+          "assessed": 3,
+          "failed_row_positions": [],
+          "id": "consistency_1",
+          "passed": 3,
+          "positions_truncated": false
+        }
+      ],
+      "coverage": 1.0,
+      "failed": 0,
+      "passed": 6,
+      "possible": 6,
+      "score": 1.0,
+      "status": "assessed"
+    },
+    "timeliness": {
+      "assessed": 3,
+      "checks": [
+        {
+          "assessed": 3,
+          "failed_row_positions": [],
+          "id": "timestamp_age_sla",
+          "passed": 3,
+          "positions_truncated": false
+        }
+      ],
+      "coverage": 1.0,
+      "failed": 0,
+      "passed": 3,
+      "possible": 3,
+      "score": 1.0,
+      "status": "assessed"
+    },
+    "uniqueness": {
+      "assessed": 3,
+      "checks": [
+        {
+          "assessed": 3,
+          "failed_row_positions": [],
+          "id": "unique_nonmissing_key",
+          "passed": 3,
+          "positions_truncated": false
+        }
+      ],
+      "coverage": 1.0,
+      "failed": 0,
+      "passed": 3,
+      "possible": 3,
+      "score": 1.0,
+      "status": "assessed"
+    },
+    "validity": {
+      "assessed": 6,
+      "checks": [
+        {
+          "assessed": 3,
+          "failed_row_positions": [],
+          "id": "validity_0",
+          "passed": 3,
+          "positions_truncated": false
+        },
+        {
+          "assessed": 3,
+          "failed_row_positions": [],
+          "id": "validity_1",
+          "passed": 3,
+          "positions_truncated": false
+        }
+      ],
+      "coverage": 1.0,
+      "failed": 0,
+      "passed": 6,
+      "possible": 6,
+      "score": 1.0,
+      "status": "assessed"
+    }
+  },
+  "fully_assessed_dimensions": 6,
+  "input_sha256": "547df7e26a5a79aacc62cd4e4d2fbda6671f32d6746b9530b49b2629700bf898",
+  "overall_score": 1.0,
+  "policy_sha256": "72c88990cddb495c158c919fab28f354af575d2b101498106b18c84eb694caa5",
+  "reference_sha256": {
+    "truth": "e3b2591f9d63422e0c2411434d211241505cf45dba8c169bb12d9f71c252e6c0"
+  },
+  "schema_version": 1
+}

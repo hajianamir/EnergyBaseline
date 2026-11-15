@@ -6,28 +6,28 @@
       "capability": "Six-dimensional data quality framework",
       "baseline_finding": "Partial",
       "baseline_evidence": "`core/quality.py::quality_score` exposes completeness, validity, uniqueness, regularity. The weighted score is 40/20/10/30 percent respectively. No six-axis accuracy/consistency/timeliness framework is established by this score.",
-      "current_status": "stage1_implemented_verification_pending"
+      "current_status": "stage1_verified_gui_cli"
     },
     {
       "id": "C002",
       "capability": "Accuracy against an external source of truth",
       "baseline_finding": "Not found",
       "baseline_evidence": "Range checks, outliers, and plausibility scores do not establish measurement accuracy against a verified reference.",
-      "current_status": "stage1_implemented_verification_pending"
+      "current_status": "stage1_verified_gui_cli"
     },
     {
       "id": "C003",
       "capability": "General cross-column / cross-table consistency rules",
       "baseline_finding": "Partial",
       "baseline_evidence": "`core/schema.py`, `core/integrity.py`, temporal quantity semantics and leakage rules; no general-purpose rule DSL found.",
-      "current_status": "stage1_bounded_rule_engine_verification_pending"
+      "current_status": "stage1_bounded_rules_verified_broader_scope_pending"
     },
     {
       "id": "C004",
       "capability": "Freshness / SLA timeliness scoring",
       "baseline_finding": "Not found",
       "baseline_evidence": "Gap/regularity detection is present; that is not a wall-clock freshness SLA engine.",
-      "current_status": "stage1_implemented_verification_pending"
+      "current_status": "stage1_verified_gui_cli"
     },
     {
       "id": "C005",
@@ -281,5 +281,16 @@
       "baseline_evidence": "PDP/ICE or a surrogate does not establish these distinct explanation techniques.",
       "current_status": "pending"
     }
-  ]
+  ],
+  "program_complete": false,
+  "stage1_verification": {
+    "tested_source_commit": "ef78c2b6bd0e2a8b81ef7220007950337b3d73cf",
+    "workflow": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43724721792",
+    "conclusion": "success",
+    "operating_systems": [
+      "Windows",
+      "Linux"
+    ],
+    "scope": "Six-axis read-only quality audit only; all other pending/partial items remain explicitly tracked."
+  }
 }
