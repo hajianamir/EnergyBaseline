@@ -1,0 +1,34 @@
+{
+  "run_id": 43691420952,
+  "url": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43691420952",
+  "source_commit": "f1cb9a3b595eaf2dfc2605da4e7562d911110022",
+  "receipts": [
+    {
+      "file": "ci-native/windows-credentials.json",
+      "sha256": "e7b9deb123b3b8db7e742fff0a668d9b21e9fcbe5da46c5461239d8f38cb9c04",
+      "source_commit": "f1cb9a3b595eaf2dfc2605da4e7562d911110022",
+      "job_id": 132742690129,
+      "check_annotations_url": "https://api.github.com/repos/hajianamir/EnergyBaseline/check-runs/132742690129/annotations",
+      "original_line_endings": "CRLF",
+      "retrieval": "Reconstructed byte-exact from this run official check notice JSON and verified against its runner-computed SHA-256; not an Azure artifact ZIP download."
+    },
+    {
+      "file": "ci-native/linux-odbc.json",
+      "sha256": "52f87344876855f09670034a5cbff1afcd8fe3d7eaff4757c961d49f39809337",
+      "source_commit": "f1cb9a3b595eaf2dfc2605da4e7562d911110022",
+      "job_id": 132742690377,
+      "check_annotations_url": "https://api.github.com/repos/hajianamir/EnergyBaseline/check-runs/132742690377/annotations",
+      "original_line_endings": "LF",
+      "retrieval": "Reconstructed byte-exact from this run official check notice JSON and verified against its runner-computed SHA-256; not an Azure artifact ZIP download."
+    },
+    {
+      "file": "ci-native/linux-credentials.json",
+      "sha256": "fd639d080281c29e3290a1fe7d97ab5dab392cad05b3f9e4df8a2d835f3f0ed0",
+      "source_commit": "f1cb9a3b595eaf2dfc2605da4e7562d911110022",
+      "job_id": 132742690377,
+      "check_annotations_url": "https://api.github.com/repos/hajianamir/EnergyBaseline/check-runs/132742690377/annotations",
+      "original_line_endings": "LF",
+      "retrieval": "Reconstructed byte-exact from this run official check notice JSON and verified against its runner-computed SHA-256; not an Azure artifact ZIP download."
+    }
+  ]
+}

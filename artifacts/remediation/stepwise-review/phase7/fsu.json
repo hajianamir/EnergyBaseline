@@ -1,0 +1,26 @@
+{
+  "0.9": {
+    "confidence": 0.9,
+    "defined": true,
+    "fsu": 0.07940622168917215,
+    "half_width": 28.6664486283198,
+    "lower": 332.3436588734802,
+    "maxlags": 6,
+    "method": "Bartlett autocovariance + calibration mean + measurement + static factor",
+    "savings": 361.0101075018,
+    "standard_uncertainty": 17.37396568719945,
+    "upper": 389.6765561301198
+  },
+  "0.95": {
+    "confidence": 0.95,
+    "defined": true,
+    "fsu": 0.0947085464774646,
+    "half_width": 34.19074254516872,
+    "lower": 326.81936495663126,
+    "maxlags": 6,
+    "method": "Bartlett autocovariance + calibration mean + measurement + static factor",
+    "savings": 361.0101075018,
+    "standard_uncertainty": 17.37396568719945,
+    "upper": 395.20085004696875
+  }
+}

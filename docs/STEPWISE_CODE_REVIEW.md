@@ -2,7 +2,7 @@
 
 ## Status
 
-This pass starts from `7963431` on `arena/5b0e8eef-energybaseline`. It is separate from the previous remediation closure. The final full local regression and fresh Windows/Linux CI are **pending**; previous CI is not evidence for these changed product bytes.
+This pass starts from `7963431` on `arena/5b0e8eef-energybaseline` and is separate from the previous remediation closure. The corrected source is **`f1cb9a3b595eaf2dfc2605da4e7562d911110022`**. The full local regression is **493/493 passed** and fresh actual Windows/Linux CI **43691420952 is fully successful**. These are new executions of the changed code, not reused previous CI results. Final evidence/documentation commits do not change the tested product bytes.
 
 ## Review sequence and scope
 
@@ -41,12 +41,20 @@ Evidence directory: `artifacts/remediation/stepwise-review/`.
 
 - `reproduced-before.txt`: **40 failed, 2 passed** before the initial fixes. Parameterized failures are not 40 independent root causes.
 - `additional-before.txt`: **2 failed** reproducing the oversized-Excel and generic-HTML-ID defects before those fixes.
-- `focused.txt` / `focused.xml`: **54 passed**, including additional transport-policy and pinned-driver defenses.
-- `static.txt` / `static.json`: **10 checks passed** (pip check, Ruff lint/format, Pyflakes, compileall, four architecture/integrity guards and diff whitespace validation).
+- `focused.txt` / `focused.xml`: **54 passed**, including additional transport-policy and pinned-driver defenses, before the MT-5 compatibility follow-up.
+- `compatibility.txt` / `compatibility.xml`: **56 passed**: all **55 new regressions** plus the unchanged original MT-5 isolation test. The follow-up moves the F1–F10 input-binding check after mandatory descriptive-label removal, and adds a rejection test for altered real predictors.
+- `static-final.txt` / `static-final.json`: **10 checks passed** on the corrected source (pip check, Ruff lint/format, Pyflakes, compileall, four architecture/integrity guards and diff whitespace validation).
 - `native-generated-odbc.json`: **4 actual checks passed**, generated SQLite3 ODBC profile, bound values and row bounds; no mocks.
 - `native-odbc.json`: **10 actual checks passed**, including database-enforced read-only behavior; no mocks.
 - `full-interim-stopped.txt`: superseded incomplete run, stopped to add transport/compatibility defenses; **not acceptance evidence**.
-- `full.txt` / `full.xml`: final full run in progress.
+- `full.txt` / `full.xml`: initial full run, **491 passed, 1 failed**. The original MT-5 test exposed the ordering regression above; this run is retained as failure evidence, not acceptance.
+- `ci-initial-final.json`: initial CI `43690836217`, failed on the same unchanged MT-5 contract; not acceptance.
+- `full-final.txt` / `full-final.xml`: corrected full run **493 passed, 0 failed, 0 errors, 0 skipped in 781.36 seconds**; process exit code **0**. This is the local acceptance run on the corrected source.
+- `ci-final.json`: fresh corrected CI [43691420952](https://github.com/hajianamir/EnergyBaseline/actions/runs/43691420952), source `f1cb9a3b595eaf2dfc2605da4e7562d911110022`, **completed successfully on both Windows and Linux**. Full-suite/coverage, GUI, renderer/audit, dependency audit and SBOM steps passed; Windows packaging/runtime and self-signed signing smoke steps also passed. This does not certify a production signing identity or physical reference machine.
+- `ci-native/` / `ci-native-provenance.json`: **3 actual native receipts from this CI run**, Windows DPAPI, Linux Secret Service/outage/restart and Linux SQLite ODBC. Recovered from official GitHub check notices and byte/SHA-256 verified against runner digests, including Windows CRLF. No claim of an Azure artifact ZIP download is made.
+- `source-manifest.json` / `source-verification.json`: **215 source/config files, zero drift**; all **146 package Python files** included. `source-manifest-initial.json` preserves the earlier rejected snapshot.
+- `phase7/`: freshly rerun real MAPIE uncertainty, frozen-model prediction, monitoring/history, drift, causal and malformed-input evidence on the corrected source; all UQ cases met the declared empirical tolerance. Optional unavailable causal backends are explicitly disclosed, not replaced with mocks. All **11 persisted evidence hashes** verified.
+- `phase8/`: freshly rerun gated sample analysis and actual renderers on the corrected source; **20 metrics agree**, Executive PDF **9 pages**, repeated PDF bytes deterministic; archive verifier reproduced **8 files / 20 metrics / 30 tables**. All **12 persisted evidence hashes** verified. Report ID: `6a5e2c116f818f091b816dbfe9a6bdec801f3ee735f436fc7be76629c69c08b9`; archive SHA-256: `0fe83884fb9a2c1b21b3318f80c1f3ed99dff087a1e8229500f255448ff7d2e2`.
 
 No pre-existing test assertions were changed, removed, skipped or weakened in this pass. LICENSE and `artifacts/review_baseline/` remain unchanged.
 

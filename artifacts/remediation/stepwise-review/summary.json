@@ -1,0 +1,119 @@
+{
+  "base_commit": "7963431",
+  "tested_source_commit": "f1cb9a3b595eaf2dfc2605da4e7562d911110022",
+  "branch": "arena/5b0e8eef-energybaseline",
+  "scope": "Package-wide static checks plus risk-focused manual inspection and confirmed-defect regression testing; not proof of absence of every possible defect.",
+  "changed_product_files": [
+    "energybaseline/causal/mv.py",
+    "energybaseline/contracts.py",
+    "energybaseline/core/authorization.py",
+    "energybaseline/core/ingest.py",
+    "energybaseline/core/sqlsource.py",
+    "energybaseline/models/__init__.py",
+    "energybaseline/monitoring/drift.py",
+    "energybaseline/report/agreement.py",
+    "energybaseline/report/charts.py",
+    "energybaseline/report/excel.py",
+    "energybaseline/sdk.py",
+    "energybaseline/uq/__init__.py",
+    "energybaseline/uq/savings_uncertainty.py"
+  ],
+  "new_regression_cases": 55,
+  "local_full_regression": {
+    "passed": 493,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 781.36,
+    "exit_code": 0,
+    "text": "full-final.txt",
+    "junit": "full-final.xml"
+  },
+  "focused_compatibility": {
+    "passed": 56,
+    "composition": "55 new cases plus unchanged original MT-5 isolation test",
+    "junit": "compatibility.xml"
+  },
+  "static_checks": {
+    "passed": 10,
+    "failed": 0,
+    "file": "static-final.json"
+  },
+  "source_binding": {
+    "files": 215,
+    "drift": [],
+    "package_python_files": 146,
+    "manifest": "source-manifest.json",
+    "preexisting_tests_changed": false,
+    "license_and_review_baseline_preserved": true
+  },
+  "actual_ci": {
+    "run_id": 43691420952,
+    "url": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43691420952",
+    "source_commit": "f1cb9a3b595eaf2dfc2605da4e7562d911110022",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "Phase 8 Gate G8 (windows-latest)",
+        "conclusion": "success",
+        "database_id": 132742690129
+      },
+      {
+        "name": "Phase 8 Gate G8 (ubuntu-latest)",
+        "conclusion": "success",
+        "database_id": 132742690377
+      }
+    ],
+    "metadata": "ci-final.json",
+    "native_receipts": 3,
+    "native_receipt_provenance": "ci-native-provenance.json"
+  },
+  "actual_local_odbc": {
+    "generated_profile_checks": 4,
+    "read_only_adapter_checks": 10,
+    "mocked": false,
+    "files": [
+      "native-generated-odbc.json",
+      "native-odbc.json"
+    ]
+  },
+  "fresh_phase_evidence": {
+    "phase7_all_uq_within_tolerance": true,
+    "manifest_hashes_verified": {
+      "phase7": 11,
+      "phase8": 12
+    },
+    "renderer_metric_count": 20,
+    "executive_pdf_pages": 9,
+    "four_format_metric_agreement": true,
+    "report_id": "6a5e2c116f818f091b816dbfe9a6bdec801f3ee735f436fc7be76629c69c08b9",
+    "archive_verification": {
+      "files_verified": 8,
+      "metrics_reproduced": 20,
+      "ok": true,
+      "report_id": "6a5e2c116f818f091b816dbfe9a6bdec801f3ee735f436fc7be76629c69c08b9",
+      "sha256": "0fe83884fb9a2c1b21b3318f80c1f3ed99dff087a1e8229500f255448ff7d2e2",
+      "tables_reproduced": 30
+    }
+  },
+  "nonacceptance_history": {
+    "initial_full": {
+      "passed": 491,
+      "failed": 1,
+      "text": "full.txt"
+    },
+    "initial_ci_run_id": 43690836217,
+    "initial_ci_conclusion": "failure",
+    "stopped_interim_run": "full-interim-stopped.txt",
+    "reason": "MT-5 descriptive-label stripping must precede input binding; original assertions retained and ordering corrected."
+  },
+  "not_certified": [
+    "Real MySQL/SQL Server/other ODBC deployments or remote TLS handshakes",
+    "Physical reference-machine performance",
+    "OS reboot or locked physical desktop recovery",
+    "Production Authenticode identity; CI signing is a self-signed smoke test"
+  ],
+  "pull_request_opened": false,
+  "main_modified": false,
+  "merged": false
+}

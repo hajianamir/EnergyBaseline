@@ -1,0 +1,1319 @@
+Refreshing run status every 30 seconds. Press Ctrl+C to quit.
+
+* arena/5b0e8eef-energybaseline CI · 43690836217
+Triggered via push about 3 minutes ago
+
+JOBS
+* Phase 8 Gate G8 (windows-latest) (ID 132740950688)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Install hashed lockfile dependencies
+  * Actual Windows DPAPI process-restart and tamper evidence
+  * Actual Linux Secret Service and outage evidence
+  * Actual Linux SQLite ODBC adapter evidence
+  * Ruff lint and format check
+  * Pyflakes check
+  * Gate G1 architecture, integrity, and traceability checks
+  * Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+* Phase 8 Gate G8 (ubuntu-latest) (ID 132740950857)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  - Actual Windows DPAPI process-restart and tamper evidence
+  ✓ Actual Linux Secret Service and outage evidence
+  ✓ Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+Refreshing run status every 30 seconds. Press Ctrl+C to quit.
+
+* arena/5b0e8eef-energybaseline CI · 43690836217
+Triggered via push about 3 minutes ago
+
+JOBS
+* Phase 8 Gate G8 (windows-latest) (ID 132740950688)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Actual Windows DPAPI process-restart and tamper evidence
+  - Actual Linux Secret Service and outage evidence
+  - Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+* Phase 8 Gate G8 (ubuntu-latest) (ID 132740950857)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  - Actual Windows DPAPI process-restart and tamper evidence
+  ✓ Actual Linux Secret Service and outage evidence
+  ✓ Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+Refreshing run status every 30 seconds. Press Ctrl+C to quit.
+
+* arena/5b0e8eef-energybaseline CI · 43690836217
+Triggered via push about 4 minutes ago
+
+JOBS
+* Phase 8 Gate G8 (windows-latest) (ID 132740950688)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Actual Windows DPAPI process-restart and tamper evidence
+  - Actual Linux Secret Service and outage evidence
+  - Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+* Phase 8 Gate G8 (ubuntu-latest) (ID 132740950857)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  - Actual Windows DPAPI process-restart and tamper evidence
+  ✓ Actual Linux Secret Service and outage evidence
+  ✓ Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+Refreshing run status every 30 seconds. Press Ctrl+C to quit.
+
+* arena/5b0e8eef-energybaseline CI · 43690836217
+Triggered via push about 4 minutes ago
+
+JOBS
+* Phase 8 Gate G8 (windows-latest) (ID 132740950688)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Actual Windows DPAPI process-restart and tamper evidence
+  - Actual Linux Secret Service and outage evidence
+  - Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+* Phase 8 Gate G8 (ubuntu-latest) (ID 132740950857)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  - Actual Windows DPAPI process-restart and tamper evidence
+  ✓ Actual Linux Secret Service and outage evidence
+  ✓ Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+Refreshing run status every 30 seconds. Press Ctrl+C to quit.
+
+* arena/5b0e8eef-energybaseline CI · 43690836217
+Triggered via push about 5 minutes ago
+
+JOBS
+* Phase 8 Gate G8 (windows-latest) (ID 132740950688)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Actual Windows DPAPI process-restart and tamper evidence
+  - Actual Linux Secret Service and outage evidence
+  - Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+* Phase 8 Gate G8 (ubuntu-latest) (ID 132740950857)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  - Actual Windows DPAPI process-restart and tamper evidence
+  ✓ Actual Linux Secret Service and outage evidence
+  ✓ Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+Refreshing run status every 30 seconds. Press Ctrl+C to quit.
+
+* arena/5b0e8eef-energybaseline CI · 43690836217
+Triggered via push about 5 minutes ago
+
+JOBS
+* Phase 8 Gate G8 (windows-latest) (ID 132740950688)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Actual Windows DPAPI process-restart and tamper evidence
+  - Actual Linux Secret Service and outage evidence
+  - Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+* Phase 8 Gate G8 (ubuntu-latest) (ID 132740950857)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  - Actual Windows DPAPI process-restart and tamper evidence
+  ✓ Actual Linux Secret Service and outage evidence
+  ✓ Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+Refreshing run status every 30 seconds. Press Ctrl+C to quit.
+
+* arena/5b0e8eef-energybaseline CI · 43690836217
+Triggered via push about 6 minutes ago
+
+JOBS
+* Phase 8 Gate G8 (windows-latest) (ID 132740950688)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Actual Windows DPAPI process-restart and tamper evidence
+  - Actual Linux Secret Service and outage evidence
+  - Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+X Phase 8 Gate G8 (ubuntu-latest) in 6m6s (ID 132740950857)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  - Actual Windows DPAPI process-restart and tamper evidence
+  ✓ Actual Linux Secret Service and outage evidence
+  ✓ Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  X Gate G1 unit tests (gates + DB config)
+  - Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  - Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  - Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  - Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  - Gate G8 shared reports, renderer agreement and audit verification
+  - Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  ✓ Emit pytest failure annotations on error
+  - GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  - Vulnerability audit (pip-audit)
+  - Generate CycloneDX SBOM
+  ✓ Publish native evidence receipts in the check log
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  - Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 8 Gate G8 (ubuntu-latest): .github#2
+
+- sha256=52f87344876855f09670034a5cbff1afcd8fe3d7eaff4757c961d49f39809337 {"evidence_schema_version":1,"adapter":"pyodbc/unixODBC/SQLite ODBC","native_runtime":true,"mocked":false,"metadata":{"pyodbc":"5.5.0","dbms":"SQLite","driver_version":"0.99991","driver_manager":"03.52.0002.0003","driver_reported_read_only_before_enforcement":false,"advisory_flag_prevented_write":false},"checks":{"backend_policy_installed":true,"backend_confirms_query_only":true,"database_rejects_write_even_without_ast":true,"injection_shaped_bound_value_remains_literal":true,"qmark_repetition_and_order":true,"bound_date_range":true,"bounded_driver_fetch":true,"table_survives_bound_value":true,"ast_rejects_write":true,"driver_failure_redacts_bound_value":true},"passed":true,"scope":"Local synthetic SQLite ODBC only; not SQL Server/MySQL/TLS certification."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+- sha256=fd639d080281c29e3290a1fe7d97ab5dab392cad05b3f9e4df8a2d835f3f0ed0 {"evidence_schema_version":1,"platform":"linux","native":true,"mocked":false,"backend":{"name":"os-keyring+fernet","persistent":true,"secure_store":true},"checks":{"actual_secure_os_backend":true,"fresh_process_recovers_same_plaintext":true,"tampered_ciphertext_is_rejected":true,"no_plaintext_keyfile_created":true,"actual_service_outage_fails_closed":true},"service_failure":{"executed":true,"disconnected_os_service_does_not_claim_persistence":true,"disconnected_os_service_uses_session_only":true,"fallback_expires_across_process_restart":true},"passed":true,"scope":"Actual OS backend, process restart and ciphertext tamper; not reboot or physical desktop evidence."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+X energybaseline.core.vsg.ComplianceGateError: The accepted VSG is not bound to these input values, columns, dtypes and timestamps. Rebuild and accept the gates. | def test_mt5_proof_discovery_cluster_labels_never_reach_any_model() -> None:         rng = np.random.default_rng(5252)         n = 120         idx = pd.date_range("2025-01-01", periods=n, freq="D")         df = pd.DataFrame(             {                 "timestamp": idx.astype(str),                 "oat_c": np.concatenate([rng.normal(8.0, 1.0, n // 2), rng.normal(26.0, 1.0, n // 2)]),                 "occ": np.concatenate([rng.normal(0.3, 0.05, n // 2), rng.normal(0.9, 0.05, n // 2)]),             },             index=idx,         )         y = 100.0 + 3.0 * df["oat_c"].to_numpy() + 25.0 * df["occ"].to_numpy() + rng.normal(0.0, 0.8, size=n)         df["energy_kwh"] = y              rep = discover_operating_regimes(df, ["oat_c",
+Phase 8 Gate G8 (ubuntu-latest): .github#13
+
+X Process completed with exit code 1.
+Phase 8 Gate G8 (ubuntu-latest): .github#124
+
+Refreshing run status every 30 seconds. Press Ctrl+C to quit.
+
+* arena/5b0e8eef-energybaseline CI · 43690836217
+Triggered via push about 6 minutes ago
+
+JOBS
+* Phase 8 Gate G8 (windows-latest) (ID 132740950688)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Actual Windows DPAPI process-restart and tamper evidence
+  - Actual Linux Secret Service and outage evidence
+  - Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+X Phase 8 Gate G8 (ubuntu-latest) in 6m6s (ID 132740950857)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  - Actual Windows DPAPI process-restart and tamper evidence
+  ✓ Actual Linux Secret Service and outage evidence
+  ✓ Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  X Gate G1 unit tests (gates + DB config)
+  - Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  - Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  - Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  - Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  - Gate G8 shared reports, renderer agreement and audit verification
+  - Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  ✓ Emit pytest failure annotations on error
+  - GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  - Vulnerability audit (pip-audit)
+  - Generate CycloneDX SBOM
+  ✓ Publish native evidence receipts in the check log
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  - Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 8 Gate G8 (ubuntu-latest): .github#2
+
+- sha256=52f87344876855f09670034a5cbff1afcd8fe3d7eaff4757c961d49f39809337 {"evidence_schema_version":1,"adapter":"pyodbc/unixODBC/SQLite ODBC","native_runtime":true,"mocked":false,"metadata":{"pyodbc":"5.5.0","dbms":"SQLite","driver_version":"0.99991","driver_manager":"03.52.0002.0003","driver_reported_read_only_before_enforcement":false,"advisory_flag_prevented_write":false},"checks":{"backend_policy_installed":true,"backend_confirms_query_only":true,"database_rejects_write_even_without_ast":true,"injection_shaped_bound_value_remains_literal":true,"qmark_repetition_and_order":true,"bound_date_range":true,"bounded_driver_fetch":true,"table_survives_bound_value":true,"ast_rejects_write":true,"driver_failure_redacts_bound_value":true},"passed":true,"scope":"Local synthetic SQLite ODBC only; not SQL Server/MySQL/TLS certification."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+- sha256=fd639d080281c29e3290a1fe7d97ab5dab392cad05b3f9e4df8a2d835f3f0ed0 {"evidence_schema_version":1,"platform":"linux","native":true,"mocked":false,"backend":{"name":"os-keyring+fernet","persistent":true,"secure_store":true},"checks":{"actual_secure_os_backend":true,"fresh_process_recovers_same_plaintext":true,"tampered_ciphertext_is_rejected":true,"no_plaintext_keyfile_created":true,"actual_service_outage_fails_closed":true},"service_failure":{"executed":true,"disconnected_os_service_does_not_claim_persistence":true,"disconnected_os_service_uses_session_only":true,"fallback_expires_across_process_restart":true},"passed":true,"scope":"Actual OS backend, process restart and ciphertext tamper; not reboot or physical desktop evidence."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+X energybaseline.core.vsg.ComplianceGateError: The accepted VSG is not bound to these input values, columns, dtypes and timestamps. Rebuild and accept the gates. | def test_mt5_proof_discovery_cluster_labels_never_reach_any_model() -> None:         rng = np.random.default_rng(5252)         n = 120         idx = pd.date_range("2025-01-01", periods=n, freq="D")         df = pd.DataFrame(             {                 "timestamp": idx.astype(str),                 "oat_c": np.concatenate([rng.normal(8.0, 1.0, n // 2), rng.normal(26.0, 1.0, n // 2)]),                 "occ": np.concatenate([rng.normal(0.3, 0.05, n // 2), rng.normal(0.9, 0.05, n // 2)]),             },             index=idx,         )         y = 100.0 + 3.0 * df["oat_c"].to_numpy() + 25.0 * df["occ"].to_numpy() + rng.normal(0.0, 0.8, size=n)         df["energy_kwh"] = y              rep = discover_operating_regimes(df, ["oat_c",
+Phase 8 Gate G8 (ubuntu-latest): .github#13
+
+X Process completed with exit code 1.
+Phase 8 Gate G8 (ubuntu-latest): .github#124
+
+Refreshing run status every 30 seconds. Press Ctrl+C to quit.
+
+* arena/5b0e8eef-energybaseline CI · 43690836217
+Triggered via push about 7 minutes ago
+
+JOBS
+* Phase 8 Gate G8 (windows-latest) (ID 132740950688)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Actual Windows DPAPI process-restart and tamper evidence
+  - Actual Linux Secret Service and outage evidence
+  - Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+X Phase 8 Gate G8 (ubuntu-latest) in 6m6s (ID 132740950857)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  - Actual Windows DPAPI process-restart and tamper evidence
+  ✓ Actual Linux Secret Service and outage evidence
+  ✓ Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  X Gate G1 unit tests (gates + DB config)
+  - Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  - Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  - Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  - Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  - Gate G8 shared reports, renderer agreement and audit verification
+  - Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  ✓ Emit pytest failure annotations on error
+  - GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  - Vulnerability audit (pip-audit)
+  - Generate CycloneDX SBOM
+  ✓ Publish native evidence receipts in the check log
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  - Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 8 Gate G8 (ubuntu-latest): .github#2
+
+- sha256=52f87344876855f09670034a5cbff1afcd8fe3d7eaff4757c961d49f39809337 {"evidence_schema_version":1,"adapter":"pyodbc/unixODBC/SQLite ODBC","native_runtime":true,"mocked":false,"metadata":{"pyodbc":"5.5.0","dbms":"SQLite","driver_version":"0.99991","driver_manager":"03.52.0002.0003","driver_reported_read_only_before_enforcement":false,"advisory_flag_prevented_write":false},"checks":{"backend_policy_installed":true,"backend_confirms_query_only":true,"database_rejects_write_even_without_ast":true,"injection_shaped_bound_value_remains_literal":true,"qmark_repetition_and_order":true,"bound_date_range":true,"bounded_driver_fetch":true,"table_survives_bound_value":true,"ast_rejects_write":true,"driver_failure_redacts_bound_value":true},"passed":true,"scope":"Local synthetic SQLite ODBC only; not SQL Server/MySQL/TLS certification."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+- sha256=fd639d080281c29e3290a1fe7d97ab5dab392cad05b3f9e4df8a2d835f3f0ed0 {"evidence_schema_version":1,"platform":"linux","native":true,"mocked":false,"backend":{"name":"os-keyring+fernet","persistent":true,"secure_store":true},"checks":{"actual_secure_os_backend":true,"fresh_process_recovers_same_plaintext":true,"tampered_ciphertext_is_rejected":true,"no_plaintext_keyfile_created":true,"actual_service_outage_fails_closed":true},"service_failure":{"executed":true,"disconnected_os_service_does_not_claim_persistence":true,"disconnected_os_service_uses_session_only":true,"fallback_expires_across_process_restart":true},"passed":true,"scope":"Actual OS backend, process restart and ciphertext tamper; not reboot or physical desktop evidence."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+X energybaseline.core.vsg.ComplianceGateError: The accepted VSG is not bound to these input values, columns, dtypes and timestamps. Rebuild and accept the gates. | def test_mt5_proof_discovery_cluster_labels_never_reach_any_model() -> None:         rng = np.random.default_rng(5252)         n = 120         idx = pd.date_range("2025-01-01", periods=n, freq="D")         df = pd.DataFrame(             {                 "timestamp": idx.astype(str),                 "oat_c": np.concatenate([rng.normal(8.0, 1.0, n // 2), rng.normal(26.0, 1.0, n // 2)]),                 "occ": np.concatenate([rng.normal(0.3, 0.05, n // 2), rng.normal(0.9, 0.05, n // 2)]),             },             index=idx,         )         y = 100.0 + 3.0 * df["oat_c"].to_numpy() + 25.0 * df["occ"].to_numpy() + rng.normal(0.0, 0.8, size=n)         df["energy_kwh"] = y              rep = discover_operating_regimes(df, ["oat_c",
+Phase 8 Gate G8 (ubuntu-latest): .github#13
+
+X Process completed with exit code 1.
+Phase 8 Gate G8 (ubuntu-latest): .github#124
+
+Refreshing run status every 30 seconds. Press Ctrl+C to quit.
+
+* arena/5b0e8eef-energybaseline CI · 43690836217
+Triggered via push about 7 minutes ago
+
+JOBS
+* Phase 8 Gate G8 (windows-latest) (ID 132740950688)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Actual Windows DPAPI process-restart and tamper evidence
+  - Actual Linux Secret Service and outage evidence
+  - Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+X Phase 8 Gate G8 (ubuntu-latest) in 6m6s (ID 132740950857)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  - Actual Windows DPAPI process-restart and tamper evidence
+  ✓ Actual Linux Secret Service and outage evidence
+  ✓ Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  X Gate G1 unit tests (gates + DB config)
+  - Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  - Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  - Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  - Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  - Gate G8 shared reports, renderer agreement and audit verification
+  - Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  ✓ Emit pytest failure annotations on error
+  - GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  - Vulnerability audit (pip-audit)
+  - Generate CycloneDX SBOM
+  ✓ Publish native evidence receipts in the check log
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  - Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 8 Gate G8 (ubuntu-latest): .github#2
+
+- sha256=52f87344876855f09670034a5cbff1afcd8fe3d7eaff4757c961d49f39809337 {"evidence_schema_version":1,"adapter":"pyodbc/unixODBC/SQLite ODBC","native_runtime":true,"mocked":false,"metadata":{"pyodbc":"5.5.0","dbms":"SQLite","driver_version":"0.99991","driver_manager":"03.52.0002.0003","driver_reported_read_only_before_enforcement":false,"advisory_flag_prevented_write":false},"checks":{"backend_policy_installed":true,"backend_confirms_query_only":true,"database_rejects_write_even_without_ast":true,"injection_shaped_bound_value_remains_literal":true,"qmark_repetition_and_order":true,"bound_date_range":true,"bounded_driver_fetch":true,"table_survives_bound_value":true,"ast_rejects_write":true,"driver_failure_redacts_bound_value":true},"passed":true,"scope":"Local synthetic SQLite ODBC only; not SQL Server/MySQL/TLS certification."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+- sha256=fd639d080281c29e3290a1fe7d97ab5dab392cad05b3f9e4df8a2d835f3f0ed0 {"evidence_schema_version":1,"platform":"linux","native":true,"mocked":false,"backend":{"name":"os-keyring+fernet","persistent":true,"secure_store":true},"checks":{"actual_secure_os_backend":true,"fresh_process_recovers_same_plaintext":true,"tampered_ciphertext_is_rejected":true,"no_plaintext_keyfile_created":true,"actual_service_outage_fails_closed":true},"service_failure":{"executed":true,"disconnected_os_service_does_not_claim_persistence":true,"disconnected_os_service_uses_session_only":true,"fallback_expires_across_process_restart":true},"passed":true,"scope":"Actual OS backend, process restart and ciphertext tamper; not reboot or physical desktop evidence."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+X energybaseline.core.vsg.ComplianceGateError: The accepted VSG is not bound to these input values, columns, dtypes and timestamps. Rebuild and accept the gates. | def test_mt5_proof_discovery_cluster_labels_never_reach_any_model() -> None:         rng = np.random.default_rng(5252)         n = 120         idx = pd.date_range("2025-01-01", periods=n, freq="D")         df = pd.DataFrame(             {                 "timestamp": idx.astype(str),                 "oat_c": np.concatenate([rng.normal(8.0, 1.0, n // 2), rng.normal(26.0, 1.0, n // 2)]),                 "occ": np.concatenate([rng.normal(0.3, 0.05, n // 2), rng.normal(0.9, 0.05, n // 2)]),             },             index=idx,         )         y = 100.0 + 3.0 * df["oat_c"].to_numpy() + 25.0 * df["occ"].to_numpy() + rng.normal(0.0, 0.8, size=n)         df["energy_kwh"] = y              rep = discover_operating_regimes(df, ["oat_c",
+Phase 8 Gate G8 (ubuntu-latest): .github#13
+
+X Process completed with exit code 1.
+Phase 8 Gate G8 (ubuntu-latest): .github#124
+
+Refreshing run status every 30 seconds. Press Ctrl+C to quit.
+
+* arena/5b0e8eef-energybaseline CI · 43690836217
+Triggered via push about 8 minutes ago
+
+JOBS
+* Phase 8 Gate G8 (windows-latest) (ID 132740950688)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Actual Windows DPAPI process-restart and tamper evidence
+  - Actual Linux Secret Service and outage evidence
+  - Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+X Phase 8 Gate G8 (ubuntu-latest) in 6m6s (ID 132740950857)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  - Actual Windows DPAPI process-restart and tamper evidence
+  ✓ Actual Linux Secret Service and outage evidence
+  ✓ Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  X Gate G1 unit tests (gates + DB config)
+  - Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  - Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  - Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  - Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  - Gate G8 shared reports, renderer agreement and audit verification
+  - Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  ✓ Emit pytest failure annotations on error
+  - GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  - Vulnerability audit (pip-audit)
+  - Generate CycloneDX SBOM
+  ✓ Publish native evidence receipts in the check log
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  - Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 8 Gate G8 (ubuntu-latest): .github#2
+
+- sha256=52f87344876855f09670034a5cbff1afcd8fe3d7eaff4757c961d49f39809337 {"evidence_schema_version":1,"adapter":"pyodbc/unixODBC/SQLite ODBC","native_runtime":true,"mocked":false,"metadata":{"pyodbc":"5.5.0","dbms":"SQLite","driver_version":"0.99991","driver_manager":"03.52.0002.0003","driver_reported_read_only_before_enforcement":false,"advisory_flag_prevented_write":false},"checks":{"backend_policy_installed":true,"backend_confirms_query_only":true,"database_rejects_write_even_without_ast":true,"injection_shaped_bound_value_remains_literal":true,"qmark_repetition_and_order":true,"bound_date_range":true,"bounded_driver_fetch":true,"table_survives_bound_value":true,"ast_rejects_write":true,"driver_failure_redacts_bound_value":true},"passed":true,"scope":"Local synthetic SQLite ODBC only; not SQL Server/MySQL/TLS certification."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+- sha256=fd639d080281c29e3290a1fe7d97ab5dab392cad05b3f9e4df8a2d835f3f0ed0 {"evidence_schema_version":1,"platform":"linux","native":true,"mocked":false,"backend":{"name":"os-keyring+fernet","persistent":true,"secure_store":true},"checks":{"actual_secure_os_backend":true,"fresh_process_recovers_same_plaintext":true,"tampered_ciphertext_is_rejected":true,"no_plaintext_keyfile_created":true,"actual_service_outage_fails_closed":true},"service_failure":{"executed":true,"disconnected_os_service_does_not_claim_persistence":true,"disconnected_os_service_uses_session_only":true,"fallback_expires_across_process_restart":true},"passed":true,"scope":"Actual OS backend, process restart and ciphertext tamper; not reboot or physical desktop evidence."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+X energybaseline.core.vsg.ComplianceGateError: The accepted VSG is not bound to these input values, columns, dtypes and timestamps. Rebuild and accept the gates. | def test_mt5_proof_discovery_cluster_labels_never_reach_any_model() -> None:         rng = np.random.default_rng(5252)         n = 120         idx = pd.date_range("2025-01-01", periods=n, freq="D")         df = pd.DataFrame(             {                 "timestamp": idx.astype(str),                 "oat_c": np.concatenate([rng.normal(8.0, 1.0, n // 2), rng.normal(26.0, 1.0, n // 2)]),                 "occ": np.concatenate([rng.normal(0.3, 0.05, n // 2), rng.normal(0.9, 0.05, n // 2)]),             },             index=idx,         )         y = 100.0 + 3.0 * df["oat_c"].to_numpy() + 25.0 * df["occ"].to_numpy() + rng.normal(0.0, 0.8, size=n)         df["energy_kwh"] = y              rep = discover_operating_regimes(df, ["oat_c",
+Phase 8 Gate G8 (ubuntu-latest): .github#13
+
+X Process completed with exit code 1.
+Phase 8 Gate G8 (ubuntu-latest): .github#124
+
+Refreshing run status every 30 seconds. Press Ctrl+C to quit.
+
+* arena/5b0e8eef-energybaseline CI · 43690836217
+Triggered via push about 8 minutes ago
+
+JOBS
+* Phase 8 Gate G8 (windows-latest) (ID 132740950688)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Actual Windows DPAPI process-restart and tamper evidence
+  - Actual Linux Secret Service and outage evidence
+  - Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+X Phase 8 Gate G8 (ubuntu-latest) in 6m6s (ID 132740950857)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  - Actual Windows DPAPI process-restart and tamper evidence
+  ✓ Actual Linux Secret Service and outage evidence
+  ✓ Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  X Gate G1 unit tests (gates + DB config)
+  - Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  - Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  - Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  - Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  - Gate G8 shared reports, renderer agreement and audit verification
+  - Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  ✓ Emit pytest failure annotations on error
+  - GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  - Vulnerability audit (pip-audit)
+  - Generate CycloneDX SBOM
+  ✓ Publish native evidence receipts in the check log
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  - Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 8 Gate G8 (ubuntu-latest): .github#2
+
+- sha256=52f87344876855f09670034a5cbff1afcd8fe3d7eaff4757c961d49f39809337 {"evidence_schema_version":1,"adapter":"pyodbc/unixODBC/SQLite ODBC","native_runtime":true,"mocked":false,"metadata":{"pyodbc":"5.5.0","dbms":"SQLite","driver_version":"0.99991","driver_manager":"03.52.0002.0003","driver_reported_read_only_before_enforcement":false,"advisory_flag_prevented_write":false},"checks":{"backend_policy_installed":true,"backend_confirms_query_only":true,"database_rejects_write_even_without_ast":true,"injection_shaped_bound_value_remains_literal":true,"qmark_repetition_and_order":true,"bound_date_range":true,"bounded_driver_fetch":true,"table_survives_bound_value":true,"ast_rejects_write":true,"driver_failure_redacts_bound_value":true},"passed":true,"scope":"Local synthetic SQLite ODBC only; not SQL Server/MySQL/TLS certification."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+- sha256=fd639d080281c29e3290a1fe7d97ab5dab392cad05b3f9e4df8a2d835f3f0ed0 {"evidence_schema_version":1,"platform":"linux","native":true,"mocked":false,"backend":{"name":"os-keyring+fernet","persistent":true,"secure_store":true},"checks":{"actual_secure_os_backend":true,"fresh_process_recovers_same_plaintext":true,"tampered_ciphertext_is_rejected":true,"no_plaintext_keyfile_created":true,"actual_service_outage_fails_closed":true},"service_failure":{"executed":true,"disconnected_os_service_does_not_claim_persistence":true,"disconnected_os_service_uses_session_only":true,"fallback_expires_across_process_restart":true},"passed":true,"scope":"Actual OS backend, process restart and ciphertext tamper; not reboot or physical desktop evidence."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+X energybaseline.core.vsg.ComplianceGateError: The accepted VSG is not bound to these input values, columns, dtypes and timestamps. Rebuild and accept the gates. | def test_mt5_proof_discovery_cluster_labels_never_reach_any_model() -> None:         rng = np.random.default_rng(5252)         n = 120         idx = pd.date_range("2025-01-01", periods=n, freq="D")         df = pd.DataFrame(             {                 "timestamp": idx.astype(str),                 "oat_c": np.concatenate([rng.normal(8.0, 1.0, n // 2), rng.normal(26.0, 1.0, n // 2)]),                 "occ": np.concatenate([rng.normal(0.3, 0.05, n // 2), rng.normal(0.9, 0.05, n // 2)]),             },             index=idx,         )         y = 100.0 + 3.0 * df["oat_c"].to_numpy() + 25.0 * df["occ"].to_numpy() + rng.normal(0.0, 0.8, size=n)         df["energy_kwh"] = y              rep = discover_operating_regimes(df, ["oat_c",
+Phase 8 Gate G8 (ubuntu-latest): .github#13
+
+X Process completed with exit code 1.
+Phase 8 Gate G8 (ubuntu-latest): .github#124
+
+Refreshing run status every 30 seconds. Press Ctrl+C to quit.
+
+* arena/5b0e8eef-energybaseline CI · 43690836217
+Triggered via push about 9 minutes ago
+
+JOBS
+* Phase 8 Gate G8 (windows-latest) (ID 132740950688)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Actual Windows DPAPI process-restart and tamper evidence
+  - Actual Linux Secret Service and outage evidence
+  - Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+X Phase 8 Gate G8 (ubuntu-latest) in 6m6s (ID 132740950857)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  - Actual Windows DPAPI process-restart and tamper evidence
+  ✓ Actual Linux Secret Service and outage evidence
+  ✓ Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  X Gate G1 unit tests (gates + DB config)
+  - Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  - Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  - Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  - Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  - Gate G8 shared reports, renderer agreement and audit verification
+  - Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  ✓ Emit pytest failure annotations on error
+  - GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  - Vulnerability audit (pip-audit)
+  - Generate CycloneDX SBOM
+  ✓ Publish native evidence receipts in the check log
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  - Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 8 Gate G8 (ubuntu-latest): .github#2
+
+- sha256=52f87344876855f09670034a5cbff1afcd8fe3d7eaff4757c961d49f39809337 {"evidence_schema_version":1,"adapter":"pyodbc/unixODBC/SQLite ODBC","native_runtime":true,"mocked":false,"metadata":{"pyodbc":"5.5.0","dbms":"SQLite","driver_version":"0.99991","driver_manager":"03.52.0002.0003","driver_reported_read_only_before_enforcement":false,"advisory_flag_prevented_write":false},"checks":{"backend_policy_installed":true,"backend_confirms_query_only":true,"database_rejects_write_even_without_ast":true,"injection_shaped_bound_value_remains_literal":true,"qmark_repetition_and_order":true,"bound_date_range":true,"bounded_driver_fetch":true,"table_survives_bound_value":true,"ast_rejects_write":true,"driver_failure_redacts_bound_value":true},"passed":true,"scope":"Local synthetic SQLite ODBC only; not SQL Server/MySQL/TLS certification."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+- sha256=fd639d080281c29e3290a1fe7d97ab5dab392cad05b3f9e4df8a2d835f3f0ed0 {"evidence_schema_version":1,"platform":"linux","native":true,"mocked":false,"backend":{"name":"os-keyring+fernet","persistent":true,"secure_store":true},"checks":{"actual_secure_os_backend":true,"fresh_process_recovers_same_plaintext":true,"tampered_ciphertext_is_rejected":true,"no_plaintext_keyfile_created":true,"actual_service_outage_fails_closed":true},"service_failure":{"executed":true,"disconnected_os_service_does_not_claim_persistence":true,"disconnected_os_service_uses_session_only":true,"fallback_expires_across_process_restart":true},"passed":true,"scope":"Actual OS backend, process restart and ciphertext tamper; not reboot or physical desktop evidence."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+X energybaseline.core.vsg.ComplianceGateError: The accepted VSG is not bound to these input values, columns, dtypes and timestamps. Rebuild and accept the gates. | def test_mt5_proof_discovery_cluster_labels_never_reach_any_model() -> None:         rng = np.random.default_rng(5252)         n = 120         idx = pd.date_range("2025-01-01", periods=n, freq="D")         df = pd.DataFrame(             {                 "timestamp": idx.astype(str),                 "oat_c": np.concatenate([rng.normal(8.0, 1.0, n // 2), rng.normal(26.0, 1.0, n // 2)]),                 "occ": np.concatenate([rng.normal(0.3, 0.05, n // 2), rng.normal(0.9, 0.05, n // 2)]),             },             index=idx,         )         y = 100.0 + 3.0 * df["oat_c"].to_numpy() + 25.0 * df["occ"].to_numpy() + rng.normal(0.0, 0.8, size=n)         df["energy_kwh"] = y              rep = discover_operating_regimes(df, ["oat_c",
+Phase 8 Gate G8 (ubuntu-latest): .github#13
+
+X Process completed with exit code 1.
+Phase 8 Gate G8 (ubuntu-latest): .github#124
+
+Refreshing run status every 30 seconds. Press Ctrl+C to quit.
+
+* arena/5b0e8eef-energybaseline CI · 43690836217
+Triggered via push about 10 minutes ago
+
+JOBS
+* Phase 8 Gate G8 (windows-latest) (ID 132740950688)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Actual Windows DPAPI process-restart and tamper evidence
+  - Actual Linux Secret Service and outage evidence
+  - Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+X Phase 8 Gate G8 (ubuntu-latest) in 6m6s (ID 132740950857)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  - Actual Windows DPAPI process-restart and tamper evidence
+  ✓ Actual Linux Secret Service and outage evidence
+  ✓ Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  X Gate G1 unit tests (gates + DB config)
+  - Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  - Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  - Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  - Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  - Gate G8 shared reports, renderer agreement and audit verification
+  - Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  ✓ Emit pytest failure annotations on error
+  - GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  - Vulnerability audit (pip-audit)
+  - Generate CycloneDX SBOM
+  ✓ Publish native evidence receipts in the check log
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  - Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 8 Gate G8 (ubuntu-latest): .github#2
+
+- sha256=52f87344876855f09670034a5cbff1afcd8fe3d7eaff4757c961d49f39809337 {"evidence_schema_version":1,"adapter":"pyodbc/unixODBC/SQLite ODBC","native_runtime":true,"mocked":false,"metadata":{"pyodbc":"5.5.0","dbms":"SQLite","driver_version":"0.99991","driver_manager":"03.52.0002.0003","driver_reported_read_only_before_enforcement":false,"advisory_flag_prevented_write":false},"checks":{"backend_policy_installed":true,"backend_confirms_query_only":true,"database_rejects_write_even_without_ast":true,"injection_shaped_bound_value_remains_literal":true,"qmark_repetition_and_order":true,"bound_date_range":true,"bounded_driver_fetch":true,"table_survives_bound_value":true,"ast_rejects_write":true,"driver_failure_redacts_bound_value":true},"passed":true,"scope":"Local synthetic SQLite ODBC only; not SQL Server/MySQL/TLS certification."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+- sha256=fd639d080281c29e3290a1fe7d97ab5dab392cad05b3f9e4df8a2d835f3f0ed0 {"evidence_schema_version":1,"platform":"linux","native":true,"mocked":false,"backend":{"name":"os-keyring+fernet","persistent":true,"secure_store":true},"checks":{"actual_secure_os_backend":true,"fresh_process_recovers_same_plaintext":true,"tampered_ciphertext_is_rejected":true,"no_plaintext_keyfile_created":true,"actual_service_outage_fails_closed":true},"service_failure":{"executed":true,"disconnected_os_service_does_not_claim_persistence":true,"disconnected_os_service_uses_session_only":true,"fallback_expires_across_process_restart":true},"passed":true,"scope":"Actual OS backend, process restart and ciphertext tamper; not reboot or physical desktop evidence."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+X energybaseline.core.vsg.ComplianceGateError: The accepted VSG is not bound to these input values, columns, dtypes and timestamps. Rebuild and accept the gates. | def test_mt5_proof_discovery_cluster_labels_never_reach_any_model() -> None:         rng = np.random.default_rng(5252)         n = 120         idx = pd.date_range("2025-01-01", periods=n, freq="D")         df = pd.DataFrame(             {                 "timestamp": idx.astype(str),                 "oat_c": np.concatenate([rng.normal(8.0, 1.0, n // 2), rng.normal(26.0, 1.0, n // 2)]),                 "occ": np.concatenate([rng.normal(0.3, 0.05, n // 2), rng.normal(0.9, 0.05, n // 2)]),             },             index=idx,         )         y = 100.0 + 3.0 * df["oat_c"].to_numpy() + 25.0 * df["occ"].to_numpy() + rng.normal(0.0, 0.8, size=n)         df["energy_kwh"] = y              rep = discover_operating_regimes(df, ["oat_c",
+Phase 8 Gate G8 (ubuntu-latest): .github#13
+
+X Process completed with exit code 1.
+Phase 8 Gate G8 (ubuntu-latest): .github#124
+
+Refreshing run status every 30 seconds. Press Ctrl+C to quit.
+
+* arena/5b0e8eef-energybaseline CI · 43690836217
+Triggered via push about 10 minutes ago
+
+JOBS
+* Phase 8 Gate G8 (windows-latest) (ID 132740950688)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Actual Windows DPAPI process-restart and tamper evidence
+  - Actual Linux Secret Service and outage evidence
+  - Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+X Phase 8 Gate G8 (ubuntu-latest) in 6m6s (ID 132740950857)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  - Actual Windows DPAPI process-restart and tamper evidence
+  ✓ Actual Linux Secret Service and outage evidence
+  ✓ Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  X Gate G1 unit tests (gates + DB config)
+  - Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  - Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  - Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  - Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  - Gate G8 shared reports, renderer agreement and audit verification
+  - Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  ✓ Emit pytest failure annotations on error
+  - GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  - Vulnerability audit (pip-audit)
+  - Generate CycloneDX SBOM
+  ✓ Publish native evidence receipts in the check log
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  - Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 8 Gate G8 (ubuntu-latest): .github#2
+
+- sha256=52f87344876855f09670034a5cbff1afcd8fe3d7eaff4757c961d49f39809337 {"evidence_schema_version":1,"adapter":"pyodbc/unixODBC/SQLite ODBC","native_runtime":true,"mocked":false,"metadata":{"pyodbc":"5.5.0","dbms":"SQLite","driver_version":"0.99991","driver_manager":"03.52.0002.0003","driver_reported_read_only_before_enforcement":false,"advisory_flag_prevented_write":false},"checks":{"backend_policy_installed":true,"backend_confirms_query_only":true,"database_rejects_write_even_without_ast":true,"injection_shaped_bound_value_remains_literal":true,"qmark_repetition_and_order":true,"bound_date_range":true,"bounded_driver_fetch":true,"table_survives_bound_value":true,"ast_rejects_write":true,"driver_failure_redacts_bound_value":true},"passed":true,"scope":"Local synthetic SQLite ODBC only; not SQL Server/MySQL/TLS certification."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+- sha256=fd639d080281c29e3290a1fe7d97ab5dab392cad05b3f9e4df8a2d835f3f0ed0 {"evidence_schema_version":1,"platform":"linux","native":true,"mocked":false,"backend":{"name":"os-keyring+fernet","persistent":true,"secure_store":true},"checks":{"actual_secure_os_backend":true,"fresh_process_recovers_same_plaintext":true,"tampered_ciphertext_is_rejected":true,"no_plaintext_keyfile_created":true,"actual_service_outage_fails_closed":true},"service_failure":{"executed":true,"disconnected_os_service_does_not_claim_persistence":true,"disconnected_os_service_uses_session_only":true,"fallback_expires_across_process_restart":true},"passed":true,"scope":"Actual OS backend, process restart and ciphertext tamper; not reboot or physical desktop evidence."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+X energybaseline.core.vsg.ComplianceGateError: The accepted VSG is not bound to these input values, columns, dtypes and timestamps. Rebuild and accept the gates. | def test_mt5_proof_discovery_cluster_labels_never_reach_any_model() -> None:         rng = np.random.default_rng(5252)         n = 120         idx = pd.date_range("2025-01-01", periods=n, freq="D")         df = pd.DataFrame(             {                 "timestamp": idx.astype(str),                 "oat_c": np.concatenate([rng.normal(8.0, 1.0, n // 2), rng.normal(26.0, 1.0, n // 2)]),                 "occ": np.concatenate([rng.normal(0.3, 0.05, n // 2), rng.normal(0.9, 0.05, n // 2)]),             },             index=idx,         )         y = 100.0 + 3.0 * df["oat_c"].to_numpy() + 25.0 * df["occ"].to_numpy() + rng.normal(0.0, 0.8, size=n)         df["energy_kwh"] = y              rep = discover_operating_regimes(df, ["oat_c",
+Phase 8 Gate G8 (ubuntu-latest): .github#13
+
+X Process completed with exit code 1.
+Phase 8 Gate G8 (ubuntu-latest): .github#124
+
+Refreshing run status every 30 seconds. Press Ctrl+C to quit.
+
+* arena/5b0e8eef-energybaseline CI · 43690836217
+Triggered via push about 11 minutes ago
+
+JOBS
+* Phase 8 Gate G8 (windows-latest) (ID 132740950688)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Actual Windows DPAPI process-restart and tamper evidence
+  - Actual Linux Secret Service and outage evidence
+  - Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  * Gate G1 unit tests (gates + DB config)
+  * Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  * Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  * Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  * Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  * Gate G8 shared reports, renderer agreement and audit verification
+  * Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  * Emit pytest failure annotations on error
+  * GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  * Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  * Self-signed Authenticode signing smoke test (D1=B, Windows)
+  * Vulnerability audit (pip-audit)
+  * Generate CycloneDX SBOM
+  * Publish native evidence receipts in the check log
+  * Upload SBOM, coverage, and Phase 1 evidence artifacts
+  * Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  * Post Checkout repository
+X Phase 8 Gate G8 (ubuntu-latest) in 6m6s (ID 132740950857)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  - Actual Windows DPAPI process-restart and tamper evidence
+  ✓ Actual Linux Secret Service and outage evidence
+  ✓ Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  X Gate G1 unit tests (gates + DB config)
+  - Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  - Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  - Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  - Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  - Gate G8 shared reports, renderer agreement and audit verification
+  - Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  ✓ Emit pytest failure annotations on error
+  - GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  - Vulnerability audit (pip-audit)
+  - Generate CycloneDX SBOM
+  ✓ Publish native evidence receipts in the check log
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  - Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 8 Gate G8 (ubuntu-latest): .github#2
+
+- sha256=52f87344876855f09670034a5cbff1afcd8fe3d7eaff4757c961d49f39809337 {"evidence_schema_version":1,"adapter":"pyodbc/unixODBC/SQLite ODBC","native_runtime":true,"mocked":false,"metadata":{"pyodbc":"5.5.0","dbms":"SQLite","driver_version":"0.99991","driver_manager":"03.52.0002.0003","driver_reported_read_only_before_enforcement":false,"advisory_flag_prevented_write":false},"checks":{"backend_policy_installed":true,"backend_confirms_query_only":true,"database_rejects_write_even_without_ast":true,"injection_shaped_bound_value_remains_literal":true,"qmark_repetition_and_order":true,"bound_date_range":true,"bounded_driver_fetch":true,"table_survives_bound_value":true,"ast_rejects_write":true,"driver_failure_redacts_bound_value":true},"passed":true,"scope":"Local synthetic SQLite ODBC only; not SQL Server/MySQL/TLS certification."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+- sha256=fd639d080281c29e3290a1fe7d97ab5dab392cad05b3f9e4df8a2d835f3f0ed0 {"evidence_schema_version":1,"platform":"linux","native":true,"mocked":false,"backend":{"name":"os-keyring+fernet","persistent":true,"secure_store":true},"checks":{"actual_secure_os_backend":true,"fresh_process_recovers_same_plaintext":true,"tampered_ciphertext_is_rejected":true,"no_plaintext_keyfile_created":true,"actual_service_outage_fails_closed":true},"service_failure":{"executed":true,"disconnected_os_service_does_not_claim_persistence":true,"disconnected_os_service_uses_session_only":true,"fallback_expires_across_process_restart":true},"passed":true,"scope":"Actual OS backend, process restart and ciphertext tamper; not reboot or physical desktop evidence."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+X energybaseline.core.vsg.ComplianceGateError: The accepted VSG is not bound to these input values, columns, dtypes and timestamps. Rebuild and accept the gates. | def test_mt5_proof_discovery_cluster_labels_never_reach_any_model() -> None:         rng = np.random.default_rng(5252)         n = 120         idx = pd.date_range("2025-01-01", periods=n, freq="D")         df = pd.DataFrame(             {                 "timestamp": idx.astype(str),                 "oat_c": np.concatenate([rng.normal(8.0, 1.0, n // 2), rng.normal(26.0, 1.0, n // 2)]),                 "occ": np.concatenate([rng.normal(0.3, 0.05, n // 2), rng.normal(0.9, 0.05, n // 2)]),             },             index=idx,         )         y = 100.0 + 3.0 * df["oat_c"].to_numpy() + 25.0 * df["occ"].to_numpy() + rng.normal(0.0, 0.8, size=n)         df["energy_kwh"] = y              rep = discover_operating_regimes(df, ["oat_c",
+Phase 8 Gate G8 (ubuntu-latest): .github#13
+
+X Process completed with exit code 1.
+Phase 8 Gate G8 (ubuntu-latest): .github#124
+
+X arena/5b0e8eef-energybaseline CI · 43690836217
+Triggered via push about 11 minutes ago
+
+JOBS
+X Phase 8 Gate G8 (windows-latest) in 11m27s (ID 132740950688)
+  ✓ Set up job
+  ✓ Checkout repository
+  - Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  ✓ Actual Windows DPAPI process-restart and tamper evidence
+  - Actual Linux Secret Service and outage evidence
+  - Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  X Gate G1 unit tests (gates + DB config)
+  - Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  - Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  - Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  - Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  - Gate G8 shared reports, renderer agreement and audit verification
+  - Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  ✓ Emit pytest failure annotations on error
+  - GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  - Vulnerability audit (pip-audit)
+  - Generate CycloneDX SBOM
+  ✓ Publish native evidence receipts in the check log
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  - Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+X Phase 8 Gate G8 (ubuntu-latest) in 6m6s (ID 132740950857)
+  ✓ Set up job
+  ✓ Checkout repository
+  ✓ Install Linux headless Qt runtime libraries
+  ✓ Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Install hashed lockfile dependencies
+  - Actual Windows DPAPI process-restart and tamper evidence
+  ✓ Actual Linux Secret Service and outage evidence
+  ✓ Actual Linux SQLite ODBC adapter evidence
+  ✓ Ruff lint and format check
+  ✓ Pyflakes check
+  ✓ Gate G1 architecture, integrity, and traceability checks
+  ✓ Gate G1 Alembic reversible migration cycle
+  X Gate G1 unit tests (gates + DB config)
+  - Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate
+  - Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark
+  - Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock
+  - Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity
+  - Gate G8 shared reports, renderer agreement and audit verification
+  - Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
+  ✓ Emit pytest failure annotations on error
+  - GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)
+  - Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)
+  - Self-signed Authenticode signing smoke test (D1=B, Windows)
+  - Vulnerability audit (pip-audit)
+  - Generate CycloneDX SBOM
+  ✓ Publish native evidence receipts in the check log
+  ✓ Upload SBOM, coverage, and Phase 1 evidence artifacts
+  - Post Set up Python 3.11 (3.11.9 on Windows; 3.11.18 on Ubuntu 26.04)
+  ✓ Post Checkout repository
+  ✓ Complete job
+
+ANNOTATIONS
+! Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Phase 8 Gate G8 (ubuntu-latest): .github#2
+
+- sha256=52f87344876855f09670034a5cbff1afcd8fe3d7eaff4757c961d49f39809337 {"evidence_schema_version":1,"adapter":"pyodbc/unixODBC/SQLite ODBC","native_runtime":true,"mocked":false,"metadata":{"pyodbc":"5.5.0","dbms":"SQLite","driver_version":"0.99991","driver_manager":"03.52.0002.0003","driver_reported_read_only_before_enforcement":false,"advisory_flag_prevented_write":false},"checks":{"backend_policy_installed":true,"backend_confirms_query_only":true,"database_rejects_write_even_without_ast":true,"injection_shaped_bound_value_remains_literal":true,"qmark_repetition_and_order":true,"bound_date_range":true,"bounded_driver_fetch":true,"table_survives_bound_value":true,"ast_rejects_write":true,"driver_failure_redacts_bound_value":true},"passed":true,"scope":"Local synthetic SQLite ODBC only; not SQL Server/MySQL/TLS certification."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+- sha256=fd639d080281c29e3290a1fe7d97ab5dab392cad05b3f9e4df8a2d835f3f0ed0 {"evidence_schema_version":1,"platform":"linux","native":true,"mocked":false,"backend":{"name":"os-keyring+fernet","persistent":true,"secure_store":true},"checks":{"actual_secure_os_backend":true,"fresh_process_recovers_same_plaintext":true,"tampered_ciphertext_is_rejected":true,"no_plaintext_keyfile_created":true,"actual_service_outage_fails_closed":true},"service_failure":{"executed":true,"disconnected_os_service_does_not_claim_persistence":true,"disconnected_os_service_uses_session_only":true,"fallback_expires_across_process_restart":true},"passed":true,"scope":"Actual OS backend, process restart and ciphertext tamper; not reboot or physical desktop evidence."}
+Phase 8 Gate G8 (ubuntu-latest): .github/workflows/ci.yml#1
+
+X energybaseline.core.vsg.ComplianceGateError: The accepted VSG is not bound to these input values, columns, dtypes and timestamps. Rebuild and accept the gates. | def test_mt5_proof_discovery_cluster_labels_never_reach_any_model() -> None:         rng = np.random.default_rng(5252)         n = 120         idx = pd.date_range("2025-01-01", periods=n, freq="D")         df = pd.DataFrame(             {                 "timestamp": idx.astype(str),                 "oat_c": np.concatenate([rng.normal(8.0, 1.0, n // 2), rng.normal(26.0, 1.0, n // 2)]),                 "occ": np.concatenate([rng.normal(0.3, 0.05, n // 2), rng.normal(0.9, 0.05, n // 2)]),             },             index=idx,         )         y = 100.0 + 3.0 * df["oat_c"].to_numpy() + 25.0 * df["occ"].to_numpy() + rng.normal(0.0, 0.8, size=n)         df["energy_kwh"] = y              rep = discover_operating_regimes(df, ["oat_c",
+Phase 8 Gate G8 (ubuntu-latest): .github#13
+
+X Process completed with exit code 1.
+Phase 8 Gate G8 (ubuntu-latest): .github#124
+

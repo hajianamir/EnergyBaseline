@@ -1,0 +1,17 @@
+{
+  "all_uq_within_tolerance": true,
+  "files_sha256": {
+    "causal_mv.json": "770859fddc7e7bcae434cd234bcd25c950d0e17103fdf13e81cffedebdde7f71",
+    "drift_monitor.json": "a68c77233a3f1810edc88607ff12d9b3a7a29f02c10a779eff2b6b42182161cd",
+    "fsu.json": "914f02eaa6ca7bc8b166e7b3aede00b36de57867b76b01c954d59605b19491f0",
+    "locked_baseline_snapshot.json": "4cd198e2c82c8bc5e1819d391670af5c070287f1be2ee2ff291469a23048bcb5",
+    "monitoring_audit.json": "12d451892f916c48ecf42e650116799772f0c78ce83c28141dc47e41a0260ef4",
+    "parametric_crosscheck.json": "3dbe760af7ecff6d47e675993255c01ea41e93273f855e59d3ec91401848629d",
+    "prediction.json": "a8fbe2c2ef01ec55b35fcab14d53c64ef350d0df3c694b663ae0867a312289dc",
+    "reporting_fuzz.json": "683270ba669464216a15b8ddb2a54bfc0124eae66185b2d727256764ad84d71b",
+    "sbom.json": "029c1240898285094cde79290eb4dcb885c51238d503264b1a13428153310a97",
+    "system_health.json": "36ffbdfb5ceeaee138c1039cf12be8d3e2deb340cbc112f653b44923e9576ae3",
+    "uq_calibration.json": "1e9e5e1ec03bb546176d78ed2c5ad8f234c6a58328cf715e93e946bc45d41312"
+  },
+  "source_commit": "f1cb9a3b595eaf2dfc2605da4e7562d911110022"
+}
