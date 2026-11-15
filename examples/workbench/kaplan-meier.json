@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "operation": "kaplan-meier",
+  "parameters": {
+    "duration": "duration",
+    "event": "event"
+  }
+}

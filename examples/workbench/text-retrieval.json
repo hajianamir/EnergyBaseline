@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "operation": "text-retrieval",
+  "parameters": {
+    "text": "text",
+    "query": "apple harvest",
+    "top_k": 2
+  }
+}

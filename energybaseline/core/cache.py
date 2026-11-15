@@ -877,7 +877,7 @@ class CachedComplianceRunner:
         base_tcp: TestConfigPanel,
         *,
         alphas: Sequence[float] = (0.01, 0.05, 0.10),
-        corrections: Sequence[str] = tuple(c.value for c in MultipleTestingCorrection),
+        corrections: Sequence[str] = ("none", "bonferroni", "holm", "benjamini_hochberg", "benjamini_yekutieli"),
         rules: Sequence[str] = (DecisionRule.P_ONLY.value, DecisionRule.P_AND_EFFECT_SIZE.value),
         raw_artifacts: Sequence[RawTestArtifact] | None = None,
     ) -> dict[str, Any]:

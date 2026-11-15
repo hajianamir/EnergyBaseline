@@ -1,4 +1,4 @@
-"""Test Configuration Panel (TCP), five multiple-testing corrections, scope matrix, pre-registration lock, and 14-D characterization (TCP-1..14, PIPE-1..3).
+"""Test Configuration Panel (TCP), mandatory and extended multiple-testing corrections, scope matrix, pre-registration lock, and 14-D characterization (TCP-1..14, PIPE-1..3).
 
 Compliance guarantees:
 * ``alpha`` is bounded strictly to ``[0.001, 0.20]`` with presets ``(0.001, 0.01, 0.05, 0.10, 0.20)``
@@ -52,13 +52,21 @@ class PreregistrationLockedError(TCPGuardRailError):
 
 
 class MultipleTestingCorrection(str, Enum):
-    """Five mandatory multiple-hypothesis testing correction procedures (TCP-2)."""
+    """Five mandatory procedures plus four explicit extensions (TCP-2).
+
+    Sidak variants require independence; Hochberg/Hommel require their usual
+    independence/Simes conditions. None grants arbitrary serial-dependence control.
+    """
 
     NONE = "none"
     BONFERRONI = "bonferroni"
     HOLM = "holm"
     BENJAMINI_HOCHBERG = "benjamini_hochberg"
     BENJAMINI_YEKUTIELI = "benjamini_yekutieli"
+    SIDAK = "sidak"
+    HOLM_SIDAK = "holm_sidak"
+    HOCHBERG = "hochberg"
+    HOMMEL = "hommel"
 
 
 class FamilyDefinition(str, Enum):
@@ -200,6 +208,28 @@ def _adj_by(p: np.ndarray) -> np.ndarray:
     return out
 
 
+def _adj_sidak(p: np.ndarray) -> np.ndarray:
+    from statsmodels.stats.multitest import multipletests
+    return multipletests(p, method="sidak")[1]
+
+
+def _adj_holm_sidak(p: np.ndarray) -> np.ndarray:
+    from statsmodels.stats.multitest import multipletests
+    return multipletests(p, method="holm-sidak")[1]
+
+
+def _adj_hochberg(p: np.ndarray) -> np.ndarray:
+    from statsmodels.stats.multitest import multipletests
+    return multipletests(p, method="simes-hochberg")[1]
+
+
+def _adj_hommel(p: np.ndarray) -> np.ndarray:
+    from statsmodels.stats.multitest import multipletests
+    if p.size > 5000:
+        raise TCPValidationError("Hommel correction is bounded to 5000 hypotheses per family.")
+    return multipletests(p, method="hommel")[1]
+
+
 _CORRECTION_DISPATCH: MappingProxyType[str, Callable[[np.ndarray], np.ndarray]] = MappingProxyType(
     {
         MultipleTestingCorrection.NONE.value: _adj_none,
@@ -207,6 +237,10 @@ _CORRECTION_DISPATCH: MappingProxyType[str, Callable[[np.ndarray], np.ndarray]] 
         MultipleTestingCorrection.HOLM.value: _adj_holm,
         MultipleTestingCorrection.BENJAMINI_HOCHBERG.value: _adj_bh,
         MultipleTestingCorrection.BENJAMINI_YEKUTIELI.value: _adj_by,
+        MultipleTestingCorrection.SIDAK.value: _adj_sidak,
+        MultipleTestingCorrection.HOLM_SIDAK.value: _adj_holm_sidak,
+        MultipleTestingCorrection.HOCHBERG.value: _adj_hochberg,
+        MultipleTestingCorrection.HOMMEL.value: _adj_hommel,
     }
 )
 
@@ -225,6 +259,12 @@ def normalize_correction(method: str | MultipleTestingCorrection) -> str:
         "by": MultipleTestingCorrection.BENJAMINI_YEKUTIELI.value,
         "fdr_by": MultipleTestingCorrection.BENJAMINI_YEKUTIELI.value,
         "benjamini_yekutieli": MultipleTestingCorrection.BENJAMINI_YEKUTIELI.value,
+        "sidak": MultipleTestingCorrection.SIDAK.value,
+        "holm_sidak": MultipleTestingCorrection.HOLM_SIDAK.value,
+        "holm-sidak": MultipleTestingCorrection.HOLM_SIDAK.value,
+        "hochberg": MultipleTestingCorrection.HOCHBERG.value,
+        "simes-hochberg": MultipleTestingCorrection.HOCHBERG.value,
+        "hommel": MultipleTestingCorrection.HOMMEL.value,
     }
     if val not in aliases:
         raise TCPValidationError(

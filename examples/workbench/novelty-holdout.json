@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "operation": "novelty-holdout",
+  "parameters": {
+    "features": [
+      "x0",
+      "x1"
+    ],
+    "time": "time",
+    "train_rows": 120,
+    "method": "isolation_forest",
+    "contamination": 0.05,
+    "outcome": "novelty"
+  }
+}

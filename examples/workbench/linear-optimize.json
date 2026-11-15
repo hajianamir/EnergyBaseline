@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "operation": "linear-optimize",
+  "parameters": {
+    "objective": [
+      -3,
+      -2
+    ],
+    "lower": [
+      0,
+      0
+    ],
+    "upper": [
+      1,
+      1
+    ],
+    "integrality": [
+      1,
+      1
+    ],
+    "matrix": [
+      [
+        2,
+        2
+      ]
+    ],
+    "constraint_lower": [
+      0
+    ],
+    "constraint_upper": [
+      3
+    ]
+  }
+}

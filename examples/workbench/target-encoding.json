@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "operation": "target-encoding",
+  "parameters": {
+    "category": "category",
+    "target": "y",
+    "time": "time",
+    "train_rows": 120,
+    "prior": 0
+  }
+}

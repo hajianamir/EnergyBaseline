@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "operation": "tabular-transform",
+  "parameters": {
+    "numeric": [
+      "x0",
+      "x1"
+    ],
+    "categorical": [
+      "category"
+    ],
+    "targets": [
+      "y",
+      "y2"
+    ],
+    "train_rows": 120,
+    "imputation": "mean",
+    "scaling": "robust"
+  }
+}

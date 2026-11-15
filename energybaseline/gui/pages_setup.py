@@ -452,6 +452,10 @@ class SetupPage(QWidget):
         ql.addWidget(self.quality_table)
         self.left_tabs.addTab(quality_tab, "Data Quality (Six Dimensions)")
 
+        from .workbench import WorkbenchPanel
+        self.workbench_panel = WorkbenchPanel(self.state)
+        self.left_tabs.addTab(self.workbench_panel, "Exploratory Workbench")
+
         split.addWidget(self.left_tabs)
 
         # Right column: roles + temporal + outlier policy

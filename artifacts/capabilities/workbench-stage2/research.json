@@ -1,0 +1,102 @@
+[
+  {
+    "repository": "scipy/scipy",
+    "path": "scipy/optimize/_milp.py",
+    "url": "https://github.com/scipy/scipy/blob/main/scipy/optimize/_milp.py",
+    "git_blob_sha": "e452dfff4075b3d8150975842c527dc15f7d2007",
+    "sha256": "6d411559f909f3fadf9b5b029806248e9c8298171e3e288da377edb284141523",
+    "bytes_reviewed": 15222
+  },
+  {
+    "repository": "scipy/scipy",
+    "path": "scipy/stats/_survival.py",
+    "url": "https://github.com/scipy/scipy/blob/main/scipy/stats/_survival.py",
+    "git_blob_sha": "cd6fbf3ce9c741bb10d8677e3e72db490767bb2a",
+    "sha256": "b52a923262910586ce1c85315b2ee90846eb07b84ce8adfb5444d14ba70b4601",
+    "bytes_reviewed": 26073
+  },
+  {
+    "repository": "scikit-learn/scikit-learn",
+    "path": "sklearn/preprocessing/_target_encoder.py",
+    "url": "https://github.com/scikit-learn/scikit-learn/blob/main/sklearn/preprocessing/_target_encoder.py",
+    "git_blob_sha": "e886496aba5755629e09ffba4de7b54d1d21598a",
+    "sha256": "f54e778dcdf3f6e69762b213941467868ab869cee2e40a1d37c922a1e13d621c",
+    "bytes_reviewed": 27094
+  },
+  {
+    "repository": "scikit-learn/scikit-learn",
+    "path": "sklearn/feature_selection/_rfe.py",
+    "url": "https://github.com/scikit-learn/scikit-learn/blob/main/sklearn/feature_selection/_rfe.py",
+    "git_blob_sha": "9f465efbb42969b26cf7118e67c7d38336191d47",
+    "sha256": "be112e46147f564ebc0ef251b9b2ef296afa1a49652a64b5c952edcb9387a4c0",
+    "bytes_reviewed": 37631
+  },
+  {
+    "repository": "scikit-learn/scikit-learn",
+    "path": "sklearn/feature_selection/_sequential.py",
+    "url": "https://github.com/scikit-learn/scikit-learn/blob/main/sklearn/feature_selection/_sequential.py",
+    "git_blob_sha": "35b6241745a3ad0106d2bb7bb2a044720905735c",
+    "sha256": "698e979b38b553319bbac59b75b904d6cfda927eab8b74be21425b83947b1221",
+    "bytes_reviewed": 13914
+  },
+  {
+    "repository": "statsmodels/statsmodels",
+    "path": "statsmodels/stats/multitest.py",
+    "url": "https://github.com/statsmodels/statsmodels/blob/main/statsmodels/stats/multitest.py",
+    "git_blob_sha": "2e29795deaf12466c35abbbb3739e2d70a14c2b9",
+    "sha256": "86e4ea61e8cf7bfcc43b19d320e4c859335d22ab0712d471d92e97b528c473d0",
+    "bytes_reviewed": 38008
+  },
+  {
+    "repository": "statsmodels/statsmodels",
+    "path": "statsmodels/tsa/vector_ar/var_model.py",
+    "url": "https://github.com/statsmodels/statsmodels/blob/main/statsmodels/tsa/vector_ar/var_model.py",
+    "git_blob_sha": "4e871f72eb27970baf06b82878f4fb5342ee0f23",
+    "sha256": "c1646d24f81e9a92531903e3af18bcba18960ddac6f96c64dc27cbcf453109ee",
+    "bytes_reviewed": 93400
+  },
+  {
+    "repository": "statsmodels/statsmodels",
+    "path": "statsmodels/tsa/vector_ar/vecm.py",
+    "url": "https://github.com/statsmodels/statsmodels/blob/main/statsmodels/tsa/vector_ar/vecm.py",
+    "git_blob_sha": "789b4ba186435d98fd043f1a6f1292d984a50268",
+    "sha256": "4822117a3dd54ab2d8fbcf7a0e8b756a25dbe25a2af32833411da4ef7072f2b7",
+    "bytes_reviewed": 96888
+  },
+  {
+    "repository": "fairlearn/fairlearn",
+    "path": "fairlearn/metrics/_fairness_metrics.py",
+    "url": "https://github.com/fairlearn/fairlearn/blob/main/fairlearn/metrics/_fairness_metrics.py",
+    "git_blob_sha": "d3397ab0d9a75f766f71c5444348512e7f29432e",
+    "sha256": "36ffeaa284d0c264fce56aad6084e04c5cd02e05687f048193e6dc7b10b2738c",
+    "bytes_reviewed": 11668,
+    "integration_note": "API/algorithm research only; not proof of installing or integrating this package."
+  },
+  {
+    "repository": "scipy/scipy",
+    "path": "scipy/stats/_survival.py",
+    "url": "https://github.com/scipy/scipy/blob/main/scipy/stats/_survival.py",
+    "git_blob_sha": "cd6fbf3ce9c741bb10d8677e3e72db490767bb2a",
+    "sha256": "b52a923262910586ce1c85315b2ee90846eb07b84ce8adfb5444d14ba70b4601",
+    "bytes_reviewed": 26073,
+    "integration_note": "API/algorithm research only; not proof of installing or integrating this package."
+  },
+  {
+    "repository": "simpx/simpy",
+    "path": "src/simpy/resources/resource.py",
+    "url": "https://github.com/simpx/simpy/blob/master/src/simpy/resources/resource.py",
+    "git_blob_sha": "732037ed18f14f7dca1c17206b59243a9e4d9387",
+    "sha256": "49643f093fc63b5d3a365ed69cbb27ae285b550866034c7a60308baaafe2f603",
+    "bytes_reviewed": 8531,
+    "integration_note": "API/algorithm research only; not proof of installing or integrating this package."
+  },
+  {
+    "repository": "scikit-learn/scikit-learn",
+    "path": "sklearn/feature_extraction/text.py",
+    "url": "https://github.com/scikit-learn/scikit-learn/blob/main/sklearn/feature_extraction/text.py",
+    "git_blob_sha": "6cea2777b3608b2578fe29c1ce07bbe93f9c0334",
+    "sha256": "06ef6f57791947c7c695a6b851e711d10c0045cdababef115ade4e3539766399",
+    "bytes_reviewed": 76922,
+    "integration_note": "API/algorithm research only; not proof of installing or integrating this package."
+  }
+]

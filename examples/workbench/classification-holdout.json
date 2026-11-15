@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "operation": "classification-holdout",
+  "parameters": {
+    "target": "label",
+    "numeric": [
+      "x0",
+      "x1"
+    ],
+    "categorical": [],
+    "time": "time",
+    "train_rows": 120,
+    "estimator": "logistic",
+    "sensitive": "group",
+    "minimum_group_size": 2
+  }
+}

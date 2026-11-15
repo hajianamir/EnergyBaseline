@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "operation": "categorical-divergence",
+  "parameters": {
+    "column": "category",
+    "pseudocount": 1
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "operation": "rating-svd",
+  "parameters": {
+    "user": "user",
+    "item": "item",
+    "rating": "rating",
+    "train_rows": 6,
+    "rank": 1,
+    "user_position": 0
+  }
+}

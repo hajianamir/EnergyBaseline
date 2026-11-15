@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "operation": "forecast-holdout",
+  "parameters": {
+    "target": "a",
+    "time": "time",
+    "train_rows": 80,
+    "method": "seasonal_naive",
+    "period": 7
+  }
+}

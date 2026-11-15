@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "operation": "graph-profile",
+  "parameters": {
+    "source": "source",
+    "target": "target",
+    "path_source_position": 0
+  }
+}

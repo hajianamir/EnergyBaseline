@@ -76,7 +76,11 @@ Focused unit/CLI and real Qt integration tests are under `tests/test_quality_aud
 
 Stage 1 verification on source `ef78c2b6bd0e2a8b81ef7220007950337b3d73cf`: **48 focused tests, 25 complete GUI-directory tests, and 552 full-suite local tests passed**, all with exit 0 and no skips. Fresh [Windows/Linux workflow 43724721792](https://github.com/hajianamir/EnergyBaseline/actions/runs/43724721792) completed successfully on both OSes, including full-suite/coverage and GUI/coverage steps. Raw logs, JUnit, actual hosted API receipts and source binding are in `artifacts/capabilities/quality-stage1/README.md`. Earlier-source runs are not substituted for this final implementation. The follow-up documentation/evidence commit does not change tested product, tests, dependencies or workflows. This verifies Stage 1, **not completion of the broader program**.
 
-## Remaining implementation stages (not yet implemented by this program)
+## Stage 2 executable expansion
+
+See [EXPLORATORY_WORKBENCH.md](EXPLORATORY_WORKBENCH.md) for 19 bounded offline operations, four additional integrated TCP corrections, native process-pool desktop execution, CLI/API contracts, 25 executable synthetic examples and all limits. This is a substantial but explicitly partial expansion of 22 backlog rows. Status and final-source evidence are tracked separately from Stage 1; the whole program remains incomplete.
+
+## Remaining broader implementation stages (partially addressed, not complete)
 
 1. **Statistical extensions and feature pipeline:** additional tests/corrections with preregistered hypotheses and dependence assumptions; prospective power and Bayesian posterior/MCMC/VI contracts; in-fold selectors, transforms, categorical imputation; additional baseline candidates. Do not expose unrestricted shuffled CV for temporal datasets or retrospective observed-power claims.
 2. **Monitoring, risk, fairness and robustness:** categorical/divergence/sequential drift contracts; explicitly defined loss/return risk semantics; sensitive-attribute/outcome schemas and appropriate fairness metrics; reproducible stress scenarios that do not mutate a locked baseline. Existing optional APIs require actual application integration, not installation badges.

@@ -946,10 +946,29 @@ def _cmd_quality_audit(args):
     return 0
 
 
+def _cmd_workbench(args):
+    from .workbench import run_workbench
+
+    try:
+        path = Path(args.request)
+        if path.stat().st_size > 1_000_000:
+            raise ValueError("Request is too large.")
+        request = json.loads(path.read_text(encoding="utf-8"))
+        frame = ingest.load_file(args.dataset) if args.dataset else None
+        reference = ingest.load_file(args.reference) if args.reference else None
+        result = run_workbench(request, frame, reference=reference)
+    except (OSError, UnicodeError, ValueError, TypeError, ingest.IngestError) as exc:
+        raise ValueError("Workbench request failed. Check the versioned schema, permitted input files, "
+                         "numeric types and operation-specific sample/resource limits; no raw values are exported.") from exc
+    _write_or_print(result, args.out)
+    return 0
+
+
 CLI_COMMAND_HANDLERS: Mapping[str, Callable[[argparse.Namespace], int]] = MappingProxyType(
     {
         "analyze": _cmd_analyze,
         "quality-audit": _cmd_quality_audit,
+        "workbench": _cmd_workbench,
         "schema-suggest": _cmd_schema_suggest,
         "schema-edit": _cmd_schema_edit,
         "schema-validate": _cmd_schema_validate,
@@ -999,6 +1018,12 @@ def build_parser() -> argparse.ArgumentParser:
     p_quality.add_argument("--as-of", help="Timezone-aware freshness evaluation time; required for timeliness.")
     p_quality.add_argument("--fail-under", type=float, help="Exit 1 below this [0,1] overall score, or if any dimension is unassessed.")
     p_quality.add_argument("--out")
+
+    p_workbench = sub.add_parser("workbench", help="Run a bounded offline exploratory job; never modify a locked baseline.")
+    p_workbench.add_argument("request", help="Version-1 JSON: operation, parameters; no executable expressions or model pickles.")
+    p_workbench.add_argument("--dataset", help="Explicit input CSV/TSV/Excel/Parquet binding; omitted for linear-optimize.")
+    p_workbench.add_argument("--reference", help="Explicit reference dataset for categorical-divergence only.")
+    p_workbench.add_argument("--out")
 
     p_sug = sub.add_parser("schema-suggest", help="Inspect a dataset and emit a suggested DatasetSchema JSON envelope.")
     p_sug.add_argument("dataset", help="Path to CSV / TSV / Excel / Parquet dataset.")

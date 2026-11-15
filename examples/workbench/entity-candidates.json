@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "operation": "entity-candidates",
+  "parameters": {
+    "column": "company",
+    "reference_column": "name",
+    "threshold": 0.5
+  }
+}

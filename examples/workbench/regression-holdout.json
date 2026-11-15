@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "operation": "regression-holdout",
+  "parameters": {
+    "target": "y",
+    "features": [
+      "x0",
+      "x1",
+      "x2",
+      "x3"
+    ],
+    "time": "time",
+    "train_rows": 120,
+    "estimator": "huber",
+    "selection": "rfe",
+    "feature_count": 1,
+    "ale_feature": "x0",
+    "ale_bins": 5,
+    "stress": [
+      {
+        "x0": 1
+      }
+    ]
+  }
+}

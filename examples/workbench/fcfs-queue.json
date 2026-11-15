@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "operation": "fcfs-queue",
+  "parameters": {
+    "arrival": "arrival",
+    "service": "service",
+    "servers": 2
+  }
+}
