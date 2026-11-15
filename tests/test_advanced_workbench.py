@@ -374,7 +374,10 @@ def test_component_coordinates_iou_and_template_ocr_without_plaintext_export():
 
 
 def test_specification_only_operations_never_consume_implicit_raw_dataset(series):
-    assert len(OPERATION_NAMES) == 32 and len(SPEC_OPERATIONS) == 10
+    assert len(OPERATION_NAMES) == 35 and len(SPEC_OPERATIONS) == 11
+    assert {"flaml-search", "pandera-validation", "pretrained-ocr"} <= set(OPERATION_NAMES)
+    assert "pretrained-ocr" in SPEC_OPERATIONS
+    assert not {"flaml-search", "pandera-validation"} & set(SPEC_OPERATIONS)
     for operation in SPEC_OPERATIONS:
         with pytest.raises(ValueError):
             execute(operation, {}, series)
