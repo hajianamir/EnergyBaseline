@@ -300,6 +300,9 @@ class SetupPage(QWidget):
         vbar = QHBoxLayout()
         vbar.addWidget(QLabel("Target:"))
         self.vsg_target_combo = QComboBox()
+        self.vsg_target_combo.setToolTip(
+            "View a selected TARGET. Change TARGET checkboxes or Column Metadata roles to change this list."
+        )
         self.vsg_target_combo.currentTextChanged.connect(self._render_vsg_tab)
         vbar.addWidget(self.vsg_target_combo)
         self.vsg_preset_combo = self._combo(sorted(VALID_PRESETS))
@@ -632,15 +635,47 @@ class SetupPage(QWidget):
         self.main.log_msg(f"Dataset loaded: {name}")
 
     # ------------------------------------------------------------ VSG & TCP compliance UI
+    def _clear_compliance_models(self) -> None:
+        """Discard stale authorization, not historical runs or locked baseline artifacts."""
+        s = self.state
+        s.vsg = s.tcp = s.compliance_runner = None
+        s.vsg_id = s.tcp_id = None
+        self.vsg_target_combo.blockSignals(True)
+        self.vsg_target_combo.clear()
+        self.vsg_target_combo.blockSignals(False)
+        for table in (self.vsg_tbl, self.integrity_tbl, self.tcp_results_tbl):
+            fill_table(table, pd.DataFrame())
+        for checkbox in self.tc_checks.values():
+            checkbox.setChecked(False)
+        self.impact_preview.refresh_from_models(None)
+        self.vsg_status.setText("VSG pending: select TARGET columns and provide a valid schema.")
+        self.tcp_status.setText("TCP pending: rebuild and accept the current VSG, then lock TCP again.")
+        self._refresh_limitations_banner()
+
+    def _refresh_compliance_after_schema_edit(self) -> None:
+        """Synchronize actual edits immediately; old gate acceptance never authorizes a new target."""
+        if self._syncing_schema or self.state.df is None:
+            return
+        previous_target = self.vsg_target_combo.currentText()
+        self._clear_compliance_models()
+        try:
+            self.collect()
+            self.rebuild_compliance_models()
+            if self.vsg_target_combo.findText(previous_target) >= 0:
+                self.vsg_target_combo.setCurrentText(previous_target)
+        except (SchemaValidationError, VSGValidationError, TCPValidationError) as exc:
+            # A transient invalid edit must fail closed, not retain an accepted old gate.
+            self._clear_compliance_models()
+            self.vsg_status.setText(f"VSG pending: {exc}")
+
     def rebuild_compliance_models(self) -> None:
-        """Initialize or refresh ``state.vsg``, ``state.tcp``, and ``ImpactPreviewPanel`` from active dataset."""
+        """Build pending VSG/TCP for the current selections; never transfer prior acceptance."""
         s = self.state
         if s.df is None or not s.targets:
-            s.vsg = None
-            s.tcp = None
-            s.compliance_runner = None
-            self.impact_preview.refresh_from_models(None)
+            self._clear_compliance_models()
             return
+        previous_target = self.vsg_target_combo.currentText()
+        self._clear_compliance_models()
 
         vsg = VariableSelectionGate(
             self.apply_units(s.df),
@@ -658,9 +693,12 @@ class SetupPage(QWidget):
         self.vsg_target_combo.blockSignals(True)
         self.vsg_target_combo.clear()
         self.vsg_target_combo.addItems(list(vsg.targets))
+        if previous_target in vsg.targets:
+            self.vsg_target_combo.setCurrentText(previous_target)
         self.vsg_target_combo.blockSignals(False)
 
         self._sync_tcp_widgets_from_model()
+        self.tcp_status.setText("TCP pending: accept the current VSG, then accept and lock TCP.")
         self._render_vsg_tab()
         self._refresh_limitations_banner()
         if self.main is not None and hasattr(self.main, "auto_panel"):
@@ -958,6 +996,7 @@ class SetupPage(QWidget):
                 self._sync_schema_to_legacy_controls_unlocked()
         finally:
             self._syncing_schema = False
+        self._refresh_compliance_after_schema_edit()
 
     def _on_schema_item_changed(self, item: QTableWidgetItem) -> None:
         if self._syncing_schema:
@@ -984,6 +1023,7 @@ class SetupPage(QWidget):
                     cb_qt.setCurrentText(QuantityType.QUALITY.value)
         finally:
             self._syncing_schema = False
+        self._refresh_compliance_after_schema_edit()
 
     def _on_legacy_units_edited(self) -> None:
         if self._syncing_schema or self.schema_tbl.rowCount() == 0:
@@ -997,6 +1037,7 @@ class SetupPage(QWidget):
                     self.schema_tbl.item(r, 4).setText(units[nm])
         finally:
             self._syncing_schema = False
+        self._refresh_compliance_after_schema_edit()
 
     def _sync_schema_to_legacy_controls_unlocked(self) -> None:
         time_col: str | None = None
@@ -1090,6 +1131,7 @@ class SetupPage(QWidget):
             self._sync_schema_to_legacy_controls_unlocked()
         finally:
             self._syncing_schema = False
+        self._refresh_compliance_after_schema_edit()
 
     def build_schema_from_ui(self) -> DatasetSchema:
         """Construct and validate a ``DatasetSchema`` from ``self.schema_tbl`` (DAT-7)."""
@@ -1229,6 +1271,7 @@ class SetupPage(QWidget):
             sid = store.save_dataset_schema(schema, dataset_id=self.state.dataset_id)
             self.state.schema_id = sid
             self.schema_status.setText(f"Schema #{sid} (SHA {schema.compute_sha256()[:10]}…)")
+            self._refresh_compliance_after_schema_edit()
             return True
         except (PathGuardError, SchemaIntegrityError, SchemaValidationError, OSError) as exc:
             self.schema_status.setText(f"Load failed: {exc}")
@@ -1275,6 +1318,7 @@ class SetupPage(QWidget):
                         cb_qt.setCurrentText(QuantityType.QUALITY.value)
         finally:
             self._syncing_schema = False
+        self._refresh_compliance_after_schema_edit()
 
     def checked_targets(self) -> list[str]:
         return [
