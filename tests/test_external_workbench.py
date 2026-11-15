@@ -292,3 +292,44 @@ print("native Qt6 and loader environment preserved")
     result = subprocess.run([sys.executable, "-c", code], cwd=ROOT, capture_output=True, text=True, timeout=60)
     assert result.returncode == 0, result.stderr
     assert result.stdout.strip() == "native Qt6 and loader environment preserved"
+
+
+@pytest.mark.parametrize("name", ["flaml-search", "pandera-validation", "pretrained-ocr"])
+def test_real_external_cli_without_standard_streams_keeps_explicit_output(name, tmp_path):
+    # Actual Windows windowed PyInstaller processes set both streams to None.
+    # Execute the real engines in a fresh interpreter with that runtime contract,
+    # not a mocked model or a replacement success response.
+    out = tmp_path / "result.json"
+    args = ["workbench", str(EXAMPLES / (name + ".json")), "--out", str(out)]
+    if name != "pretrained-ocr":
+        args += ["--dataset", str(ROOT / "examples/advanced/series.csv")]
+    code = """
+import json,sys
+from pathlib import Path
+from energybaseline.cli import main
+args=json.loads(sys.argv[1])
+sys.stdout=None
+sys.stderr=None
+raise SystemExit(main(args))
+"""
+    child = subprocess.run(
+        [sys.executable, "-c", code, json.dumps(args)], cwd=ROOT, capture_output=True, text=True, timeout=60
+    )
+    assert child.returncode == 0, child.stderr
+    assert child.stdout == child.stderr == ""
+    assert json.loads(out.read_text())["operation"] == name
+
+
+def test_windowless_cli_without_destination_fails_closed_without_secondary_stream_error():
+    code = """
+import sys
+from energybaseline.cli import main
+sys.stdout=None
+sys.stderr=None
+result=main(['workbench','examples/external/pandera-validation.json',
+             '--dataset','examples/advanced/series.csv'])
+assert result==2
+"""
+    child = subprocess.run([sys.executable, "-c", code], cwd=ROOT, capture_output=True, text=True, timeout=60)
+    assert child.returncode == 0, child.stderr
+    assert child.stdout == child.stderr == ""

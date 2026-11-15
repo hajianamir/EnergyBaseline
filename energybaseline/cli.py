@@ -96,7 +96,12 @@ def _write_or_print(payload: Mapping[str, Any], out_path: str | None) -> None:
         p = Path(out_path)
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_text(rendered, encoding="utf-8")
-    sys.stdout.write(rendered)
+    if sys.stdout is not None:
+        sys.stdout.write(rendered)
+    elif not out_path:
+        # PyInstaller's windowed Windows executable has no standard streams.
+        # An explicit output file is required instead of silently losing evidence.
+        raise ValueError("Windowed CLI execution requires an explicit --out path.")
 
 
 def _cmd_schema_suggest(args: argparse.Namespace) -> int:
@@ -1245,7 +1250,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(list(argv) if argv is not None else None)
     handler = CLI_COMMAND_HANDLERS.get(args.subcommand)
     if handler is None:
-        sys.stderr.write(f"ERROR: Unknown subcommand '{args.subcommand}'.\n")
+        if sys.stderr is not None:
+            sys.stderr.write(f"ERROR: Unknown subcommand '{args.subcommand}'.\n")
         return 2
     try:
         return handler(args)
@@ -1262,7 +1268,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         ValueError,
     ) as exc:
         err_payload = {"valid": False, "error_type": type(exc).__name__, "error": str(exc)}
-        sys.stderr.write(json.dumps(err_payload) + "\n")
+        if sys.stderr is not None:
+            sys.stderr.write(json.dumps(err_payload) + "\n")
         return 2
 
 
