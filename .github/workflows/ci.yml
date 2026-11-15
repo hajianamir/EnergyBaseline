@@ -2,6 +2,9 @@ name: CI
 
 on:
   push:
+    paths-ignore:
+      - 'artifacts/**'
+      - 'docs/**'
   pull_request:
   workflow_dispatch:
 
@@ -182,6 +185,11 @@ jobs:
       - name: Generate CycloneDX SBOM
         run: |
           cyclonedx-py requirements requirements.lock --pyproject pyproject.toml --output-reproducible -o sbom.json
+
+      - name: Publish native evidence receipts in the check log
+        if: always()
+        run: |
+          python -c "import glob, hashlib, json, pathlib; [print('::notice file=.github/workflows/ci.yml,line=1,title=NativeEvidence-' + pathlib.Path(f).name + '::sha256=' + hashlib.sha256(pathlib.Path(f).read_bytes()).hexdigest() + ' ' + json.dumps(json.loads(pathlib.Path(f).read_text()), separators=(',', ':'))) for f in sorted(glob.glob('artifacts/remediation/ci-native/*.json'))]"
 
       - name: Upload SBOM, coverage, and Phase 1 evidence artifacts
         if: always()

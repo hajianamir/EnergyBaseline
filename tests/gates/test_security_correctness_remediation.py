@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import sqlite3
 
 import pytest
@@ -87,12 +88,13 @@ def test_storage_boolean_configuration_is_not_truthy_string(monkeypatch):
 
 @pytest.fixture
 def no_secure_store(monkeypatch, tmp_path):
-    import keyring
-
     def unavailable(*args):
-        raise RuntimeError("No daemon")
+        raise secrets.CredentialStorageUnavailable("Provider unavailable in this unit fixture")
 
-    monkeypatch.setattr(keyring, "get_password", unavailable)
+    # Patch the actual provider boundary used by the product. Patching the
+    # public keyring facade does not disable Windows' approved native backend.
+    # Genuine OS behavior is separately proved by remediation_credentials.py.
+    monkeypatch.setattr(secrets, "_secure_keyring", unavailable)
     monkeypatch.setenv("EB_HOME", str(tmp_path))
     monkeypatch.delenv("EB_ALLOW_INSECURE_KEYFILE", raising=False)
     monkeypatch.setattr(secrets.sys, "platform", "linux")
@@ -122,7 +124,9 @@ def test_file_key_requires_opt_in_and_is_private(no_secure_store, monkeypatch):
     monkeypatch.setenv("EB_ALLOW_INSECURE_KEYFILE", "true")
     token = secrets.encrypt_text(CANARY)
     key = no_secure_store / "data" / ".eb_master.key"
-    assert key.is_file() and key.stat().st_mode & 0o077 == 0
+    assert key.is_file()
+    if os.name == "posix":
+        assert key.stat().st_mode & 0o077 == 0
     assert secrets.decrypt_text(token) == CANARY
     assert secrets.backend_status()["persistent"] and not secrets.backend_status()["secure_store"]
 
