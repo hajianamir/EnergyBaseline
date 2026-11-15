@@ -50,6 +50,8 @@ class QtLogHandler(logging.Handler):
     def close(self):
         # Logging's global handler list must not retain Qt slots past window or
         # QApplication destruction. close() is also called at interpreter exit.
+        if self._closed:
+            return
         try:
             self.emitter.message.disconnect()
         except (RuntimeError, TypeError):
