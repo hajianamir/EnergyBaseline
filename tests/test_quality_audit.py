@@ -248,3 +248,30 @@ def test_incompatible_comparisons_return_safe_validation_error():
 def test_empty_frame_does_not_bypass_key_validation():
     with pytest.raises(ValueError):
         audit_quality(pd.DataFrame(), {"unique_by": ["missing"]})
+
+
+def test_large_integer_accuracy_cannot_be_inflated_by_float_rounding():
+    frame = pd.DataFrame({"id": [1], "value": [2**53 + 1]})
+    truth = pd.DataFrame({"id": [1], "value": [2**53]})
+    policy = {"accuracy": {"reference": "r", "keys": ["id"], "columns": ["value"]}}
+    result = audit_quality(frame, policy, references={"r": truth})
+    assert result["dimensions"]["accuracy"]["score"] == 0
+    policy["accuracy"]["atol"] = 0.1
+    with pytest.raises(ValueError, match="explicit rescaling"):
+        audit_quality(frame, policy, references={"r": truth})
+
+
+def test_missing_reference_rows_preserve_exact_known_integer_truth():
+    frame = pd.DataFrame({"id": [1, 2], "value": [2**53 + 1, 5]})
+    truth = pd.DataFrame({"id": [1], "value": [2**53 + 1]})
+    result = audit_quality(
+        frame, {"accuracy": {"reference": "r", "keys": ["id"], "columns": ["value"]}}, references={"r": truth}
+    )
+    assert result["dimensions"]["accuracy"]["score"] == 1
+    assert result["dimensions"]["accuracy"]["coverage"] == 0.5
+
+
+def test_numeric_range_limits_preserve_large_integer_distinctions():
+    frame = pd.DataFrame({"n": [2**53, 2**53 + 1]})
+    result = audit_quality(frame, {"validity": [{"kind": "range", "column": "n", "min": 2**53 + 1}]})
+    assert result["dimensions"]["validity"]["score"] == 0.5

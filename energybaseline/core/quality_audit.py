@@ -10,6 +10,7 @@ from __future__ import annotations
 import hashlib
 import json
 from collections.abc import Mapping
+from numbers import Integral
 
 import numpy as np
 import pandas as pd
@@ -42,7 +43,7 @@ def _number(value):
         raise ValueError("Policy numeric limit is out of range.") from exc
     if not np.isfinite(numeric):
         raise ValueError("Policy tolerances and numeric limits must be finite numbers.")
-    return numeric
+    return value if isinstance(value, int) else numeric
 
 
 def _reference(references, name):
@@ -97,7 +98,8 @@ def _joined_reference(frame, reference, keys, key_types):
     # Separate key and value frames avoid suffix collisions with arbitrary input names.
     left = pd.MultiIndex.from_frame(left_keys)
     right = pd.MultiIndex.from_frame(right_keys)
-    return reference.set_axis(right).reindex(left).reset_index(drop=True)
+    # Object values preserve exact integers even when unmatched rows introduce NA.
+    return reference.astype(object).set_axis(right).reindex(left).reset_index(drop=True)
 
 
 def audit_quality(
@@ -168,8 +170,10 @@ def audit_quality(
             )
             if low > high:
                 raise ValueError("Range minimum cannot exceed maximum.")
-            numeric = pd.to_numeric(values, errors="coerce").astype(float)
-            valid = np.isfinite(numeric) & numeric.between(low, high)
+            numeric = pd.to_numeric(values, errors="coerce")
+            valid = np.isfinite(numeric.to_numpy(dtype=float, na_value=np.nan)) & numeric.astype(object).between(
+                low, high
+            )
         elif kind == "allowed":
             _keys(rule, ("kind", "column", "values"), ("values",))
             if not isinstance(rule["values"], list) or not rule["values"]:
@@ -236,10 +240,21 @@ def audit_quality(
             truth = joined[column]
             known = truth.notna()
             if pd.api.types.is_numeric_dtype(ref[column]):
-                a = pd.to_numeric(observed, errors="coerce").to_numpy(dtype=float, na_value=np.nan)
+                numeric_observed = pd.to_numeric(observed, errors="coerce")
+                a = numeric_observed.to_numpy(dtype=float, na_value=np.nan)
                 b = pd.to_numeric(truth, errors="coerce").to_numpy(dtype=float, na_value=np.nan)
                 known &= np.isfinite(b)
-                valid = np.isfinite(a) & np.isclose(a, b, atol=atol, rtol=rtol)
+                if atol == 0 and rtol == 0:
+                    # Python numeric equality preserves integer distinctions above 2**53.
+                    valid = numeric_observed.astype(object).eq(truth.astype(object)).fillna(False).to_numpy(dtype=bool)
+                    valid = valid & np.isfinite(a)
+                else:
+                    for values in (numeric_observed, truth):
+                        if any(isinstance(value, Integral) and abs(value) > 2**53 for value in values.astype(object)):
+                            raise ValueError(
+                                "Large-integer accuracy with nonzero tolerances requires explicit rescaling."
+                            )
+                    valid = np.isfinite(a) & np.isclose(a, b, atol=atol, rtol=rtol)
             else:
                 valid = observed.eq(truth).fillna(False).to_numpy(dtype=bool)
             known_array = known.to_numpy(dtype=bool)
