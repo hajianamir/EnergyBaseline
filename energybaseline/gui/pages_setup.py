@@ -353,7 +353,8 @@ class SetupPage(QWidget):
         self.tcp_conf_combo.currentTextChanged.connect(self._on_tcp_controls_edited)
         self.tcp_conf_combo.setToolTip(
             "Confidence level (1 − α): coverage probability for confidence/prediction intervals. "
-            "95 % means the interval contains the true value in 95 of 100 repeated samples. "
+            "Nominal 95 % coverage depends on the method's assumptions; observed coverage "
+            "can differ, especially for autocorrelated or shifted series. "
             "Used for uncertainty bands around the baseline and for MCS/test decisions."
         )
         tf.addRow("Confidence level (%)", self.tcp_conf_combo)
@@ -380,15 +381,16 @@ class SetupPage(QWidget):
         tbar.addWidget(self.btn_amend_tcp)
         tl.addLayout(tbar)
 
-        # Test catalog panel: user can see every T1–T14 test, its stage, gate role,
-        # and whether it is disableable. Hard-gate tests are read-only.
+        # Read-only catalog of the actual TCP selections. Configuration changes
+        # require the model's audited per-test API, never an unbound checkbox.
         g_tc = QGroupBox("Statistical test catalog (T1–T14) — tests applied to data and baseline")
         f_tc = QFormLayout(g_tc)
         self.tc_checks: dict[str, QCheckBox] = {}
         for tid, spec in sorted(TEST_CATALOG_SPECS.items()):
             row = QHBoxLayout()
             cb = QCheckBox(f"{tid} · {spec.name}")
-            cb.setChecked(True)
+            cb.setChecked(False)
+            cb.setEnabled(False)
             is_hard = spec.default_gate_role == "hard_gate"
             if is_hard:
                 cb.setEnabled(False)
@@ -684,6 +686,9 @@ class SetupPage(QWidget):
             self.tcp_corr_combo.setCurrentText(tcp.correction)
             self.tcp_fam_combo.setCurrentText(tcp.family_definition)
             self.tcp_rule_combo.setCurrentText(tcp.decision_rule)
+            for test_id, checkbox in self.tc_checks.items():
+                checkbox.setChecked(tcp.test_panels[test_id].enabled)
+                checkbox.setEnabled(False)
         finally:
             for w in (
                 self.tcp_alpha_combo,

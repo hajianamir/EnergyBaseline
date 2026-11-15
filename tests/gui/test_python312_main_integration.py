@@ -30,6 +30,10 @@ def test_explicit_target_survives_reload_and_collect(qapp, tmp_path, monkeypatch
         page = window.setup_page
         page.set_dataset(frame, "synthetic", "manual", "a" * 64)
         assert page.checked_targets() == ["chosen_output"]
+        for test_id, checkbox in page.tc_checks.items():
+            assert not checkbox.isEnabled()
+            assert checkbox.isChecked() == state.tcp.test_panels[test_id].enabled
+        assert "autocorrelated" in page.tcp_conf_combo.toolTip()
         # Simulate stale schema target metadata without changing explicit checkboxes.
         for row in range(page.schema_tbl.rowCount()):
             name = page.schema_tbl.item(row, 0).text()

@@ -37,3 +37,9 @@ python -m pytest tests/ --cov=energybaseline/core --cov-fail-under=60
 ```
 
 Linux GUI execution additionally requires the native Qt/ODBC/SecretService packages declared in CI. Native credential and ODBC evidence must come from actual OS services, not mocked substitutes. Packaging/production signing and real remote database TLS retain their existing certification limits.
+
+### Local 3.12 environment established
+
+CPython 3.12.16 was built from the upstream `v3.12.16` source tag in the disposable cache, with OpenSSL 3.0.18 and native zlib/SQLite/libffi/bzip2/lzma support. The complete new environment imports torch `2.15.0+cu132` and passes `pip check`. To stay within the sandbox disk limit, 15 existing CUDA-library distributions with exactly matching locked versions are reused by symlink; all interpreter-specific Python wheels were installed for CPython 3.12. This local reuse is not represented as a clean-room dependency install; both fresh hosted runners install the lock normally.
+
+The statistical catalog imported from main is now explicitly read-only and reflects actual TCP test-panel selections. The original checkboxes were unbound controls that could misleadingly suggest a test was disabled without changing the audited model. The confidence tooltip discloses method assumptions and autocorrelation/shift limitations rather than promising unconditional coverage. Added regression assertions cover both corrections.
