@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "operation": "pandera-validation",
+  "parameters": {
+    "columns": [
+      {
+        "column": "x",
+        "dtype": "float64",
+        "minimum": -10,
+        "maximum": 10
+      },
+      {
+        "column": "y",
+        "dtype": "float64",
+        "nullable": false
+      }
+    ]
+  }
+}

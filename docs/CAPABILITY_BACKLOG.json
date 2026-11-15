@@ -38,7 +38,8 @@
       "baseline_evidence": "Product schema/integrity validation is custom and narrower. Dependency presence would not establish execution.",
       "current_status": "stage3_bounded_scope_verified_cli_gui",
       "stage3_implemented_scope": "Read-only business-validation operation with typed bounded expression trees, three-valued truth, reference hashes, exact integer comparisons and privacy-bounded failures.",
-      "remaining_scope": "Pandera/Great Expectations adapters and unrestricted arbitrary business Python execution are not implemented."
+      "remaining_scope": "Great Expectations, arbitrary Pandera user extensions and unrestricted arbitrary business Python execution remain unimplemented.",
+      "stage5_implemented_scope": "Actual Pandera DataFrameSchema execution through API/CLI/native workers with bounded typed/null/unique/range rules, coercion disabled and private positional failures; final verification pending."
     },
     {
       "id": "C006",
@@ -228,7 +229,8 @@
       "baseline_evidence": "Optuna-backed tuning does not mean these AutoML engines are integrated.",
       "current_status": "stage4_bounded_scope_verified_cli_gui",
       "stage4_implemented_scope": "Actual Optuna TPE model-family/hyperparameter search with nested temporal preprocessing and untouched holdout; genuine scratch-trained neural architecture/width search.",
-      "remaining_scope": "Auto-sklearn, TPOT, H2O, FLAML and AutoGluon are not integrated; no full external-engine or main accepted-model lifecycle claim."
+      "remaining_scope": "Auto-sklearn, TPOT, H2O and AutoGluon remain unintegrated. FLAML scope is bounded regression, not its full task/estimator catalog or accepted-model lifecycle. Runtime conflicts and unimplemented boundaries are recorded in docs/EXTERNAL_ENGINES.md.",
+      "stage5_implemented_scope": "Actual FLAML CFO regression search with inner chronological validation/purge, bounded real forest estimators and fresh outer training refit; final verification pending."
     },
     {
       "id": "C027",
@@ -307,7 +309,8 @@
       "baseline_evidence": "Plotting and a 1D numeric CNN are not computer vision.",
       "current_status": "stage4_bounded_scope_verified_cli_gui",
       "stage4_implemented_scope": "Actual PNG/JPEG/BMP loading, Conv2d classification, binary U-Net segmentation, learned-mask component detection and explicitly supplied printed-template OCR; native worker/CLI and privacy-bound output.",
-      "remaining_scope": "Not a pretrained semantic detector/segmenter/OCR system, arbitrary-resolution vision framework, handwriting or general vision model zoo."
+      "remaining_scope": "Pretrained semantic object classification/detection/segmentation, plaintext OCR export, arbitrary-resolution/language/handwriting coverage and general model zoo remain unimplemented. YOLO release metadata is not executed weights.",
+      "stage5_implemented_scope": "Actual pretrained PP-OCRv4 detection/recognition and mobile orientation via RapidOCR/ONNX Runtime; fixed approved weight hashes, offline CPU inference and privacy-preserving OCR audit; final verification pending."
     },
     {
       "id": "C036",
@@ -444,5 +447,25 @@
     "gui_coverage_percent": 72.1,
     "local_full_suite_coverage_instrumentation": false,
     "hosted_full_suite_expanded_coverage_gates": "Passed on Windows and Linux; unchanged 60/80 percent thresholds"
+  },
+  "stage5": {
+    "status": "implementation_final_verification_pending",
+    "documentation": "docs/EXTERNAL_ENGINES.md",
+    "model_notices": "docs/THIRD_PARTY_MODELS.md",
+    "evidence": "artifacts/capabilities/external-stage5/README.md",
+    "new_operations": 3,
+    "total_workbench_operations": 35,
+    "example_jobs": 3,
+    "actual_external_engines": [
+      "FLAML",
+      "Pandera",
+      "RapidOCR with bundled pretrained ONNX models"
+    ],
+    "program_complete": false,
+    "tests": [
+      "tests/test_external_workbench.py",
+      "tests/gui/test_external_workbench_gui.py"
+    ],
+    "remaining_scope": "All per-row remaining_scope fields, incompatible/unimplemented external backends, foundation weights and full-paper parity remain open. No installed-only completion claims."
   }
 }

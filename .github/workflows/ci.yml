@@ -133,6 +133,10 @@ jobs:
           python -m pytest -q --junitxml=pytest-g8.xml tests/gates/test_phase8_reporting_and_audit.py
           python scripts/evidence/phase8.py --out-dir artifacts/phase8/ci
 
+      - name: Actual external engines and offline pretrained OCR (no mocked backends)
+        run: |
+          python scripts/evidence/external_engines.py --out artifacts/capabilities/external-stage5/ci-python-engines.json
+
       - name: Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
         run: |
           python -m pytest -q --junitxml=pytest-core.xml --cov=energybaseline/core --cov=energybaseline/tests_catalog --cov=energybaseline/mining --cov=energybaseline/models --cov=energybaseline/scoring --cov=energybaseline/validation --cov=energybaseline/lock --cov=energybaseline/uq --cov=energybaseline/monitoring --cov=energybaseline/causal --cov=energybaseline/report --cov=energybaseline/workbench --cov=energybaseline/statistics --cov-report=xml:coverage.xml --cov-report=term --cov-fail-under=60
@@ -182,6 +186,11 @@ jobs:
         shell: pwsh
         run: |
           pwsh -NoProfile -File scripts/sign/sign_artifacts.ps1 -SelfTest
+
+      - name: Actual frozen Windows external engines and pretrained OCR
+        if: matrix.os == 'windows-latest'
+        run: |
+          python scripts/evidence/external_engines.py --executable dist/EnergyBaseline/EnergyBaseline.exe --out artifacts/capabilities/external-stage5/ci-frozen-engines.json
 
       - name: Vulnerability audit (pip-audit)
         run: |

@@ -1,0 +1,14 @@
+[
+  {
+    "request": "flaml-search.json",
+    "dataset": "../advanced/series.csv"
+  },
+  {
+    "request": "pandera-validation.json",
+    "dataset": "../advanced/series.csv"
+  },
+  {
+    "request": "pretrained-ocr.json",
+    "dataset": null
+  }
+]

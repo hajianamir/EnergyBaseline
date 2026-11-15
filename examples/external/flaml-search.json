@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "operation": "flaml-search",
+  "parameters": {
+    "time": "time",
+    "target": "y",
+    "features": [
+      "x"
+    ],
+    "train_rows": 72,
+    "validation_rows": 16,
+    "gap": 2,
+    "seed": 9,
+    "iterations": 4
+  }
+}

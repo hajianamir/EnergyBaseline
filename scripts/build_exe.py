@@ -308,8 +308,14 @@ def main(argv: list[str] | None = None) -> int:
 
     for pkg in ("sklearn", "statsmodels"):
         cmd += ["--collect-submodules", pkg]
-    for data_pkg in ("matplotlib", "sklearn"):
+    for data_pkg in ("matplotlib", "sklearn", "rapidocr_onnxruntime"):
         cmd += ["--collect-data", data_pkg]
+    # Real external backends use runtime metadata and Pandera dispatch registrations.
+    # OCR ONNX/config data must be shipped; no model download is permitted in the app.
+    for pkg in ("flaml.automl", "pandera.backends.pandas"):
+        cmd += ["--collect-submodules", pkg]
+    for distribution in ("flaml", "pandera", "rapidocr-onnxruntime", "onnxruntime"):
+        cmd += ["--copy-metadata", distribution]
 
     if args.profile == "lite":
         cmd += ["--exclude-module", "torch", "--exclude-module", "torchvision", "--exclude-module", "torchaudio"]
@@ -324,10 +330,13 @@ def main(argv: list[str] | None = None) -> int:
     bundle_dir.mkdir(parents=True, exist_ok=True)
 
     # Copy documentation and icon assets next to executable for user inspection and shortcut icons.
-    for doc_rel in ("README.md", "LICENSE", "docs/USER_GUIDE.md"):
+    for doc_rel in ("README.md", "LICENSE", "docs/USER_GUIDE.md", "docs/EXTERNAL_ENGINES.md", "docs/THIRD_PARTY_MODELS.md"):
         src = ROOT / doc_rel
         if src.exists():
             shutil.copy2(src, bundle_dir / src.name)
+    license_dir = ROOT / "docs" / "licenses"
+    if license_dir.is_dir():
+        shutil.copytree(license_dir, bundle_dir / "third_party_licenses", dirs_exist_ok=True)
     if ico.exists():
         (bundle_dir / "assets").mkdir(exist_ok=True)
         shutil.copy2(ico, bundle_dir / "assets" / ico.name)

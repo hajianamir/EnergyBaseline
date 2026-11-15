@@ -8,6 +8,7 @@ that zero ``os.environ`` references exist outside ``energybaseline/config/``.
 from __future__ import annotations
 
 from collections.abc import Mapping
+from contextlib import contextmanager
 import os
 
 
@@ -38,3 +39,22 @@ def configure_qt_runtime_env(*, enable_highdpi: bool = False) -> None:
     os.environ.setdefault("QT_API", "pyside6")
     if enable_highdpi:
         os.environ.setdefault("QT_ENABLE_HIGHDPI_SCALING", "1")
+
+
+@contextmanager
+def preserve_native_import_environment():
+    """Prevent OpenCV's import-time path/Qt5 defaults from leaking into Qt6 workers.
+
+    The dependency remains imported, but its bootstrap environment modifications are
+    restored immediately. Runtime native-library loading itself is not undone.
+    """
+    keys = ("PATH", "LD_LIBRARY_PATH", "QT_QPA_PLATFORM_PLUGIN_PATH", "QT_QPA_FONTDIR")
+    previous = {key: os.environ.get(key) for key in keys}
+    try:
+        yield
+    finally:
+        for key, value in previous.items():
+            if value is None:
+                os.environ.pop(key, None)
+            else:
+                os.environ[key] = value

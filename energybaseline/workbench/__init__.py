@@ -24,6 +24,7 @@ from .vision import image_classification, image_segmentation, image_detection, t
 from .common import digest, fields, finite_json
 from .domains import competing_risks, graph_profile, rating_recommendations, survival_curve, text_retrieval
 from .entities import entity_candidates
+from .external import flaml_holdout, pandera_validation, pretrained_ocr
 from .forecasting import forecast_holdout
 from .operations import optimize, pareto, queue_simulation
 from .preparation import multi_target_consensus, target_encoding_preview, transform_preview
@@ -34,6 +35,8 @@ from .prediction import classification_holdout, novelty_holdout
 OPERATIONS = MappingProxyType(
     {
         "automl-search": automl_search,
+        "flaml-search": flaml_holdout,
+        "pandera-validation": pandera_validation,
         "deep-forecast": deep_forecast,
         "digital-twin": digital_twin,
         "portfolio-risk": portfolio_risk,
@@ -55,6 +58,7 @@ OPERATIONS = MappingProxyType(
     }
 )
 SPEC_OPERATIONS = MappingProxyType({
+    "pretrained-ocr": pretrained_ocr,
     "linear-optimize": optimize,
     "route-optimize": routing,
     "schedule-optimize": scheduling,
