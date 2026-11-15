@@ -2,6 +2,8 @@
 
 Date: 2026-11-12. Baseline inspected: `c5f32177dd699804381c3d8a19bf6b19bb9037ee` (main / PR #9), with the VSG synchronization correction in this branch.
 
+> Historical inventory: subsequent implementation progress, executable examples and remaining work are tracked in [CAPABILITY_EXECUTION.md](CAPABILITY_EXECUTION.md) and [CAPABILITY_BACKLOG.json](CAPABILITY_BACKLOG.json). Stage 1 adds a separate six-axis quality audit; it does not silently replace the historical preprocessing score.
+
 ## Scope and interpretation
 
 This is a source-level usage audit, not a benchmark or a claim that every algorithm was executed on a user's dataset. The product package is `energybaseline`, not `uap`. No production `uap` integration was found. The absence of a class with a UAP name does **not** imply the absence of an equivalent algorithm.

@@ -923,9 +923,33 @@ def _cmd_analyze(args):
 
 
 
+def _cmd_quality_audit(args):
+    from .core.quality_audit import audit_quality
+
+    try:
+        frame = ingest.load_file(args.dataset)
+        policy = json.loads(Path(args.policy).read_text(encoding="utf-8")) if args.policy else {}
+        references = {}
+        for binding in args.reference:
+            name, separator, path = binding.partition("=")
+            if not separator or not name or not path or name in references:
+                raise ValueError("References require unique name=path bindings.")
+            references[name] = ingest.load_file(path)
+    except OSError as exc:
+        raise ValueError("Quality audit input could not be loaded.") from exc
+    result = audit_quality(frame, policy, references=references, as_of=args.as_of)
+    if args.fail_under is not None and not 0 <= args.fail_under <= 1:
+        raise ValueError("Quality threshold must be between zero and one.")
+    _write_or_print(result, args.out)
+    if args.fail_under is not None:
+        return int(result["overall_score"] is None or result["overall_score"] < args.fail_under)
+    return 0
+
+
 CLI_COMMAND_HANDLERS: Mapping[str, Callable[[argparse.Namespace], int]] = MappingProxyType(
     {
         "analyze": _cmd_analyze,
+        "quality-audit": _cmd_quality_audit,
         "schema-suggest": _cmd_schema_suggest,
         "schema-edit": _cmd_schema_edit,
         "schema-validate": _cmd_schema_validate,
@@ -967,6 +991,14 @@ def build_parser() -> argparse.ArgumentParser:
     p_analysis.add_argument("--config", help="Path to a JSON configuration object.")
     p_analysis.add_argument("--inference", action="store_true", help="Explicitly accept VSG and lock TCP for these exact input values before inference.")
     p_analysis.add_argument("--out")
+
+    p_quality = sub.add_parser("quality-audit", help="Read-only six-dimensional quality audit with explicit reference evidence.")
+    p_quality.add_argument("dataset")
+    p_quality.add_argument("--policy", help="Version-1 quality policy JSON; never executable expressions.")
+    p_quality.add_argument("--reference", action="append", default=[], help="Explicit name=dataset-path reference binding; repeatable.")
+    p_quality.add_argument("--as-of", help="Timezone-aware freshness evaluation time; required for timeliness.")
+    p_quality.add_argument("--fail-under", type=float, help="Exit 1 below this [0,1] overall score, or if any dimension is unassessed.")
+    p_quality.add_argument("--out")
 
     p_sug = sub.add_parser("schema-suggest", help="Inspect a dataset and emit a suggested DatasetSchema JSON envelope.")
     p_sug.add_argument("dataset", help="Path to CSV / TSV / Excel / Parquet dataset.")

@@ -28,6 +28,7 @@ class AppState(QObject):
         self.tcp = None  # TestConfigPanel | None
         self.tcp_id: int | None = None
         self.compliance_runner = None  # CachedComplianceRunner | None
+        self.quality_audit: dict | None = None
         self.data_dictionary: pd.DataFrame | None = None
         self.time_col: str | None = None
         self.targets: list[str] = []

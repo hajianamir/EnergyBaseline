@@ -1,0 +1,285 @@
+{
+  "scope": "Every partial/not-found/not-implemented row in the original audit. Existing library/CLI capabilities are not falsely relabeled as missing.",
+  "items": [
+    {
+      "id": "C001",
+      "capability": "Six-dimensional data quality framework",
+      "baseline_finding": "Partial",
+      "baseline_evidence": "`core/quality.py::quality_score` exposes completeness, validity, uniqueness, regularity. The weighted score is 40/20/10/30 percent respectively. No six-axis accuracy/consistency/timeliness framework is established by this score.",
+      "current_status": "stage1_implemented_verification_pending"
+    },
+    {
+      "id": "C002",
+      "capability": "Accuracy against an external source of truth",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Range checks, outliers, and plausibility scores do not establish measurement accuracy against a verified reference.",
+      "current_status": "stage1_implemented_verification_pending"
+    },
+    {
+      "id": "C003",
+      "capability": "General cross-column / cross-table consistency rules",
+      "baseline_finding": "Partial",
+      "baseline_evidence": "`core/schema.py`, `core/integrity.py`, temporal quantity semantics and leakage rules; no general-purpose rule DSL found.",
+      "current_status": "stage1_bounded_rule_engine_verification_pending"
+    },
+    {
+      "id": "C004",
+      "capability": "Freshness / SLA timeliness scoring",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Gap/regularity detection is present; that is not a wall-clock freshness SLA engine.",
+      "current_status": "stage1_implemented_verification_pending"
+    },
+    {
+      "id": "C005",
+      "capability": "Arbitrary business validation suite / Pandera or Great Expectations execution",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Product schema/integrity validation is custom and narrower. Dependency presence would not establish execution.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C006",
+      "capability": "Mean/mode/general categorical imputation APIs",
+      "baseline_finding": "Not found as a general catalog",
+      "baseline_evidence": "The predictor-specific policies above are not a complete arbitrary tabular imputation framework.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C007",
+      "capability": "Learned string normalization, fuzzy deduplication, entity resolution",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "File ingestion and column-name handling are not these capabilities.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C008",
+      "capability": "One-sample KS / Lilliefors normality",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "KS drift is not a substitute for these normality tests.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C009",
+      "capability": "Ordinary pooled two-sample t, one-sample t, paired t, Wilcoxon signed-rank, sign test",
+      "baseline_finding": "Not found as dedicated general tests",
+      "baseline_evidence": "A t-based confidence interval is not evidence of these separate test APIs.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C010",
+      "capability": "Repeated-measures ANOVA, two-way/factorial ANOVA, ANCOVA, MANOVA, Tukey HSD, Dunn",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Do not equate Nemenyi with every post-hoc procedure.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C011",
+      "capability": "Pearson / Spearman / Kendall associations",
+      "baseline_finding": "Partial",
+      "baseline_evidence": "Descriptive coefficients and MI in `core/eda.py`, Kendall inference is gated, Pearson p-values in `core/cache.py`; not one uniform correlation API with all alternatives and CIs.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C012",
+      "capability": "Chi-square contingency, Fisher exact, McNemar, Cochran Q",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "A chi-square distribution used for Mahalanobis thresholds or another diagnostic does not implement contingency testing.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C013",
+      "capability": "Sidak, Holm-Sidak, Hochberg, Hommel, two-stage FDR",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Not implied by using statsmodels elsewhere.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C014",
+      "capability": "General power/sample-size design workbench",
+      "baseline_finding": "Partial at most",
+      "baseline_evidence": "Assumption/sample-size gates exist; no general prospective power-analysis interface established. Retrospective observed power is explicitly rejected by test contracts.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C015",
+      "capability": "Bayesian posterior inference, MCMC, variational inference, Bayesian model averaging",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Bayesian Ridge and Gaussian process candidates exist, but do not establish a general MCMC/variational-inference/model-averaging workbench.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C016",
+      "capability": "Financial VaR, CVaR / expected shortfall, drawdown, portfolio risk",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Savings uncertainty and deviation alerts are not financial risk analytics.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C017",
+      "capability": "Jensen-Shannon/KL divergence, categorical chi-square drift, ADWIN, DDM, EDDM",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Not established by the numeric drift implementation.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C018",
+      "capability": "Demographic parity, equalized odds, disparate impact, subgroup fairness mitigation",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Causal group covariate balance is not algorithmic fairness.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C019",
+      "capability": "General adversarial robustness / stress-testing suite",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Leakage canaries, validity-domain checks, plausibility and sensitivity diagnostics are narrower safeguards.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C020",
+      "capability": "RFE / RFECV, Boruta, sequential forward/backward selection, genetic selection",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Ranking or an AUTO heuristic does not implement these algorithms.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C021",
+      "capability": "Multi-target feature consensus",
+      "baseline_finding": "Partial",
+      "baseline_evidence": "`models/f8_regime.py` has Kendall-W feature consensus; this is not evidence of a general multi-output consensus selector.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C022",
+      "capability": "General RobustScaler / MinMax / power transforms / learned categorical encoding / target encoding",
+      "baseline_finding": "Not found as a general feature pipeline",
+      "baseline_evidence": "Not implied by sklearn being installed.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C023",
+      "capability": "Feature hashing / text TF-IDF / language embeddings / image embeddings",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Numeric dimensionality reduction is not NLP/CV embedding support.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C024",
+      "capability": "Median / last-value / seasonal-naive / random-walk baseline catalog",
+      "baseline_finding": "Not found as dedicated main candidates",
+      "baseline_evidence": "ETS or seasonal decomposition does not establish these separate benchmark models.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C025",
+      "capability": "Huber/RANSAC robust regression, kNN regression and arbitrary standalone decision-tree regression",
+      "baseline_finding": "Not found as dedicated main candidates",
+      "baseline_evidence": "kNN classification in mining and trees inside ensembles are different capabilities.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C026",
+      "capability": "Auto-sklearn, TPOT, H2O, FLAML, AutoGluon, NAS",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Optuna-backed tuning does not mean these AutoML engines are integrated.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C027",
+      "capability": "TFT, PatchTST, Informer / general Transformer forecasting",
+      "baseline_finding": "Not implemented in main candidate registry",
+      "baseline_evidence": "`core/models.py` explicitly records TFT and PatchTST/Informer as unavailable architectures.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C028",
+      "capability": "VAR / VECM, TBATS / BATS, Croston intermittent demand, hierarchical reconciliation",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Not implied by statsmodels or decomposition capabilities.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C029",
+      "capability": "DeepAR, N-HiTS, TiDE, foundation forecasting models",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "N-BEATS is implemented; do not extrapolate that to every deep forecasting architecture.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C030",
+      "capability": "General supervised classification product",
+      "baseline_finding": "Partial, descriptive mining only",
+      "baseline_evidence": "`core/mining.py` has logistic/RF/ExtraTrees/GB/SVM/kNN/NB/MLP and optional boosting regime classifiers. This does not provide arbitrary classification targets, classification lifecycle, or a fairness workbench in the main regression product.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C031",
+      "capability": "General anomaly detection",
+      "baseline_finding": "Partial / integrated numeric methods",
+      "baseline_evidence": "See outlier methods above and descriptive `core/mining.py`; no comprehensive anomaly model zoo.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C032",
+      "capability": "Survival / Cox / AFT / Kaplan-Meier / competing risks",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "No production survival workflow identified.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C033",
+      "capability": "Graph analytics / GNN / node classification / link prediction",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "A pipeline dependency DAG is not graph machine learning.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C034",
+      "capability": "NLP classification / NER / sentiment / translation / summarization / topic modeling / LLM or RAG",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Numeric report narratives are not a general NLP subsystem.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C035",
+      "capability": "Image classification / detection / segmentation / OCR / vision models",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Plotting and a 1D numeric CNN are not computer vision.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C036",
+      "capability": "Recommenders / collaborative filtering / matrix factorization / ranking",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Model leaderboard ranking is not recommendation-system learning-to-rank.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C037",
+      "capability": "Causal forests / generalized CATE model zoo / IV / RD / synthetic control / causal discovery",
+      "baseline_finding": "Not found as complete workflows",
+      "baseline_evidence": "The optional LinearDML adapter is not evidence for these separate algorithms.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C038",
+      "capability": "General LP/MILP, scheduling, routing, multi-objective / Pareto / evolutionary optimization",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Task-specific numerical minimization is not a general operations-research platform.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C039",
+      "capability": "General discrete-event, agent-based, system-dynamics simulation / digital twins",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Bootstrap and Monte Carlo test calibration are not these simulators.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C040",
+      "capability": "LIME, ALE, counterfactual explanations, recourse, causal explanations",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "PDP/ICE or a surrogate does not establish these distinct explanation techniques.",
+      "current_status": "pending"
+    }
+  ]
+}
