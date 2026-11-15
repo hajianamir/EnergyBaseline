@@ -1,0 +1,7 @@
+{
+  "job_id": 132920145882,
+  "returncode": 1,
+  "raw_hosted_log_retrieved": false,
+  "temporary_redirect_credentials_retained": false,
+  "limitation": "GitHub job-log request failed under the sandbox/integration access policy. Actual API job receipts and local raw logs are retained; no hosted raw log is claimed."
+}

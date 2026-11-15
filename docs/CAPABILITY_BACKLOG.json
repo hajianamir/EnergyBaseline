@@ -20,7 +20,7 @@
       "capability": "General cross-column / cross-table consistency rules",
       "baseline_finding": "Partial",
       "baseline_evidence": "`core/schema.py`, `core/integrity.py`, temporal quantity semantics and leakage rules; no general-purpose rule DSL found.",
-      "current_status": "stage3_bounded_implementation_verification_pending",
+      "current_status": "stage3_bounded_scope_verified_cli_gui",
       "stage3_implemented_scope": "Composable typed cross-column arithmetic, boolean implication and composite reference-membership assertions.",
       "remaining_scope": "Custom bounded JSON DSL; not arbitrary user code or an external validation framework."
     },
@@ -36,7 +36,7 @@
       "capability": "Arbitrary business validation suite / Pandera or Great Expectations execution",
       "baseline_finding": "Not found",
       "baseline_evidence": "Product schema/integrity validation is custom and narrower. Dependency presence would not establish execution.",
-      "current_status": "stage3_bounded_implementation_verification_pending",
+      "current_status": "stage3_bounded_scope_verified_cli_gui",
       "stage3_implemented_scope": "Read-only business-validation operation with typed bounded expression trees, three-valued truth, reference hashes, exact integer comparisons and privacy-bounded failures.",
       "remaining_scope": "Pandera/Great Expectations adapters and unrestricted arbitrary business Python execution are not implemented."
     },
@@ -63,7 +63,7 @@
       "capability": "One-sample KS / Lilliefors normality",
       "baseline_finding": "Not found",
       "baseline_evidence": "KS drift is not a substitute for these normality tests.",
-      "current_status": "stage3_bounded_implementation_verification_pending",
+      "current_status": "stage3_bounded_scope_verified_cli_gui",
       "stage3_implemented_scope": "Preregistered external-parameter normal KS and fitted-parameter Lilliefors with accepted input-bound gates.",
       "remaining_scope": "Non-normal KS families and autocorrelation-robust calibration are not implemented."
     },
@@ -72,7 +72,7 @@
       "capability": "Ordinary pooled two-sample t, one-sample t, paired t, Wilcoxon signed-rank, sign test",
       "baseline_finding": "Not found as dedicated general tests",
       "baseline_evidence": "A t-based confidence interval is not evidence of these separate test APIs.",
-      "current_status": "stage3_bounded_implementation_verification_pending",
+      "current_status": "stage3_bounded_scope_verified_cli_gui",
       "stage3_implemented_scope": "One-sample, pooled, Welch and paired t; Wilcoxon signed-rank and exact sign test with explicit direction and paired assumptions.",
       "remaining_scope": "Wilcoxon Hodges-Lehmann intervals and general dependent-series calibration are not implemented."
     },
@@ -81,7 +81,7 @@
       "capability": "Repeated-measures ANOVA, two-way/factorial ANOVA, ANCOVA, MANOVA, Tukey HSD, Dunn",
       "baseline_finding": "Not found",
       "baseline_evidence": "Do not equate Nemenyi with every post-hoc procedure.",
-      "current_status": "stage3_bounded_implementation_verification_pending",
+      "current_status": "stage3_bounded_scope_verified_cli_gui",
       "stage3_implemented_scope": "Two-way Type II factorial, balanced one-way repeated ANOVA, fixed-slope ANCOVA, Wilks MANOVA, Tukey simultaneous comparisons and tie-corrected Dunn.",
       "remaining_scope": "Mixed effects, incomplete repeated designs, sphericity corrections and arbitrary higher-order factorial designs remain outside this bounded implementation."
     },
@@ -90,7 +90,7 @@
       "capability": "Pearson / Spearman / Kendall associations",
       "baseline_finding": "Partial",
       "baseline_evidence": "Descriptive coefficients and MI in `core/eda.py`, Kendall inference is gated, Pearson p-values in `core/cache.py`; not one uniform correlation API with all alternatives and CIs.",
-      "current_status": "stage3_bounded_implementation_verification_pending",
+      "current_status": "stage3_bounded_scope_verified_cli_gui",
       "stage3_implemented_scope": "Uniform gated Pearson/Spearman/Kendall rows, complete-plan multiplicity, Fisher or paired-percentile intervals and explicit undefined-resample handling.",
       "remaining_scope": "Rank intervals support two-sided independent pairs only; no block-bootstrap/dependent-series guarantee."
     },
@@ -99,7 +99,7 @@
       "capability": "Chi-square contingency, Fisher exact, McNemar, Cochran Q",
       "baseline_finding": "Not found",
       "baseline_evidence": "A chi-square distribution used for Mahalanobis thresholds or another diagnostic does not implement contingency testing.",
-      "current_status": "stage3_bounded_implementation_verification_pending",
+      "current_status": "stage3_bounded_scope_verified_cli_gui",
       "stage3_implemented_scope": "Contingency chi-square with expected-count guard, binary Fisher exact, exact McNemar and matched Cochran Q.",
       "remaining_scope": "General RxC exact tests and small-sample exact Cochran Q are not implemented."
     },
@@ -108,7 +108,7 @@
       "capability": "Sidak, Holm-Sidak, Hochberg, Hommel, two-stage FDR",
       "baseline_finding": "Not found",
       "baseline_evidence": "Not implied by using statsmodels elsewhere.",
-      "current_status": "stage3_bounded_implementation_verification_pending",
+      "current_status": "stage3_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Sidak, Holm-Sidak, Hochberg and Hommel are added to the actual TCP/CLI/GUI correction registry.",
       "remaining_scope": "Two-stage FDR is deliberately separate from legacy alpha-independent what-if caches; no unrestricted iterated FDR mode.",
       "stage3_implemented_scope": "Alpha-bound two-stage BH/BKY FDR applied to the complete preregistered expanded family, in addition to the four Stage 2 integrated corrections."
@@ -118,7 +118,7 @@
       "capability": "General power/sample-size design workbench",
       "baseline_finding": "Partial at most",
       "baseline_evidence": "Assumption/sample-size gates exist; no general prospective power-analysis interface established. Retrospective observed power is explicitly rejected by test contracts.",
-      "current_status": "stage3_bounded_implementation_verification_pending",
+      "current_status": "stage3_bounded_scope_verified_cli_gui",
       "stage3_implemented_scope": "Prospective power and checked integer sample sizes for one-sample t, independent t/z and balanced ANOVA using externally specified standardized effects.",
       "remaining_scope": "Other design families, cluster/sequential designs and general decision-theoretic design remain pending; observed power is forbidden."
     },
@@ -127,7 +127,7 @@
       "capability": "Bayesian posterior inference, MCMC, variational inference, Bayesian model averaging",
       "baseline_finding": "Not found",
       "baseline_evidence": "Bayesian Ridge and Gaussian process candidates exist, but do not establish a general MCMC/variational-inference/model-averaging workbench.",
-      "current_status": "stage3_bounded_implementation_verification_pending",
+      "current_status": "stage3_bounded_scope_verified_cli_gui",
       "stage3_implemented_scope": "Conjugate beta-binomial/known-noise normal posteriors, genuine multichain linear Metropolis, optimized mean-field Gaussian VI and evidence-weighted normal-prior-model BMA.",
       "remaining_scope": "General probabilistic programs, unknown-noise/hierarchical models, modern rank-normalized diagnostics and named PyMC/Stan/NumPyro backend integration remain pending."
     },
@@ -380,7 +380,7 @@
     "remaining_scope": "Per-row remaining_scope fields are still pending; pending rows are not implemented. No full-program completion claim."
   },
   "stage3": {
-    "status": "local_focused_passed_full_and_two_os_pending",
+    "status": "verified_bounded_scope_not_program_completion",
     "documentation": "docs/PREREGISTERED_STATISTICS.md",
     "evidence": "artifacts/capabilities/statistics-stage3/README.md",
     "statistical_method_identifiers": 27,
@@ -391,6 +391,20 @@
       "tests/test_business_validation.py",
       "tests/gui/test_statistics_gui.py"
     ],
-    "remaining_scope": "All per-row remaining_scope exclusions and other pending rows remain incomplete. No full-program completion claim."
+    "remaining_scope": "All per-row remaining_scope exclusions and other pending rows remain incomplete. No full-program completion claim.",
+    "tested_source_commit": "9dc70d5ef939dfc54dd0fd5dcace8479b9744460",
+    "workflow": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43749525830",
+    "conclusion": "success",
+    "operating_systems": [
+      "Windows",
+      "Linux"
+    ],
+    "local_focused_tests": 202,
+    "local_full_suite_tests": 754,
+    "local_complete_gui_tests": 32,
+    "capability_package_coverage_percent": 89.51,
+    "gui_coverage_percent": 72.09,
+    "local_full_suite_coverage_instrumentation": false,
+    "hosted_full_suite_expanded_coverage_gates": "Passed on Windows and Linux; unchanged 60/80 percent thresholds"
   }
 }

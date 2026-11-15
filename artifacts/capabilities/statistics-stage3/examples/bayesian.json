@@ -1,0 +1,182 @@
+{
+  "alpha": 0.05,
+  "assumptions": "Explicit caller-declared sampling/likelihood conditions; not established automatically. No autocorrelation-robust or distribution-free guarantee.",
+  "baseline_changed": false,
+  "bayesian": [
+    {
+      "credible_interval": {
+        "interpretation": "Bayesian equal-tailed credible",
+        "kind": "pointwise",
+        "level": 0.95,
+        "lower": 0.4405588790236913,
+        "lower_unbounded": false,
+        "upper": 0.6145921258173577,
+        "upper_unbounded": false
+      },
+      "family": "beta-binomial",
+      "id": "H1beta-binomial",
+      "method": "beta_binomial",
+      "n": 120,
+      "posterior_mean": 0.528,
+      "posterior_probability_above_threshold": 0.7351152978173664,
+      "posterior_variance": 0.001977904761904762,
+      "prior_sensitivity_or_model_adequacy_proven": false
+    },
+    {
+      "credible_interval": {
+        "interpretation": "Bayesian equal-tailed credible",
+        "kind": "pointwise",
+        "level": 0.95,
+        "lower": 0.7661421801835124,
+        "lower_unbounded": false,
+        "upper": 1.4804981788186016,
+        "upper_unbounded": false
+      },
+      "family": "known-noise normal mean with normal prior",
+      "id": "H1normal-mean",
+      "log_marginal_likelihood": -275.478650512865,
+      "method": "normal_mean",
+      "n": 120,
+      "noise_variance_estimated_from_data": false,
+      "posterior_mean": 1.123320179501057,
+      "posterior_probability_above_threshold": 0.9999999996454877,
+      "posterior_variance": 0.033210332103321034
+    },
+    {
+      "credible_interval": {
+        "interpretation": "Bayesian mixture equal-tailed credible",
+        "kind": "pointwise",
+        "level": 0.95,
+        "lower": 0.7631668454078238,
+        "lower_unbounded": false,
+        "upper": 1.4775402455786326,
+        "upper_unbounded": false
+      },
+      "family": "Bayesian normal-mean prior-model averaging",
+      "id": "H1normal-model-average",
+      "log_evidence": [
+        -274.93932523697794,
+        -275.0994988573466
+      ],
+      "method": "normal_model_average",
+      "n": 120,
+      "posterior_mean": 1.1201060573824526,
+      "posterior_model_probabilities": [
+        0.3346731054092425,
+        0.6653268945907574
+      ],
+      "posterior_variance": 0.03321310118048055,
+      "scope": "Evidence-weighted declared prior models with common known noise; not arbitrary estimator averaging."
+    },
+    {
+      "acceptance_by_chain": [
+        0.433,
+        0.4325,
+        0.4545,
+        0.4475
+      ],
+      "algorithm": "fixed-kernel random-walk Metropolis; no sampling-phase adaptation",
+      "chains": 4,
+      "credible_intervals": [
+        {
+          "interpretation": "Bayesian MCMC approximate credible",
+          "kind": "pointwise",
+          "level": 0.95,
+          "lower": 0.8085629287018512,
+          "lower_unbounded": false,
+          "upper": 1.173218475377787,
+          "upper_unbounded": false
+        },
+        {
+          "interpretation": "Bayesian MCMC approximate credible",
+          "kind": "pointwise",
+          "level": 0.95,
+          "lower": 1.849293638690006,
+          "lower_unbounded": false,
+          "upper": 2.215722758343005,
+          "upper_unbounded": false
+        }
+      ],
+      "draws_per_chain": 2000,
+      "effective_sample_size": [
+        1068.9068225494539,
+        985.7704254540731
+      ],
+      "family": "Gaussian linear likelihood / independent normal coefficient priors",
+      "guarantee": "Diagnostics cannot prove convergence. Do not trust intervals when diagnostics warn.",
+      "id": "H2linear-metropolis",
+      "method": "linear_metropolis",
+      "posterior_means": [
+        0.9898668988000542,
+        2.0337121780768523
+      ],
+      "rhat_method": "classical split, not rank-normalized",
+      "seed": 10,
+      "split_rhat": [
+        1.0020189062636524,
+        1.0008168764321366
+      ],
+      "status": "diagnostics_passed",
+      "warmup_per_chain": 1000
+    },
+    {
+      "active_log_sd_bounds": false,
+      "algorithm": "mean-field Gaussian reverse-KL variational optimization, L-BFGS-B",
+      "credible_intervals": [
+        {
+          "interpretation": "Bayesian mean-field approximate credible",
+          "kind": "pointwise",
+          "level": 0.95,
+          "lower": 0.8070784453709149,
+          "lower_unbounded": false,
+          "upper": 1.164751723699772,
+          "upper_unbounded": false
+        },
+        {
+          "interpretation": "Bayesian mean-field approximate credible",
+          "kind": "pointwise",
+          "level": 0.95,
+          "lower": 1.8568608551068653,
+          "lower_unbounded": false,
+          "upper": 2.2119796392846798,
+          "upper_unbounded": false
+        }
+      ],
+      "family": "Gaussian linear likelihood / independent normal coefficient priors",
+      "id": "H2linear-variational",
+      "iterations": 24,
+      "kl_to_exact_gaussian_posterior": 0.0023571012473730946,
+      "limitation": "Independent variational factors can understate correlated posterior uncertainty; these are not exact marginal intervals.",
+      "method": "linear_variational",
+      "optimizer_success": true,
+      "status": "optimized",
+      "variational_means": [
+        0.9859150845353434,
+        2.0344202471957726
+      ],
+      "variational_sd": [
+        0.09124485989287003,
+        0.09059319124712145
+      ]
+    }
+  ],
+  "confidence_level": 0.95,
+  "evidence_sha256": "7735977b514f384181fc7bf85e7dfceb80ac9abca6aa1f41a7e6641c81b7936c",
+  "family_definition": "All expanded frequentist comparisons in this plan",
+  "frequentist": [],
+  "input_sha256": "4b1c9788a704ea2aa4e8d498092bf517838f5b545f549ef6202a6e8b9e29f0e6",
+  "library_versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  },
+  "operation": "statistical-plan",
+  "preregistration_sha256": "4c58b2a768e6cead6d717aec727204b85f0354f943dd76ba8c18d3ce8eb47693",
+  "prospective": [],
+  "reference_sha256": null,
+  "sampling": "independent",
+  "spec_sha256": "494ceb04697ed098740c359d315bcc218dcb6890339737d92c85acca20a9d76c",
+  "version": 1,
+  "vsg_sha256": "89f4f5dacabf618cb7372c95110c62e59354867f0721d41aa11e6e264452aea0"
+}

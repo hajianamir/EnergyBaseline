@@ -1,0 +1,1878 @@
+{
+  "tested_source_commit": "9dc70d5ef939dfc54dd0fd5dcace8479b9744460",
+  "method": "Git clean-filter blob comparison against tested commit",
+  "tracked_non_documentation_evidence_files": 374,
+  "drift": [],
+  "files": [
+    {
+      "path": ".gitattributes",
+      "git_clean_blob": "9f9562e10f6c90dbf43c218ea3d4ae16a18ffccf",
+      "expected_blob": "9f9562e10f6c90dbf43c218ea3d4ae16a18ffccf"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "git_clean_blob": "9f974b0be6f482319df004fc2fa0a9c20c8564dc",
+      "expected_blob": "9f974b0be6f482319df004fc2fa0a9c20c8564dc"
+    },
+    {
+      "path": ".github/workflows/r-reference.yml",
+      "git_clean_blob": "44e8fdb6af52270cb670019135572e6abee96692",
+      "expected_blob": "44e8fdb6af52270cb670019135572e6abee96692"
+    },
+    {
+      "path": ".gitignore",
+      "git_clean_blob": "453ee138a4da6a42caf32628ffa6d70b9ce04830",
+      "expected_blob": "453ee138a4da6a42caf32628ffa6d70b9ce04830"
+    },
+    {
+      "path": ".python-version",
+      "git_clean_blob": "e4fba2183587225f216eeada4c78dfab6b2e65f5",
+      "expected_blob": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "git_clean_blob": "d4e3e9aab54f64c141eaf06f883ed375385120f9",
+      "expected_blob": "d4e3e9aab54f64c141eaf06f883ed375385120f9"
+    },
+    {
+      "path": "LICENSE",
+      "git_clean_blob": "91bfeaad786cd6ece682aa27f307b3d07a2520de",
+      "expected_blob": "91bfeaad786cd6ece682aa27f307b3d07a2520de"
+    },
+    {
+      "path": "README.md",
+      "git_clean_blob": "935cf6e4d73eb3b22b86d072372a8095ca821eb4",
+      "expected_blob": "935cf6e4d73eb3b22b86d072372a8095ca821eb4"
+    },
+    {
+      "path": "SECURITY.md",
+      "git_clean_blob": "37187e2f6e1f76a7fff01e7dde653cb1302302b7",
+      "expected_blob": "37187e2f6e1f76a7fff01e7dde653cb1302302b7"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "git_clean_blob": "60585d8d250a749697b223d827cf8aaa4deabba5",
+      "expected_blob": "60585d8d250a749697b223d827cf8aaa4deabba5"
+    },
+    {
+      "path": "alembic.ini",
+      "git_clean_blob": "b44dd745a4f6694a66ab4b4b69ac68747812ab9d",
+      "expected_blob": "b44dd745a4f6694a66ab4b4b69ac68747812ab9d"
+    },
+    {
+      "path": "alembic/env.py",
+      "git_clean_blob": "7d497e8fade20e36656646cd97bfc6082e42be4f",
+      "expected_blob": "7d497e8fade20e36656646cd97bfc6082e42be4f"
+    },
+    {
+      "path": "alembic/script.py.mako",
+      "git_clean_blob": "36cd8efeda0d3f671a90fc6c7b4131af5758bbb4",
+      "expected_blob": "36cd8efeda0d3f671a90fc6c7b4131af5758bbb4"
+    },
+    {
+      "path": "alembic/versions/0001_initial.py",
+      "git_clean_blob": "ffbb51e34382d70af8264f503aa7332602a4b0fa",
+      "expected_blob": "ffbb51e34382d70af8264f503aa7332602a4b0fa"
+    },
+    {
+      "path": "alembic/versions/0002_phase2_schema_and_nre.py",
+      "git_clean_blob": "2717124943cf1be49ffa05c5899910ef136f2962",
+      "expected_blob": "2717124943cf1be49ffa05c5899910ef136f2962"
+    },
+    {
+      "path": "alembic/versions/0003_phase3_vsg_tcp_cache.py",
+      "git_clean_blob": "4b08d1f81b451624ecc6c36ba760e86eed3990d4",
+      "expected_blob": "4b08d1f81b451624ecc6c36ba760e86eed3990d4"
+    },
+    {
+      "path": "alembic/versions/0004_phase7_protected_payload.py",
+      "git_clean_blob": "2a366864028b7723116fe69c72866fba333cfb17",
+      "expected_blob": "2a366864028b7723116fe69c72866fba333cfb17"
+    },
+    {
+      "path": "assets/energybaseline.ico",
+      "git_clean_blob": "554fcc8953937f4810f4d92884fc0aa9e63ffb6b",
+      "expected_blob": "554fcc8953937f4810f4d92884fc0aa9e63ffb6b"
+    },
+    {
+      "path": "assets/energybaseline.png",
+      "git_clean_blob": "7802310c04d9b828a7236cc554b22f01be3957d9",
+      "expected_blob": "7802310c04d9b828a7236cc554b22f01be3957d9"
+    },
+    {
+      "path": "energybaseline/__init__.py",
+      "git_clean_blob": "e2e83df994a46badefcd38d0f829d74b104bec29",
+      "expected_blob": "e2e83df994a46badefcd38d0f829d74b104bec29"
+    },
+    {
+      "path": "energybaseline/__main__.py",
+      "git_clean_blob": "b2ca0186f278dc9629193795e7e60bafba13b9ef",
+      "expected_blob": "b2ca0186f278dc9629193795e7e60bafba13b9ef"
+    },
+    {
+      "path": "energybaseline/causal/__init__.py",
+      "git_clean_blob": "ed2cde91477edbccfb2234cf2dc412b190f4ef03",
+      "expected_blob": "ed2cde91477edbccfb2234cf2dc412b190f4ef03"
+    },
+    {
+      "path": "energybaseline/causal/mv.py",
+      "git_clean_blob": "f53f1407202d573a6fdd9d8f965350262ffbc4fd",
+      "expected_blob": "f53f1407202d573a6fdd9d8f965350262ffbc4fd"
+    },
+    {
+      "path": "energybaseline/cli.py",
+      "git_clean_blob": "4429f9ec4d639d8da49ec3eb7aaf0c69f82b3f76",
+      "expected_blob": "4429f9ec4d639d8da49ec3eb7aaf0c69f82b3f76"
+    },
+    {
+      "path": "energybaseline/config/__init__.py",
+      "git_clean_blob": "696f958f10554e91ad2211982c48107129a13dbe",
+      "expected_blob": "696f958f10554e91ad2211982c48107129a13dbe"
+    },
+    {
+      "path": "energybaseline/config/redaction.py",
+      "git_clean_blob": "59c2ebf1fc6a5d81fdf034f995a98f05d4150efe",
+      "expected_blob": "59c2ebf1fc6a5d81fdf034f995a98f05d4150efe"
+    },
+    {
+      "path": "energybaseline/config/runtime_env.py",
+      "git_clean_blob": "cd21c9260d61b059ad3d79defa308b164a36b757",
+      "expected_blob": "cd21c9260d61b059ad3d79defa308b164a36b757"
+    },
+    {
+      "path": "energybaseline/config/settings.py",
+      "git_clean_blob": "eeeb84a7ff8036b51176ca2dc7d50e1fd3c0a04d",
+      "expected_blob": "eeeb84a7ff8036b51176ca2dc7d50e1fd3c0a04d"
+    },
+    {
+      "path": "energybaseline/contracts.py",
+      "git_clean_blob": "97b1042865e62d6c79ddc4cae8aeaea4558fe99c",
+      "expected_blob": "97b1042865e62d6c79ddc4cae8aeaea4558fe99c"
+    },
+    {
+      "path": "energybaseline/core/authorization.py",
+      "git_clean_blob": "39fb307384fd44535569c426d3cfdcf5f15e3120",
+      "expected_blob": "39fb307384fd44535569c426d3cfdcf5f15e3120"
+    },
+    {
+      "path": "energybaseline/core/auto.py",
+      "git_clean_blob": "9b954c570eafc8de912f840b98a0cfe25fe3e70a",
+      "expected_blob": "9b954c570eafc8de912f840b98a0cfe25fe3e70a"
+    },
+    {
+      "path": "energybaseline/core/cache.py",
+      "git_clean_blob": "765f42e0790b5325b52a064fb2428471969aaa47",
+      "expected_blob": "765f42e0790b5325b52a064fb2428471969aaa47"
+    },
+    {
+      "path": "energybaseline/core/domain.py",
+      "git_clean_blob": "3c0ce9e7819fded331dbdee94f45bfdbefa28504",
+      "expected_blob": "3c0ce9e7819fded331dbdee94f45bfdbefa28504"
+    },
+    {
+      "path": "energybaseline/core/eda.py",
+      "git_clean_blob": "a47250560279a318040f8dee926e0b633749289e",
+      "expected_blob": "a47250560279a318040f8dee926e0b633749289e"
+    },
+    {
+      "path": "energybaseline/core/evaluation.py",
+      "git_clean_blob": "fb039cc305d6612e9acf0bd66a10ace4810f2c00",
+      "expected_blob": "fb039cc305d6612e9acf0bd66a10ace4810f2c00"
+    },
+    {
+      "path": "energybaseline/core/features.py",
+      "git_clean_blob": "488698a5188c698b7f63b442a1bd20030ecd01b2",
+      "expected_blob": "488698a5188c698b7f63b442a1bd20030ecd01b2"
+    },
+    {
+      "path": "energybaseline/core/ingest.py",
+      "git_clean_blob": "04863fa14a32ea1a3a8cf005514b475ea95412b2",
+      "expected_blob": "04863fa14a32ea1a3a8cf005514b475ea95412b2"
+    },
+    {
+      "path": "energybaseline/core/integrity.py",
+      "git_clean_blob": "80a9da65ae2d40b848484479d337e08ea310cccf",
+      "expected_blob": "80a9da65ae2d40b848484479d337e08ea310cccf"
+    },
+    {
+      "path": "energybaseline/core/mining.py",
+      "git_clean_blob": "fb904b296afcb06ee9770530074025f1068160e6",
+      "expected_blob": "fb904b296afcb06ee9770530074025f1068160e6"
+    },
+    {
+      "path": "energybaseline/core/models.py",
+      "git_clean_blob": "c3a9fee56caeeb273e7c48cec0fcf472a3ac3e72",
+      "expected_blob": "c3a9fee56caeeb273e7c48cec0fcf472a3ac3e72"
+    },
+    {
+      "path": "energybaseline/core/monitor.py",
+      "git_clean_blob": "3fa467aaac98efbda2e8a2a4f2237017a3fa38c0",
+      "expected_blob": "3fa467aaac98efbda2e8a2a4f2237017a3fa38c0"
+    },
+    {
+      "path": "energybaseline/core/nn.py",
+      "git_clean_blob": "8b2b6ad5246d73e5ab3f62b57e06ab4d4139c6e9",
+      "expected_blob": "8b2b6ad5246d73e5ab3f62b57e06ab4d4139c6e9"
+    },
+    {
+      "path": "energybaseline/core/pipeline.py",
+      "git_clean_blob": "502ac2451dea94758e68d2e989ae7649379f38b5",
+      "expected_blob": "502ac2451dea94758e68d2e989ae7649379f38b5"
+    },
+    {
+      "path": "energybaseline/core/pool.py",
+      "git_clean_blob": "ccd93e6190d001f81499ab0a70e434b9d2570fb8",
+      "expected_blob": "ccd93e6190d001f81499ab0a70e434b9d2570fb8"
+    },
+    {
+      "path": "energybaseline/core/provenance.py",
+      "git_clean_blob": "5ae58a400c89c0de763d85c8faf93000e29ec883",
+      "expected_blob": "5ae58a400c89c0de763d85c8faf93000e29ec883"
+    },
+    {
+      "path": "energybaseline/core/quality.py",
+      "git_clean_blob": "ada2511c30f8990dc606de3cce44374c60749a77",
+      "expected_blob": "ada2511c30f8990dc606de3cce44374c60749a77"
+    },
+    {
+      "path": "energybaseline/core/quality_audit.py",
+      "git_clean_blob": "9556c2a0654c2cdf985437d7657e99faa8af9c0f",
+      "expected_blob": "9556c2a0654c2cdf985437d7657e99faa8af9c0f"
+    },
+    {
+      "path": "energybaseline/core/report.py",
+      "git_clean_blob": "972c66f6e935585b51d0aeb9b0edf091577afaf7",
+      "expected_blob": "972c66f6e935585b51d0aeb9b0edf091577afaf7"
+    },
+    {
+      "path": "energybaseline/core/report_adapter.py",
+      "git_clean_blob": "36220e3199c5c874537ff5aa47c856b9d9daaee5",
+      "expected_blob": "36220e3199c5c874537ff5aa47c856b9d9daaee5"
+    },
+    {
+      "path": "energybaseline/core/report_template.py",
+      "git_clean_blob": "57600f81749be481bf384df791127573a554893a",
+      "expected_blob": "57600f81749be481bf384df791127573a554893a"
+    },
+    {
+      "path": "energybaseline/core/schema.py",
+      "git_clean_blob": "9f37efcd38528b21d35e4de11c44d1035b7b74f2",
+      "expected_blob": "9f37efcd38528b21d35e4de11c44d1035b7b74f2"
+    },
+    {
+      "path": "energybaseline/core/scoring.py",
+      "git_clean_blob": "79e98f7fa3673e46969f6d6c4a34938c47a98142",
+      "expected_blob": "79e98f7fa3673e46969f6d6c4a34938c47a98142"
+    },
+    {
+      "path": "energybaseline/core/secrets.py",
+      "git_clean_blob": "4d9c357dbd626c1d285dd93685db688fa18e57d1",
+      "expected_blob": "4d9c357dbd626c1d285dd93685db688fa18e57d1"
+    },
+    {
+      "path": "energybaseline/core/sqlsource.py",
+      "git_clean_blob": "5f01d8b2beeca208e003c3d49a593011deb9d2d0",
+      "expected_blob": "5f01d8b2beeca208e003c3d49a593011deb9d2d0"
+    },
+    {
+      "path": "energybaseline/core/store.py",
+      "git_clean_blob": "bfd80e8bd74676c9be32df625e7bf7b3dddabcda",
+      "expected_blob": "bfd80e8bd74676c9be32df625e7bf7b3dddabcda"
+    },
+    {
+      "path": "energybaseline/core/tcp.py",
+      "git_clean_blob": "20364becb21f8da422ba05d9b81a7f2f99bd8c9e",
+      "expected_blob": "20364becb21f8da422ba05d9b81a7f2f99bd8c9e"
+    },
+    {
+      "path": "energybaseline/core/telemetry.py",
+      "git_clean_blob": "c35c66b75dcfcdd594e0c12dd7b536b5ad3e2a2d",
+      "expected_blob": "c35c66b75dcfcdd594e0c12dd7b536b5ad3e2a2d"
+    },
+    {
+      "path": "energybaseline/core/temporal.py",
+      "git_clean_blob": "689865b95a1a2018ea5f47112b6465cda835455e",
+      "expected_blob": "689865b95a1a2018ea5f47112b6465cda835455e"
+    },
+    {
+      "path": "energybaseline/core/vsg.py",
+      "git_clean_blob": "53388098d2750e1965e75e67247058cf7df53a7d",
+      "expected_blob": "53388098d2750e1965e75e67247058cf7df53a7d"
+    },
+    {
+      "path": "energybaseline/db/__init__.py",
+      "git_clean_blob": "03c3df93b42f1fea9d293269582137e65c47eb1c",
+      "expected_blob": "03c3df93b42f1fea9d293269582137e65c47eb1c"
+    },
+    {
+      "path": "energybaseline/db/backup.py",
+      "git_clean_blob": "a448ca89fa470407b25b8e104f237a93f42703a5",
+      "expected_blob": "a448ca89fa470407b25b8e104f237a93f42703a5"
+    },
+    {
+      "path": "energybaseline/db/migrate.py",
+      "git_clean_blob": "623ff8c8facfba993f0e9449cfa960db02a8a118",
+      "expected_blob": "623ff8c8facfba993f0e9449cfa960db02a8a118"
+    },
+    {
+      "path": "energybaseline/db/models.py",
+      "git_clean_blob": "0afceb462086dd3411c5f846d7b650fa7f7d16c4",
+      "expected_blob": "0afceb462086dd3411c5f846d7b650fa7f7d16c4"
+    },
+    {
+      "path": "energybaseline/db/session.py",
+      "git_clean_blob": "8b44ace13225c8a25dfce11117fecfdff112376c",
+      "expected_blob": "8b44ace13225c8a25dfce11117fecfdff112376c"
+    },
+    {
+      "path": "energybaseline/gui/advanced.py",
+      "git_clean_blob": "09f3c65fe6571ebe861837044d2b84169c12ed34",
+      "expected_blob": "09f3c65fe6571ebe861837044d2b84169c12ed34"
+    },
+    {
+      "path": "energybaseline/gui/app.py",
+      "git_clean_blob": "2e78be21b94a6adb47f300e2fdcb73039eedfe76",
+      "expected_blob": "2e78be21b94a6adb47f300e2fdcb73039eedfe76"
+    },
+    {
+      "path": "energybaseline/gui/artifact_approval.py",
+      "git_clean_blob": "212c1dc405e72981d832789235d5ac7abb2b9ede",
+      "expected_blob": "212c1dc405e72981d832789235d5ac7abb2b9ede"
+    },
+    {
+      "path": "energybaseline/gui/commands.py",
+      "git_clean_blob": "9f1b0f831f6935b53ee029f268c9456035cbc8b0",
+      "expected_blob": "9f1b0f831f6935b53ee029f268c9456035cbc8b0"
+    },
+    {
+      "path": "energybaseline/gui/main_window.py",
+      "git_clean_blob": "8d9730de34d656f12a4e1c3434818f3064d33aef",
+      "expected_blob": "8d9730de34d656f12a4e1c3434818f3064d33aef"
+    },
+    {
+      "path": "energybaseline/gui/page_monitor.py",
+      "git_clean_blob": "a37a4cb43be9db02b022b8ca6543e0e1772ab240",
+      "expected_blob": "a37a4cb43be9db02b022b8ca6543e0e1772ab240"
+    },
+    {
+      "path": "energybaseline/gui/page_status.py",
+      "git_clean_blob": "901de0bca403d6d7d7cfdf0203f859d19843b713",
+      "expected_blob": "901de0bca403d6d7d7cfdf0203f859d19843b713"
+    },
+    {
+      "path": "energybaseline/gui/pages_results.py",
+      "git_clean_blob": "b10d6d779d4201361da2ffc021f1e1ac977582a0",
+      "expected_blob": "b10d6d779d4201361da2ffc021f1e1ac977582a0"
+    },
+    {
+      "path": "energybaseline/gui/pages_setup.py",
+      "git_clean_blob": "bc9978e2da082c44aeb67e50548d2732ecabbe70",
+      "expected_blob": "bc9978e2da082c44aeb67e50548d2732ecabbe70"
+    },
+    {
+      "path": "energybaseline/gui/report_preview.py",
+      "git_clean_blob": "6707e5df4656d82b664604c5e94db68f9d85ec80",
+      "expected_blob": "6707e5df4656d82b664604c5e94db68f9d85ec80"
+    },
+    {
+      "path": "energybaseline/gui/single_instance.py",
+      "git_clean_blob": "9038a0e9804dece757bf668432eab23f5a49e36c",
+      "expected_blob": "9038a0e9804dece757bf668432eab23f5a49e36c"
+    },
+    {
+      "path": "energybaseline/gui/sql_dialog.py",
+      "git_clean_blob": "b3c8184bdf6904db83ab7f3533a6f8d9f1de2295",
+      "expected_blob": "b3c8184bdf6904db83ab7f3533a6f8d9f1de2295"
+    },
+    {
+      "path": "energybaseline/gui/state.py",
+      "git_clean_blob": "b6cd73930c6bff260287bf3dc91d2511455e557b",
+      "expected_blob": "b6cd73930c6bff260287bf3dc91d2511455e557b"
+    },
+    {
+      "path": "energybaseline/gui/statistics.py",
+      "git_clean_blob": "f92af0cf2a0877a05c6ddd36cedf4b644f85e785",
+      "expected_blob": "f92af0cf2a0877a05c6ddd36cedf4b644f85e785"
+    },
+    {
+      "path": "energybaseline/gui/table_model.py",
+      "git_clean_blob": "bda03254d43f864d8d428261b0e4e961df3893bb",
+      "expected_blob": "bda03254d43f864d8d428261b0e4e961df3893bb"
+    },
+    {
+      "path": "energybaseline/gui/theme.py",
+      "git_clean_blob": "d42f1035a2e208a9fd78653b4db607ed05a879d1",
+      "expected_blob": "d42f1035a2e208a9fd78653b4db607ed05a879d1"
+    },
+    {
+      "path": "energybaseline/gui/widgets.py",
+      "git_clean_blob": "b094a32700d6915f940d293c39f16ea51c40962d",
+      "expected_blob": "b094a32700d6915f940d293c39f16ea51c40962d"
+    },
+    {
+      "path": "energybaseline/gui/workbench.py",
+      "git_clean_blob": "a9b72dcdcca6e2524638601a91a8c177dee6729f",
+      "expected_blob": "a9b72dcdcca6e2524638601a91a8c177dee6729f"
+    },
+    {
+      "path": "energybaseline/io/__init__.py",
+      "git_clean_blob": "a145f746f67e7e33822a14beedf8d2f77b634b19",
+      "expected_blob": "a145f746f67e7e33822a14beedf8d2f77b634b19"
+    },
+    {
+      "path": "energybaseline/io/paths.py",
+      "git_clean_blob": "08ff07d785516174ca1a511abe6af3e4a021ac8f",
+      "expected_blob": "08ff07d785516174ca1a511abe6af3e4a021ac8f"
+    },
+    {
+      "path": "energybaseline/launcher.py",
+      "git_clean_blob": "1c3a6106fea5519e5f04425ded61dfc4c19ab972",
+      "expected_blob": "1c3a6106fea5519e5f04425ded61dfc4c19ab972"
+    },
+    {
+      "path": "energybaseline/lock/__init__.py",
+      "git_clean_blob": "e3f193163e8d4e3b90cfc3aa6d8ad2a830d938f0",
+      "expected_blob": "e3f193163e8d4e3b90cfc3aa6d8ad2a830d938f0"
+    },
+    {
+      "path": "energybaseline/lock/baseline_lock.py",
+      "git_clean_blob": "69a1299e7e74270c660c8c437f3bb64c5f2ad3ae",
+      "expected_blob": "69a1299e7e74270c660c8c437f3bb64c5f2ad3ae"
+    },
+    {
+      "path": "energybaseline/mining/__init__.py",
+      "git_clean_blob": "61729fc8839efdf81b505a9d8950d3fe3756dcc0",
+      "expected_blob": "61729fc8839efdf81b505a9d8950d3fe3756dcc0"
+    },
+    {
+      "path": "energybaseline/mining/clustering.py",
+      "git_clean_blob": "d7fea57896b36c22f0992af477b10348df47f7b2",
+      "expected_blob": "d7fea57896b36c22f0992af477b10348df47f7b2"
+    },
+    {
+      "path": "energybaseline/mining/downsample.py",
+      "git_clean_blob": "ac9258423fd17569a3241f28f58a8420b4f5ab61",
+      "expected_blob": "ac9258423fd17569a3241f28f58a8420b4f5ab61"
+    },
+    {
+      "path": "energybaseline/mining/eda_attach.py",
+      "git_clean_blob": "74df6f1659808997628a1df52967f15ef1adb179",
+      "expected_blob": "74df6f1659808997628a1df52967f15ef1adb179"
+    },
+    {
+      "path": "energybaseline/models/__init__.py",
+      "git_clean_blob": "8f3084ef6d1131afd48e62ef1eb9a9fd6e943423",
+      "expected_blob": "8f3084ef6d1131afd48e62ef1eb9a9fd6e943423"
+    },
+    {
+      "path": "energybaseline/models/base.py",
+      "git_clean_blob": "a019d195762eae81e520fd5cd1c601776e72d84d",
+      "expected_blob": "a019d195762eae81e520fd5cd1c601776e72d84d"
+    },
+    {
+      "path": "energybaseline/models/ensemble.py",
+      "git_clean_blob": "39f2ff101120d906185c8708c7f5cae704ccb9c1",
+      "expected_blob": "39f2ff101120d906185c8708c7f5cae704ccb9c1"
+    },
+    {
+      "path": "energybaseline/models/f10_stacking.py",
+      "git_clean_blob": "3de643056d34a053afe2c75fb1578235d8b7ac02",
+      "expected_blob": "3de643056d34a053afe2c75fb1578235d8b7ac02"
+    },
+    {
+      "path": "energybaseline/models/f1_baseline.py",
+      "git_clean_blob": "1414dc07d583272f53421e03b2d3f37cbb3b74ce",
+      "expected_blob": "1414dc07d583272f53421e03b2d3f37cbb3b74ce"
+    },
+    {
+      "path": "energybaseline/models/f2_ashrae.py",
+      "git_clean_blob": "c2dc84cad095b28e4525b92fc44ccc4621a39baa",
+      "expected_blob": "c2dc84cad095b28e4525b92fc44ccc4621a39baa"
+    },
+    {
+      "path": "energybaseline/models/f3_regularized.py",
+      "git_clean_blob": "17bc8d000c165e39a1e85ded65749ff3411ebcd1",
+      "expected_blob": "17bc8d000c165e39a1e85ded65749ff3411ebcd1"
+    },
+    {
+      "path": "energybaseline/models/f4_basis.py",
+      "git_clean_blob": "2f870b659a1f4526fbafd3fd90d5bad9f0487921",
+      "expected_blob": "2f870b659a1f4526fbafd3fd90d5bad9f0487921"
+    },
+    {
+      "path": "energybaseline/models/f5_ensemble.py",
+      "git_clean_blob": "ae425930dfc7248ae0aa2870852893a86f6818f0",
+      "expected_blob": "ae425930dfc7248ae0aa2870852893a86f6818f0"
+    },
+    {
+      "path": "energybaseline/models/f6_neural.py",
+      "git_clean_blob": "2c811cf43bbc52997c1a617a97fe4225979357a9",
+      "expected_blob": "2c811cf43bbc52997c1a617a97fe4225979357a9"
+    },
+    {
+      "path": "energybaseline/models/f7_timeseries.py",
+      "git_clean_blob": "d517b98c5d9a0e777d4d256a20ff06ead1bebef1",
+      "expected_blob": "d517b98c5d9a0e777d4d256a20ff06ead1bebef1"
+    },
+    {
+      "path": "energybaseline/models/f8_regime.py",
+      "git_clean_blob": "da702c6d957363d912896cf225011151f0a97883",
+      "expected_blob": "da702c6d957363d912896cf225011151f0a97883"
+    },
+    {
+      "path": "energybaseline/models/f9_decomposition.py",
+      "git_clean_blob": "19fff626d6340baae686edc6703295261c1dc880",
+      "expected_blob": "19fff626d6340baae686edc6703295261c1dc880"
+    },
+    {
+      "path": "energybaseline/models/portfolio.py",
+      "git_clean_blob": "a1780a08ddabaac1f884468120dee169dc08fb1e",
+      "expected_blob": "a1780a08ddabaac1f884468120dee169dc08fb1e"
+    },
+    {
+      "path": "energybaseline/models/top5.py",
+      "git_clean_blob": "c8d0130d9ff2437b2b44a81e4027a7935546af09",
+      "expected_blob": "c8d0130d9ff2437b2b44a81e4027a7935546af09"
+    },
+    {
+      "path": "energybaseline/monitoring/__init__.py",
+      "git_clean_blob": "5d2776b51be041c1dea53ce4473216ae464e4246",
+      "expected_blob": "5d2776b51be041c1dea53ce4473216ae464e4246"
+    },
+    {
+      "path": "energybaseline/monitoring/adjustments.py",
+      "git_clean_blob": "2ab986e3ff077699dd9cca9889600cc829134791",
+      "expected_blob": "2ab986e3ff077699dd9cca9889600cc829134791"
+    },
+    {
+      "path": "energybaseline/monitoring/drift.py",
+      "git_clean_blob": "18e93b825ba4b48c2a8a7c2dc9ac90004c5cefaa",
+      "expected_blob": "18e93b825ba4b48c2a8a7c2dc9ac90004c5cefaa"
+    },
+    {
+      "path": "energybaseline/monitoring/prediction.py",
+      "git_clean_blob": "43d5f11b1248c7830518a2d5438e9fd462aac355",
+      "expected_blob": "43d5f11b1248c7830518a2d5438e9fd462aac355"
+    },
+    {
+      "path": "energybaseline/monitoring/safety.py",
+      "git_clean_blob": "47276e242c66fd876d0f5d4af30e66d646967ab6",
+      "expected_blob": "47276e242c66fd876d0f5d4af30e66d646967ab6"
+    },
+    {
+      "path": "energybaseline/pipeline.py",
+      "git_clean_blob": "db2878abf3a307af6050e9d2c9e194734c01199c",
+      "expected_blob": "db2878abf3a307af6050e9d2c9e194734c01199c"
+    },
+    {
+      "path": "energybaseline/report/__init__.py",
+      "git_clean_blob": "6d650f78a5d3916e327a5257b39dc330b6eedfd4",
+      "expected_blob": "6d650f78a5d3916e327a5257b39dc330b6eedfd4"
+    },
+    {
+      "path": "energybaseline/report/agreement.py",
+      "git_clean_blob": "9a3f66fbf1686b291355225d752df1040cf8309b",
+      "expected_blob": "9a3f66fbf1686b291355225d752df1040cf8309b"
+    },
+    {
+      "path": "energybaseline/report/archive.py",
+      "git_clean_blob": "6ab8d28b81c6767927aab148ee35d0258863116a",
+      "expected_blob": "6ab8d28b81c6767927aab148ee35d0258863116a"
+    },
+    {
+      "path": "energybaseline/report/banner.py",
+      "git_clean_blob": "cff03f2bce9609ac25ae3c2af4f1f666805575e8",
+      "expected_blob": "cff03f2bce9609ac25ae3c2af4f1f666805575e8"
+    },
+    {
+      "path": "energybaseline/report/charts.py",
+      "git_clean_blob": "e755f48028806afe1e18ae41fee274da28345da9",
+      "expected_blob": "e755f48028806afe1e18ae41fee274da28345da9"
+    },
+    {
+      "path": "energybaseline/report/depth.py",
+      "git_clean_blob": "f210f50562fb980c88d30107c75ddc129db93125",
+      "expected_blob": "f210f50562fb980c88d30107c75ddc129db93125"
+    },
+    {
+      "path": "energybaseline/report/diff.py",
+      "git_clean_blob": "2bc3b981a6712dd552411e2248a398a5375d9ca7",
+      "expected_blob": "2bc3b981a6712dd552411e2248a398a5375d9ca7"
+    },
+    {
+      "path": "energybaseline/report/excel.py",
+      "git_clean_blob": "d85520d3fedd6e5b7d940293a6008ab172bad17b",
+      "expected_blob": "d85520d3fedd6e5b7d940293a6008ab172bad17b"
+    },
+    {
+      "path": "energybaseline/report/html.py",
+      "git_clean_blob": "55ca6cd259d1005eb3096ecea0909636e151940e",
+      "expected_blob": "55ca6cd259d1005eb3096ecea0909636e151940e"
+    },
+    {
+      "path": "energybaseline/report/model.py",
+      "git_clean_blob": "4d1934d4743ca19ccb524c78a925feff914e25ac",
+      "expected_blob": "4d1934d4743ca19ccb524c78a925feff914e25ac"
+    },
+    {
+      "path": "energybaseline/report/narrative.py",
+      "git_clean_blob": "b2c92214e40b59dff997607300149b308d54e01f",
+      "expected_blob": "b2c92214e40b59dff997607300149b308d54e01f"
+    },
+    {
+      "path": "energybaseline/report/pdf.py",
+      "git_clean_blob": "fc4877fec26855199f9ef7889f935b869508c461",
+      "expected_blob": "fc4877fec26855199f9ef7889f935b869508c461"
+    },
+    {
+      "path": "energybaseline/report/provenance.py",
+      "git_clean_blob": "fe85d6e932c3cf70359b7f176d413cd4c6d01e9e",
+      "expected_blob": "fe85d6e932c3cf70359b7f176d413cd4c6d01e9e"
+    },
+    {
+      "path": "energybaseline/report/safety.py",
+      "git_clean_blob": "ddc84472f3a35b3bf38772e6a062241af6c6c438",
+      "expected_blob": "ddc84472f3a35b3bf38772e6a062241af6c6c438"
+    },
+    {
+      "path": "energybaseline/report/sections.py",
+      "git_clean_blob": "1e275a835f32ff29d9f6b3b07deb31ebc376aaf3",
+      "expected_blob": "1e275a835f32ff29d9f6b3b07deb31ebc376aaf3"
+    },
+    {
+      "path": "energybaseline/report/template.py",
+      "git_clean_blob": "c860b4a99fc1930e7928703ad4e6eea570a6c0c8",
+      "expected_blob": "c860b4a99fc1930e7928703ad4e6eea570a6c0c8"
+    },
+    {
+      "path": "energybaseline/scoring/__init__.py",
+      "git_clean_blob": "7ca75961db00c3c3f62f32ee8cb3be6d00dd3ceb",
+      "expected_blob": "7ca75961db00c3c3f62f32ee8cb3be6d00dd3ceb"
+    },
+    {
+      "path": "energybaseline/scoring/composite.py",
+      "git_clean_blob": "15536b4f5cee87523a1137bb0bd036ce735663da",
+      "expected_blob": "15536b4f5cee87523a1137bb0bd036ce735663da"
+    },
+    {
+      "path": "energybaseline/scoring/envelope.py",
+      "git_clean_blob": "8afa8463b3151e59f4e822dbe8fb59b26a91d0b4",
+      "expected_blob": "8afa8463b3151e59f4e822dbe8fb59b26a91d0b4"
+    },
+    {
+      "path": "energybaseline/scoring/override.py",
+      "git_clean_blob": "87fbc9e8c1baebbb2bee214dffb1f3cc18708782",
+      "expected_blob": "87fbc9e8c1baebbb2bee214dffb1f3cc18708782"
+    },
+    {
+      "path": "energybaseline/scoring/registers.py",
+      "git_clean_blob": "eaa8ff51915a8bccdfe5ad809423a06040e47c48",
+      "expected_blob": "eaa8ff51915a8bccdfe5ad809423a06040e47c48"
+    },
+    {
+      "path": "energybaseline/scoring/tiebreak.py",
+      "git_clean_blob": "520a009977c87f4f390f9ef63ba4a717038d18e8",
+      "expected_blob": "520a009977c87f4f390f9ef63ba4a717038d18e8"
+    },
+    {
+      "path": "energybaseline/sdk.py",
+      "git_clean_blob": "e9de56b81d9488d8ff4c1dc0920ad9dcf628abd5",
+      "expected_blob": "e9de56b81d9488d8ff4c1dc0920ad9dcf628abd5"
+    },
+    {
+      "path": "energybaseline/statistics/__init__.py",
+      "git_clean_blob": "7e18df077d50f9a4a2f2b90822c6ec106a27ac00",
+      "expected_blob": "7e18df077d50f9a4a2f2b90822c6ec106a27ac00"
+    },
+    {
+      "path": "energybaseline/statistics/bayes.py",
+      "git_clean_blob": "4878251c46cc8d1ada3969eec755b37ac6a3b82f",
+      "expected_blob": "4878251c46cc8d1ada3969eec755b37ac6a3b82f"
+    },
+    {
+      "path": "energybaseline/statistics/common.py",
+      "git_clean_blob": "3676bd8ffa9b564c0f89f8fe2b31ba5b8e260bde",
+      "expected_blob": "3676bd8ffa9b564c0f89f8fe2b31ba5b8e260bde"
+    },
+    {
+      "path": "energybaseline/statistics/designs.py",
+      "git_clean_blob": "3bacb8686051e564fa9e1cd43416aecfa6f5aa93",
+      "expected_blob": "3bacb8686051e564fa9e1cd43416aecfa6f5aa93"
+    },
+    {
+      "path": "energybaseline/statistics/power.py",
+      "git_clean_blob": "e9f71353d03766a25d6d5613ec44ab393d26b3c4",
+      "expected_blob": "e9f71353d03766a25d6d5613ec44ab393d26b3c4"
+    },
+    {
+      "path": "energybaseline/statistics/tests.py",
+      "git_clean_blob": "f13fc97123b7b7842a028229e014627e1dd7e8f8",
+      "expected_blob": "f13fc97123b7b7842a028229e014627e1dd7e8f8"
+    },
+    {
+      "path": "energybaseline/tests_catalog/__init__.py",
+      "git_clean_blob": "3573648ef2c2bc52b7da07821d274639a86b776b",
+      "expected_blob": "3573648ef2c2bc52b7da07821d274639a86b776b"
+    },
+    {
+      "path": "energybaseline/tests_catalog/ci_method.py",
+      "git_clean_blob": "c4db836bc6292cdfabebcca493945551597e5462",
+      "expected_blob": "c4db836bc6292cdfabebcca493945551597e5462"
+    },
+    {
+      "path": "energybaseline/tests_catalog/monte_carlo.py",
+      "git_clean_blob": "a0732ae513678be20b060d0749a2b02bb4b5ae56",
+      "expected_blob": "a0732ae513678be20b060d0749a2b02bb4b5ae56"
+    },
+    {
+      "path": "energybaseline/tests_catalog/r_reference_validator.py",
+      "git_clean_blob": "c54b6395d9980c53200cf454523794c31b8ad700",
+      "expected_blob": "c54b6395d9980c53200cf454523794c31b8ad700"
+    },
+    {
+      "path": "energybaseline/tests_catalog/r_references/chow.json",
+      "git_clean_blob": "c233f89ac8f8c9fe76da1914711ba4542e803aea",
+      "expected_blob": "c233f89ac8f8c9fe76da1914711ba4542e803aea"
+    },
+    {
+      "path": "energybaseline/tests_catalog/r_references/diebold_mariano.json",
+      "git_clean_blob": "319879536ca1facfa89896007cc3f8f3a9a2f7a1",
+      "expected_blob": "319879536ca1facfa89896007cc3f8f3a9a2f7a1"
+    },
+    {
+      "path": "energybaseline/tests_catalog/r_references/little_mcar.json",
+      "git_clean_blob": "c1a6410267d68f232cd221f25bc4a8acf63f2d62",
+      "expected_blob": "c1a6410267d68f232cd221f25bc4a8acf63f2d62"
+    },
+    {
+      "path": "energybaseline/tests_catalog/r_references/mcs.json",
+      "git_clean_blob": "3871eaaf2e979fa53bf82278460872f5175edb7e",
+      "expected_blob": "3871eaaf2e979fa53bf82278460872f5175edb7e"
+    },
+    {
+      "path": "energybaseline/tests_catalog/r_references/nemenyi.json",
+      "git_clean_blob": "663b255e82a1ada72337084c22b92d29d56de728",
+      "expected_blob": "663b255e82a1ada72337084c22b92d29d56de728"
+    },
+    {
+      "path": "energybaseline/tests_catalog/r_references/pettitt.json",
+      "git_clean_blob": "a28296daac14f0f02b132a4a4b8ea22fe4614bfe",
+      "expected_blob": "a28296daac14f0f02b132a4a4b8ea22fe4614bfe"
+    },
+    {
+      "path": "energybaseline/tests_catalog/r_references/quandt_andrews.json",
+      "git_clean_blob": "bd07fa4586dfab50bc70153725e8375adbc7aeb1",
+      "expected_blob": "bd07fa4586dfab50bc70153725e8375adbc7aeb1"
+    },
+    {
+      "path": "energybaseline/tests_catalog/t10_diebold_mariano.py",
+      "git_clean_blob": "509057849466cb4c3e04a5c3a96b2dbad671f345",
+      "expected_blob": "509057849466cb4c3e04a5c3a96b2dbad671f345"
+    },
+    {
+      "path": "energybaseline/tests_catalog/t11_nemenyi.py",
+      "git_clean_blob": "5ec1a3e743c3f3045ae27e181691628576e2be64",
+      "expected_blob": "5ec1a3e743c3f3045ae27e181691628576e2be64"
+    },
+    {
+      "path": "energybaseline/tests_catalog/t12_little_mcar.py",
+      "git_clean_blob": "e0e6907a48457a69341cf2db722d6f175651d604",
+      "expected_blob": "e0e6907a48457a69341cf2db722d6f175651d604"
+    },
+    {
+      "path": "energybaseline/tests_catalog/t13_outlier_influence.py",
+      "git_clean_blob": "9063455065ae3ec671b8ff71949a92cf30fa8289",
+      "expected_blob": "9063455065ae3ec671b8ff71949a92cf30fa8289"
+    },
+    {
+      "path": "energybaseline/tests_catalog/t14_causal_group.py",
+      "git_clean_blob": "c4afc6e5e8bdbf12587579c33f702f4f03984a06",
+      "expected_blob": "c4afc6e5e8bdbf12587579c33f702f4f03984a06"
+    },
+    {
+      "path": "energybaseline/tests_catalog/t1_stationarity.py",
+      "git_clean_blob": "467ac39c1d15c5fb4592246a3c4e3511f7a57ef3",
+      "expected_blob": "467ac39c1d15c5fb4592246a3c4e3511f7a57ef3"
+    },
+    {
+      "path": "energybaseline/tests_catalog/t2_seasonality.py",
+      "git_clean_blob": "8ce280b4cad42a7858a12e017fc8d390e3b27774",
+      "expected_blob": "8ce280b4cad42a7858a12e017fc8d390e3b27774"
+    },
+    {
+      "path": "energybaseline/tests_catalog/t3_autocorrelation.py",
+      "git_clean_blob": "9fdd49a486d5d34d382079eb09f14ae738b6d8a4",
+      "expected_blob": "9fdd49a486d5d34d382079eb09f14ae738b6d8a4"
+    },
+    {
+      "path": "energybaseline/tests_catalog/t4_normality.py",
+      "git_clean_blob": "51a49fc6eec32db52379c6f3fa4d1bc157920247",
+      "expected_blob": "51a49fc6eec32db52379c6f3fa4d1bc157920247"
+    },
+    {
+      "path": "energybaseline/tests_catalog/t5_heteroskedasticity.py",
+      "git_clean_blob": "9747a457da5c063da9a97356b9253fc8a839b9fb",
+      "expected_blob": "9747a457da5c063da9a97356b9253fc8a839b9fb"
+    },
+    {
+      "path": "energybaseline/tests_catalog/t6_multicollinearity.py",
+      "git_clean_blob": "588c7f76b799499ce0613c7c254c59024fc171e2",
+      "expected_blob": "588c7f76b799499ce0613c7c254c59024fc171e2"
+    },
+    {
+      "path": "energybaseline/tests_catalog/t7_structural_break_chow.py",
+      "git_clean_blob": "e4dee45eb989138960cf143442ff0ce7448ce3b4",
+      "expected_blob": "e4dee45eb989138960cf143442ff0ce7448ce3b4"
+    },
+    {
+      "path": "energybaseline/tests_catalog/t8_structural_break_quandt_andrews.py",
+      "git_clean_blob": "3e1ed8840e7ae58e31dcf3f41ad31db33b27563d",
+      "expected_blob": "3e1ed8840e7ae58e31dcf3f41ad31db33b27563d"
+    },
+    {
+      "path": "energybaseline/tests_catalog/t9_pettitt.py",
+      "git_clean_blob": "7acbfdd9809e5b2969df31af2462942fb62ab1fe",
+      "expected_blob": "7acbfdd9809e5b2969df31af2462942fb62ab1fe"
+    },
+    {
+      "path": "energybaseline/tests_catalog/tc_assumptions.py",
+      "git_clean_blob": "28406f0997ee7a851f8b67d796da7b2e745ed314",
+      "expected_blob": "28406f0997ee7a851f8b67d796da7b2e745ed314"
+    },
+    {
+      "path": "energybaseline/uq/__init__.py",
+      "git_clean_blob": "21846bc652962237535ba367ed689ab25bfae8fc",
+      "expected_blob": "21846bc652962237535ba367ed689ab25bfae8fc"
+    },
+    {
+      "path": "energybaseline/uq/calibration.py",
+      "git_clean_blob": "18e35d17c26ea963c5c98cd868d145ffd9988753",
+      "expected_blob": "18e35d17c26ea963c5c98cd868d145ffd9988753"
+    },
+    {
+      "path": "energybaseline/uq/conformal.py",
+      "git_clean_blob": "d3413bd9a1b1c8ac69b2d5d0039bfbc8e733e061",
+      "expected_blob": "d3413bd9a1b1c8ac69b2d5d0039bfbc8e733e061"
+    },
+    {
+      "path": "energybaseline/uq/fsu.py",
+      "git_clean_blob": "78ec40f0ed326a670c7063956da36280658e365d",
+      "expected_blob": "78ec40f0ed326a670c7063956da36280658e365d"
+    },
+    {
+      "path": "energybaseline/uq/parametric.py",
+      "git_clean_blob": "256c4aef613f115ddfe675289d1f20fe783a6ec0",
+      "expected_blob": "256c4aef613f115ddfe675289d1f20fe783a6ec0"
+    },
+    {
+      "path": "energybaseline/uq/savings_uncertainty.py",
+      "git_clean_blob": "09e93b9271ca3ef1a8ed00a2e45b209423adad16",
+      "expected_blob": "09e93b9271ca3ef1a8ed00a2e45b209423adad16"
+    },
+    {
+      "path": "energybaseline/validation/__init__.py",
+      "git_clean_blob": "f5b4b1341cb74a9c86ed7462ea4820023d664fc1",
+      "expected_blob": "f5b4b1341cb74a9c86ed7462ea4820023d664fc1"
+    },
+    {
+      "path": "energybaseline/validation/ashrae14_metrics.py",
+      "git_clean_blob": "4565fe6fdadd1af06b8da68908292d6e2cfc455e",
+      "expected_blob": "4565fe6fdadd1af06b8da68908292d6e2cfc455e"
+    },
+    {
+      "path": "energybaseline/validation/leakage_canary.py",
+      "git_clean_blob": "f5eeef56b70b6ecba4703d3bed038f7f8ffa80e4",
+      "expected_blob": "f5eeef56b70b6ecba4703d3bed038f7f8ffa80e4"
+    },
+    {
+      "path": "energybaseline/validation/nested_hpo.py",
+      "git_clean_blob": "a97ea36f3ebc4b5c91269a158fac814d1d322812",
+      "expected_blob": "a97ea36f3ebc4b5c91269a158fac814d1d322812"
+    },
+    {
+      "path": "energybaseline/validation/preprocessing.py",
+      "git_clean_blob": "857d6624418398bde7e58210a7e37bf3f1fd4ca0",
+      "expected_blob": "857d6624418398bde7e58210a7e37bf3f1fd4ca0"
+    },
+    {
+      "path": "energybaseline/validation/purge.py",
+      "git_clean_blob": "80aa760ddc15ba1a89943904b52ab927d3ea5454",
+      "expected_blob": "80aa760ddc15ba1a89943904b52ab927d3ea5454"
+    },
+    {
+      "path": "energybaseline/validation/splitting.py",
+      "git_clean_blob": "fa450ad9dc5ed8bc5232a127c955dc6d6d8efe73",
+      "expected_blob": "fa450ad9dc5ed8bc5232a127c955dc6d6d8efe73"
+    },
+    {
+      "path": "energybaseline/validation/walkforward.py",
+      "git_clean_blob": "c2e1203aae4be1ea5b081ad6e1847edcb841c271",
+      "expected_blob": "c2e1203aae4be1ea5b081ad6e1847edcb841c271"
+    },
+    {
+      "path": "energybaseline/workbench/__init__.py",
+      "git_clean_blob": "14407e3f2f2c898f7a2089298154c1556243188c",
+      "expected_blob": "14407e3f2f2c898f7a2089298154c1556243188c"
+    },
+    {
+      "path": "energybaseline/workbench/analytics.py",
+      "git_clean_blob": "951e8bb750caaf24d0b3fbeab50edd5bc92f43f5",
+      "expected_blob": "951e8bb750caaf24d0b3fbeab50edd5bc92f43f5"
+    },
+    {
+      "path": "energybaseline/workbench/business.py",
+      "git_clean_blob": "1bf2fd2f2e9417e3cebc780a9b970ba92af780a4",
+      "expected_blob": "1bf2fd2f2e9417e3cebc780a9b970ba92af780a4"
+    },
+    {
+      "path": "energybaseline/workbench/common.py",
+      "git_clean_blob": "ccf70b3be8d95969748414ee5d5b86113761b53b",
+      "expected_blob": "ccf70b3be8d95969748414ee5d5b86113761b53b"
+    },
+    {
+      "path": "energybaseline/workbench/domains.py",
+      "git_clean_blob": "27253f45e03c76d9f8f7ab6d12d79d0d4337cd77",
+      "expected_blob": "27253f45e03c76d9f8f7ab6d12d79d0d4337cd77"
+    },
+    {
+      "path": "energybaseline/workbench/entities.py",
+      "git_clean_blob": "e0561330b35b71b611568b004e4794b854e94ef8",
+      "expected_blob": "e0561330b35b71b611568b004e4794b854e94ef8"
+    },
+    {
+      "path": "energybaseline/workbench/forecasting.py",
+      "git_clean_blob": "57842866271e55f0db17d874f233d58a80c84c81",
+      "expected_blob": "57842866271e55f0db17d874f233d58a80c84c81"
+    },
+    {
+      "path": "energybaseline/workbench/operations.py",
+      "git_clean_blob": "c4aaeab77fd5a4b735255b96f86bb1164976b16b",
+      "expected_blob": "c4aaeab77fd5a4b735255b96f86bb1164976b16b"
+    },
+    {
+      "path": "energybaseline/workbench/prediction.py",
+      "git_clean_blob": "910ff68bab705330c64326777cdcd1084fc20756",
+      "expected_blob": "910ff68bab705330c64326777cdcd1084fc20756"
+    },
+    {
+      "path": "energybaseline/workbench/preparation.py",
+      "git_clean_blob": "cf71b5f16d2f5dc7e9cc60450c274f3b98de574c",
+      "expected_blob": "cf71b5f16d2f5dc7e9cc60450c274f3b98de574c"
+    },
+    {
+      "path": "energybaseline/workbench/regression.py",
+      "git_clean_blob": "fac3eb20b0a4597f5a780ec74c7c019c4fe90329",
+      "expected_blob": "fac3eb20b0a4597f5a780ec74c7c019c4fe90329"
+    },
+    {
+      "path": "examples/energy_baseline_report.html",
+      "git_clean_blob": "18fe6cb06106355ef46ef0d063393a74561621e7",
+      "expected_blob": "18fe6cb06106355ef46ef0d063393a74561621e7"
+    },
+    {
+      "path": "examples/quality/input.csv",
+      "git_clean_blob": "2a343775ad12d52579878efd866439c5899162f7",
+      "expected_blob": "2a343775ad12d52579878efd866439c5899162f7"
+    },
+    {
+      "path": "examples/quality/policy.json",
+      "git_clean_blob": "b8d3eea1aa0d504f8b570edaa19d8cc23e6e6eb9",
+      "expected_blob": "b8d3eea1aa0d504f8b570edaa19d8cc23e6e6eb9"
+    },
+    {
+      "path": "examples/quality/reference.csv",
+      "git_clean_blob": "0ce340cd4c561e8a7e7e1436fd8aa3178139bf5e",
+      "expected_blob": "0ce340cd4c561e8a7e7e1436fd8aa3178139bf5e"
+    },
+    {
+      "path": "examples/statistics/bayesian.json",
+      "git_clean_blob": "8e2ac7fe5a6314a28ebeff45546d2af50b7798cb",
+      "expected_blob": "8e2ac7fe5a6314a28ebeff45546d2af50b7798cb"
+    },
+    {
+      "path": "examples/statistics/independent.json",
+      "git_clean_blob": "e1d4579e971c9b5392d548a97afe0973f9859851",
+      "expected_blob": "e1d4579e971c9b5392d548a97afe0973f9859851"
+    },
+    {
+      "path": "examples/statistics/input.csv",
+      "git_clean_blob": "1684cf9577c543f29e5c24ec878850fd70217f2a",
+      "expected_blob": "1684cf9577c543f29e5c24ec878850fd70217f2a"
+    },
+    {
+      "path": "examples/statistics/paired.json",
+      "git_clean_blob": "a12c4a8320f23258a8778d1c7d8c62dd9f916b7b",
+      "expected_blob": "a12c4a8320f23258a8778d1c7d8c62dd9f916b7b"
+    },
+    {
+      "path": "examples/statistics/prospective.json",
+      "git_clean_blob": "a02ac3457d2412634f0da17edcd1d55cda9bb88b",
+      "expected_blob": "a02ac3457d2412634f0da17edcd1d55cda9bb88b"
+    },
+    {
+      "path": "examples/statistics/two-stage-fdr.json",
+      "git_clean_blob": "b432494ffecb3e04541b7b22a454519037cd5482",
+      "expected_blob": "b432494ffecb3e04541b7b22a454519037cd5482"
+    },
+    {
+      "path": "examples/workbench/README.md",
+      "git_clean_blob": "3230f340b15cb23889b52119073ac638466dcd66",
+      "expected_blob": "3230f340b15cb23889b52119073ac638466dcd66"
+    },
+    {
+      "path": "examples/workbench/business-validation.json",
+      "git_clean_blob": "7583b2a974aec2d48e01792b3b91a7c19d5fad0b",
+      "expected_blob": "7583b2a974aec2d48e01792b3b91a7c19d5fad0b"
+    },
+    {
+      "path": "examples/workbench/categorical-divergence.json",
+      "git_clean_blob": "9ca49174d40dd2c52fda15d757cf5e1ba97297bc",
+      "expected_blob": "9ca49174d40dd2c52fda15d757cf5e1ba97297bc"
+    },
+    {
+      "path": "examples/workbench/categories.csv",
+      "git_clean_blob": "6718378019af607bdb0cce1107746791d9618a99",
+      "expected_blob": "6718378019af607bdb0cce1107746791d9618a99"
+    },
+    {
+      "path": "examples/workbench/category-reference.csv",
+      "git_clean_blob": "d0585a06d5c9a047079c6ca69682bbd3d5e4f58d",
+      "expected_blob": "d0585a06d5c9a047079c6ca69682bbd3d5e4f58d"
+    },
+    {
+      "path": "examples/workbench/classification-holdout.json",
+      "git_clean_blob": "f4aa0af0809104cec58006b11dac1ad6729c7c99",
+      "expected_blob": "f4aa0af0809104cec58006b11dac1ad6729c7c99"
+    },
+    {
+      "path": "examples/workbench/competing-risks.json",
+      "git_clean_blob": "8cce3151de2dadc39132ee7e13df25f2a52b457a",
+      "expected_blob": "8cce3151de2dadc39132ee7e13df25f2a52b457a"
+    },
+    {
+      "path": "examples/workbench/documents.csv",
+      "git_clean_blob": "c175db68159d7344d69fb2e688022812b4c6ebac",
+      "expected_blob": "c175db68159d7344d69fb2e688022812b4c6ebac"
+    },
+    {
+      "path": "examples/workbench/entities.csv",
+      "git_clean_blob": "bfc8b2f855ef34e7d1e4adae7b278c37d96263dd",
+      "expected_blob": "bfc8b2f855ef34e7d1e4adae7b278c37d96263dd"
+    },
+    {
+      "path": "examples/workbench/entity-candidates.json",
+      "git_clean_blob": "1824791bbecd49d839c835a65f9512f713506fa3",
+      "expected_blob": "1824791bbecd49d839c835a65f9512f713506fa3"
+    },
+    {
+      "path": "examples/workbench/entity-reference.csv",
+      "git_clean_blob": "9587e24d43bfee50e2367cb4fb3dfb2032702877",
+      "expected_blob": "9587e24d43bfee50e2367cb4fb3dfb2032702877"
+    },
+    {
+      "path": "examples/workbench/fairness.csv",
+      "git_clean_blob": "1296b3633370e841775f3f1a3eb31d7efa092def",
+      "expected_blob": "1296b3633370e841775f3f1a3eb31d7efa092def"
+    },
+    {
+      "path": "examples/workbench/fcfs-queue.json",
+      "git_clean_blob": "f3c03311efa7e43de66637a94bd57bb2aba13aac",
+      "expected_blob": "f3c03311efa7e43de66637a94bd57bb2aba13aac"
+    },
+    {
+      "path": "examples/workbench/forecast-croston_sba.json",
+      "git_clean_blob": "823d0f419369433214aaab2cbc5b98aceeb2a6d1",
+      "expected_blob": "823d0f419369433214aaab2cbc5b98aceeb2a6d1"
+    },
+    {
+      "path": "examples/workbench/forecast-last.json",
+      "git_clean_blob": "a3dc6ca282c10c7d09b981f6bde973654bf06600",
+      "expected_blob": "a3dc6ca282c10c7d09b981f6bde973654bf06600"
+    },
+    {
+      "path": "examples/workbench/forecast-median.json",
+      "git_clean_blob": "dbda9b37133bdd8f02930a7f8f32d7d1171b1e53",
+      "expected_blob": "dbda9b37133bdd8f02930a7f8f32d7d1171b1e53"
+    },
+    {
+      "path": "examples/workbench/forecast-random_walk_drift.json",
+      "git_clean_blob": "2caf12a1d229ce1580da94fc4ffe1246e577018d",
+      "expected_blob": "2caf12a1d229ce1580da94fc4ffe1246e577018d"
+    },
+    {
+      "path": "examples/workbench/forecast-seasonal_naive.json",
+      "git_clean_blob": "11b6c418e5f6bd1b88ce6f9abcb728e2a76e272d",
+      "expected_blob": "11b6c418e5f6bd1b88ce6f9abcb728e2a76e272d"
+    },
+    {
+      "path": "examples/workbench/forecast-var.json",
+      "git_clean_blob": "1117f2c8a903125af934fa19aa8103bc749690b3",
+      "expected_blob": "1117f2c8a903125af934fa19aa8103bc749690b3"
+    },
+    {
+      "path": "examples/workbench/forecast-vecm.json",
+      "git_clean_blob": "ec9709af318761986a1f4af462af301fb695ac00",
+      "expected_blob": "ec9709af318761986a1f4af462af301fb695ac00"
+    },
+    {
+      "path": "examples/workbench/forecast.csv",
+      "git_clean_blob": "c5ac1035615287000e5f21b349c707086676f41d",
+      "expected_blob": "c5ac1035615287000e5f21b349c707086676f41d"
+    },
+    {
+      "path": "examples/workbench/graph-profile.json",
+      "git_clean_blob": "34c7b0329e0a11c16891a439ac511568193910ef",
+      "expected_blob": "34c7b0329e0a11c16891a439ac511568193910ef"
+    },
+    {
+      "path": "examples/workbench/graph.csv",
+      "git_clean_blob": "36021e4b4e372b22de9d964c7f5b7ec48d379d1b",
+      "expected_blob": "36021e4b4e372b22de9d964c7f5b7ec48d379d1b"
+    },
+    {
+      "path": "examples/workbench/group-fairness.json",
+      "git_clean_blob": "f9cb25d5024321539534cb0cdb8b7b0451907aaf",
+      "expected_blob": "f9cb25d5024321539534cb0cdb8b7b0451907aaf"
+    },
+    {
+      "path": "examples/workbench/kaplan-meier.json",
+      "git_clean_blob": "fa8bb91a08e399a92eaa2691a5d3198c180c8844",
+      "expected_blob": "fa8bb91a08e399a92eaa2691a5d3198c180c8844"
+    },
+    {
+      "path": "examples/workbench/linear-optimize.json",
+      "git_clean_blob": "dc6eef5c330f958afbe41b588435e4410b83db9b",
+      "expected_blob": "dc6eef5c330f958afbe41b588435e4410b83db9b"
+    },
+    {
+      "path": "examples/workbench/manifest.json",
+      "git_clean_blob": "d6d354c399487e5bfe6d0fa5ded7a80f09979e89",
+      "expected_blob": "d6d354c399487e5bfe6d0fa5ded7a80f09979e89"
+    },
+    {
+      "path": "examples/workbench/multi-target-consensus.json",
+      "git_clean_blob": "ec0813736bb61cae1636fb06f4f6c5656b1b0c6f",
+      "expected_blob": "ec0813736bb61cae1636fb06f4f6c5656b1b0c6f"
+    },
+    {
+      "path": "examples/workbench/novelty-holdout.json",
+      "git_clean_blob": "b7722ed86c913269546a388c59df736203a41803",
+      "expected_blob": "b7722ed86c913269546a388c59df736203a41803"
+    },
+    {
+      "path": "examples/workbench/objectives.csv",
+      "git_clean_blob": "b65b59d6e93badd82bdd412565405c82d33f0436",
+      "expected_blob": "b65b59d6e93badd82bdd412565405c82d33f0436"
+    },
+    {
+      "path": "examples/workbench/pareto-front.json",
+      "git_clean_blob": "5c0835c341aee49cccb67d5f678f5a789d3bbbef",
+      "expected_blob": "5c0835c341aee49cccb67d5f678f5a789d3bbbef"
+    },
+    {
+      "path": "examples/workbench/portfolio-risk.json",
+      "git_clean_blob": "5cbec71910582bf69935272ef1c3fee1d830b811",
+      "expected_blob": "5cbec71910582bf69935272ef1c3fee1d830b811"
+    },
+    {
+      "path": "examples/workbench/prediction.csv",
+      "git_clean_blob": "25d42240412ca148a8b0d8fb8281626d9bb68d44",
+      "expected_blob": "25d42240412ca148a8b0d8fb8281626d9bb68d44"
+    },
+    {
+      "path": "examples/workbench/queue.csv",
+      "git_clean_blob": "55c45ba7aa67c976dc4b5c94ee5e8a9709adfa21",
+      "expected_blob": "55c45ba7aa67c976dc4b5c94ee5e8a9709adfa21"
+    },
+    {
+      "path": "examples/workbench/rating-svd.json",
+      "git_clean_blob": "d63f241cbe521f7651dada17b97363f723b4e467",
+      "expected_blob": "d63f241cbe521f7651dada17b97363f723b4e467"
+    },
+    {
+      "path": "examples/workbench/ratings.csv",
+      "git_clean_blob": "7291c709cc00a05c7d9ac0ab3bde2d162e418d40",
+      "expected_blob": "7291c709cc00a05c7d9ac0ab3bde2d162e418d40"
+    },
+    {
+      "path": "examples/workbench/regression-holdout.json",
+      "git_clean_blob": "d3621e6414f75839694c8bfcecc9b729da49c0e6",
+      "expected_blob": "d3621e6414f75839694c8bfcecc9b729da49c0e6"
+    },
+    {
+      "path": "examples/workbench/regression.csv",
+      "git_clean_blob": "f959bddc6fef74adc48a879559e3d21f8e8e2efc",
+      "expected_blob": "f959bddc6fef74adc48a879559e3d21f8e8e2efc"
+    },
+    {
+      "path": "examples/workbench/returns.csv",
+      "git_clean_blob": "76466c3ab2ee47686eddc4be8a377b974ba1cfd2",
+      "expected_blob": "76466c3ab2ee47686eddc4be8a377b974ba1cfd2"
+    },
+    {
+      "path": "examples/workbench/survival.csv",
+      "git_clean_blob": "fe5e5eb181045c2eb46133bb850ea77b272d70bb",
+      "expected_blob": "fe5e5eb181045c2eb46133bb850ea77b272d70bb"
+    },
+    {
+      "path": "examples/workbench/tabular-transform.json",
+      "git_clean_blob": "7f029710d5fedfdb6ee74867f0ed05a311a3e266",
+      "expected_blob": "7f029710d5fedfdb6ee74867f0ed05a311a3e266"
+    },
+    {
+      "path": "examples/workbench/target-encoding.json",
+      "git_clean_blob": "0734796144d632190f5f02154bb87c3a2a1b2092",
+      "expected_blob": "0734796144d632190f5f02154bb87c3a2a1b2092"
+    },
+    {
+      "path": "examples/workbench/text-retrieval.json",
+      "git_clean_blob": "b383de1c7d38c5da6fb9aaefac81624ec755bd2f",
+      "expected_blob": "b383de1c7d38c5da6fb9aaefac81624ec755bd2f"
+    },
+    {
+      "path": "install.bat",
+      "git_clean_blob": "ca99649d3da4f6b9289dbd83565924f5e66263c3",
+      "expected_blob": "ca99649d3da4f6b9289dbd83565924f5e66263c3"
+    },
+    {
+      "path": "pip-audit.py",
+      "git_clean_blob": "ba4ff09f0a96d864b9114d350b43c0017537300e",
+      "expected_blob": "ba4ff09f0a96d864b9114d350b43c0017537300e"
+    },
+    {
+      "path": "pyproject.toml",
+      "git_clean_blob": "1525efae2575ba7294a74f7a7fbde87227e850af",
+      "expected_blob": "1525efae2575ba7294a74f7a7fbde87227e850af"
+    },
+    {
+      "path": "pytest.ini",
+      "git_clean_blob": "f5465c9f03b77d97d48b99e9702d6c5ef2540ae7",
+      "expected_blob": "f5465c9f03b77d97d48b99e9702d6c5ef2540ae7"
+    },
+    {
+      "path": "requirements-dev.txt",
+      "git_clean_blob": "bc04b4960a7552e403b95f80dcce0b9b4aedc34c",
+      "expected_blob": "bc04b4960a7552e403b95f80dcce0b9b4aedc34c"
+    },
+    {
+      "path": "requirements.in",
+      "git_clean_blob": "4a92ba6e1e132e53fb1fb0012f9a63d6e887829b",
+      "expected_blob": "4a92ba6e1e132e53fb1fb0012f9a63d6e887829b"
+    },
+    {
+      "path": "requirements.lock",
+      "git_clean_blob": "2e3bfb7d2d1ad7f8b534e30353b02e5469e4c11b",
+      "expected_blob": "2e3bfb7d2d1ad7f8b534e30353b02e5469e4c11b"
+    },
+    {
+      "path": "requirements.txt",
+      "git_clean_blob": "637c79c70b6f3e0a09d17857cc8715344beeaf39",
+      "expected_blob": "637c79c70b6f3e0a09d17857cc8715344beeaf39"
+    },
+    {
+      "path": "samples/generate_samples.py",
+      "git_clean_blob": "79cc5faaa47f229a7b2692d59cc43a5a5b7785b6",
+      "expected_blob": "79cc5faaa47f229a7b2692d59cc43a5a5b7785b6"
+    },
+    {
+      "path": "samples/hourly_office.csv",
+      "git_clean_blob": "a68269137865064773b4273fec6f68dd455b42ff",
+      "expected_blob": "a68269137865064773b4273fec6f68dd455b42ff"
+    },
+    {
+      "path": "samples/hourly_office_new_data.csv",
+      "git_clean_blob": "6f14eb757bd7a21045db670d543d2efa6de21b21",
+      "expected_blob": "6f14eb757bd7a21045db670d543d2efa6de21b21"
+    },
+    {
+      "path": "samples/monthly_building.csv",
+      "git_clean_blob": "f76719f3ff55417750656b0535359e772e52ea17",
+      "expected_blob": "f76719f3ff55417750656b0535359e772e52ea17"
+    },
+    {
+      "path": "scripts/benchmarks/bench_1m.py",
+      "git_clean_blob": "d918fdb26e627a3852a69ca7e4c8c4258a24f6ac",
+      "expected_blob": "d918fdb26e627a3852a69ca7e4c8c4258a24f6ac"
+    },
+    {
+      "path": "scripts/build_exe.py",
+      "git_clean_blob": "46f68e6254a77040b8d2864c6935baf5006a89d1",
+      "expected_blob": "46f68e6254a77040b8d2864c6935baf5006a89d1"
+    },
+    {
+      "path": "scripts/ci_junit_annotations.py",
+      "git_clean_blob": "20345ea1964cd5bb5a5388861beedfdab20d1c0b",
+      "expected_blob": "20345ea1964cd5bb5a5388861beedfdab20d1c0b"
+    },
+    {
+      "path": "scripts/evidence/bootstrap_native_qt.py",
+      "git_clean_blob": "5e6a5a453edbb7c59fe64615e3c9ba02143ddf95",
+      "expected_blob": "5e6a5a453edbb7c59fe64615e3c9ba02143ddf95"
+    },
+    {
+      "path": "scripts/evidence/bootstrap_odbc.py",
+      "git_clean_blob": "a2650fb5fcb121f442304b51d51894cd678b70b3",
+      "expected_blob": "a2650fb5fcb121f442304b51d51894cd678b70b3"
+    },
+    {
+      "path": "scripts/evidence/dpi_matrix.ps1",
+      "git_clean_blob": "2a5089a68d266c3b5eaf25303c54fcca93401a82",
+      "expected_blob": "2a5089a68d266c3b5eaf25303c54fcca93401a82"
+    },
+    {
+      "path": "scripts/evidence/installer_smoke.ps1",
+      "git_clean_blob": "50c202352ec49dc0110ce183b6ae00f9b8a6e0df",
+      "expected_blob": "50c202352ec49dc0110ce183b6ae00f9b8a6e0df"
+    },
+    {
+      "path": "scripts/evidence/lif_orphans.ps1",
+      "git_clean_blob": "80c83b6b520b19bdffb9b88383c83c22d78d745e",
+      "expected_blob": "80c83b6b520b19bdffb9b88383c83c22d78d745e"
+    },
+    {
+      "path": "scripts/evidence/phase7.py",
+      "git_clean_blob": "60a1da21b4f65c7f100c002205ae880f2ed2dd72",
+      "expected_blob": "60a1da21b4f65c7f100c002205ae880f2ed2dd72"
+    },
+    {
+      "path": "scripts/evidence/phase8.py",
+      "git_clean_blob": "d2d4d988b30794e7067436aaedf35e6faa81682d",
+      "expected_blob": "d2d4d988b30794e7067436aaedf35e6faa81682d"
+    },
+    {
+      "path": "scripts/evidence/remediation_credentials.py",
+      "git_clean_blob": "648cbeae94961224894c20f79705af229a244caf",
+      "expected_blob": "648cbeae94961224894c20f79705af229a244caf"
+    },
+    {
+      "path": "scripts/evidence/remediation_odbc.py",
+      "git_clean_blob": "164b9357e397887d31519afdb043cd594a02973c",
+      "expected_blob": "164b9357e397887d31519afdb043cd594a02973c"
+    },
+    {
+      "path": "scripts/evidence/remediation_postgres.py",
+      "git_clean_blob": "cdf946a7ebb642398321ae86954b8d8e25031010",
+      "expected_blob": "cdf946a7ebb642398321ae86954b8d8e25031010"
+    },
+    {
+      "path": "scripts/evidence/startup_time.ps1",
+      "git_clean_blob": "0aa4a05e39720413832db1f0554f67e129dccc6d",
+      "expected_blob": "0aa4a05e39720413832db1f0554f67e129dccc6d"
+    },
+    {
+      "path": "scripts/evidence/stepwise_odbc.py",
+      "git_clean_blob": "b11b7557943635f05856b825a094addcc5c4df75",
+      "expected_blob": "b11b7557943635f05856b825a094addcc5c4df75"
+    },
+    {
+      "path": "scripts/gates/__init__.py",
+      "git_clean_blob": "21f454ec5c5d05b48b25dceebfdcfe02ce9ed731",
+      "expected_blob": "21f454ec5c5d05b48b25dceebfdcfe02ce9ed731"
+    },
+    {
+      "path": "scripts/gates/guard_env_readers.py",
+      "git_clean_blob": "9016cae054472c9bc3d4d73720bf0c046dbab8f9",
+      "expected_blob": "9016cae054472c9bc3d4d73720bf0c046dbab8f9"
+    },
+    {
+      "path": "scripts/gates/guard_no_qthread_compute.py",
+      "git_clean_blob": "f43b499e848d1490cdfd384a529bb03aeb45ca80",
+      "expected_blob": "f43b499e848d1490cdfd384a529bb03aeb45ca80"
+    },
+    {
+      "path": "scripts/gates/guard_tests_integrity.py",
+      "git_clean_blob": "2c92c942ec09f5a080153e9326f5241ac83a669d",
+      "expected_blob": "2c92c942ec09f5a080153e9326f5241ac83a669d"
+    },
+    {
+      "path": "scripts/gates/guard_web_free.py",
+      "git_clean_blob": "27e6f0017c88c6007642523cbdb8629d30cc1f02",
+      "expected_blob": "27e6f0017c88c6007642523cbdb8629d30cc1f02"
+    },
+    {
+      "path": "scripts/gen_matrix.py",
+      "git_clean_blob": "ff519a227f842d74bcb6cdd8921ab278b2516bcd",
+      "expected_blob": "ff519a227f842d74bcb6cdd8921ab278b2516bcd"
+    },
+    {
+      "path": "scripts/make_example_reports.py",
+      "git_clean_blob": "491e470d3bff7f82c5c5fc6e0297e8748c1005e7",
+      "expected_blob": "491e470d3bff7f82c5c5fc6e0297e8748c1005e7"
+    },
+    {
+      "path": "scripts/make_icon.py",
+      "git_clean_blob": "b564ee731d03dfa4cb3f9d2592ea7a42cbcf8cdf",
+      "expected_blob": "b564ee731d03dfa4cb3f9d2592ea7a42cbcf8cdf"
+    },
+    {
+      "path": "scripts/make_shortcut.py",
+      "git_clean_blob": "c71b9533fcff68b2e891dccb83c64b0fbdde0fa5",
+      "expected_blob": "c71b9533fcff68b2e891dccb83c64b0fbdde0fa5"
+    },
+    {
+      "path": "scripts/sign/sign_artifacts.ps1",
+      "git_clean_blob": "f41a0dd15195cb6c5ce63d69fa740067e23e69dd",
+      "expected_blob": "f41a0dd15195cb6c5ce63d69fa740067e23e69dd"
+    },
+    {
+      "path": "scripts/verify_runtime.py",
+      "git_clean_blob": "0ca765e1930b4ee1a2a3ee1042e23aeeda2f0431",
+      "expected_blob": "0ca765e1930b4ee1a2a3ee1042e23aeeda2f0431"
+    },
+    {
+      "path": "start.bat",
+      "git_clean_blob": "badf848f774c9b9faa9d4389f84408d2250ece96",
+      "expected_blob": "badf848f774c9b9faa9d4389f84408d2250ece96"
+    },
+    {
+      "path": "stop.bat",
+      "git_clean_blob": "be5bfa5849395858bbd14311c48822fbb4e3399b",
+      "expected_blob": "be5bfa5849395858bbd14311c48822fbb4e3399b"
+    },
+    {
+      "path": "tests/.baseline.sha256",
+      "git_clean_blob": "f0a73431a0bc879700a3913e4e48d74db08f0c3b",
+      "expected_blob": "f0a73431a0bc879700a3913e4e48d74db08f0c3b"
+    },
+    {
+      "path": "tests/conftest.py",
+      "git_clean_blob": "99fc4d2be1dcfee1d10718711aa4d3fab4e3822f",
+      "expected_blob": "99fc4d2be1dcfee1d10718711aa4d3fab4e3822f"
+    },
+    {
+      "path": "tests/fixtures/__init__.py",
+      "git_clean_blob": "aa35af178b7ed5e2801d952b0e43e26f8a8a820f",
+      "expected_blob": "aa35af178b7ed5e2801d952b0e43e26f8a8a820f"
+    },
+    {
+      "path": "tests/fixtures/phase8.py",
+      "git_clean_blob": "4685199ae06877ff2c842fb8b4d7ad2733d4938c",
+      "expected_blob": "4685199ae06877ff2c842fb8b4d7ad2733d4938c"
+    },
+    {
+      "path": "tests/fixtures/synthetic.py",
+      "git_clean_blob": "bbcc0fdca896cacf397abf97c25172f5fb2038ae",
+      "expected_blob": "bbcc0fdca896cacf397abf97c25172f5fb2038ae"
+    },
+    {
+      "path": "tests/gates/__init__.py",
+      "git_clean_blob": "a629839dbc9fceaa30eec5f8952892a2f1780a07",
+      "expected_blob": "a629839dbc9fceaa30eec5f8952892a2f1780a07"
+    },
+    {
+      "path": "tests/gates/test_domain_policy_remediation.py",
+      "git_clean_blob": "2bac8019c45fc20189444c06a38d727fb83e4d7d",
+      "expected_blob": "2bac8019c45fc20189444c06a38d727fb83e4d7d"
+    },
+    {
+      "path": "tests/gates/test_external_artifact_trust.py",
+      "git_clean_blob": "f28cbc9dabff7cbb0afb3501e255ba08ef42de9c",
+      "expected_blob": "f28cbc9dabff7cbb0afb3501e255ba08ef42de9c"
+    },
+    {
+      "path": "tests/gates/test_final_boundary_remediation.py",
+      "git_clean_blob": "620a03ef2f7c3acb2c7a74b6a80e7885dd6baacd",
+      "expected_blob": "620a03ef2f7c3acb2c7a74b6a80e7885dd6baacd"
+    },
+    {
+      "path": "tests/gates/test_gen_matrix.py",
+      "git_clean_blob": "301edd6504a58515e4c1af8f01f03acb09dd17e2",
+      "expected_blob": "301edd6504a58515e4c1af8f01f03acb09dd17e2"
+    },
+    {
+      "path": "tests/gates/test_guard_env_readers.py",
+      "git_clean_blob": "4542e384b1c6f1a6bb461675e2660a64fc57cd99",
+      "expected_blob": "4542e384b1c6f1a6bb461675e2660a64fc57cd99"
+    },
+    {
+      "path": "tests/gates/test_guard_tests_integrity.py",
+      "git_clean_blob": "e26eb21b3cf9033d78b8ff80390e5d622ac1712a",
+      "expected_blob": "e26eb21b3cf9033d78b8ff80390e5d622ac1712a"
+    },
+    {
+      "path": "tests/gates/test_guard_web_free.py",
+      "git_clean_blob": "4812c6589e89aa675a66b170baf343810029c33b",
+      "expected_blob": "4812c6589e89aa675a66b170baf343810029c33b"
+    },
+    {
+      "path": "tests/gates/test_inference_authorization_recheck.py",
+      "git_clean_blob": "22ba6d1cdac788147bdaad55ecec3fc73aabc01d",
+      "expected_blob": "22ba6d1cdac788147bdaad55ecec3fc73aabc01d"
+    },
+    {
+      "path": "tests/gates/test_odbc_backend_enforcement.py",
+      "git_clean_blob": "dd11d56358809c05e18bc86c97f34719c82a4cc7",
+      "expected_blob": "dd11d56358809c05e18bc86c97f34719c82a4cc7"
+    },
+    {
+      "path": "tests/gates/test_phase0_contracts.py",
+      "git_clean_blob": "0e15bee86212ad361823f18bd278ba4df459870e",
+      "expected_blob": "0e15bee86212ad361823f18bd278ba4df459870e"
+    },
+    {
+      "path": "tests/gates/test_phase1_db_ladder.py",
+      "git_clean_blob": "5cab5c5995eb44e08dfdf92fa885c42bd91fb49d",
+      "expected_blob": "5cab5c5995eb44e08dfdf92fa885c42bd91fb49d"
+    },
+    {
+      "path": "tests/gates/test_phase1_paths_and_commands.py",
+      "git_clean_blob": "4eb1e404037d1bfdeca799bd5488a4682a6bee78",
+      "expected_blob": "4eb1e404037d1bfdeca799bd5488a4682a6bee78"
+    },
+    {
+      "path": "tests/gates/test_phase1_pool_and_lifecycle.py",
+      "git_clean_blob": "9ddc5b864d3487b79c6d1f2e3e7def3cf330c2c3",
+      "expected_blob": "9ddc5b864d3487b79c6d1f2e3e7def3cf330c2c3"
+    },
+    {
+      "path": "tests/gates/test_phase2_ingest_and_sql.py",
+      "git_clean_blob": "ec7d975930dfaade0be3766c4b6f63dbca248b3b",
+      "expected_blob": "ec7d975930dfaade0be3766c4b6f63dbca248b3b"
+    },
+    {
+      "path": "tests/gates/test_phase2_quality_and_cli.py",
+      "git_clean_blob": "5d72f38a280aa1f6419676384da48377ecd03fa8",
+      "expected_blob": "5d72f38a280aa1f6419676384da48377ecd03fa8"
+    },
+    {
+      "path": "tests/gates/test_phase2_schema_and_db.py",
+      "git_clean_blob": "e0ec9408b5e9cc458f25c77132990025938b0abf",
+      "expected_blob": "e0ec9408b5e9cc458f25c77132990025938b0abf"
+    },
+    {
+      "path": "tests/gates/test_phase2_temporal_and_dst.py",
+      "git_clean_blob": "de03f6fca31ebd19d369dcdabf9ebb99c39f959f",
+      "expected_blob": "de03f6fca31ebd19d369dcdabf9ebb99c39f959f"
+    },
+    {
+      "path": "tests/gates/test_phase3_auto_and_fuzz.py",
+      "git_clean_blob": "2394cfa94670b0384467a28c9988d2653ab87585",
+      "expected_blob": "2394cfa94670b0384467a28c9988d2653ab87585"
+    },
+    {
+      "path": "tests/gates/test_phase3_tcp_cache_whatif.py",
+      "git_clean_blob": "f303fb3d79ef4a63a31a53eddfcf69e188fd17c6",
+      "expected_blob": "f303fb3d79ef4a63a31a53eddfcf69e188fd17c6"
+    },
+    {
+      "path": "tests/gates/test_phase3_vsg_integrity_provenance.py",
+      "git_clean_blob": "1069c55288f58482ca16a68eb32f6db06e76a46a",
+      "expected_blob": "1069c55288f58482ca16a68eb32f6db06e76a46a"
+    },
+    {
+      "path": "tests/gates/test_phase4_g4a_t1_t4.py",
+      "git_clean_blob": "704547394c562b883d081f4f63b4c56eae0e6d22",
+      "expected_blob": "704547394c562b883d081f4f63b4c56eae0e6d22"
+    },
+    {
+      "path": "tests/gates/test_phase4_g4b_t5_t9.py",
+      "git_clean_blob": "ab55a09da433e53f789e96be81ed3d7c7c4764ac",
+      "expected_blob": "ab55a09da433e53f789e96be81ed3d7c7c4764ac"
+    },
+    {
+      "path": "tests/gates/test_phase4_g4c_t10_t14.py",
+      "git_clean_blob": "91254e46033b71c1ac467852922729bc0ff9cc93",
+      "expected_blob": "91254e46033b71c1ac467852922729bc0ff9cc93"
+    },
+    {
+      "path": "tests/gates/test_phase5_f1_f10_models.py",
+      "git_clean_blob": "18a2bd3705397b3e31e6a9d97ef7c3e02a95c1f2",
+      "expected_blob": "18a2bd3705397b3e31e6a9d97ef7c3e02a95c1f2"
+    },
+    {
+      "path": "tests/gates/test_phase5_mining_isolation_and_perf.py",
+      "git_clean_blob": "e5738425fbd49a59c80eb57389e769390c558203",
+      "expected_blob": "e5738425fbd49a59c80eb57389e769390c558203"
+    },
+    {
+      "path": "tests/gates/test_phase6_scoring_top5_and_lock.py",
+      "git_clean_blob": "5271960ce0d678d96c677baf25f4dccfeeeef3fb",
+      "expected_blob": "5271960ce0d678d96c677baf25f4dccfeeeef3fb"
+    },
+    {
+      "path": "tests/gates/test_phase6_validation_and_portfolio.py",
+      "git_clean_blob": "52c32626e98855b46b0a68b787bc9bfbbff53f3b",
+      "expected_blob": "52c32626e98855b46b0a68b787bc9bfbbff53f3b"
+    },
+    {
+      "path": "tests/gates/test_phase7_uq_monitoring_causal.py",
+      "git_clean_blob": "177b195ae03ef62f9fe13ce9ad36edf8f430f966",
+      "expected_blob": "177b195ae03ef62f9fe13ce9ad36edf8f430f966"
+    },
+    {
+      "path": "tests/gates/test_phase8_reporting_and_audit.py",
+      "git_clean_blob": "e0417d9f127793fd9df59a4882dae3e28475f965",
+      "expected_blob": "e0417d9f127793fd9df59a4882dae3e28475f965"
+    },
+    {
+      "path": "tests/gates/test_python312_runtime_contract.py",
+      "git_clean_blob": "b1cba3df6c050c5743601d0496389e0523f0d7ad",
+      "expected_blob": "b1cba3df6c050c5743601d0496389e0523f0d7ad"
+    },
+    {
+      "path": "tests/gates/test_r_reference_workflow_runtime.py",
+      "git_clean_blob": "134de3d8148618d97cc1df7f38b448894ee56c11",
+      "expected_blob": "134de3d8148618d97cc1df7f38b448894ee56c11"
+    },
+    {
+      "path": "tests/gates/test_raw_fold_evaluation.py",
+      "git_clean_blob": "9a79ccc01e3a9da71bb40cd28709c3efb0038ef0",
+      "expected_blob": "9a79ccc01e3a9da71bb40cd28709c3efb0038ef0"
+    },
+    {
+      "path": "tests/gates/test_remaining_remediation.py",
+      "git_clean_blob": "6af18001b50c8171526ac8b68a137b99ed569653",
+      "expected_blob": "6af18001b50c8171526ac8b68a137b99ed569653"
+    },
+    {
+      "path": "tests/gates/test_remediation_recheck.py",
+      "git_clean_blob": "5d7617b543de05652d3889f6167d9b570d4cf23d",
+      "expected_blob": "5d7617b543de05652d3889f6167d9b570d4cf23d"
+    },
+    {
+      "path": "tests/gates/test_security_correctness_remediation.py",
+      "git_clean_blob": "2e804162fe55de5bcdc660f1c29600149e29b48f",
+      "expected_blob": "2e804162fe55de5bcdc660f1c29600149e29b48f"
+    },
+    {
+      "path": "tests/gates/test_stepwise_review_regressions.py",
+      "git_clean_blob": "aa0d7d705e32829a9ce228876f588f580e694646",
+      "expected_blob": "aa0d7d705e32829a9ce228876f588f580e694646"
+    },
+    {
+      "path": "tests/gates/test_temporal_compatibility_remediation.py",
+      "git_clean_blob": "f625468b9f731e522d127db85516bac8eede5194",
+      "expected_blob": "f625468b9f731e522d127db85516bac8eede5194"
+    },
+    {
+      "path": "tests/gui/__init__.py",
+      "git_clean_blob": "8a0efd4644d16c76b16a52445ed6864d079885df",
+      "expected_blob": "8a0efd4644d16c76b16a52445ed6864d079885df"
+    },
+    {
+      "path": "tests/gui/conftest.py",
+      "git_clean_blob": "256d80e0a6fbe83752178ffc73a72fcaf0af4463",
+      "expected_blob": "256d80e0a6fbe83752178ffc73a72fcaf0af4463"
+    },
+    {
+      "path": "tests/gui/test_phase1_gui.py",
+      "git_clean_blob": "88c7f0b6ee900025102a8814a168fb8bb831cbc4",
+      "expected_blob": "88c7f0b6ee900025102a8814a168fb8bb831cbc4"
+    },
+    {
+      "path": "tests/gui/test_phase2_gui_schema.py",
+      "git_clean_blob": "e6cc346612b62ed906a5a80099025a54f487b421",
+      "expected_blob": "e6cc346612b62ed906a5a80099025a54f487b421"
+    },
+    {
+      "path": "tests/gui/test_phase3_gui_vsg_tcp.py",
+      "git_clean_blob": "6e38884e7440640597e68d9fe202eeb5fd88057d",
+      "expected_blob": "6e38884e7440640597e68d9fe202eeb5fd88057d"
+    },
+    {
+      "path": "tests/gui/test_phase5_gui_tables_ux5_ux8.py",
+      "git_clean_blob": "f198d674c7cc8ad2ef0da6de5b5ac8b481dd0cc3",
+      "expected_blob": "f198d674c7cc8ad2ef0da6de5b5ac8b481dd0cc3"
+    },
+    {
+      "path": "tests/gui/test_phase6_gui_top5_and_lock.py",
+      "git_clean_blob": "2a39735f7d5fc2f4e76b08e2c2f725194877f6f7",
+      "expected_blob": "2a39735f7d5fc2f4e76b08e2c2f725194877f6f7"
+    },
+    {
+      "path": "tests/gui/test_phase7_gui_snapshot.py",
+      "git_clean_blob": "3c320a79caf1eb429d13d7e0daa40203cadf0f05",
+      "expected_blob": "3c320a79caf1eb429d13d7e0daa40203cadf0f05"
+    },
+    {
+      "path": "tests/gui/test_phase8_report_preview.py",
+      "git_clean_blob": "2730ca2883a02bfd7342b65731bf858784d91969",
+      "expected_blob": "2730ca2883a02bfd7342b65731bf858784d91969"
+    },
+    {
+      "path": "tests/gui/test_python312_main_integration.py",
+      "git_clean_blob": "f40019974f2bc4fe9a658b8cbfcbaad5353c2db7",
+      "expected_blob": "f40019974f2bc4fe9a658b8cbfcbaad5353c2db7"
+    },
+    {
+      "path": "tests/gui/test_qapp_smoke.py",
+      "git_clean_blob": "ee4f4fcc28e93a2a679ae1fb9bb9e1ae0eaca73e",
+      "expected_blob": "ee4f4fcc28e93a2a679ae1fb9bb9e1ae0eaca73e"
+    },
+    {
+      "path": "tests/gui/test_quality_audit_gui.py",
+      "git_clean_blob": "067ffa905846907b4c778081e0048cfce8d92a06",
+      "expected_blob": "067ffa905846907b4c778081e0048cfce8d92a06"
+    },
+    {
+      "path": "tests/gui/test_remediation_native.py",
+      "git_clean_blob": "370d3ab5a8070bf5b43a5716719e2365f79a7920",
+      "expected_blob": "370d3ab5a8070bf5b43a5716719e2365f79a7920"
+    },
+    {
+      "path": "tests/gui/test_statistics_gui.py",
+      "git_clean_blob": "10ae4bf4c30d8d44e7e3667d54ad7eb49d56630f",
+      "expected_blob": "10ae4bf4c30d8d44e7e3667d54ad7eb49d56630f"
+    },
+    {
+      "path": "tests/gui/test_vsg_target_sync.py",
+      "git_clean_blob": "8cb15a9de770de0631bc804d60b06433270536b6",
+      "expected_blob": "8cb15a9de770de0631bc804d60b06433270536b6"
+    },
+    {
+      "path": "tests/gui/test_workbench_gui.py",
+      "git_clean_blob": "871357a07febc130dba27fd4635512b496eb953e",
+      "expected_blob": "871357a07febc130dba27fd4635512b496eb953e"
+    },
+    {
+      "path": "tests/reference/README.md",
+      "git_clean_blob": "a04e748bb3c46194a63f498733c05c5257353bd1",
+      "expected_blob": "a04e748bb3c46194a63f498733c05c5257353bd1"
+    },
+    {
+      "path": "tests/reference/chow.R",
+      "git_clean_blob": "a81bdae7013a35a4b8af9f87b55032e7de052427",
+      "expected_blob": "a81bdae7013a35a4b8af9f87b55032e7de052427"
+    },
+    {
+      "path": "tests/reference/chow.json",
+      "git_clean_blob": "c233f89ac8f8c9fe76da1914711ba4542e803aea",
+      "expected_blob": "c233f89ac8f8c9fe76da1914711ba4542e803aea"
+    },
+    {
+      "path": "tests/reference/diebold_mariano.R",
+      "git_clean_blob": "085c628774503f9915b0f38a96cc074e47634c0b",
+      "expected_blob": "085c628774503f9915b0f38a96cc074e47634c0b"
+    },
+    {
+      "path": "tests/reference/diebold_mariano.json",
+      "git_clean_blob": "319879536ca1facfa89896007cc3f8f3a9a2f7a1",
+      "expected_blob": "319879536ca1facfa89896007cc3f8f3a9a2f7a1"
+    },
+    {
+      "path": "tests/reference/little_mcar.R",
+      "git_clean_blob": "fd7003810955c1fe523ca5dc8369903132189594",
+      "expected_blob": "fd7003810955c1fe523ca5dc8369903132189594"
+    },
+    {
+      "path": "tests/reference/little_mcar.json",
+      "git_clean_blob": "c1a6410267d68f232cd221f25bc4a8acf63f2d62",
+      "expected_blob": "c1a6410267d68f232cd221f25bc4a8acf63f2d62"
+    },
+    {
+      "path": "tests/reference/mcs.R",
+      "git_clean_blob": "e78fd6b101f98ec696ab5b3132025e1b8717da05",
+      "expected_blob": "e78fd6b101f98ec696ab5b3132025e1b8717da05"
+    },
+    {
+      "path": "tests/reference/mcs.json",
+      "git_clean_blob": "3871eaaf2e979fa53bf82278460872f5175edb7e",
+      "expected_blob": "3871eaaf2e979fa53bf82278460872f5175edb7e"
+    },
+    {
+      "path": "tests/reference/nemenyi.R",
+      "git_clean_blob": "48852fd2089df42261b9f15e35b09f5fc16a72cc",
+      "expected_blob": "48852fd2089df42261b9f15e35b09f5fc16a72cc"
+    },
+    {
+      "path": "tests/reference/nemenyi.json",
+      "git_clean_blob": "663b255e82a1ada72337084c22b92d29d56de728",
+      "expected_blob": "663b255e82a1ada72337084c22b92d29d56de728"
+    },
+    {
+      "path": "tests/reference/pettitt.R",
+      "git_clean_blob": "f7b33bb6ddda1f1b8fb17eadccf0d5842f4729a5",
+      "expected_blob": "f7b33bb6ddda1f1b8fb17eadccf0d5842f4729a5"
+    },
+    {
+      "path": "tests/reference/pettitt.json",
+      "git_clean_blob": "a28296daac14f0f02b132a4a4b8ea22fe4614bfe",
+      "expected_blob": "a28296daac14f0f02b132a4a4b8ea22fe4614bfe"
+    },
+    {
+      "path": "tests/reference/quandt_andrews.R",
+      "git_clean_blob": "9b823241a84446d134eea3997afeee095fc825aa",
+      "expected_blob": "9b823241a84446d134eea3997afeee095fc825aa"
+    },
+    {
+      "path": "tests/reference/quandt_andrews.json",
+      "git_clean_blob": "bd07fa4586dfab50bc70153725e8375adbc7aeb1",
+      "expected_blob": "bd07fa4586dfab50bc70153725e8375adbc7aeb1"
+    },
+    {
+      "path": "tests/test_business_validation.py",
+      "git_clean_blob": "bddfd01fd9369d453709b486ca92296649c94eb6",
+      "expected_blob": "bddfd01fd9369d453709b486ca92296649c94eb6"
+    },
+    {
+      "path": "tests/test_config_db.py",
+      "git_clean_blob": "0852ac009d73462a1efc53079e42c3a57609f188",
+      "expected_blob": "0852ac009d73462a1efc53079e42c3a57609f188"
+    },
+    {
+      "path": "tests/test_core.py",
+      "git_clean_blob": "1f384f2c36c2aa319fdf9d4b11b759d8720a1c92",
+      "expected_blob": "1f384f2c36c2aa319fdf9d4b11b759d8720a1c92"
+    },
+    {
+      "path": "tests/test_pipeline.py",
+      "git_clean_blob": "71a37ee7d080f4fd896191ee0cf85f5800c20d0b",
+      "expected_blob": "71a37ee7d080f4fd896191ee0cf85f5800c20d0b"
+    },
+    {
+      "path": "tests/test_quality_audit.py",
+      "git_clean_blob": "7a7ddae083c8284f50b10813f9e987063a0e6bf8",
+      "expected_blob": "7a7ddae083c8284f50b10813f9e987063a0e6bf8"
+    },
+    {
+      "path": "tests/test_reference_staleness.py",
+      "git_clean_blob": "90df9340ce20d3e19ecf64abc6e47b6b3c3bba19",
+      "expected_blob": "90df9340ce20d3e19ecf64abc6e47b6b3c3bba19"
+    },
+    {
+      "path": "tests/test_statistical_plans.py",
+      "git_clean_blob": "4049ecb5204c63d65eb66fe04160a495fcc62d68",
+      "expected_blob": "4049ecb5204c63d65eb66fe04160a495fcc62d68"
+    },
+    {
+      "path": "tests/test_workbench.py",
+      "git_clean_blob": "4c488f07462c73fdd9f3a53e51874e31d54562d6",
+      "expected_blob": "4c488f07462c73fdd9f3a53e51874e31d54562d6"
+    },
+    {
+      "path": "tests_catalog/r_references/chow.json",
+      "git_clean_blob": "c233f89ac8f8c9fe76da1914711ba4542e803aea",
+      "expected_blob": "c233f89ac8f8c9fe76da1914711ba4542e803aea"
+    },
+    {
+      "path": "tests_catalog/r_references/diebold_mariano.json",
+      "git_clean_blob": "319879536ca1facfa89896007cc3f8f3a9a2f7a1",
+      "expected_blob": "319879536ca1facfa89896007cc3f8f3a9a2f7a1"
+    },
+    {
+      "path": "tests_catalog/r_references/little_mcar.json",
+      "git_clean_blob": "c1a6410267d68f232cd221f25bc4a8acf63f2d62",
+      "expected_blob": "c1a6410267d68f232cd221f25bc4a8acf63f2d62"
+    },
+    {
+      "path": "tests_catalog/r_references/mcs.json",
+      "git_clean_blob": "3871eaaf2e979fa53bf82278460872f5175edb7e",
+      "expected_blob": "3871eaaf2e979fa53bf82278460872f5175edb7e"
+    },
+    {
+      "path": "tests_catalog/r_references/nemenyi.json",
+      "git_clean_blob": "663b255e82a1ada72337084c22b92d29d56de728",
+      "expected_blob": "663b255e82a1ada72337084c22b92d29d56de728"
+    },
+    {
+      "path": "tests_catalog/r_references/pettitt.json",
+      "git_clean_blob": "a28296daac14f0f02b132a4a4b8ea22fe4614bfe",
+      "expected_blob": "a28296daac14f0f02b132a4a4b8ea22fe4614bfe"
+    },
+    {
+      "path": "tests_catalog/r_references/quandt_andrews.json",
+      "git_clean_blob": "bd07fa4586dfab50bc70153725e8375adbc7aeb1",
+      "expected_blob": "bd07fa4586dfab50bc70153725e8375adbc7aeb1"
+    }
+  ]
+}
