@@ -314,7 +314,17 @@ def main(argv: list[str] | None = None) -> int:
     # OCR ONNX/config data must be shipped; no model download is permitted in the app.
     for pkg in ("flaml.automl", "pandera.backends.pandas"):
         cmd += ["--collect-submodules", pkg]
-    for distribution in ("flaml", "pandera", "rapidocr-onnxruntime", "onnxruntime"):
+    for distribution in (
+        "flaml",
+        "pandera",
+        "rapidocr-onnxruntime",
+        "onnxruntime",
+        "numpy",
+        "pandas",
+        "scipy",
+        "scikit-learn",
+        "statsmodels",
+    ):
         cmd += ["--copy-metadata", distribution]
 
     if args.profile == "lite":
@@ -330,7 +340,13 @@ def main(argv: list[str] | None = None) -> int:
     bundle_dir.mkdir(parents=True, exist_ok=True)
 
     # Copy documentation and icon assets next to executable for user inspection and shortcut icons.
-    for doc_rel in ("README.md", "LICENSE", "docs/USER_GUIDE.md", "docs/EXTERNAL_ENGINES.md", "docs/THIRD_PARTY_MODELS.md"):
+    for doc_rel in (
+        "README.md",
+        "LICENSE",
+        "docs/USER_GUIDE.md",
+        "docs/EXTERNAL_ENGINES.md",
+        "docs/THIRD_PARTY_MODELS.md",
+    ):
         src = ROOT / doc_rel
         if src.exists():
             shutil.copy2(src, bundle_dir / src.name)
