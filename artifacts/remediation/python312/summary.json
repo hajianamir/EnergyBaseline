@@ -1,0 +1,103 @@
+{
+  "status": "migration_and_native_two_os_validation_complete",
+  "branch": "arena/5b0e8eef-energybaseline",
+  "integrated_main_commit": "fed56d58d18c20e0a689b5f510ed2e7c357034d9",
+  "merge_commit": "d7fc8f9e7e197abd0f2381ce2f616b515a81c4ce",
+  "native_tested_commit": "56574a4970490735053a563c01d8616fc4f28ebf",
+  "local_full_suite": {
+    "source_commit": "f0a6981d10cbab5ebd4365cfbe86b5886ea1c4bb",
+    "tests_passed": 498,
+    "tests_failed": 0,
+    "tests_skipped": 0,
+    "elapsed_seconds": 646.4,
+    "process_exit_code": 0,
+    "accepted_as_clean_run": true,
+    "log": "pytest-isolation.txt",
+    "junit": "pytest-isolation.xml"
+  },
+  "runtime": "Python 3.12.x; local CPython 3.12.16",
+  "dependency_lock_packages": 164,
+  "static_checks_passed": 11,
+  "native_ci": {
+    "run_id": 43704827147,
+    "url": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43704827147",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "id": 132783541078,
+        "name": "Phase 8 Gate G8 (windows-latest)",
+        "conclusion": "success",
+        "url": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43704827147/job/132783541078"
+      },
+      {
+        "id": 132783541242,
+        "name": "Phase 8 Gate G8 (ubuntu-latest)",
+        "conclusion": "success",
+        "url": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43704827147/job/132783541242"
+      }
+    ]
+  },
+  "native_receipts": [
+    {
+      "name": "linux-odbc.json",
+      "sha256": "52f87344876855f09670034a5cbff1afcd8fe3d7eaff4757c961d49f39809337",
+      "run_id": 43704827147,
+      "job_id": 132783541242,
+      "source_commit": "56574a4970490735053a563c01d8616fc4f28ebf",
+      "method": "Reconstructed from official check annotation; byte-exact runner SHA-256 verified; not an Azure artifact ZIP download."
+    },
+    {
+      "name": "linux-credentials.json",
+      "sha256": "fd639d080281c29e3290a1fe7d97ab5dab392cad05b3f9e4df8a2d835f3f0ed0",
+      "run_id": 43704827147,
+      "job_id": 132783541242,
+      "source_commit": "56574a4970490735053a563c01d8616fc4f28ebf",
+      "method": "Reconstructed from official check annotation; byte-exact runner SHA-256 verified; not an Azure artifact ZIP download."
+    },
+    {
+      "name": "windows-credentials.json",
+      "sha256": "e7b9deb123b3b8db7e742fff0a668d9b21e9fcbe5da46c5461239d8f38cb9c04",
+      "run_id": 43704827147,
+      "job_id": 132783541078,
+      "source_commit": "56574a4970490735053a563c01d8616fc4f28ebf",
+      "method": "Reconstructed from official check annotation; byte-exact runner SHA-256 verified; not an Azure artifact ZIP download."
+    }
+  ],
+  "source_files_bound": 294,
+  "source_drift": [],
+  "line_ending_note": "Raw SHA-256 hashes describe workspace bytes; Git clean-filter blob comparison handles eight CRLF shell scripts without mislabeling them as source drift.",
+  "report_evidence": {
+    "source_commit": "6511457d16b76d8e2d1afcf908b8d9e523edffab",
+    "product_identical_to_final_ci": true,
+    "phase7_hashes_verified": 11,
+    "phase8_hashes_verified": 12,
+    "renderer_metrics": 20,
+    "executive_pdf_pages": 9,
+    "audit_files_verified": 8,
+    "audit_tables_reproduced": 30,
+    "report_id": "55266825df1f0961e96cd8dc7271c02fa89a7c3fa3ddc2d7927184d483de0af7",
+    "audit_sha256": "7a88763d34c6369d470e65a017c94f31ee688235a7fb38c577e43a396e8975a8"
+  },
+  "preservation": {
+    "local_full_suite_commit": "f0a6981d10cbab5ebd4365cfbe86b5886ea1c4bb",
+    "native_retry_commit": "56574a4970490735053a563c01d8616fc4f28ebf",
+    "local_to_retry_changes": [
+      "README.md"
+    ],
+    "all_executable_test_dependency_workflow_files_identical": true,
+    "report_evidence_commit": "6511457d16b76d8e2d1afcf908b8d9e523edffab",
+    "report_to_retry_product_changes": [],
+    "initial_coverage_to_retry_core_changes": [],
+    "mandatory_original_tests_and_license_changed": [],
+    "review_baseline_changes": []
+  },
+  "retained_failures": [
+    "Initial Linux/native Qt teardown exit 139; fixed with production ownership cleanup plus strict test widget destruction.",
+    "Windows run 43702773093 Gate G1 took 5.297s against unchanged 5.0s limit; unchanged-implementation retry 43704827147 passed. Timing sensitivity remains documented."
+  ],
+  "limits": [
+    "Matching locked CUDA native libraries were reused locally; hosted installations are fresh.",
+    "No production signing, physical-machine performance, reboot/locked-desktop or real remote-database TLS certification.",
+    "Official native receipts are SHA-verified annotation reconstructions, not downloaded Azure ZIPs."
+  ]
+}

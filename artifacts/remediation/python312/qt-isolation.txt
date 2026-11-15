@@ -1,0 +1,204 @@
+..............F................                                          [100%]
+=================================== FAILURES ===================================
+_____ test_desktop_dispatches_input_bound_inference_to_actual_spawn_worker _____
+
+self = <energybaseline.core.pool.AnalysisPoolManager object at 0x7f253d861e80>
+timeout = 30.0
+
+    def handshake(self, *, timeout: float | None = None) -> dict[str, Any]:
+        """Verify pool readiness and ``PROTOCOL_VERSION`` within 30 s (cold) / 10 s (warm)."""
+        self._ensure_raw_executor()
+        wait_s = (
+            timeout
+            if timeout is not None
+            else (WARM_HANDSHAKE_TIMEOUT_SECONDS if self._handshaken_once else FIRST_HANDSHAKE_TIMEOUT_SECONDS)
+        )
+        fut = self._executor.submit(  # type: ignore[union-attr]
+            _dispatch_worker_command,
+            "worker.ping",
+            {"protocol_version": PROTOCOL_VERSION, "job_id": f"ping_{uuid.uuid4().hex[:8]}"},
+        )
+        try:
+>           reply = fut.result(timeout=wait_s)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+energybaseline/core/pool.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = None, timeout = 30.0
+
+    def result(self, timeout=None):
+        """Return the result of the call that the future represents.
+    
+        Args:
+            timeout: The number of seconds to wait for the result if the future
+                isn't done. If None, then there is no limit on the wait time.
+    
+        Returns:
+            The result of the call that the future represents.
+    
+        Raises:
+            CancelledError: If the future was cancelled.
+            TimeoutError: If the future didn't finish executing before the given
+                timeout.
+            Exception: If the call raised then that exception will be raised.
+        """
+        try:
+            with self._condition:
+                if self._state in [CANCELLED, CANCELLED_AND_NOTIFIED]:
+                    raise CancelledError()
+                elif self._state == FINISHED:
+                    return self.__get_result()
+    
+                self._condition.wait(timeout)
+    
+                if self._state in [CANCELLED, CANCELLED_AND_NOTIFIED]:
+                    raise CancelledError()
+                elif self._state == FINISHED:
+                    return self.__get_result()
+                else:
+>                   raise TimeoutError()
+E                   TimeoutError
+
+.cache/migration312/python/lib/python3.12/concurrent/futures/_base.py:458: TimeoutError
+
+The above exception was the direct cause of the following exception:
+
+qtbot = <pytestqt.qtbot.QtBot object at 0x7f24f11d9f40>
+tmp_path = PosixPath('/tmp/pytest-of-user/pytest-28/test_desktop_dispatches_input_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f24f0cd2d80>
+
+    def test_desktop_dispatches_input_bound_inference_to_actual_spawn_worker(qtbot, tmp_path, monkeypatch):
+        monkeypatch.setenv("EB_HOME", str(tmp_path))
+        monkeypatch.setenv("EB_NONINTERACTIVE", "1")
+        session.reset_engine()
+        window = MainWindow(AppState(), session.init_database())
+        qtbot.addWidget(window)
+        window.state.config.update(
+            {
+                "domain_pack": "manufacturing",
+                "seed": 42,
+                "model_families": ["linear"],
+                "hpo_trials": 0,
+                "enable_nn": False,
+                "enable_mining": False,
+                "include_importance": False,
+                "include_eda_attachment": False,
+                "lags": [],
+                "rolling_windows": [],
+            }
+        )
+        rng = np.random.default_rng(531)
+        x = rng.normal(size=72)
+        frame = pd.DataFrame(
+            {
+                "time": pd.date_range("2010-01-01", periods=72, freq="MS"),
+                "quality_offset": -8 + x + rng.normal(0, 0.5, 72),
+                "process_setting": x,
+            }
+        )
+        window.setup_page.set_dataset(frame, "manufacturing.csv", "manual", sha256_dataframe(frame))
+        window.setup_page.collect()
+        window.setup_page.rebuild_compliance_models()
+        assert window.setup_page.accept_vsg_gate()
+        assert len(window.setup_page.accept_and_lock_tcp()) == 64
+>       window.analysis_page.start()
+
+tests/gui/test_remediation_native.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+energybaseline/gui/pages_setup.py:1518: in start
+    self._job_handle = mgr.submit_analysis(
+energybaseline/core/pool.py:896: in submit_analysis
+    return self.submit_command(
+energybaseline/core/pool.py:819: in submit_command
+    self._ensure_pool()
+energybaseline/core/pool.py:700: in _ensure_pool
+    self.handshake(timeout=timeout)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <energybaseline.core.pool.AnalysisPoolManager object at 0x7f253d861e80>
+timeout = 30.0
+
+    def handshake(self, *, timeout: float | None = None) -> dict[str, Any]:
+        """Verify pool readiness and ``PROTOCOL_VERSION`` within 30 s (cold) / 10 s (warm)."""
+        self._ensure_raw_executor()
+        wait_s = (
+            timeout
+            if timeout is not None
+            else (WARM_HANDSHAKE_TIMEOUT_SECONDS if self._handshaken_once else FIRST_HANDSHAKE_TIMEOUT_SECONDS)
+        )
+        fut = self._executor.submit(  # type: ignore[union-attr]
+            _dispatch_worker_command,
+            "worker.ping",
+            {"protocol_version": PROTOCOL_VERSION, "job_id": f"ping_{uuid.uuid4().hex[:8]}"},
+        )
+        try:
+            reply = fut.result(timeout=wait_s)
+        except Exception as exc:
+>           raise PoolHandshakeError(f"Worker pool handshake failed within {wait_s:.1f}s: {exc}") from exc
+E           energybaseline.core.pool.PoolHandshakeError: Worker pool handshake failed within 30.0s:
+
+energybaseline/core/pool.py:730: PoolHandshakeError
+----------------------------- Captured stdout call -----------------------------
+.........
+----------------------------- Captured stderr call -----------------------------
+2026-11-15 10:09:36,150 INFO energybaseline.db db.selftest {"ok": true, "url": "sqlite://***", "masked_url": "sqlite://***", "rung": "eb_home", "fallback": true, "writable": true, "banner_level": "none", "banner_text": ""}
+2026-11-15 10:09:36,226 INFO energybaseline.gui GUI started
+2026-11-15 10:09:36,270 INFO energybaseline.auto auto.resolved target=quality_offset setting=vsg_max_missing_pct value=40 signals=[n=72, p=1, median_missing_pct=0.00%] rule=[maximum predictor missingness adapts to sample length (25% n<60, 40% n<1000, 50% n>=1000)]
+2026-11-15 10:09:36,271 INFO energybaseline.auto auto.resolved target=quality_offset setting=vsg_min_rel_variance value=1e-08 signals=[n=72, candidate_count=1] rule=[near-constant relative-variance floor scaled by sample size]
+2026-11-15 10:09:36,271 INFO energybaseline.auto auto.resolved target=quality_offset setting=vsg_vif_limit value=5 signals=[n=72, candidate_count=1] rule=[iterative VIF multicollinearity ceiling (5.0 for n<100, 10.0 for n>=100)]
+2026-11-15 10:09:36,273 INFO energybaseline.auto auto.derived target=quality_offset setting=vsg.process_setting value=include signals=[miss=0.00%, uniq=72, r=0.906, rho=0.862, mi=0.612, vif=1.00]
+2026-11-15 10:09:36,274 INFO energybaseline.auto auto.resolved target= setting=tcp_alpha value=0.05 signals=[n=72, est_tests=10] rule=[alpha=0.01 for large n>=2000 (guards trivial rejection), 0.10 for very small n<30, 0.05 otherwise]
+2026-11-15 10:09:36,274 INFO energybaseline.auto auto.resolved target= setting=tcp_confidence value=0.95 signals=[alpha=0.05, n=72] rule=[nominal confidence level matched to 1 - alpha (bounded to [0.80, 0.999])]
+2026-11-15 10:09:36,275 INFO energybaseline.auto auto.resolved target= setting=tcp_correction value=benjamini_yekutieli signals=[est_family_m=10, mean_abs_r=0.906] rule=[Holm FWER for small families (m<=8), BY FDR under strong dependence (|r|>=0.65), BH FDR otherwise]
+2026-11-15 10:09:36,275 INFO energybaseline.auto auto.resolved target= setting=tcp_family_definition value=per_test_family signals=[n_targets=1, est_family_m=10] rule=[group hypotheses by statistical test family for single target, per-target when multiple EnPIs compete]
+2026-11-15 10:09:36,275 INFO energybaseline.auto auto.resolved target= setting=tcp_decision_rule value=p_only signals=[n=72] rule=[require practical effect-size floor alongside p_adj<=alpha when n>=500 to prevent trivial rejections]
+2026-11-15 10:09:36,275 INFO energybaseline.auto auto.resolved target= setting=tcp_min_effect_size value=0.1179 signals=[n=72, rule=p_only] rule=[minimum standardized effect size 1/sqrt(n) clamped to [0.02, 0.20]]
+2026-11-15 10:09:36,275 INFO energybaseline.auto auto.resolved target= setting=tcp_execution_mode value=full signals=[n=72] rule=[full bootstrap/exact mode for n<=10000, fast asymptotic subsampling mode for n>10000]
+2026-11-15 10:09:36,292 INFO energybaseline.gui Dataset loaded: manufacturing.csv
+2026-11-15 10:09:36,298 INFO energybaseline.auto auto.resolved target=quality_offset setting=vsg_max_missing_pct value=40 signals=[n=72, p=1, median_missing_pct=0.00%] rule=[maximum predictor missingness adapts to sample length (25% n<60, 40% n<1000, 50% n>=1000)]
+2026-11-15 10:09:36,298 INFO energybaseline.auto auto.resolved target=quality_offset setting=vsg_min_rel_variance value=1e-08 signals=[n=72, candidate_count=1] rule=[near-constant relative-variance floor scaled by sample size]
+2026-11-15 10:09:36,298 INFO energybaseline.auto auto.resolved target=quality_offset setting=vsg_vif_limit value=5 signals=[n=72, candidate_count=1] rule=[iterative VIF multicollinearity ceiling (5.0 for n<100, 10.0 for n>=100)]
+2026-11-15 10:09:36,301 INFO energybaseline.auto auto.derived target=quality_offset setting=vsg.process_setting value=include signals=[miss=0.00%, uniq=72, r=0.906, rho=0.862, mi=0.612, vif=1.00]
+2026-11-15 10:09:36,301 INFO energybaseline.auto auto.resolved target= setting=tcp_alpha value=0.05 signals=[n=72, est_tests=10] rule=[alpha=0.01 for large n>=2000 (guards trivial rejection), 0.10 for very small n<30, 0.05 otherwise]
+2026-11-15 10:09:36,302 INFO energybaseline.auto auto.resolved target= setting=tcp_confidence value=0.95 signals=[alpha=0.05, n=72] rule=[nominal confidence level matched to 1 - alpha (bounded to [0.80, 0.999])]
+2026-11-15 10:09:36,302 INFO energybaseline.auto auto.resolved target= setting=tcp_correction value=benjamini_yekutieli signals=[est_family_m=10, mean_abs_r=0.906] rule=[Holm FWER for small families (m<=8), BY FDR under strong dependence (|r|>=0.65), BH FDR otherwise]
+2026-11-15 10:09:36,302 INFO energybaseline.auto auto.resolved target= setting=tcp_family_definition value=per_test_family signals=[n_targets=1, est_family_m=10] rule=[group hypotheses by statistical test family for single target, per-target when multiple EnPIs compete]
+2026-11-15 10:09:36,303 INFO energybaseline.auto auto.resolved target= setting=tcp_decision_rule value=p_only signals=[n=72] rule=[require practical effect-size floor alongside p_adj<=alpha when n>=500 to prevent trivial rejections]
+2026-11-15 10:09:36,303 INFO energybaseline.auto auto.resolved target= setting=tcp_min_effect_size value=0.1179 signals=[n=72, rule=p_only] rule=[minimum standardized effect size 1/sqrt(n) clamped to [0.02, 0.20]]
+2026-11-15 10:09:36,303 INFO energybaseline.auto auto.resolved target= setting=tcp_execution_mode value=full signals=[n=72] rule=[full bootstrap/exact mode for n<=10000, fast asymptotic subsampling mode for n>10000]..
+------------------------------ Captured log call -------------------------------
+INFO     energybaseline.db:session.py:439 db.selftest {"ok": true, "url": "sqlite://***", "masked_url": "sqlite://***", "rung": "eb_home", "fallback": true, "writable": true, "banner_level": "none", "banner_text": ""}
+INFO     energybaseline.gui:main_window.py:231 GUI started
+INFO     energybaseline.auto:auto.py:272 auto.resolved target=quality_offset setting=vsg_max_missing_pct value=40 signals=[n=72, p=1, median_missing_pct=0.00%] rule=[maximum predictor missingness adapts to sample length (25% n<60, 40% n<1000, 50% n>=1000)]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target=quality_offset setting=vsg_min_rel_variance value=1e-08 signals=[n=72, candidate_count=1] rule=[near-constant relative-variance floor scaled by sample size]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target=quality_offset setting=vsg_vif_limit value=5 signals=[n=72, candidate_count=1] rule=[iterative VIF multicollinearity ceiling (5.0 for n<100, 10.0 for n>=100)]
+INFO     energybaseline.auto:auto.py:321 auto.derived target=quality_offset setting=vsg.process_setting value=include signals=[miss=0.00%, uniq=72, r=0.906, rho=0.862, mi=0.612, vif=1.00]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_alpha value=0.05 signals=[n=72, est_tests=10] rule=[alpha=0.01 for large n>=2000 (guards trivial rejection), 0.10 for very small n<30, 0.05 otherwise]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_confidence value=0.95 signals=[alpha=0.05, n=72] rule=[nominal confidence level matched to 1 - alpha (bounded to [0.80, 0.999])]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_correction value=benjamini_yekutieli signals=[est_family_m=10, mean_abs_r=0.906] rule=[Holm FWER for small families (m<=8), BY FDR under strong dependence (|r|>=0.65), BH FDR otherwise]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_family_definition value=per_test_family signals=[n_targets=1, est_family_m=10] rule=[group hypotheses by statistical test family for single target, per-target when multiple EnPIs compete]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_decision_rule value=p_only signals=[n=72] rule=[require practical effect-size floor alongside p_adj<=alpha when n>=500 to prevent trivial rejections]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_min_effect_size value=0.1179 signals=[n=72, rule=p_only] rule=[minimum standardized effect size 1/sqrt(n) clamped to [0.02, 0.20]]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_execution_mode value=full signals=[n=72] rule=[full bootstrap/exact mode for n<=10000, fast asymptotic subsampling mode for n>10000]
+INFO     energybaseline.gui:main_window.py:249 Dataset loaded: manufacturing.csv
+INFO     energybaseline.auto:auto.py:272 auto.resolved target=quality_offset setting=vsg_max_missing_pct value=40 signals=[n=72, p=1, median_missing_pct=0.00%] rule=[maximum predictor missingness adapts to sample length (25% n<60, 40% n<1000, 50% n>=1000)]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target=quality_offset setting=vsg_min_rel_variance value=1e-08 signals=[n=72, candidate_count=1] rule=[near-constant relative-variance floor scaled by sample size]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target=quality_offset setting=vsg_vif_limit value=5 signals=[n=72, candidate_count=1] rule=[iterative VIF multicollinearity ceiling (5.0 for n<100, 10.0 for n>=100)]
+INFO     energybaseline.auto:auto.py:321 auto.derived target=quality_offset setting=vsg.process_setting value=include signals=[miss=0.00%, uniq=72, r=0.906, rho=0.862, mi=0.612, vif=1.00]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_alpha value=0.05 signals=[n=72, est_tests=10] rule=[alpha=0.01 for large n>=2000 (guards trivial rejection), 0.10 for very small n<30, 0.05 otherwise]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_confidence value=0.95 signals=[alpha=0.05, n=72] rule=[nominal confidence level matched to 1 - alpha (bounded to [0.80, 0.999])]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_correction value=benjamini_yekutieli signals=[est_family_m=10, mean_abs_r=0.906] rule=[Holm FWER for small families (m<=8), BY FDR under strong dependence (|r|>=0.65), BH FDR otherwise]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_family_definition value=per_test_family signals=[n_targets=1, est_family_m=10] rule=[group hypotheses by statistical test family for single target, per-target when multiple EnPIs compete]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_decision_rule value=p_only signals=[n=72] rule=[require practical effect-size floor alongside p_adj<=alpha when n>=500 to prevent trivial rejections]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_min_effect_size value=0.1179 signals=[n=72, rule=p_only] rule=[minimum standardized effect size 1/sqrt(n) clamped to [0.02, 0.20]]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_execution_mode value=full signals=[n=72] rule=[full bootstrap/exact mode for n<=10000, fast asymptotic subsampling mode for n>10000]
+--------------------------- Captured stdout teardown ---------------------------
+.
+=========================== short test summary info ============================
+FAILED tests/gui/test_remediation_native.py::test_desktop_dispatches_input_bound_inference_to_actual_spawn_worker
+1 failed, 30 passed in 63.47s (0:01:03)
+pytest.main returned 1
+top level []
+collect 0
+done diagnostic

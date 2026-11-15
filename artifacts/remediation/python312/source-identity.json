@@ -1,0 +1,13 @@
+{
+  "local_full_suite_commit": "f0a6981d10cbab5ebd4365cfbe86b5886ea1c4bb",
+  "native_retry_commit": "56574a4970490735053a563c01d8616fc4f28ebf",
+  "local_to_retry_changes": [
+    "README.md"
+  ],
+  "all_executable_test_dependency_workflow_files_identical": true,
+  "report_evidence_commit": "6511457d16b76d8e2d1afcf908b8d9e523edffab",
+  "report_to_retry_product_changes": [],
+  "initial_coverage_to_retry_core_changes": [],
+  "mandatory_original_tests_and_license_changed": [],
+  "review_baseline_changes": []
+}

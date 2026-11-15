@@ -1,0 +1,7 @@
+.................                                                        [100%]
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.16-final-0 _______________
+
+Coverage XML written to file artifacts/remediation/python312/gui-coverage.xml
+Required test coverage of 56% reached. Total coverage: 69.14%
+17 passed in 92.95s (0:01:32)

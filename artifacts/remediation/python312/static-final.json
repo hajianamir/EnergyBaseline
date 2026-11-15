@@ -1,0 +1,128 @@
+[
+  {
+    "command": [
+      "python",
+      "-m",
+      "ruff",
+      "check",
+      "."
+    ],
+    "exit_code": 0,
+    "seconds": 0.057,
+    "stdout": "All checks passed!\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "ruff",
+      "format",
+      "--check",
+      "."
+    ],
+    "exit_code": 0,
+    "seconds": 0.057,
+    "stdout": "112 files already formatted\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "pyflakes",
+      "energybaseline"
+    ],
+    "exit_code": 0,
+    "seconds": 1.876,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "compileall",
+      "-q",
+      "energybaseline",
+      "scripts"
+    ],
+    "exit_code": 0,
+    "seconds": 0.065,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python",
+      "scripts/gates/guard_web_free.py"
+    ],
+    "exit_code": 0,
+    "seconds": 27.599,
+    "stdout": "OK [guard_web_free] clean (/home/user/EnergyBaseline)\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python",
+      "scripts/gates/guard_tests_integrity.py"
+    ],
+    "exit_code": 0,
+    "seconds": 0.043,
+    "stdout": "OK [guard_tests_integrity] verified 4 baseline test files\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python",
+      "scripts/gates/guard_env_readers.py"
+    ],
+    "exit_code": 0,
+    "seconds": 12.418,
+    "stdout": "OK [guard_env_readers] clean (/home/user/EnergyBaseline)\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python",
+      "scripts/gates/guard_no_qthread_compute.py"
+    ],
+    "exit_code": 0,
+    "seconds": 0.798,
+    "stdout": "OK [guard_no_qthread_compute] clean (/home/user/EnergyBaseline)\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python",
+      "scripts/gen_matrix.py",
+      "--check"
+    ],
+    "exit_code": 0,
+    "seconds": 1.343,
+    "stdout": "OK [gen_matrix] verified 251 requirement IDs (188 done)\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python",
+      "scripts/verify_runtime.py"
+    ],
+    "exit_code": 0,
+    "seconds": 0.06,
+    "stdout": "Runtime contract verified: Python 3.12.16, linux\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "pip",
+      "check"
+    ],
+    "exit_code": 0,
+    "seconds": 0.774,
+    "stdout": "No broken requirements found.\n",
+    "stderr": ""
+  }
+]

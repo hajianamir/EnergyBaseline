@@ -1,5 +1,36 @@
 # Python 3.12 migration and main integration
 
+## Final result — migration and native validation complete
+
+All implementation work remains on `arena/5b0e8eef-energybaseline`. Remote main `fed56d58d18c20e0a689b5f510ed2e7c357034d9` was integrated locally by merge commit `d7fc8f9`; no main push, new PR, or PR merge/close operation was performed.
+
+| Validation | Final evidence |
+|---|---|
+| Complete local Python 3.12.16 suite | **498 passed, 0 failed, 0 skipped, process exit 0**, 646.40 seconds; source `f0a6981` |
+| Final real Windows CI | **SUCCESS**, job `132783541078` |
+| Final real Ubuntu 26.04 CI | **SUCCESS**, job `132783541242` |
+| Shared final CI run | [43704827147](https://github.com/hajianamir/EnergyBaseline/actions/runs/43704827147), tested source `56574a4970490735053a563c01d8616fc4f28ebf` |
+| Source identity | Local full-suite source and final CI source differ only in root README documentation; all executable, dependency, workflow and test files are identical |
+| Static/runtime/dependency checks | **11 passed**; actual interpreter and `pip check` verified |
+| Preserved gates | Full-suite core/selected-module coverage gates and GUI coverage gate passed on both hosted OSes; no test or coverage threshold was weakened |
+| Native receipts | Three actual hosted ODBC/SecretService/Windows-DPAPI receipts, byte-exact runner SHA-256 verified from official check annotations |
+| Source binding | **294 files**, **0 drift**; eight CRLF working-tree scripts also verified against Git's normalized blob identity |
+| Fresh product reports | Four-renderer agreement on **20 metrics**, **9-page** deterministic Executive PDF, **8-file** reproducible audit archive, **11 + 12** phase manifest hashes verified |
+
+Windows CI also passed executable packaging/runtime evidence, the self-signed Authenticode smoke test, vulnerability audit, SBOM generation and artifact upload. These hosted smoke checks are not production-signing or physical-machine certification.
+
+**Retained findings:** initial local/hosted Linux processes segfaulted after passing assertions because Qt objects survived into interpreter teardown. The final production ownership cleanup and strict GUI test destruction contract now pass with clean exit, including two native Linux runs. A separate Windows initialization timing check once took **5.297 seconds against its unchanged 5.0-second limit**; the identical-implementation retry passed. The failure is retained, and a successful retry does not erase timing sensitivity under hosted load.
+
+The exact/hash dependency manifests contain 164 universal Python 3.12 package pins. Native Qt Essentials/Addons avoid the WebEngine dependency newly introduced by the PySide6 metapackage. The original four integrity-protected tests, LICENSE and `artifacts/review_baseline/` remain unchanged; the two existing runtime contract tests were updated only for the explicitly authorized migration, and new semantic/GUI/teardown assertions strengthen coverage.
+
+Primary machine-readable evidence: `artifacts/remediation/python312/summary.json`, `pytest-isolation.txt`/XML, `static-final.json`, `source-identity.json`, `source-binding-ci-final.json`, `ci/receipts-final.json`, and `artifact-sha256.json`. The historical Python 3.11 review is not used as migration acceptance. The final evidence commit changes only `docs/**` and `artifacts/**`, which the existing workflow intentionally ignores; no validated implementation changes follow the tested source.
+
+**Scope limits:** local matching CUDA native libraries were reused to fit the sandbox disk limit; hosted installs are fresh. Native receipt bytes were reconstructed from official check annotations and verified against runner SHA-256, not downloaded as Azure ZIPs. Production signing, real remote MySQL/SQL Server TLS, reboot/locked-desktop persistence and physical-machine performance remain uncertified.
+
+## Chronological execution record
+
+The entries below retain intermediate pending states and failed attempts for auditability; the final table above is the current acceptance status.
+
 ## Authorized scope
 
 Integrate `origin/main` (`fed56d58d18c20e0a689b5f510ed2e7c357034d9`) into `arena/5b0e8eef-energybaseline`, retain the remediation/security contracts, migrate the complete runtime policy to Python 3.12, regenerate dependency manifests, and execute fresh Windows/Linux CI. Do not change main, merge/close PRs, remove tests or weaken coverage.
@@ -67,3 +98,13 @@ Inspection confirmed a Qt ownership/lifetime defect: main gave QMdiSubWindow obj
 The first production ownership fix is not sufficient on its own: source `6511457` again reported 498 passing local tests (713.62 seconds) and then exited 139. This failed process is retained in `pytest-fixed.txt`/XML. Conversely, hosted run `43697653541` on the preceding `d848936` completed successfully on both Windows and Linux, so the symptom is intermittent, not a deterministic assertion failure.
 
 A focused diagnostic identified dozens of still-live top-level Qt objects after the legacy GUI suite, including test-only `Main`, `_StubMain`, ResultsPage and MonitorPage objects. Those tests use qapp and close(), not qtbot.addWidget(); close() only hides a QWidget, leaving native deletion until global interpreter teardown. A new `tests/gui/conftest.py` isolation fixture closes and schedules deletion of test-owned root windows, drains DeferredDelete while QApplication still exists, runs garbage collection, and **asserts every captured root really became invalid**. It does not alter existing tests, skip execution, suppress exceptions, relax assertions or intercept process exits. Production MDI/logging ownership fixes remain independently enforced by their regressions. Fresh full-suite and two-OS runs are still required on this strengthened teardown contract.
+
+Direct standard pytest invocation of the strengthened GUI suite passed 17/17 cases in 40.03 seconds with exit 0 (`gui-isolation.txt`/XML). An earlier ad-hoc `pytest.main()` diagnostic wrapper is not acceptance evidence: it lacked a `__main__` guard for multiprocessing spawn and produced a worker-handshake timeout. That wrapper is not shipped or used by CI. Standard `python -m pytest` remains mandatory.
+
+### Clean local acceptance and unchanged-source CI revalidation
+
+With strict native-widget teardown in place, the full standard suite on `f0a6981d10cbab5ebd4365cfbe86b5886ea1c4bb` completed **498 passed, 0 failed, 0 skipped, exit 0 in 646.40 seconds** (`pytest-isolation.txt`/XML). No process-exit override or warning suppression is used.
+
+Run `43702773093` subsequently recorded a Windows Gate G1 timing failure in the unchanged `test_db_matrix_unreachable_postgres_probe_audits_and_warns`: total initialization took 5.297 seconds against its existing 5.0-second limit. The original test and limit remain unchanged, and its official annotation is retained. This is a distinct timing finding, not evidence that the Qt teardown fix failed. Direct job rerun/cancel is denied by the GitHub integration's Actions write permission (HTTP 403), although push and check reads work. Therefore empty commit `b08e7e8a3a12e1e83375818ad091e0541d75875b` revalidates the **identical source tree** without changing code, tests, budgets, coverage or workflow steps. Final native Windows/Linux acceptance remains pending that revalidation. Timing sensitivity must not be hidden if the retry passes.
+
+The empty commit did not trigger Actions because the existing push path filters see no changed files. A root README setup clarification therefore triggers the retry, without changing implementation, dependencies, tests or workflow steps. The local 498-pass source remains identical for all executable/test files; the README now links this evidence and explains recreation of old virtual environments and native Qt component pins.
