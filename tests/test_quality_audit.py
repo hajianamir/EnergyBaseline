@@ -275,3 +275,12 @@ def test_numeric_range_limits_preserve_large_integer_distinctions():
     frame = pd.DataFrame({"n": [2**53, 2**53 + 1]})
     result = audit_quality(frame, {"validity": [{"kind": "range", "column": "n", "min": 2**53 + 1}]})
     assert result["dimensions"]["validity"]["score"] == 0.5
+
+
+@pytest.mark.parametrize("observed", [[str(2**53 + 1), "invalid"], [2**53 + 1, "invalid"]])
+def test_mixed_numeric_strings_cannot_silently_round_into_reference_matches(observed):
+    frame = pd.DataFrame({"id": [1, 2], "value": observed})
+    truth = pd.DataFrame({"id": [1, 2], "value": [2**53, 5]})
+    policy = {"accuracy": {"reference": "r", "keys": ["id"], "columns": ["value"]}}
+    with pytest.raises(ValueError, match="numeric observed dtype"):
+        audit_quality(frame, policy, references={"r": truth})

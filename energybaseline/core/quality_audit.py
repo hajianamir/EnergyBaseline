@@ -240,7 +240,11 @@ def audit_quality(
             truth = joined[column]
             known = truth.notna()
             if pd.api.types.is_numeric_dtype(ref[column]):
-                numeric_observed = pd.to_numeric(observed, errors="coerce")
+                if not pd.api.types.is_numeric_dtype(observed):
+                    raise ValueError(
+                        "Numeric accuracy requires a numeric observed dtype; parse mixed/string columns explicitly."
+                    )
+                numeric_observed = observed
                 a = numeric_observed.to_numpy(dtype=float, na_value=np.nan)
                 b = pd.to_numeric(truth, errors="coerce").to_numpy(dtype=float, na_value=np.nan)
                 known &= np.isfinite(b)
