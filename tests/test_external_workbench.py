@@ -5,6 +5,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -310,14 +311,28 @@ from energybaseline.cli import main
 args=json.loads(sys.argv[1])
 sys.stdout=None
 sys.stderr=None
-raise SystemExit(main(args))
+result=main(args)
+assert sys.stdout is None and sys.stderr is None
+raise SystemExit(result)
 """
     child = subprocess.run(
         [sys.executable, "-c", code, json.dumps(args)], cwd=ROOT, capture_output=True, text=True, timeout=60
     )
     assert child.returncode == 0, child.stderr
-    assert child.stdout == child.stderr == ""
-    assert json.loads(out.read_text())["operation"] == name
+    assert child.stdout == ""
+    _assert_only_known_native_discovery_warning(child.stderr)
+    output = json.loads(out.read_text())
+    assert output["operation"] == name
+    assert output["spec_sha256"] == digest(json.loads((EXAMPLES / (name + ".json")).read_text()))
+    row = output["result"]
+    assert row["baseline_changed"] is False
+    if name == "flaml-search":
+        assert row["engine"] == "flaml" and row["iterations_executed"] == 4 and row["test_rmse"] < 2
+    elif name == "pandera-validation":
+        assert row["engine"] == "pandera" and row["passed"]
+    else:
+        assert row["pretrained_weights_used"] and row["images"][0]["lines"][0]["character_count"] == 15
+        assert row["recognized_plaintext_exported"] is False
 
 
 def test_windowless_cli_without_destination_fails_closed_without_secondary_stream_error():
@@ -333,3 +348,35 @@ assert result==2
     child = subprocess.run([sys.executable, "-c", code], cwd=ROOT, capture_output=True, text=True, timeout=60)
     assert child.returncode == 0, child.stderr
     assert child.stdout == child.stderr == ""
+
+
+def _assert_only_known_native_discovery_warning(stderr):
+    # Python sys.stderr=None does not close OS descriptor 2. ORT's C++ logger can
+    # independently write this hardware-enumeration warning on Azure Linux VMs.
+    # Accept only the exact bounded diagnostic, never arbitrary stderr/tracebacks.
+    assert len(stderr) <= 32768
+    lines = re.sub(r"\x1b\[[0-9;]*m", "", stderr).splitlines()
+    assert len(lines) <= 32
+    expected = (
+        r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d+ "
+        r"\[W:onnxruntime:Default, device_discovery\.cc:\d+ GetPciBusId\] "
+        r'Skipping pci_bus_id for PCI path at "/sys/devices/[^"\r\n]+" '
+        r'because filename "[0-9a-f-]+" did not match expected pattern of '
+        + re.escape("[0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+")
+    )
+    assert all(re.fullmatch(expected, line) for line in lines), stderr
+
+
+def test_native_warning_allowlist_rejects_python_errors_unknown_logs_and_excessive_output():
+    known = (
+        "\x1b[0;93m2026-11-15 23:31:25.824591402 "
+        "[W:onnxruntime:Default, device_discovery.cc:95 GetPciBusId] "
+        'Skipping pci_bus_id for PCI path at "/sys/devices/test/5620e0c7-8062-4dce-aeb7-520c7ef76171" '
+        'because filename "5620e0c7-8062-4dce-aeb7-520c7ef76171" did not match expected pattern of '
+        "[0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+\x1b[m\n"
+    )
+    _assert_only_known_native_discovery_warning("")
+    _assert_only_known_native_discovery_warning(known)
+    for invalid in ("Traceback: PRIVATE", "Unexpected native error", known + "PRIVATE", known * 33, "x" * 32769):
+        with pytest.raises(AssertionError):
+            _assert_only_known_native_discovery_warning(invalid)
