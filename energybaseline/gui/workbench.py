@@ -25,7 +25,7 @@ class WorkbenchPanel(QWidget):
         layout = QVBoxLayout(self)
         notice = QLabel(
             "Exploratory tools only. No hypothesis tests, baseline acceptance, refitting or model persistence. "
-            "Load a version-1 job from examples/workbench; inputs use the current raw dataset."
+            "Load a version-1 job from examples/workbench or examples/advanced; tabular jobs use the current raw dataset."
         )
         self.notice = notice
         notice.setWordWrap(True)
@@ -123,7 +123,9 @@ class WorkbenchPanel(QWidget):
             if len(self.editor.toPlainText()) > 1_000_000:
                 raise ValueError("Request too large.")
             request = json.loads(self.editor.toPlainText())
-            frame = None if request.get("operation") == "linear-optimize" else self.state.df
+            from ..workbench import SPEC_OPERATIONS
+
+            frame = None if request.get("operation") in SPEC_OPERATIONS else self.state.df
             manager = get_pool_manager()
             cache = manager.cache_dir()
             envelope = pack_payload((frame, self.reference), cache, prefix="workbench_inputs")

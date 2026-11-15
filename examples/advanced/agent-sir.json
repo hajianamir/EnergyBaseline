@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "operation": "agent-simulate",
+  "parameters": {
+    "agents": 8,
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        4,
+        5
+      ],
+      [
+        5,
+        6
+      ],
+      [
+        6,
+        7
+      ]
+    ],
+    "initial_infected": [
+      0
+    ],
+    "transmission_rate": 0.5,
+    "recovery_rate": 0.2,
+    "step_size": 0.5,
+    "steps": 20,
+    "seed": 7,
+    "interventions": [
+      {
+        "step": 10,
+        "transmission_multiplier": 0.25
+      }
+    ]
+  }
+}

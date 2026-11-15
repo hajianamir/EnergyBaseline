@@ -1,0 +1,68 @@
+[
+  {
+    "request": "automl-search.json",
+    "dataset": "series.csv"
+  },
+  {
+    "request": "forecast-patchtst.json",
+    "dataset": "series.csv"
+  },
+  {
+    "request": "forecast-informer.json",
+    "dataset": "series.csv"
+  },
+  {
+    "request": "forecast-tft.json",
+    "dataset": "series.csv"
+  },
+  {
+    "request": "forecast-nhits.json",
+    "dataset": "series.csv"
+  },
+  {
+    "request": "forecast-tide.json",
+    "dataset": "series.csv"
+  },
+  {
+    "request": "forecast-deepar.json",
+    "dataset": "series.csv"
+  },
+  {
+    "request": "neural-architecture-search.json",
+    "dataset": "series.csv"
+  },
+  {
+    "request": "digital-twin.json",
+    "dataset": "series.csv"
+  },
+  {
+    "request": "route-optimize.json"
+  },
+  {
+    "request": "schedule-optimize.json"
+  },
+  {
+    "request": "evolutionary-optimize.json"
+  },
+  {
+    "request": "stock-flow.json"
+  },
+  {
+    "request": "agent-sir.json"
+  },
+  {
+    "request": "image-classification.json"
+  },
+  {
+    "request": "image-segmentation.json"
+  },
+  {
+    "request": "image-detection.json"
+  },
+  {
+    "request": "template-ocr.json"
+  },
+  {
+    "request": "image-classification-files.json"
+  }
+]

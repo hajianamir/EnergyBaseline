@@ -16,6 +16,11 @@ from numpy.linalg import LinAlgError
 
 from .analytics import categorical_divergence, group_fairness, portfolio_risk
 from .business import business_validation
+from .automl import automl_search
+from .deep import deep_forecast
+from .planning import routing, scheduling, evolutionary
+from .simulation import stock_flow, agent_sir, digital_twin
+from .vision import image_classification, image_segmentation, image_detection, template_ocr
 from .common import digest, fields, finite_json
 from .domains import competing_risks, graph_profile, rating_recommendations, survival_curve, text_retrieval
 from .entities import entity_candidates
@@ -28,6 +33,9 @@ from .prediction import classification_holdout, novelty_holdout
 
 OPERATIONS = MappingProxyType(
     {
+        "automl-search": automl_search,
+        "deep-forecast": deep_forecast,
+        "digital-twin": digital_twin,
         "portfolio-risk": portfolio_risk,
         "group-fairness": group_fairness,
         "kaplan-meier": survival_curve,
@@ -46,7 +54,19 @@ OPERATIONS = MappingProxyType(
         "regression-holdout": regression_holdout,
     }
 )
-OPERATION_NAMES = tuple(OPERATIONS) + ("categorical-divergence", "entity-candidates", "business-validation", "linear-optimize")
+SPEC_OPERATIONS = MappingProxyType({
+    "linear-optimize": optimize,
+    "route-optimize": routing,
+    "schedule-optimize": scheduling,
+    "evolutionary-optimize": evolutionary,
+    "stock-flow-simulate": stock_flow,
+    "agent-simulate": agent_sir,
+    "image-classification": image_classification,
+    "image-segmentation": image_segmentation,
+    "image-detection": image_detection,
+    "template-ocr": template_ocr,
+})
+OPERATION_NAMES = tuple(OPERATIONS) + ("categorical-divergence", "entity-candidates", "business-validation") + tuple(SPEC_OPERATIONS)
 
 
 def _validate_frame(frame):
@@ -84,9 +104,9 @@ def run_workbench(request, frame=None, *, reference=None):
         raise ValueError("Workbench request must be bounded finite JSON.") from None
     from ..core.ingest import sha256_dataframe
 
-    if operation == "linear-optimize":
+    if operation in SPEC_OPERATIONS:
         if frame is not None or reference is not None:
-            raise ValueError("Optimization consumes its explicit specification, not an implicit dataset/reference.")
+            raise ValueError("Specification-only operations do not consume an implicit dataset/reference.")
         data_hash, reference_hash = None, None
     else:
         _validate_frame(frame)
@@ -99,8 +119,8 @@ def run_workbench(request, frame=None, *, reference=None):
         elif reference is not None:
             raise ValueError("Reference data are supported only for categorical-divergence, entity-candidates and business-validation.")
     try:
-        if operation == "linear-optimize":
-            result = optimize(request["parameters"])
+        if operation in SPEC_OPERATIONS:
+            result = SPEC_OPERATIONS[operation](request["parameters"])
         elif operation == "business-validation":
             result = business_validation(frame, reference, request["parameters"])
         elif operation in ("categorical-divergence", "entity-candidates"):
@@ -109,7 +129,7 @@ def run_workbench(request, frame=None, *, reference=None):
         else:
             result = OPERATIONS[operation](frame, request["parameters"])
         finite_json(result)
-    except (ValueError, TypeError, KeyError, IndexError, OverflowError, LinAlgError):
+    except (ValueError, TypeError, KeyError, IndexError, OverflowError, LinAlgError, RuntimeError, OSError):
         # Third-party exception text can echo cell values, category labels or caller literals.
         raise ValueError(
             "Workbench operation failed validation or numeric execution. Check the documented schema, "

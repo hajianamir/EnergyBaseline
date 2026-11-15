@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "operation": "image-classification",
+  "parameters": {
+    "labels": [
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1
+    ],
+    "train_images": 12,
+    "seed": 7,
+    "epochs": 3,
+    "width": 4,
+    "image_files": [
+      "sample-00.png",
+      "sample-01.png",
+      "sample-02.png",
+      "sample-03.png",
+      "sample-04.png",
+      "sample-05.png",
+      "sample-06.png",
+      "sample-07.png",
+      "sample-08.png",
+      "sample-09.png",
+      "sample-10.png",
+      "sample-11.png",
+      "sample-12.png",
+      "sample-13.png",
+      "sample-14.png",
+      "sample-15.png"
+    ],
+    "image_root": "examples/advanced/images",
+    "image_size": [
+      8,
+      8
+    ],
+    "color_mode": "L"
+  }
+}

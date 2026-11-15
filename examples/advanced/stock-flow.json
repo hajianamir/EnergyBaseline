@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "operation": "stock-flow-simulate",
+  "parameters": {
+    "initial": [
+      10,
+      0
+    ],
+    "stoichiometry": [
+      [
+        -1
+      ],
+      [
+        1
+      ]
+    ],
+    "rate_matrix": [
+      [
+        0.2,
+        0
+      ]
+    ],
+    "constant_rates": [
+      0
+    ],
+    "duration": 5,
+    "steps": 20
+  }
+}

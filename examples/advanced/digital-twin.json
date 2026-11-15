@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "operation": "digital-twin",
+  "parameters": {
+    "time": "time",
+    "states": [
+      "state"
+    ],
+    "inputs": [
+      "control"
+    ],
+    "train_rows": 72,
+    "ridge": 0
+  }
+}

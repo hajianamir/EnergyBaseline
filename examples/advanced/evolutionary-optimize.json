@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "operation": "evolutionary-optimize",
+  "parameters": {
+    "lower": [
+      0,
+      0
+    ],
+    "upper": [
+      2,
+      2
+    ],
+    "objectives": [
+      {
+        "linear": [
+          0,
+          0
+        ],
+        "quadratic": [
+          1,
+          1
+        ],
+        "bias": 0
+      },
+      {
+        "linear": [
+          -4,
+          -4
+        ],
+        "quadratic": [
+          1,
+          1
+        ],
+        "bias": 8
+      }
+    ],
+    "seed": 4,
+    "population": 16,
+    "generations": 8,
+    "matrix": [
+      [
+        -1,
+        -1
+      ]
+    ],
+    "constraint_upper": [
+      -1
+    ]
+  }
+}
