@@ -14,6 +14,7 @@ Python:
 
 ```python
 from energybaseline.workbench import run_workbench
+
 result = run_workbench(request, frame, reference=reference_frame)
 ```
 
