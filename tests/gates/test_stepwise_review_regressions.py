@@ -272,3 +272,14 @@ def test_odbc_plain_database_compatibility_never_leaves_delimiters_unescaped():
     assert sqlsource._odbc_value("/safe/database.sqlite", brace=False) == "/safe/database.sqlite"
     for value in ("x;PWD=bad", "x}y", "{x", " padded ", ""):
         assert sqlsource._odbc_value(value, brace=False).startswith("{")
+
+
+def test_catalog_stripping_does_not_authorize_changed_real_predictors():
+    from energybaseline.models import evaluate_f1_f10_catalog
+
+    frame, gate, panel = locked_panel()
+    panel.lock_preregistration()
+    tagged = frame.assign(regime_cluster_k=0)
+    tagged.loc[0, "x"] += 100
+    with pytest.raises(ComplianceGateError, match="input"):
+        evaluate_f1_f10_catalog(tagged, target_col="y", predictor_cols=["x", "regime_cluster_k"], vsg=gate, tcp=panel)

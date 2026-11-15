@@ -1,6 +1,6 @@
 {
-  "base_commit": "7963431d67c04345ea53e7c65f27ac2fac72406c",
-  "description": "Exact tested source snapshot; bind to the new source commit in the final evidence summary.",
+  "base_commit": "3c68ba69bdc2a318b2ca8dce86d41fc742af74ea",
+  "description": "Corrected MT-5-compatible source snapshot; final full run and new CI must match these bytes.",
   "files": {
     ".gitattributes": "723929a4fbce825f480b87571a25d0d9c4e66a70238c58fd0b46a1f936926be2",
     ".github/workflows/ci.yml": "a4a557ce9d29141151a05eb08af2f8b83b05b63d0b82bf4a7d3805b2e2fbe89f",
@@ -75,7 +75,7 @@
     "energybaseline/mining/clustering.py": "56ad2acd9e8fc86b4960fa9138820efb7041857f5d3410c1103d7d3e13b95bd7",
     "energybaseline/mining/downsample.py": "ce3493eca521c10bc3eceeb5efdf8e03b7c35a5ffe06bdbd1d908a275b5d4c97",
     "energybaseline/mining/eda_attach.py": "d72703a3e989797e4d9aa103a8a526b027d29a5ed93b611b5733c007420832f5",
-    "energybaseline/models/__init__.py": "4110f88bf405f946d0ab144ff5b801ac9a12eae90f492570cd8a6f9d12ce26d5",
+    "energybaseline/models/__init__.py": "d5334c0919e26bf3a457ae31eb3c1cb24574fd731e188431bbe2ab866d007a1d",
     "energybaseline/models/base.py": "36f8cb701830e1bf97a8b71d17082d0abe331fed7e4ed3e7eb38b9ddd1d279a0",
     "energybaseline/models/ensemble.py": "1e7e1b9e1f3f82cb6fcae01ba86f72c7d747f908cd7f3460964019e69e2be392",
     "energybaseline/models/f10_stacking.py": "bf11098488215d490428b7a6dcee099b573ac9f4bce830cc4426541979a75c85",
@@ -201,7 +201,7 @@
     "tests/gates/test_remaining_remediation.py": "300d84308643b6ce6de2f9ac5dc0c83afaa75215a628cd0be362e209cd9d0d2d",
     "tests/gates/test_remediation_recheck.py": "7cf1bb9cd7d5d1cecb4cc9bcf9a428f39839f1723f5ed2e4f4b2fb38846bd644",
     "tests/gates/test_security_correctness_remediation.py": "376d735058fcd0ffd83875515ae6413a5aac03cfdd5266a4dcb532884581e5d3",
-    "tests/gates/test_stepwise_review_regressions.py": "87bee15cf3c2c39675754c845f9bc1570d7bb1fdeffc64954c22936721fc1acc",
+    "tests/gates/test_stepwise_review_regressions.py": "5d81b8c368cf9e4a2cc480b913e61622ce8f7456547003582b8ce63c6c083b58",
     "tests/gates/test_temporal_compatibility_remediation.py": "7538e5ce1c8bccdc6b19bd061f0abdc37e8ab32fa69d6c93104a8419352d4ca6",
     "tests/gui/__init__.py": "2a2eff7f57247a0de332734c02296f61d84fac3a58207aedda6824de8fe21d93",
     "tests/gui/test_phase1_gui.py": "f9b2451c24196c13e703065f86ab7041e647ca5d8136b411c0c1d1f3f16059d9",
