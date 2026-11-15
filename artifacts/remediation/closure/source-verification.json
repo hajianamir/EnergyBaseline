@@ -1,0 +1,8 @@
+{
+  "checked_files": 210,
+  "source_drift": [],
+  "manifest": "source-manifest.json",
+  "phase7_exit_code": 0,
+  "phase8_exit_code": 0,
+  "note": "Full regression was still running at this verification; final result is not yet certified."
+}

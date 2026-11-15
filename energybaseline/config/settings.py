@@ -21,6 +21,7 @@ import sys
 from pathlib import Path
 
 from ..io.paths import PathGuardError, resolve_app_home, resolve_temp_dir
+from .redaction import safe_database_label
 
 DEFAULT_SQLITE_URL = "sqlite:///./data/app.db"
 _ENV_KEYS = ("DATABASE_URL", "POSTGRES_URL", "DB_CONNECTION_STRING", "DB_URI", "EB_DATABASE_URL")
@@ -148,13 +149,28 @@ def mask_database_url(url: str) -> str:
 
 
 def _mask(url: str) -> str:
-    if "@" in url and "://" in url:
-        scheme, rest = url.split("://", 1)
-        creds, host = rest.rsplit("@", 1)
-        if ":" in creds:
-            creds = creds.split(":", 1)[0] + ":***"
-        return f"{scheme}://{creds}@{host}"
-    return url
+    return safe_database_label(url)
+
+
+def _boolean_setting(name: str, default: bool = False) -> bool:
+    raw = os.environ.get(name, "").strip().lower()
+    if not raw:
+        return default
+    if raw in {"1", "true", "yes", "on"}:
+        return True
+    if raw in {"0", "false", "no", "off"}:
+        return False
+    raise ValueError(f"{name} must be an explicit boolean (true/false or 1/0).")
+
+
+def external_database_required() -> bool:
+    """Read storage policy at the central configuration boundary."""
+    return _boolean_setting("EB_DB_STRICT")
+
+
+def insecure_credential_file_allowed() -> bool:
+    """Development-only opt-in; never enable a plaintext master-key file by default."""
+    return _boolean_setting("EB_ALLOW_INSECURE_KEYFILE")
 
 
 def setup_logging(extra_handler: logging.Handler | None = None) -> None:

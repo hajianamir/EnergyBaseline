@@ -1,0 +1,5 @@
+OK [guard_web_free] clean (/home/user/EnergyBaseline)
+OK [guard_env_readers] clean (/home/user/EnergyBaseline)
+OK [guard_tests_integrity] verified 4 baseline test files
+OK [guard_no_qthread_compute] clean (/home/user/EnergyBaseline)
+OK [gen_matrix] verified 251 requirement IDs (188 done)

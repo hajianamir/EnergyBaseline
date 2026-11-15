@@ -15,6 +15,7 @@ from .ci_method import ConfidenceInterval, detect_serial_autocorrelation
 
 library_versions_snapshot = canonical_library_versions
 
+STATUS_NOT_RUN_GATES: Final[str] = "not run (gates not accepted)"
 STATUS_NOT_RUN_USER: Final[str] = "not run (user)"
 STATUS_NOT_APPLICABLE_NO_GROUP: Final[str] = "not applicable (no group column)"
 STATUS_INSUFFICIENT_DATA: Final[str] = "insufficient_data"
@@ -26,6 +27,7 @@ VALID_DECISIONS: Final[frozenset[str]] = frozenset(
         STATUS_PASS,
         STATUS_FAIL,
         STATUS_NOT_RUN_USER,
+        STATUS_NOT_RUN_GATES,
         STATUS_NOT_APPLICABLE_NO_GROUP,
         STATUS_INSUFFICIENT_DATA,
     }
@@ -196,7 +198,9 @@ class TestContractResult:
 
     def __post_init__(self) -> None:
         if self.decision not in VALID_DECISIONS:
-            raise TestContractError(f"Invalid decision {self.decision!r} on {self.test_id}; expected {sorted(VALID_DECISIONS)}.")
+            raise TestContractError(
+                f"Invalid decision {self.decision!r} on {self.test_id}; expected {sorted(VALID_DECISIONS)}."
+            )
         if self.mode not in ("fast", "full"):
             raise TestContractError(f"Invalid mode {self.mode!r} on {self.test_id}; expected 'fast' or 'full'.")
         if self.p_raw is not None:
@@ -213,7 +217,9 @@ class TestContractResult:
         _guard_no_observed_power(self.details)
         _guard_no_observed_power(self.assumptions_checked)
         if "observed power" in self.interpretation.lower() or "observed_power" in self.interpretation.lower():
-            raise ObservedPowerForbiddenError("Post-hoc observed power is forbidden in TestContractResult.interpretation.")
+            raise ObservedPowerForbiddenError(
+                "Post-hoc observed power is forbidden in TestContractResult.interpretation."
+            )
 
     def with_multiplicity_and_policy(
         self,
@@ -282,6 +288,7 @@ class TestContractResult:
     def to_dict(self) -> dict[str, Any]:
         df_out: Any = list(self.df) if isinstance(self.df, tuple) else self.df
         return {
+            "schema_version": 1,
             "alpha": self.alpha,
             "assumptions_checked": list(self.assumptions_checked),
             "assumptions_met": self.assumptions_met,
@@ -408,6 +415,22 @@ def make_insufficient_data_result(
         interpretation=f"{test_id} ({name}) skipped cleanly: {reason} (n={n_used}, required>={min_required}).",
         downstream_action="skip_insufficient_sample",
         mode=mode if mode in ("fast", "full") else "full",
+    )
+
+
+def make_not_run_gates_result(*, test_id: str, target: str, stage: str, mode: str = "full") -> TestContractResult:
+    """Typed no-compute result used by every ungated application analysis."""
+    from dataclasses import replace
+
+    base = make_not_run_user_result(test_id=test_id, name=test_id, target=target, stage=stage, mode=mode)
+    return replace(
+        base,
+        decision=STATUS_NOT_RUN_GATES,
+        subtest="authorization_absent",
+        inference_label="not run",
+        assumptions_checked=(),
+        interpretation="Inferential engines require accepted VSG and locked TCP; no test was executed.",
+        downstream_action="Accept VSG and lock TCP before requesting inference.",
     )
 
 

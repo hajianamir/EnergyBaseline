@@ -1,0 +1,67 @@
+{
+  "branch": "arena/5b0e8eef-energybaseline",
+  "full_regression": {
+    "tests": 429,
+    "passed": 428,
+    "failed": 1,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 706.27,
+    "exit_code": 1,
+    "groups": {
+      "gui": {
+        "tests": 15,
+        "passed": 14,
+        "failed": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "non_gui": {
+        "tests": 414,
+        "passed": 414,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    }
+  },
+  "focused": {
+    "passed": 127,
+    "seconds": 54.24
+  },
+  "native_gui_rebuilt_runtime": {
+    "passed": 14,
+    "failed": 1,
+    "skipped": 0,
+    "seconds": 59.7
+  },
+  "native_bootstrap": {
+    "exit_code": 0,
+    "real_qtwidgets": true,
+    "qpa_platform": "offscreen",
+    "scope": "Linux x86-64 local test runtime, not physical display or two-OS evidence"
+  },
+  "static_checks": {
+    "commands": 11,
+    "failures": 0
+  },
+  "source_verification": {
+    "files": 207,
+    "drift": []
+  },
+  "known_failure": {
+    "test": "tests/gui/test_phase6_gui_top5_and_lock.py:93",
+    "expected_fixture_fidelity": 0.941,
+    "actual_artifact_fidelity_displayed": 0.979,
+    "original_test_unchanged": true,
+    "not_skipped_or_xfailed": true
+  },
+  "remaining_release_gates": [
+    "Original GUI hardcoded-fidelity contract requires formal resolution; no fabricated metric or ranking workaround applied.",
+    "Actual Windows and two-OS E3 acceptance.",
+    "Original raw E1 acceptance requirements.",
+    "Real secure OS credential-store durability and failure checks.",
+    "Real MySQL, SQL Server and ODBC deployment validation."
+  ],
+  "release_complete": false
+}

@@ -1,0 +1,82 @@
+"""Reproduce with: OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 .venv/bin/python < artifacts/remediation/remaining/domain-proof-script.txt"""
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+
+import numpy as np
+import pandas as pd
+
+from energybaseline.contracts import AnalysisRequest
+from energybaseline.core import ingest
+from energybaseline.core.models import metrics
+from energybaseline.core.report_adapter import model_from_analysis
+from energybaseline.sdk import analyze_request
+from samples import generate_samples
+
+root = Path('artifacts/remediation/remaining/domain-proof')
+root.mkdir(parents=True, exist_ok=True)
+generate_samples.rng = np.random.default_rng(2024)
+rng = np.random.default_rng(773)
+n = 72
+settings = rng.normal(size=n)
+cases = {
+    'energy': (generate_samples.monthly_building(months=n), 'Month', 'Energy_kWh'),
+    'water': (pd.DataFrame({'time': pd.date_range('2010-01-01', periods=n, freq='MS'),
+                            'pressure_kPa': settings + 200,
+                            'volume_m3': 1000 + 80 * settings + rng.normal(0, 8, n)}), 'time', 'volume_m3'),
+    'manufacturing': (pd.DataFrame({'time': pd.date_range('2010-01-01', periods=n, freq='MS'),
+                                    'process_setting': settings,
+                                    'quality_offset': -8 + 2 * settings + rng.normal(0, .2, n)}), 'time', 'quality_offset'),
+}
+config = {'seed': 42, 'parallel_targets': 1, 'model_families': ['linear'], 'hpo_trials': 0,
+          'enable_nn': False, 'enable_mining': False, 'include_importance': False,
+          'include_eda_attachment': False, 'lags': [1, 3], 'rolling_windows': [3]}
+(root / 'config.json').write_text(json.dumps(config, indent=2) + '\n')
+evidence = {}
+for pack, (generated, time_col, target) in cases.items():
+    path = root / (pack + '-input.csv')
+    generated.to_csv(path, index=False)
+    frame = ingest.load_file(path)
+    sha = ingest.sha256_file(path)
+    response = analyze_request(frame, AnalysisRequest(time_col, (target,), pack, config), dataset_sha=sha)
+    result = response.run.targets[target]
+    assert result.status == 'ok', result.error
+    trace = result.validation_series
+    trace.to_csv(root / (pack + '-raw-oof.csv'))
+    reproduced = {}
+    for row in result.shortlist:
+        mask = trace[row['name']].notna()
+        actual = metrics(trace.loc[mask, 'actual'], trace.loc[mask, row['name']])
+        assert np.isclose(actual['rmse'], row['metrics']['rmse'])
+        reproduced[row['name']] = actual
+    cli_path = root / (pack + '-cli.json')
+    command = [sys.executable, '-m', 'energybaseline.cli', 'analyze', str(path), '--time-col', time_col,
+               '--targets', target, '--domain-pack', pack, '--config', str(root / 'config.json'), '--out', str(cli_path)]
+    completed = subprocess.run(command, capture_output=True, text=True, timeout=120)
+    assert completed.returncode == 0, completed.stderr
+    cli = json.loads(cli_path.read_text())
+    summary = response.to_summary()
+    assert cli['domain_policy'] == summary['domain_policy']
+    assert cli['targets'][target]['validation_contract'] == summary['targets'][target]['validation_contract']
+    for first, second in zip(cli['targets'][target]['shortlist'], summary['targets'][target]['shortlist']):
+        assert first['name'] == second['name']
+        assert np.isclose(first['score'], second['score'])
+        assert first['metrics'] == second['metrics']
+    report = model_from_analysis(response.run, [], [])
+    report.save(root / (pack + '-report.json'))
+    if pack != 'energy':
+        assert all(v is None for v in result.thresholds.values())
+        assert 'degree_days' not in result.eda
+    evidence[pack] = {'input_sha256': sha, 'domain_policy': summary['domain_policy'],
+                      'status': result.status, 'raw_oof_metrics_reproduced': reproduced,
+                      'thresholds': result.thresholds, 'purge_gap_spec': result.purge_gap_spec,
+                      'cli_sdk_fold_feature_metric_score_agreement': True,
+                      'report_id': report.report_id, 'inference_requested': False}
+output = {'evidence_schema_version': 1,
+          'scope': 'Actual synthetic energy/water/signed-manufacturing runs through SDK and CLI on Linux. Not native GUI or two-OS acceptance.',
+          'config': config, 'cases': evidence}
+(root / 'summary.json').write_text(json.dumps(output, indent=2) + '\n')
+print(json.dumps(output, indent=2))

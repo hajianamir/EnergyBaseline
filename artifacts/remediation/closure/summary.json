@@ -1,0 +1,83 @@
+{
+  "source_commit": "e03742be4fa7ad27e155169ad01ce15d2cc91898",
+  "branch": "arena/5b0e8eef-energybaseline",
+  "local_full_regression": {
+    "tested_commit": "b7e3caa313ac14981eb51d560645c89ce6b77cfb",
+    "tests": 438,
+    "passed": 438,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 664.18,
+    "exit_code": 0
+  },
+  "ci_followup_unit_regression": {
+    "passed": 53,
+    "seconds": 4.37,
+    "scope": "Correct actual provider failure-injection boundary and POSIX-only permission assertion in the added tests."
+  },
+  "product_source_delta_since_full_local_run": [],
+  "source_verification": {
+    "files": 213,
+    "drift": []
+  },
+  "two_os_ci": {
+    "run_id": 43685905726,
+    "url": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43685905726",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "Phase 8 Gate G8 (windows-latest)",
+        "databaseId": 132726206462,
+        "conclusion": "success",
+        "startedAt": "2026-11-15T06:32:29Z",
+        "completedAt": "2026-11-15T06:55:03Z"
+      },
+      {
+        "name": "Phase 8 Gate G8 (ubuntu-latest)",
+        "databaseId": 132726206643,
+        "conclusion": "success",
+        "startedAt": "2026-11-15T06:32:30Z",
+        "completedAt": "2026-11-15T06:55:03Z"
+      }
+    ]
+  },
+  "native_receipts": {
+    "count": 3,
+    "sha256_verified": true,
+    "windows_dpapi": true,
+    "linux_secret_service_and_outage": true,
+    "linux_sqlite_odbc": true,
+    "mocked": false
+  },
+  "local_native_odbc": {
+    "checks": 10,
+    "passed": 10,
+    "advisory_flag_alone_prevented_write": false,
+    "backend_enforced_write_rejection": true
+  },
+  "rendering_evidence": {
+    "metrics_in_agreement": 20,
+    "executive_pdf_pages": 9,
+    "byte_deterministic_pdf": true,
+    "archive_metrics_reproduced": 20,
+    "archive_tables_reproduced": 30
+  },
+  "static_checks": {
+    "commands": 11,
+    "failures": 0
+  },
+  "owner_authorized_exceptions": [
+    "One original GUI fidelity/approval contract test updated without removing assertions or skipping tests.",
+    "Commit/push only the current branch, no PR, merge or main modification."
+  ],
+  "remaining_unproven_deployment_claims": [
+    "Actual MySQL/MariaDB and SQL Server instances and other ODBC drivers/TLS policies.",
+    "Physical reference-machine performance and OS reboot/locked-desktop recovery.",
+    "Production Authenticode signing, distinct from successful CI self-signed smoke."
+  ],
+  "whole_azure_job_logs_downloaded": false,
+  "whole_azure_job_logs_note": "Official GitHub raw job/step metadata and byte-verified actual native JSON check receipts retained instead; no unavailable ZIP/log download claim.",
+  "implementation_and_two_os_ci_green": true,
+  "universal_release_certification": false
+}

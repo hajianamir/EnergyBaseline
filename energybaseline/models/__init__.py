@@ -90,12 +90,13 @@ def evaluate_f1_f10_catalog(
     """Evaluate all F1..F10 baseline families gated by VSG/TCP acceptance and MT-5 cluster-label isolation."""
     if vsg is None or tcp is None:
         raise ValueError("VSG and TCP instances are required before inferential F1..F10 model evaluation (PIPE-1).")
-    vsg.assert_accepted()
-    tcp.assert_accepted()
+    from ..core.authorization import assert_bound_inference
 
-    # Enforce MT-5: strip any exploratory cluster labels from candidate DataFrame before building model inputs
+    # Enforce MT-5 before binding: descriptive labels are never authorized model
+    # inputs. The remaining values, columns and index must match accepted VSG.
     clean_df, stripped_cols = strip_discovery_cluster_labels(df)
     _ = stripped_cols
+    assert_bound_inference(clean_df, vsg.time_col, [target_col], vsg, tcp)
 
     if predictor_cols is None:
         preds = [c for c in vsg.included_variables(target_col) if c in clean_df.columns and c != target_col]

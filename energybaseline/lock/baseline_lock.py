@@ -1,8 +1,8 @@
 """Immutable Versioned Baseline Lock, SHA-256 Verified Joblib Store, ISO 50006 Model Card & Excel Formula Round-Trip (SC-10, AC-04, G-9, DOM-1).
 
 Enforces strict Phase 6 Gate G6 invariants:
-- Unsafe Python pickle deserialization is strictly forbidden: artifacts are persisted via ``joblib.dump``
-  and cryptographically verified against their recorded ``artifact_sha256`` BEFORE ``joblib.load`` runs.
+- Joblib is executable Python serialization, not a safe data format. A matching hash alone
+  does not establish origin; external records require an independently trusted record digest.
 - Once locked, a ``LockedBaselineRecord`` and its on-disk ``v<N>`` manifest/artifact are strictly
   immutable: attribute assignment, nested dict mutation, or in-place version overwrite raises
   ``BaselineImmutabilityError``.
@@ -17,6 +17,7 @@ import copy
 from dataclasses import dataclass
 from datetime import datetime, timezone
 import hashlib
+import io
 import json
 from pathlib import Path
 import re
@@ -28,6 +29,11 @@ import joblib
 import numpy as np
 import openpyxl
 import pandas as pd
+
+
+# Only artifacts created by application code in this process receive implicit
+# trust. Reading a manifest never adds it to this registry.
+_issued_record_digests: set[str] = set()
 
 
 class BaselineImmutabilityError(TypeError):
@@ -293,7 +299,7 @@ def build_iso50006_model_card(
     validity_envelope: Mapping[str, Any],
     notes: str = "",
 ) -> dict[str, Any]:
-    """Construct an ISO 50006:2014 / IPMVP Option C compliant Energy Baseline (EnB) Model Card (DOM-1)."""
+    """Record energy-policy context; this card is not a standards compliance certificate."""
     return {
         "adjustment_method": (
             "Closed-form parametric routine adjustment equation"
@@ -377,8 +383,11 @@ class BaselineLockManager:
         locked_by: str = "engineer",
         explicit_version: int | None = None,
         notes: str = "",
+        domain_pack: str = "neutral",
     ) -> LockedBaselineRecord:
         """Create a new immutable baseline version ``v<N>`` with joblib SHA-256 verification and audit log."""
+        from ..core.domain import resolve_domain
+        policy = resolve_domain({"domain_pack": domain_pack})
         key = (str(run_id), str(target))
         history = self._records_by_key.get(key, [])
         if explicit_version is not None:
@@ -406,7 +415,15 @@ class BaselineLockManager:
         (self.lock_dir / f"{slug}.joblib.sha256").write_text(f"{art_sha}  {art_path.name}\n", encoding="utf-8")
 
         win = dict(baseline_window or {})
-        thr = {str(k): float(v) for k, v in (thresholds or {"max_cvrmse": 15.0, "max_nmbe": 5.0, "min_r2": 0.75}).items()}
+        # No arbitrary-data energy limits. Energy standards require an explicit
+        # pack and a recognized calibration interval, or caller-defined limits.
+        limits = dict(thresholds or {})
+        if thresholds is None and policy.energy and win.get("granularity"):
+            from ..core.auto import AutoLog
+            from ..core.scoring import thresholds as policy_thresholds
+            from ..core.temporal import granularity
+            limits = policy_thresholds(granularity(win["granularity"]), AutoLog({"domain_pack": "energy"}))
+        thr = {str(k): float(v) for k, v in limits.items() if v is not None}
         cal = dict(calibration_metrics or {})
         env = dict(validity_envelope or {})
         card = build_iso50006_model_card(
@@ -423,6 +440,15 @@ class BaselineLockManager:
             notes=notes,
         )
 
+        card["domain_policy"] = policy.to_dict()
+        card["schema_version"] = 1
+        if not policy.energy:
+            card.pop("energy_performance_indicator_enpi", None)
+            card["target_measure"] = str(target)
+            card["governing_standards"] = []
+            card["static_factors_guidance"] = "Declare process-specific invariant factors and revalidate after material change."
+        prep_summary = {**dict(preprocessing_summary or {}), "domain_policy": policy.to_dict()}
+
         rec = LockedBaselineRecord(
             lock_id=f"lock-{uuid.uuid4().hex[:12]}",
             run_id=str(run_id),
@@ -437,7 +463,7 @@ class BaselineLockManager:
             coefficients=dict(coefficients or {}),
             hyperparameters=dict(hyperparameters or {}),
             selected_features=selected_features,
-            preprocessing_summary=dict(preprocessing_summary or {}),
+            preprocessing_summary=prep_summary,
             vsg_snapshot=dict(vsg_snapshot or {}),
             tcp_snapshot=dict(tcp_snapshot or {}),
             baseline_window=win,
@@ -473,12 +499,23 @@ class BaselineLockManager:
             lf.write(json.dumps(audit_event, sort_keys=True) + "\n")
 
         self._records_by_key.setdefault(key, []).append(rec)
+        _issued_record_digests.add(rec.record_sha256)
         return rec
 
-    def load_verified_artifact(self, record: LockedBaselineRecord) -> Any:
-        """Verify SHA-256 of both manifest and joblib file BEFORE deserializing with ``joblib.load`` (G-9)."""
+    def load_verified_artifact(self, record: LockedBaselineRecord, *, trusted_record_sha256: str | None = None) -> Any:
+        """Require origin approval and deserialize the exact bytes whose hash was checked.
+
+        ``trusted_record_sha256`` must come from an independently trusted source,
+        not be copied automatically from the untrusted manifest being opened.
+        """
         record.verify_integrity()
-        return joblib.load(record.artifact_path)
+        if record.record_sha256 not in _issued_record_digests:
+            if trusted_record_sha256 is None or trusted_record_sha256 != record.record_sha256:
+                raise ArtifactIntegrityError("External model artifacts are executable Python. An independently trusted record SHA-256 is required before loading; no model was deserialized.")
+        payload = Path(record.artifact_path).read_bytes()
+        if hashlib.sha256(payload).hexdigest() != record.artifact_sha256:
+            raise ArtifactIntegrityError("SHA-256 verification FAILED before deserialization: artifact bytes changed.")
+        return joblib.load(io.BytesIO(payload))
 
     def update_locked_baseline(self, *args: Any, **kwargs: Any) -> None:
         """Explicitly forbidden in-place mutation entry point — always raises ``BaselineImmutabilityError``."""

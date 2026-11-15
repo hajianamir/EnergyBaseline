@@ -1,0 +1,12 @@
+{
+  "ols_hac": {
+    "diagnostic_only": true,
+    "disjoint_fraction": 0.0,
+    "mean_width_ratio": 1.0435746137710085
+  },
+  "quantile": {
+    "diagnostic_only": true,
+    "disjoint_fraction": 0.0,
+    "mean_width_ratio": 1.048876907190681
+  }
+}

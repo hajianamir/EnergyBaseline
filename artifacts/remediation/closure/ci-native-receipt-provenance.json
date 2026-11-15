@@ -1,0 +1,37 @@
+{
+  "run_id": 43685905726,
+  "url": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43685905726",
+  "source_commit": "e03742be4fa7ad27e155169ad01ce15d2cc91898",
+  "receipts": [
+    {
+      "file": "ci-native/windows-credentials.json",
+      "sha256": "e7b9deb123b3b8db7e742fff0a668d9b21e9fcbe5da46c5461239d8f38cb9c04",
+      "job_id": 132726206462,
+      "job_name": "Phase 8 Gate G8 (windows-latest)",
+      "annotation_id": null,
+      "source_commit": "e03742be4fa7ad27e155169ad01ce15d2cc91898",
+      "original_line_endings": "CRLF",
+      "retrieval": "Byte-exact reconstruction from official GitHub check notice JSON, verified against the CI-computed SHA-256. Azure artifact download is not accessible in this sandbox."
+    },
+    {
+      "file": "ci-native/linux-odbc.json",
+      "sha256": "52f87344876855f09670034a5cbff1afcd8fe3d7eaff4757c961d49f39809337",
+      "job_id": 132726206643,
+      "job_name": "Phase 8 Gate G8 (ubuntu-latest)",
+      "annotation_id": null,
+      "source_commit": "e03742be4fa7ad27e155169ad01ce15d2cc91898",
+      "original_line_endings": "LF",
+      "retrieval": "Byte-exact reconstruction from official GitHub check notice JSON, verified against the CI-computed SHA-256. Azure artifact download is not accessible in this sandbox."
+    },
+    {
+      "file": "ci-native/linux-credentials.json",
+      "sha256": "fd639d080281c29e3290a1fe7d97ab5dab392cad05b3f9e4df8a2d835f3f0ed0",
+      "job_id": 132726206643,
+      "job_name": "Phase 8 Gate G8 (ubuntu-latest)",
+      "annotation_id": null,
+      "source_commit": "e03742be4fa7ad27e155169ad01ce15d2cc91898",
+      "original_line_endings": "LF",
+      "retrieval": "Byte-exact reconstruction from official GitHub check notice JSON, verified against the CI-computed SHA-256. Azure artifact download is not accessible in this sandbox."
+    }
+  ]
+}

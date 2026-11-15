@@ -2,7 +2,7 @@
 
 Python-only · PySide6 · offline · no web server · no browser.
 
-Python 3.11.9 · PySide6 (native Qt GUI) · SQLite · scikit-learn / statsmodels / arch / MAPIE / XGBoost / LightGBM / CatBoost / PyTorch · ReportLab · Windows 10 22H2 / Windows 11 x64.
+Python 3.12.x · PySide6 (native Qt GUI) · SQLite · scikit-learn / statsmodels / arch / MAPIE / XGBoost / LightGBM / CatBoost / PyTorch · ReportLab · Windows 10 22H2 / Windows 11 x64.
 
 ```
 install.bat            # once: venv + hashed lock requirements + migrations + EnergyBaseline.exe + .lnk (developer step)
@@ -11,6 +11,12 @@ start.bat / stop.bat   # developer launcher / stop
 python -m energybaseline
 python -m pytest -q    # automated test suite (DB fallback, temporal, pipeline, monitoring, reports, gates, GUI smoke)
 ```
+
+## Python 3.12 development setup
+
+The shared `.python-version` selects Python 3.12; `pyproject.toml` supports `>=3.12,<3.13`. Recreate a Python 3.11 virtual environment with Python 3.12 before installing the hashed lockfile. Both CI workflows verify the active interpreter and run `pip check` before tests. Native Qt Essentials/Addons are pinned directly: the PySide6 6.12 metapackage also installs a browser engine and is intentionally not used.
+
+Migration evidence, failed attempts and native Windows/Linux validation status are recorded in [Python 3.12 migration](docs/PYTHON312_MIGRATION.md).
 
 ## Layout
 ```

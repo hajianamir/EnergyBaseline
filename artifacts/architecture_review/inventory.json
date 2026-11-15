@@ -1,0 +1,258 @@
+{
+  "requirement_name_version_counts": {
+    "requirements.in": 47,
+    "requirements.txt": 169,
+    "requirements.lock": 169
+  },
+  "requirement_name_version_differences_from_lock": {
+    "requirements.in": {},
+    "requirements.txt": {}
+  },
+  "unit_alias_count": 39,
+  "source_commit": "fe345ded40aae652fe1fb99617ca314211d9e5cf",
+  "python": "3.11.2",
+  "python_modules": 139,
+  "except_exception_count": 89,
+  "bare_except_count": 0,
+  "except_exception_pass_only_count": 18,
+  "except_exception_pass_only_locations": [
+    {
+      "file": "energybaseline/core/eda.py",
+      "line": 23
+    },
+    {
+      "file": "energybaseline/core/eda.py",
+      "line": 82
+    },
+    {
+      "file": "energybaseline/core/features.py",
+      "line": 73
+    },
+    {
+      "file": "energybaseline/core/ingest.py",
+      "line": 516
+    },
+    {
+      "file": "energybaseline/core/integrity.py",
+      "line": 303
+    },
+    {
+      "file": "energybaseline/core/mining.py",
+      "line": 182
+    },
+    {
+      "file": "energybaseline/core/mining.py",
+      "line": 304
+    },
+    {
+      "file": "energybaseline/core/mining.py",
+      "line": 311
+    },
+    {
+      "file": "energybaseline/core/models.py",
+      "line": 451
+    },
+    {
+      "file": "energybaseline/core/pool.py",
+      "line": 128
+    },
+    {
+      "file": "energybaseline/core/secrets.py",
+      "line": 68
+    },
+    {
+      "file": "energybaseline/core/store.py",
+      "line": 193
+    },
+    {
+      "file": "energybaseline/gui/app.py",
+      "line": 44
+    },
+    {
+      "file": "energybaseline/gui/app.py",
+      "line": 114
+    },
+    {
+      "file": "energybaseline/gui/main_window.py",
+      "line": 52
+    },
+    {
+      "file": "energybaseline/gui/single_instance.py",
+      "line": 109
+    },
+    {
+      "file": "energybaseline/launcher.py",
+      "line": 63
+    },
+    {
+      "file": "energybaseline/launcher.py",
+      "line": 87
+    }
+  ],
+  "domain_token_scope": "Case-insensitive ASHRAE|IPMVP occurrence count in energybaseline/**/*.py, including comments/docstrings/identifiers",
+  "domain_token_occurrences": 103,
+  "domain_token_files": [
+    {
+      "file": "energybaseline/cli.py",
+      "occurrences": 3
+    },
+    {
+      "file": "energybaseline/core/schema.py",
+      "occurrences": 2
+    },
+    {
+      "file": "energybaseline/core/scoring.py",
+      "occurrences": 16
+    },
+    {
+      "file": "energybaseline/gui/pages_results.py",
+      "occurrences": 7
+    },
+    {
+      "file": "energybaseline/lock/baseline_lock.py",
+      "occurrences": 3
+    },
+    {
+      "file": "energybaseline/models/__init__.py",
+      "occurrences": 3
+    },
+    {
+      "file": "energybaseline/models/base.py",
+      "occurrences": 2
+    },
+    {
+      "file": "energybaseline/models/ensemble.py",
+      "occurrences": 6
+    },
+    {
+      "file": "energybaseline/models/f2_ashrae.py",
+      "occurrences": 5
+    },
+    {
+      "file": "energybaseline/models/portfolio.py",
+      "occurrences": 5
+    },
+    {
+      "file": "energybaseline/pipeline.py",
+      "occurrences": 5
+    },
+    {
+      "file": "energybaseline/scoring/registers.py",
+      "occurrences": 6
+    },
+    {
+      "file": "energybaseline/scoring/tiebreak.py",
+      "occurrences": 2
+    },
+    {
+      "file": "energybaseline/uq/savings_uncertainty.py",
+      "occurrences": 3
+    },
+    {
+      "file": "energybaseline/validation/__init__.py",
+      "occurrences": 7
+    },
+    {
+      "file": "energybaseline/validation/ashrae14_metrics.py",
+      "occurrences": 28
+    }
+  ],
+  "dataclasses": {
+    "TargetResult": {
+      "fields": 37,
+      "direct_dict_fields": 14
+    },
+    "RunResult": {
+      "fields": 13,
+      "direct_dict_fields": 7
+    }
+  },
+  "largest_functions": [
+    {
+      "file": "energybaseline/core/quality.py",
+      "name": "preprocess_target",
+      "line": 573,
+      "physical_lines": 424
+    },
+    {
+      "file": "energybaseline/core/pipeline.py",
+      "name": "analyze_target",
+      "line": 201,
+      "physical_lines": 420
+    },
+    {
+      "file": "energybaseline/tests_catalog/__init__.py",
+      "name": "run_full_test_catalog",
+      "line": 128,
+      "physical_lines": 376
+    },
+    {
+      "file": "energybaseline/core/temporal.py",
+      "name": "prepare_temporal",
+      "line": 668,
+      "physical_lines": 299
+    },
+    {
+      "file": "energybaseline/tests_catalog/t14_causal_group.py",
+      "name": "run_t14_causal_group",
+      "line": 105,
+      "physical_lines": 296
+    },
+    {
+      "file": "energybaseline/core/mining.py",
+      "name": "run_mining",
+      "line": 36,
+      "physical_lines": 288
+    },
+    {
+      "file": "energybaseline/models/__init__.py",
+      "name": "evaluate_f1_f10_catalog",
+      "line": 78,
+      "physical_lines": 265
+    },
+    {
+      "file": "energybaseline/tests_catalog/t10_diebold_mariano.py",
+      "name": "run_t10_diebold_mariano",
+      "line": 180,
+      "physical_lines": 248
+    },
+    {
+      "file": "energybaseline/tests_catalog/t2_seasonality.py",
+      "name": "run_t2_seasonality",
+      "line": 86,
+      "physical_lines": 227
+    },
+    {
+      "file": "energybaseline/tests_catalog/t5_heteroskedasticity.py",
+      "name": "run_t5_heteroskedasticity",
+      "line": 56,
+      "physical_lines": 227
+    },
+    {
+      "file": "energybaseline/core/vsg.py",
+      "name": "_resolve_target_auto",
+      "line": 496,
+      "physical_lines": 225
+    },
+    {
+      "file": "energybaseline/tests_catalog/t12_little_mcar.py",
+      "name": "run_t12_little_mcar",
+      "line": 203,
+      "physical_lines": 224
+    }
+  ],
+  "run_analysis": {
+    "file": "energybaseline/core/pipeline.py",
+    "name": "run_analysis",
+    "line": 657,
+    "physical_lines": 85
+  },
+  "module_line_counts": {
+    "energybaseline/core/models.py": 731,
+    "energybaseline/core/pipeline.py": 741,
+    "energybaseline/core/scoring.py": 230,
+    "energybaseline/core/mining.py": 323,
+    "energybaseline/core/report.py": 117,
+    "energybaseline/gui/pages_setup.py": 1552
+  }
+}

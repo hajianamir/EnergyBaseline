@@ -53,7 +53,8 @@ def figure_for(model, chart_id):
     rows = model.table(spec["artifact_id"])
     fig = Figure(figsize=(7, 2.7), layout="constrained")
     ax = fig.add_subplot(111)
-    colors = spec["palette"]
+    # Validation permits any nonempty approved subset, including one color.
+    colors = [spec["palette"][i % len(spec["palette"])] for i in range(len(OKABE_ITO))]
     kind = spec["kind"]
 
     def values(key):

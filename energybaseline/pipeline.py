@@ -14,6 +14,7 @@ import numpy as np
 import pandas as pd
 
 from .mining.clustering import assert_no_cluster_labels_in_model_inputs
+from .core.features import validate_memory
 from .validation import (
     ASHRAE14Metrics,
     FoldPreprocessingSummary,
@@ -63,9 +64,9 @@ class InFoldModelPipeline:
         self.scale = bool(scale)
         self.fit_degree_day_knots = bool(fit_degree_day_knots)
         self.temp_col = temp_col
-        self.lags = tuple(int(v) for v in lags if int(v) > 0)
+        self.lags = tuple(validate_memory(list(lags), setting="lags"))
         self.lag_cols = tuple(str(c) for c in lag_cols)
-        self.rolling_windows = tuple(int(v) for v in rolling_windows if int(v) > 1)
+        self.rolling_windows = tuple(validate_memory(list(rolling_windows), setting="rolling_windows"))
         self.roll_cols = tuple(str(c) for c in roll_cols)
         self.selection_method = str(selection_method)
         self.enforce_k_max = bool(enforce_k_max)
@@ -88,10 +89,10 @@ class InFoldModelPipeline:
             seed=self.seed,
         )
 
-    def fit(self, X_train: pd.DataFrame, y_train: Any) -> "InFoldModelPipeline":
+    def fit(self, X_train: pd.DataFrame, y_train: Any, *, history: pd.DataFrame | None = None) -> "InFoldModelPipeline":
         assert_no_cluster_labels_in_model_inputs(X_train)
         prep = self._new_preprocessor()
-        X_tr_proc = prep.fit_transform(X_train, y_train)
+        X_tr_proc = prep.fit_transform(X_train, y_train, history=history)
         est = self.estimator_factory()
         est.fit(X_tr_proc, np.asarray(y_train, dtype=float).reshape(-1))
         self.preprocessor_ = prep
@@ -122,6 +123,10 @@ def run_leakage_safe_cv(
         X = pd.DataFrame(X)
     yv = np.asarray(y, dtype=float).reshape(-1)
     n = int(yv.size)
+    if not X.index.is_unique:
+        raise ValueError("Temporal evaluation requires unique observation indices.")
+    if not np.isfinite(yv).all():
+        raise ValueError("Temporal evaluation requires finite target observations.")
     if len(X) != n:
         raise ValueError(f"X ({len(X)}) and y ({n}) length mismatch.")
 
@@ -150,7 +155,7 @@ def run_leakage_safe_cv(
         va_end = int(wf.val_idx[-1]) + 1
         X_tr_slice = X.iloc[wf.train_idx]
         y_tr_slice = yv[wf.train_idx]
-        fold_pipe.fit(X_tr_slice, y_tr_slice)
+        fold_pipe.fit(X_tr_slice, y_tr_slice, history=X.iloc[: int(wf.train_idx.max()) + 1])
         assert fold_pipe.preprocessor_ is not None
         fold_summaries.append(fold_pipe.preprocessor_.summary())
 
@@ -166,7 +171,9 @@ def run_leakage_safe_cv(
     final_pipe = pipeline_builder().fit(X, yv)
     assert final_pipe.preprocessor_ is not None
     n_par = getattr(final_pipe.estimator_, "n_params", None)
-    n_par_int = int(n_par() if callable(n_par) else (n_par or max(1, len(final_pipe.preprocessor_.selected_features_) + 1)))
+    n_par_int = int(
+        n_par() if callable(n_par) else (n_par or max(1, len(final_pipe.preprocessor_.selected_features_) + 1))
+    )
     oos_m = compute_ashrae14_oos_metrics(yv[valid], oof[valid], n_params=n_par_int, granularity=granularity)
     return InFoldCVResult(
         oof_predictions=oof,

@@ -1,0 +1,18 @@
+[
+  {
+    "name": "linux-odbc.json",
+    "sha256": "52f87344876855f09670034a5cbff1afcd8fe3d7eaff4757c961d49f39809337",
+    "run_id": 43702773093,
+    "job_id": 132777295018,
+    "source_commit": "f0a6981d10cbab5ebd4365cfbe86b5886ea1c4bb",
+    "method": "Reconstructed from official check annotation; exact bytes verified against runner-emitted SHA-256. Not downloaded Azure artifact ZIP."
+  },
+  {
+    "name": "linux-credentials.json",
+    "sha256": "fd639d080281c29e3290a1fe7d97ab5dab392cad05b3f9e4df8a2d835f3f0ed0",
+    "run_id": 43702773093,
+    "job_id": 132777295018,
+    "source_commit": "f0a6981d10cbab5ebd4365cfbe86b5886ea1c4bb",
+    "method": "Reconstructed from official check annotation; exact bytes verified against runner-emitted SHA-256. Not downloaded Azure artifact ZIP."
+  }
+]

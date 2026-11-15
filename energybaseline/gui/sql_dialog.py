@@ -68,7 +68,10 @@ class SqlDialog(QDialog):
         self.queries = QPlainTextEdit()
         self.queries.setMaximumHeight(110)
         right.addWidget(self.queries)
-        self.msg = QLabel(f"Password storage: {backend_name()} - never plaintext.")
+        self.remember_credentials = QCheckBox("Remember credentials using the available protection backend")
+        self.remember_credentials.setChecked(False)
+        right.addWidget(self.remember_credentials)
+        self.msg = QLabel(f"Credential protection: {backend_name()}. No local master-key file is created by default.")
         self.msg.setWordWrap(True)
         right.addWidget(self.msg)
         row = QHBoxLayout()
@@ -149,13 +152,13 @@ class SqlDialog(QDialog):
         try:
             for q in p.queries.values():
                 sq.validate_select(q)
-            sq.save_profile(p)
+            sq.save_profile(p, remember_credentials=self.remember_credentials.isChecked())
         except Exception as exc:
             QMessageBox.warning(self, "Save", str(exc))
             return
         store.audit(f"SQL connection saved: {p.name} ({p.driver})", "sql")
         self.reload(p.name)
-        self.msg.setText("Saved (password and query templates encrypted).")
+        self.msg.setText(f"Profile saved. Credential protection: {backend_name()}. Session-only credentials cannot be restored after restart.")
 
     def _delete(self):
         n = self.name.text().strip()

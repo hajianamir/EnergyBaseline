@@ -1,0 +1,430 @@
+CMake Warning (author) at CMakeLists.txt:8 (project):
+  cmake_minimum_required() should be called prior to this top-level project()
+  call.  Please see the cmake-commands(7) manual for usage documentation of
+  both commands.
+This warning is for project developers.  Use -Wno-author to suppress it.
+
+-- The C compiler identification is GNU 12.2.0
+-- The CXX compiler identification is GNU 12.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+CMake Warning (deprecated) at CMakeLists.txt:11 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+This warning is for project developers.  Use -Wno-author or -Wno-deprecated
+to suppress it.
+
+-- Generate config.h.in with autogen.sh to enable cmake header difference check.
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Found EXPAT: /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libexpat.so (found version "2.6.4")
+-- Found X11: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include
+-- Looking for XOpenDisplay in /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libX11.so;/home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libXext.so
+-- Looking for XOpenDisplay in /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libX11.so;/home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libXext.so - found
+-- Looking for gethostbyname
+-- Looking for gethostbyname - found
+-- Looking for connect
+-- Looking for connect - found
+-- Looking for remove
+-- Looking for remove - found
+-- Looking for shmat
+-- Looking for shmat - found
+-- Found PkgConfig: /home/user/EnergyBaseline/.cache/native-runtime/toolenv/bin/pkg-config (found version "3.0.7")
+CMake Warning (author) at /home/user/EnergyBaseline/.cache/native-runtime/toolenv/lib/python3.11/site-packages/cmake/data/share/cmake-4.4/Modules/FindPackageHandleStandardArgs.cmake:493 (message):
+  The package name passed to find_package_handle_standard_args() (GLIB2) does
+  not match the name of the calling package (GLib2).  This can lead to
+  problems in calling code that expects find_package() result variables
+  (e.g., `_FOUND`) to follow a certain pattern.
+Call Stack (most recent call first):
+  cmake/modules/FindGLib2.cmake:63 (find_package_handle_standard_args)
+  CMakeLists.txt:142 (find_package)
+This warning is for project developers.  Use -Wno-author to suppress it.
+
+-- Could NOT find GLIB2 (missing: GLIB2_LIBRARIES GLIB2_MAIN_INCLUDE_DIR) 
+-- Looking for alloca.h
+-- Looking for alloca.h - found
+-- Looking for byteswap.h
+-- Looking for byteswap.h - found
+-- Looking for crt/externs.h
+-- Looking for crt/externs.h - not found
+-- Looking for dirent.h
+-- Looking for dirent.h - found
+-- Looking for dlfcn.h
+-- Looking for dlfcn.h - found
+-- Looking for execinfo.h
+-- Looking for execinfo.h - found
+-- Looking for errno.h
+-- Looking for errno.h - found
+-- Looking for expat.h
+-- Looking for expat.h - not found
+-- Looking for grp.h
+-- Looking for grp.h - found
+-- Looking for inttypes.h
+-- Looking for inttypes.h - found
+-- Looking for io.h
+-- Looking for io.h - not found
+-- Looking for locale.h
+-- Looking for locale.h - found
+-- Looking for memory.h
+-- Looking for memory.h - found
+-- Looking for signal.h
+-- Looking for signal.h - found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stdlib.h
+-- Looking for stdlib.h - found
+-- Looking for stdio.h
+-- Looking for stdio.h - found
+-- Looking for string.h
+-- Looking for string.h - found
+-- Looking for strings.h
+-- Looking for strings.h - found
+-- Looking for syslog.h
+-- Looking for syslog.h - found
+-- Looking for 3 include files stdint.h, ..., sys/event.h
+-- Looking for 3 include files stdint.h, ..., sys/event.h - not found
+-- Looking for sys/inotify.h
+-- Looking for sys/inotify.h - found
+-- Looking for sys/random.h
+-- Looking for sys/random.h - found
+-- Looking for sys/resource.h
+-- Looking for sys/resource.h - found
+-- Looking for sys/stat.h
+-- Looking for sys/stat.h - found
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for sys/uio.h
+-- Looking for sys/uio.h - found
+-- Looking for sys/prctl.h
+-- Looking for sys/prctl.h - found
+-- Looking for sys/syslimits.h
+-- Looking for sys/syslimits.h - not found
+-- Looking for sys/time.h
+-- Looking for sys/time.h - found
+-- Looking for sys/wait.h
+-- Looking for sys/wait.h - found
+-- Looking for time.h
+-- Looking for time.h - found
+-- Looking for ws2tcpip.h
+-- Looking for ws2tcpip.h - not found
+-- Looking for unistd.h
+-- Looking for unistd.h - found
+-- Looking for sys/inotify.h
+-- Looking for sys/inotify.h - found
+-- Looking for backtrace
+-- Looking for backtrace - found
+-- Looking for getgrouplist
+-- Looking for getgrouplist - found
+-- Looking for getpeerucred
+-- Looking for getpeerucred - not found
+-- Looking for nanosleep
+-- Looking for nanosleep - found
+-- Looking for getpwnam_r
+-- Looking for getpwnam_r - found
+-- Looking for setenv
+-- Looking for setenv - found
+-- Looking for unsetenv
+-- Looking for unsetenv - found
+-- Looking for clearenv
+-- Looking for clearenv - found
+-- Looking for writev
+-- Looking for writev - found
+-- Looking for setrlimit
+-- Looking for setrlimit - found
+-- Looking for socketpair
+-- Looking for socketpair - found
+-- Looking for setlocale
+-- Looking for setlocale - found
+-- Looking for localeconv
+-- Looking for localeconv - found
+-- Looking for poll
+-- Looking for poll - found
+-- Looking for strtoll
+-- Looking for strtoll - found
+-- Looking for strtoull
+-- Looking for strtoull - found
+-- Looking for pipe2
+-- Looking for pipe2 - found
+-- Looking for accept4
+-- Looking for accept4 - found
+-- Looking for inotify_init1
+-- Looking for inotify_init1 - found
+-- Looking for SCM_RIGHTS
+-- Looking for SCM_RIGHTS - found
+-- Looking for prctl
+-- Looking for prctl - found
+-- Looking for raise
+-- Looking for raise - found
+-- Looking for getrandom
+-- Looking for getrandom - found
+-- Looking for getrlimit
+-- Looking for getrlimit - found
+-- Looking for prlimit
+-- Looking for prlimit - found
+-- Performing Test HAVE_CMSGCRED
+-- Performing Test HAVE_CMSGCRED - Failed
+-- Performing Test DBUS_HAVE_LINUX_EPOLL
+-- Performing Test DBUS_HAVE_LINUX_EPOLL - Success
+-- Performing Test HAVE_VA_COPY
+-- Performing Test HAVE_VA_COPY - Success
+-- Performing Test HAVE___VA_COPY
+-- Performing Test HAVE___VA_COPY - Success
+-- Performing Test DBUS_USE_SYNC
+-- Performing Test DBUS_USE_SYNC - Success
+-- Performing Test HAVE_DIRFD
+-- Performing Test HAVE_DIRFD - Failed
+-- Performing Test HAVE_DDFD
+-- Performing Test HAVE_DDFD - Failed
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Check size of short
+-- Check size of short - done
+-- Check size of int
+-- Check size of int - done
+-- Check size of long
+-- Check size of long - done
+-- Check size of long long
+-- Check size of long long - done
+-- Check size of __int64
+-- Check size of __int64 - failed
+-- Check size of socklen_t
+-- Check size of socklen_t - done
+-- Could NOT find DocBookXSL (missing: DocBookXSL_DIR) 
+ 
+set -DDBUS_INSTALL_SYSTEM_LIBS=1 to install runtime libraries too
+set DBUSDIR (environment or cmake option) to overwrite the default install directory 
+ 
+ 
+                  D-BUS 1.13.15                               
+                  =============                                       
+                                                                      
+        install prefix:           /home/user/EnergyBaseline/.cache/native-runtime/prefix                           
+        install exec_prefix:      /home/user/EnergyBaseline/.cache/native-runtime/prefix                      
+        install libdir:           /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib        
+        install bindir:           /home/user/EnergyBaseline/.cache/native-runtime/prefix/bin        
+        install sysconfdir:       /home/user/EnergyBaseline/.cache/native-runtime/prefix/etc    
+        install datadir:          /home/user/EnergyBaseline/.cache/native-runtime/prefix/share       
+        source code location:     /home/user/EnergyBaseline/.cache/native-runtime/dbus-da0db314a3c3fca7290ca0263e1ed0954ad9a90d/..                  
+        build dir:                /home/user/EnergyBaseline/.cache/native-runtime/dbus-build                 
+        c compiler:               cc                       
+        cflags:                     -Wsign-compare                    
+        cflags debug:             -g   -Wl,--export-dynamic  -D_DEBUG              
+        cflags release:           -O3 -DNDEBUG -Wl,--export-dynamic            
+        cxx compiler:             c++                     
+        cxxflags:                   -Wsign-compare                  
+        cxxflags debug:           -g            
+        cxxflags release:         -O3 -DNDEBUG          
+        64-bit int:               long                  
+        32-bit int:               int                  
+        16-bit int:               short                  
+        Doxygen:                  DOXYGEN-NOTFOUND                          
+        Docbook Generator:                   
+        gcc coverage profiling:   OFF                
+        Building unit tests:      OFF                 
+        Building with GLib:       OFF                   
+        Building verbose mode:    ON         
+        Building w/o assertions:  OFF              
+        Building w/o checks:      OFF              
+        Building bus stats API:   OFF                
+        installing system libs:   OFF         
+        Building inotify support: 1          
+        Building kqueue support:             
+        Building Doxygen docs:             
+        Building XML docs:                     
+        Daemon executable name:   dbus-daemon
+        System bus address:       unix:path=/home/user/EnergyBaseline/.cache/native-runtime/prefix/var/run/dbus/system_bus_socket  
+        System bus socket:                       
+        System bus PID file:      /home/user/EnergyBaseline/.cache/native-runtime/prefix/var/run/dbus/pid             
+        System bus user:          messagebus                        
+        Session bus socket dir:   /tmp          
+        pam_console auth dir:     (none)                              
+        'make check' socket dir:                    
+        Test listen address:                            
+ 
+NOTE: building with verbose mode increases library size, may slightly increase security risk, and decreases performance.
+NOTE: building with assertions increases library size and decreases performance.
+ 
+-- Configuring done (7.6s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/user/EnergyBaseline/.cache/native-runtime/dbus-build
+[1/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-address.c.o
+[2/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-bus.c.o
+[3/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-credentials.c.o
+[4/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-auth.c.o
+[5/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-errors.c.o
+[6/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-keyring.c.o
+[7/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-marshal-byteswap.c.o
+[8/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-marshal-header.c.o
+[9/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-marshal-validate.c.o
+[10/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-connection.c.o
+[11/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-marshal-recursive.c.o
+[12/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-misc.c.o
+[13/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-nonce.c.o
+[14/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-pending-call.c.o
+[15/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-resources.c.o
+[16/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-object-tree.c.o
+[17/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-server-debug-pipe.c.o
+[18/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-sha.c.o
+[19/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-server.c.o
+[20/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-message.c.o
+[21/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-signature.c.o
+[22/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-server-socket.c.o
+[23/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-syntax.c.o
+[24/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-threads.c.o
+[25/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-timeout.c.o
+[26/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-watch.c.o
+[27/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-transport.c.o
+[28/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-transport-unix.c.o
+[29/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-transport-socket.c.o
+[30/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-file.c.o
+[31/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-server-unix.c.o
+[32/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-dataslot.c.o
+[33/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-hash.c.o
+[34/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-list.c.o
+[35/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-internals.c.o
+[36/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-memory.c.o
+[37/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-marshal-basic.c.o
+[38/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-mempool.c.o
+[39/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-pipe.c.o
+[40/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-sysdeps.c.o
+[41/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-pipe-unix.c.o
+[42/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-file-unix.c.o
+[43/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-sysdeps-pthread.c.o
+[44/115] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-asv-util.c.o
+[45/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-string.c.o
+[46/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-userdb.c.o
+[47/115] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-mainloop.c.o
+[48/115] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-message-util.c.o
+[49/115] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-shell.c.o
+[50/115] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-sysdeps-unix.c.o
+[51/115] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-string-util.c.o
+[52/115] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-pollable-set.c.o
+[53/115] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-pollable-set-poll.c.o
+[54/115] Linking C shared library lib/libdbus-1.so.3.27.0
+[55/115] Creating library symlink lib/libdbus-1.so.3 lib/libdbus-1.so
+[56/115] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-userdb-util.c.o
+[57/115] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-sysdeps-util.c.o
+[58/115] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-pollable-set-epoll.c.o
+[59/115] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-spawn-unix.c.o
+[60/115] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-sysdeps-util-unix.c.o
+[61/115] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/audit.c.o
+[62/115] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/apparmor.c.o
+[63/115] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/activation.c.o
+[64/115] Linking C static library lib/libdbus-internal.a
+[65/115] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/config-loader-expat.c.o
+[66/115] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/config-parser-common.c.o
+[67/115] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/bus.c.o
+[68/115] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/containers.c.o
+[69/115] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/config-parser.c.o
+[70/115] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/desktop-file.c.o
+[71/115] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/dispatch.c.o
+[72/115] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/expirelist.c.o
+[73/115] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/connection.c.o
+[74/115] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/driver.c.o
+[75/115] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/selinux.c.o
+[76/115] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/policy.c.o
+[77/115] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/utils.c.o
+[78/115] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/test.c.o
+[79/115] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/services.c.o
+[80/115] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/dir-watch-inotify.c.o
+[81/115] Building C object bus/CMakeFiles/launch-helper-internal.dir/config-loader-expat.c.o
+[82/115] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/signals.c.o
+[83/115] Building C object bus/CMakeFiles/launch-helper-internal.dir/config-parser-trivial.c.o
+[84/115] Building C object bus/CMakeFiles/launch-helper-internal.dir/config-parser-common.c.o
+[85/115] Building C object bus/CMakeFiles/launch-helper-internal.dir/utils.c.o
+[86/115] Linking C static library lib/libdbus-daemon-internal.a
+[87/115] Building C object bus/CMakeFiles/launch-helper-internal.dir/desktop-file.c.o
+[88/115] Linking C static library lib/liblaunch-helper-internal.a
+[89/115] Building C object bus/CMakeFiles/dbus-daemon-launch-helper.dir/activation-helper-bin.c.o
+[90/115] Building C object bus/CMakeFiles/dbus-daemon.dir/main.c.o
+[91/115] Building C object bus/CMakeFiles/dbus-daemon-launch-helper.dir/activation-helper.c.o
+[92/115] Building C object tools/CMakeFiles/dbus-send.dir/dbus-send.c.o
+[93/115] Building C object tools/CMakeFiles/dbus-send.dir/tool-common.c.o
+[94/115] Building C object tools/CMakeFiles/dbus-send.dir/dbus-print-message.c.o
+[95/115] Building C object tools/CMakeFiles/dbus-test-tool.dir/dbus-echo.c.o
+[96/115] Building C object tools/CMakeFiles/dbus-test-tool.dir/dbus-spam.c.o
+[97/115] Building C object tools/CMakeFiles/dbus-test-tool.dir/tool-common.c.o
+[98/115] Building C object tools/CMakeFiles/dbus-test-tool.dir/test-tool.c.o
+[99/115] Building C object tools/CMakeFiles/dbus-update-activation-environment.dir/dbus-update-activation-environment.c.o
+[100/115] Building C object tools/CMakeFiles/dbus-launch.dir/tool-common.c.o
+[101/115] Building C object tools/CMakeFiles/dbus-update-activation-environment.dir/tool-common.c.o
+[102/115] Building C object tools/CMakeFiles/dbus-launch.dir/dbus-launch-x11.c.o
+[103/115] Building C object tools/CMakeFiles/dbus-launch.dir/dbus-launch.c.o
+[104/115] Building C object tools/CMakeFiles/dbus-monitor.dir/dbus-monitor.c.o
+[105/115] Building C object tools/CMakeFiles/dbus-monitor.dir/dbus-print-message.c.o
+[106/115] Building C object tools/CMakeFiles/dbus-monitor.dir/tool-common.c.o
+[107/115] Linking C executable bin/dbus-daemon-launch-helper
+[108/115] Building C object tools/CMakeFiles/dbus-run-session.dir/dbus-run-session.c.o
+[109/115] Linking C executable bin/dbus-daemon
+[110/115] Linking C executable bin/dbus-send
+[111/115] Linking C executable bin/dbus-test-tool
+[112/115] Linking C executable bin/dbus-update-activation-environment
+[113/115] Linking C executable bin/dbus-monitor
+[114/115] Linking C executable bin/dbus-launch
+[115/115] Linking C executable bin/dbus-run-session
+-- Install configuration: ""
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/cmake/DBus1/DBus1Config.cmake
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/cmake/DBus1/DBus1ConfigVersion.cmake
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/pkgconfig/dbus-1.pc
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libdbus-1.so.3.27.0
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libdbus-1.so.3
+-- Set non-toolchain portion of runtime path of "/home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libdbus-1.so.3.27.0" to ""
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libdbus-1.so
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/dbus-1.0/dbus/dbus.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/dbus-1.0/dbus/dbus-address.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/dbus-1.0/dbus/dbus-bus.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/dbus-1.0/dbus/dbus-connection.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/dbus-1.0/dbus/dbus-errors.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/dbus-1.0/dbus/dbus-macros.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/dbus-1.0/dbus/dbus-memory.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/dbus-1.0/dbus/dbus-message.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/dbus-1.0/dbus/dbus-misc.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/dbus-1.0/dbus/dbus-pending-call.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/dbus-1.0/dbus/dbus-protocol.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/dbus-1.0/dbus/dbus-server.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/dbus-1.0/dbus/dbus-shared.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/dbus-1.0/dbus/dbus-signature.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/dbus-1.0/dbus/dbus-syntax.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/dbus-1.0/dbus/dbus-threads.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/dbus-1.0/dbus/dbus-types.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/dbus-1.0/include/dbus/dbus-arch-deps.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/bin/dbus-daemon
+-- Set non-toolchain portion of runtime path of "/home/user/EnergyBaseline/.cache/native-runtime/prefix/bin/dbus-daemon" to ""
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/share/dbus-1/session.conf
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/etc/dbus-1/session.conf
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/share/dbus-1/session.d
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/share/dbus-1/services
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/share/dbus-1/system.conf
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/etc/dbus-1/system.conf
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/share/dbus-1/system.d
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/share/dbus-1/system-services
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/var/run/dbus
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/share/doc/dbus/examples/example-session-disable-stats.conf
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/share/doc/dbus/examples/example-system-enable-stats.conf
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/bin/dbus-send
+-- Set non-toolchain portion of runtime path of "/home/user/EnergyBaseline/.cache/native-runtime/prefix/bin/dbus-send" to ""
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/bin/dbus-test-tool
+-- Set non-toolchain portion of runtime path of "/home/user/EnergyBaseline/.cache/native-runtime/prefix/bin/dbus-test-tool" to ""
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/bin/dbus-update-activation-environment
+-- Set non-toolchain portion of runtime path of "/home/user/EnergyBaseline/.cache/native-runtime/prefix/bin/dbus-update-activation-environment" to ""
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/bin/dbus-launch
+-- Set non-toolchain portion of runtime path of "/home/user/EnergyBaseline/.cache/native-runtime/prefix/bin/dbus-launch" to ""
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/bin/dbus-monitor
+-- Set non-toolchain portion of runtime path of "/home/user/EnergyBaseline/.cache/native-runtime/prefix/bin/dbus-monitor" to ""
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/bin/dbus-run-session
+-- Set non-toolchain portion of runtime path of "/home/user/EnergyBaseline/.cache/native-runtime/prefix/bin/dbus-run-session" to ""
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/var/lib/dbus
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/share/doc/dbus/examples/GetAllMatchRules.py

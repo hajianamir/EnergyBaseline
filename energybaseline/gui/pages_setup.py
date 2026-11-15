@@ -41,6 +41,7 @@ from PySide6.QtWidgets import (
 )
 
 from ..core import ingest, store
+from ..core.domain import resolve_domain
 from ..core.auto import AutoLog
 from ..core.cache import CachedComplianceRunner
 from ..core.integrity import IntegrityViolationError
@@ -352,7 +353,8 @@ class SetupPage(QWidget):
         self.tcp_conf_combo.currentTextChanged.connect(self._on_tcp_controls_edited)
         self.tcp_conf_combo.setToolTip(
             "Confidence level (1 − α): coverage probability for confidence/prediction intervals. "
-            "95 % means the interval contains the true value in 95 of 100 repeated samples. "
+            "Nominal 95 % coverage depends on the method's assumptions; observed coverage "
+            "can differ, especially for autocorrelated or shifted series. "
             "Used for uncertainty bands around the baseline and for MCS/test decisions."
         )
         tf.addRow("Confidence level (%)", self.tcp_conf_combo)
@@ -379,15 +381,16 @@ class SetupPage(QWidget):
         tbar.addWidget(self.btn_amend_tcp)
         tl.addLayout(tbar)
 
-        # Test catalog panel: user can see every T1–T14 test, its stage, gate role,
-        # and whether it is disableable. Hard-gate tests are read-only.
+        # Read-only catalog of the actual TCP selections. Configuration changes
+        # require the model's audited per-test API, never an unbound checkbox.
         g_tc = QGroupBox("Statistical test catalog (T1–T14) — tests applied to data and baseline")
         f_tc = QFormLayout(g_tc)
         self.tc_checks: dict[str, QCheckBox] = {}
         for tid, spec in sorted(TEST_CATALOG_SPECS.items()):
             row = QHBoxLayout()
             cb = QCheckBox(f"{tid} · {spec.name}")
-            cb.setChecked(True)
+            cb.setChecked(False)
+            cb.setEnabled(False)
             is_hard = spec.default_gate_role == "hard_gate"
             if is_hard:
                 cb.setEnabled(False)
@@ -565,11 +568,9 @@ class SetupPage(QWidget):
         self._syncing_schema = True
         try:
             self.time_combo.clear()
-            self.time_combo.addItems(["(none)"] + list(df.columns))
-            if s.time_col and self.time_combo.findText(s.time_col) >= 0:
+            self.time_combo.addItems(list(df.columns))
+            if s.time_col:
                 self.time_combo.setCurrentText(s.time_col)
-            else:
-                self.time_combo.setCurrentText("(none)")
             self.target_list.blockSignals(True)
             self.target_list.clear()
             for c in df.columns:
@@ -578,18 +579,16 @@ class SetupPage(QWidget):
                     it.setFlags(it.flags() | Qt.ItemFlag.ItemIsUserCheckable)
                     it.setCheckState(Qt.CheckState.Unchecked)
                     self.target_list.addItem(it)
-            # Auto-select a plausible target ONLY when the user has not already
-            # chosen one (preserves explicit user choice across reloads).
-            already_checked = any(
-                self.target_list.item(i).checkState() == Qt.CheckState.Checked
-                for i in range(self.target_list.count())
-            )
-            if not already_checked:
+            # Preserve explicit target choices on reload; energy-name suggestions
+            # remain opt-in through the selected domain policy.
+            selected = set(s.targets)
+            for i in range(self.target_list.count()):
+                item = self.target_list.item(i)
+                if item.text() in selected:
+                    item.setCheckState(Qt.CheckState.Checked)
+            if not self.checked_targets() and resolve_domain(s.effective_config(), legacy_if_missing=False).energy:
                 for i in range(self.target_list.count()):
-                    if any(
-                        k in self.target_list.item(i).text().lower()
-                        for k in ("kwh", "energy", "elec", "gas", "consum", "m3")
-                    ):
+                    if any(k in self.target_list.item(i).text().lower() for k in ("kwh", "energy", "elec", "gas", "consum", "m3")):
                         self.target_list.item(i).setCheckState(Qt.CheckState.Checked)
                         break
             self.target_list.blockSignals(False)
@@ -604,6 +603,7 @@ class SetupPage(QWidget):
             targets=self.checked_targets() or None,
             dataset_name=name,
             dataset_sha256=sha,
+            domain_pack=resolve_domain(s.effective_config(), legacy_if_missing=False).key,
         )
         self.populate_schema_table(suggested)
         summary = ingest.build_ingestion_summary(df, source_name=name, source_sha256=sha, time_col=s.time_col)
@@ -643,14 +643,14 @@ class SetupPage(QWidget):
             return
 
         vsg = VariableSelectionGate(
-            s.df,
+            self.apply_units(s.df),
             targets=s.targets,
             time_col=s.time_col,
             schema=s.dataset_schema,
             dataset_sha256=s.dataset_sha,
-            config=s.config,
+            config=s.effective_config(),
         )
-        tcp = TestConfigPanel(vsg, config=s.config)
+        tcp = TestConfigPanel(vsg, config=s.effective_config())
         s.vsg = vsg
         s.tcp = tcp
         s.compliance_runner = CachedComplianceRunner(seed=42)
@@ -686,6 +686,9 @@ class SetupPage(QWidget):
             self.tcp_corr_combo.setCurrentText(tcp.correction)
             self.tcp_fam_combo.setCurrentText(tcp.family_definition)
             self.tcp_rule_combo.setCurrentText(tcp.decision_rule)
+            for test_id, checkbox in self.tc_checks.items():
+                checkbox.setChecked(tcp.test_panels[test_id].enabled)
+                checkbox.setEnabled(False)
         finally:
             for w in (
                 self.tcp_alpha_combo,
@@ -873,8 +876,7 @@ class SetupPage(QWidget):
             res = s.compliance_runner.what_if(probe)
             fill_table(self.tcp_results_tbl, pd.DataFrame(res["evaluated_results"]))
             self.tcp_status.setText(
-                f"What-If evaluated: {res['flip_count']} flip(s), "
-                f"engine_calls_delta={res['engine_calls_delta']}"
+                f"What-If evaluated: {res['flip_count']} flip(s), engine_calls_delta={res['engine_calls_delta']}"
             )
             return res
         except (PreregistrationLockedError, TCPValidationError, RuntimeError, ValueError) as exc:
@@ -921,6 +923,9 @@ class SetupPage(QWidget):
                 it_src.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
                 self.schema_tbl.setItem(r, 6, it_src)
 
+            # The schema is the role authority. Keep the legacy checkboxes and
+            # state aligned even when neutral policy suggested the first target.
+            self._sync_schema_to_legacy_controls_unlocked()
             if schema.timezone:
                 self.tz.setText(schema.timezone)
             if schema.outlier_policy.value in OUTLIER_POLICY_OPTS:
@@ -941,7 +946,10 @@ class SetupPage(QWidget):
                     cb_qt.setCurrentText("(none)")
                 elif cb_qt.currentText() == "(none)":
                     cb_qt.setCurrentText(
-                        QuantityType.FLOW.value if role_txt == ColumnRole.TARGET.value else QuantityType.QUALITY.value
+                        QuantityType.FLOW.value
+                        if role_txt == ColumnRole.TARGET.value
+                        and resolve_domain(self.state.effective_config(), legacy_if_missing=False).energy
+                        else QuantityType.QUALITY.value
                     )
             src_it = self.schema_tbl.item(row, 6)
             if src_it is not None:
@@ -1014,6 +1022,9 @@ class SetupPage(QWidget):
             it = self.target_list.item(i)
             it.setCheckState(Qt.CheckState.Checked if it.text() in targets else Qt.CheckState.Unchecked)
         self.target_list.blockSignals(False)
+        self.state.targets = self.checked_targets()
+        if time_col:
+            self.state.time_col = time_col
         self._update_overrides_table()
         self.units.setText(", ".join(unit_pairs))
 
@@ -1101,6 +1112,10 @@ class SetupPage(QWidget):
             av_txt = cb_av.currentText().strip() if isinstance(cb_av, QComboBox) else Availability.ALWAYS.value
             is_heur = (src_item.text().strip() == "heuristic") if src_item else False
 
+            if nm in self.checked_targets():
+                role_txt = ColumnRole.TARGET.value
+            elif role_txt == ColumnRole.TARGET.value:
+                role_txt = ColumnRole.PREDICTOR.value
             specs.append(
                 ColumnSpec(
                     name=nm,
@@ -1249,7 +1264,11 @@ class SetupPage(QWidget):
                 if nm in checked and cur_role != ColumnRole.TARGET.value:
                     cb_role.setCurrentText(ColumnRole.TARGET.value)
                     if cb_qt.currentText() == "(none)":
-                        cb_qt.setCurrentText(QuantityType.FLOW.value)
+                        cb_qt.setCurrentText(
+                            QuantityType.FLOW.value
+                            if resolve_domain(self.state.effective_config(), legacy_if_missing=False).energy
+                            else QuantityType.QUALITY.value
+                        )
                 elif nm not in checked and cur_role == ColumnRole.TARGET.value:
                     cb_role.setCurrentText(ColumnRole.PREDICTOR.value)
                     if cb_qt.currentText() == "(none)":
@@ -1276,8 +1295,7 @@ class SetupPage(QWidget):
     def collect(self) -> None:
         """Push the Setup choices into state (AUTO entries do NOT override Advanced settings)."""
         s = self.state
-        tc = self.time_combo.currentText()
-        s.time_col = None if tc in ("", "(none)") else tc
+        s.time_col = self.time_combo.currentText() or s.time_col
         s.targets = self.checked_targets()
         units = self._parse_units_line()
         cfg: dict[str, Any] = {}
@@ -1312,7 +1330,9 @@ class SetupPage(QWidget):
             # Keep the user's explicit target selection from the target list;
             # do not override it with schema-derived columns (which may be stale
             # auto-selected values from dataset load).
-            schema.target_columns = list(s.targets)
+            # build_schema_from_ui derives target roles from the explicit list.
+            if set(schema.target_columns) != set(s.targets):
+                raise SchemaValidationError("Schema target roles must match the selected targets.")
             merged_units = dict(schema.units_map())
             merged_units.update(units)
             units = merged_units
@@ -1443,14 +1463,10 @@ class AnalysisPage(QWidget):
             if _is_interactive():
                 QMessageBox.information(self, "Run analysis", "Tick at least one TARGET column on the Setup tab.")
             return
-        # time_col is optional: datasets without a timestamp column run as
-        # non-temporal (row-order) baselines.
-        if s.df is not None and s.time_col is None and _is_interactive():
-            QMessageBox.information(
-                self,
-                "Run analysis",
-                "No timestamp column selected — analysis will run in non-temporal (row-order) mode.",
-            )
+        if not s.time_col:
+            if _is_interactive():
+                QMessageBox.information(self, "Run analysis", "Select the timestamp column on the Setup tab.")
+            return
         if s.vsg is not None and not s.vsg.is_accepted():
             self.status.setText("Blocked: accept Variable Selection Gate (VSG) first.")
             if _is_interactive():
@@ -1506,6 +1522,8 @@ class AnalysisPage(QWidget):
             config=cfg,
             dataset_sha=s.dataset_sha,
             dataset_info=info,
+            vsg=s.vsg,
+            tcp=s.tcp,
             artifact_dir_by_target=artifact_dirs,
             on_progress=lambda t, p, m: self._progress_events.append((t, p, m)),
         )

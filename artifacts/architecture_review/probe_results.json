@@ -1,0 +1,126 @@
+{
+  "current_mask": {
+    "userinfo": {
+      "synthetic_input": "postgresql://review:REVIEW_CANARY_NOT_A_REAL_SECRET@localhost/review",
+      "output": "postgresql://review:***@localhost/review",
+      "secret_survives": false
+    },
+    "query_password": {
+      "synthetic_input": "postgresql://localhost/review?password=REVIEW_CANARY_NOT_A_REAL_SECRET",
+      "output": "postgresql://localhost/review?password=REVIEW_CANARY_NOT_A_REAL_SECRET",
+      "secret_survives": true
+    },
+    "odbc": {
+      "synthetic_input": "DRIVER={Review};UID=review;PWD=REVIEW_CANARY_NOT_A_REAL_SECRET;DATABASE=review",
+      "output": "DRIVER={Review};UID=review;PWD=REVIEW_CANARY_NOT_A_REAL_SECRET;DATABASE=review",
+      "secret_survives": true
+    },
+    "encoded_odbc": {
+      "synthetic_input": "mssql+pyodbc:///?odbc_connect=DRIVER%3DReview%3BPWD%3DREVIEW_CANARY_NOT_A_REAL_SECRET",
+      "output": "mssql+pyodbc:///?odbc_connect=DRIVER%3DReview%3BPWD%3DREVIEW_CANARY_NOT_A_REAL_SECRET",
+      "secret_survives": true
+    }
+  },
+  "temperature_detection": [
+    {
+      "column": "attempt_count",
+      "current_detected": "attempt_count",
+      "proposed_regex_matches": false
+    },
+    {
+      "column": "template_id",
+      "current_detected": "template_id",
+      "proposed_regex_matches": false
+    },
+    {
+      "column": "temporary",
+      "current_detected": "temporary",
+      "proposed_regex_matches": false
+    },
+    {
+      "column": "tempo",
+      "current_detected": "tempo",
+      "proposed_regex_matches": false
+    },
+    {
+      "column": "boat_count",
+      "current_detected": "boat_count",
+      "proposed_regex_matches": false
+    },
+    {
+      "column": "temperature_C",
+      "current_detected": "temperature_C",
+      "proposed_regex_matches": false
+    },
+    {
+      "column": "outdoor_temp_C",
+      "current_detected": "outdoor_temp_C",
+      "proposed_regex_matches": false
+    },
+    {
+      "column": "oa_temp",
+      "current_detected": "oa_temp",
+      "proposed_regex_matches": true
+    },
+    {
+      "column": "dry_bulb",
+      "current_detected": "dry_bulb",
+      "proposed_regex_matches": true
+    },
+    {
+      "column": "supply_temperature",
+      "current_detected": null,
+      "proposed_regex_matches": false
+    }
+  ],
+  "scoring_schemas": {
+    "legacy_profile_sums": {
+      "balanced": 1.0,
+      "accuracy_first": 1.0000000000000002,
+      "interpretable": 1.0
+    },
+    "new_default_sum": 1.0000000000000002,
+    "shared_keys": [
+      "cvrmse",
+      "interpretability",
+      "nmbe",
+      "parsimony",
+      "r2"
+    ],
+    "legacy_only": [
+      "ashrae",
+      "data_sufficiency",
+      "diagnostics",
+      "mae",
+      "plausibility",
+      "robustness",
+      "smape",
+      "uncertainty"
+    ],
+    "new_only": [
+      "computational_cost",
+      "fold_stability",
+      "homoscedasticity",
+      "mae_wape",
+      "normality_tails",
+      "physical_plausibility",
+      "residual_whiteness",
+      "structural_stability"
+    ]
+  },
+  "integer_lag_contract": {
+    "observed_exception": "TypeError",
+    "message": "cannot unpack non-iterable int object",
+    "input_lags": [
+      1,
+      7
+    ]
+  },
+  "sqlglot_version": "30.31.0",
+  "query_builder": {
+    "invalid_timestamp_accepted": "SELECT ts, reading FROM meters WHERE ts >= 'not-a-datetime' ORDER BY ts LIMIT 100000",
+    "table_fragment_accepted": "SELECT reading FROM meters CROSS JOIN other_readable_table LIMIT 100000",
+    "source_builder_returns": "str"
+  },
+  "readonly_ast_guards": "Both multiple-statement and DELETE probes rejected"
+}

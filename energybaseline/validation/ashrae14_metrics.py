@@ -30,9 +30,13 @@ class ASHRAE14Metrics:
     max_abs_nmbe_limit: float
     min_r2_limit: float
     meets_ashrae14: bool
+    standard_thresholds_applicable: bool = True
+    threshold_policy_version: int = 2
 
     def to_dict(self) -> dict[str, Any]:
         return {
+            "standard_thresholds_applicable": self.standard_thresholds_applicable,
+            "threshold_policy_version": self.threshold_policy_version,
             "cvrmse": float(self.cvrmse),
             "cvrmse_ashrae14_dof": float(self.cvrmse_ashrae14_dof),
             "granularity": self.granularity,
@@ -54,13 +58,17 @@ class ASHRAE14Metrics:
 
 
 def ashrae14_limits_for_granularity(granularity: str) -> tuple[float, float, float]:
-    """Return ``(max_cvrmse_pct, max_abs_nmbe_pct, min_r2)`` per ASHRAE Guideline 14-2014 / IPMVP (DOM-2)."""
+    """Compatibility energy-policy limits, not universal statistical requirements.
+
+    Weekly/daily/subhourly limits are retained as historical application policy,
+    not labeled recognized standard thresholds by the computed result.
+    """
     g = str(granularity or "monthly").strip().lower()
     if g in ("monthly", "month", "1m", "me", "ms"):
         return 15.0, 5.0, 0.75
     if g in ("weekly", "week", "1w", "w"):
         return 20.0, 7.0, 0.60
-    # Hourly, sub-hourly, or daily calibration limits per ASHRAE Guideline 14 Table 4-2
+    # Historical application limits for finer intervals (not all standardized).
     return 30.0, 10.0, 0.50
 
 
@@ -107,7 +115,8 @@ def compute_ashrae14_oos_metrics(
     wape = float(100.0 * np.sum(np.abs(res)) / max(float(np.sum(np.abs(yt))), 1e-12))
 
     max_cv, max_nm, min_r2 = ashrae14_limits_for_granularity(granularity)
-    meets = bool(cvrmse <= max_cv and abs(nmbe) <= max_nm and (not math.isfinite(r2) or r2 >= min_r2))
+    applicable = str(granularity).strip().lower() in ("monthly", "month", "1m", "me", "ms", "hourly", "hour", "1h", "h")
+    meets = bool(applicable and cvrmse <= max_cv and abs(nmbe) <= max_nm and math.isfinite(r2) and r2 >= min_r2)
     return ASHRAE14Metrics(
         n=n,
         n_params=p,
@@ -126,4 +135,5 @@ def compute_ashrae14_oos_metrics(
         max_abs_nmbe_limit=max_nm,
         min_r2_limit=min_r2,
         meets_ashrae14=meets,
+        standard_thresholds_applicable=applicable,
     )

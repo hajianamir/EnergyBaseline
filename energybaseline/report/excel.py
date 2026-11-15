@@ -18,17 +18,25 @@ def table_projection(model):
     return {k: v["value"] for k, v in model.data["artifacts"].items() if v["kind"] == "table"}
 
 
+def _append_literal_row(sheet, values):
+    # openpyxl silently truncates strings during append, so check source values
+    # before cells exist rather than inspecting already-truncated cell contents.
+    if any(isinstance(value, str) and len(value) > 32767 for value in values):
+        raise ValueError("Excel cell exceeds storage limit; use JSON companion")
+    sheet.append(values)
+    for cell in sheet[sheet.max_row]:
+        excel_literal(cell, cell.value)
+
+
 def render_excel(model, path, *, depth="standard"):
     wb = Workbook()
     toc = wb.active
     toc.title = "Contents"
     wb.properties.created = wb.properties.modified = datetime(2000, 1, 1)
     metrics = wb.create_sheet("Metrics")
-    metrics.append(["artifact_id", "label", "value", "unit"])
+    _append_literal_row(metrics, ["artifact_id", "label", "value", "unit"])
     for m in model.metrics:
-        metrics.append([m["artifact_id"], m["label"], m["value"], m["unit"]])
-        for cell in metrics[metrics.max_row]:
-            excel_literal(cell, cell.value)
+        _append_literal_row(metrics, [m["artifact_id"], m["label"], m["value"], m["unit"]])
     data = model.data
     used = set(wb.sheetnames)
 
@@ -42,30 +50,27 @@ def render_excel(model, path, *, depth="standard"):
         used.add(title)
         ws = wb.create_sheet(title)
         cols = list(dict.fromkeys(k for row in rows for k in row))
-        ws.append(cols or ["Evidence unavailable"])
+        _append_literal_row(ws, cols or ["Evidence unavailable"])
         for row in rows:
-            ws.append(
+            _append_literal_row(
+                ws,
                 [
                     row.get(c)
                     if isinstance(row.get(c), (int, float, bool)) or row.get(c) is None
                     else cell_text(row[c])
                     for c in cols
-                ]
+                ],
             )
-        for row in ws:
-            for cell in row:
-                if isinstance(cell.value, str) and len(cell.value) > 32767:
-                    raise ValueError("Excel cell exceeds storage limit; use JSON companion")
-                excel_literal(cell, cell.value)
         return ws
 
-    toc.append(["Section", "Link"])
+    _append_literal_row(toc, ["Section", "Link"])
     for section in selected_sections(model, depth):
         records = [{"Field": k, "Content": v} for k, v in section["template"].items()]
         records += [{"Field": "Narrative", "Content": s} for s in section["sentences"]]
         ws = sheet(section["title"], records)
-        toc.append([section["title"], "Open section"])
-        toc.cell(toc.max_row, 2).hyperlink = f"#'{ws.title}'!A1"
+        _append_literal_row(toc, [section["title"], "Open section"])
+        quoted_title = ws.title.replace("'", "''")
+        toc.cell(toc.max_row, 2).hyperlink = f"#'{quoted_title}'!A1"
         ws.cell(1, len(ws[1]) + 1, "Contents").hyperlink = "#'Contents'!A1"
         for aid in section["tables"]:
             record = data["artifacts"][aid]

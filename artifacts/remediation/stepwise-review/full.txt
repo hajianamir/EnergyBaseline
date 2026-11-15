@@ -1,0 +1,111 @@
+........................................................................ [ 14%]
+........................................................................ [ 29%]
+..................................................F..................... [ 43%]
+........................................................................ [ 58%]
+........................................................................ [ 73%]
+........................................................................ [ 87%]
+............................................................             [100%]
+=================================== FAILURES ===================================
+________ test_mt5_proof_discovery_cluster_labels_never_reach_any_model _________
+
+    def test_mt5_proof_discovery_cluster_labels_never_reach_any_model() -> None:
+        rng = np.random.default_rng(5252)
+        n = 120
+        idx = pd.date_range("2025-01-01", periods=n, freq="D")
+        df = pd.DataFrame(
+            {
+                "timestamp": idx.astype(str),
+                "oat_c": np.concatenate([rng.normal(8.0, 1.0, n // 2), rng.normal(26.0, 1.0, n // 2)]),
+                "occ": np.concatenate([rng.normal(0.3, 0.05, n // 2), rng.normal(0.9, 0.05, n // 2)]),
+            },
+            index=idx,
+        )
+        y = 100.0 + 3.0 * df["oat_c"].to_numpy() + 25.0 * df["occ"].to_numpy() + rng.normal(0.0, 0.8, size=n)
+        df["energy_kwh"] = y
+    
+        rep = discover_operating_regimes(df, ["oat_c", "occ"], method="kmeans", k_range=(2, 3), n_boot=10, seed=42)
+        tagged_df = attach_descriptive_cluster_labels(df, rep.labels, col_name="regime_cluster_k")
+        X_leaked = tagged_df[["oat_c", "occ", "regime_cluster_k"]]
+    
+        # 1. Direct pass of leaked DataFrame or DescriptiveClusterLabels array into EVERY F1..F10 family MUST raise RegimeLabelLeakageError
+        all_estimators = [
+            F1LinearBaseline("ols"),
+            F2ChangePointBaseline("3P-cooling", n_grid=15, n_boot_knots=0),
+            F3RegularizedBaseline("ridge"),
+            F4BasisBaseline("polynomial"),
+            F5EnsembleBaseline("random_forest", n_estimators=20),
+            F6NeuralBaseline("mlp", min_samples=30, max_epochs=20),
+            F7TimeSeriesBaseline("arimax", order=(1, 0, 0)),
+            F8RegimeBaseline(calendar_regime="weekday_weekend"),
+            F9DecompositionBaseline("stl_fourier", period=12),
+            F10ConvexStackingBaseline(cv_folds=3),
+        ]
+        for est in all_estimators:
+            with pytest.raises(RegimeLabelLeakageError):
+                est.fit(X_leaked, y)
+            with pytest.raises(RegimeLabelLeakageError):
+                est.fit(rep.labels, y)
+    
+        # F8 regime_col explicitly blocks discovery cluster columns too
+        with pytest.raises(RegimeLabelLeakageError):
+            F8RegimeBaseline(regime_col="__cluster_label__")
+        with pytest.raises(RegimeLabelLeakageError):
+            F8RegimeBaseline(regime_col="regime_cluster_k")
+    
+        # Core portfolio evaluate_candidate also blocks leaked DataFrames
+        cand = Candidate("Mean", "Linear", 1, "linear", lambda c: ColsDesign(only=[]), lambda p, c: MeanEst(), scale=False)
+        with pytest.raises(RegimeLabelLeakageError):
+            evaluate_candidate(cand, X_leaked, y, make_folds(n, 3, "blocked_kfold", 1), Ctx(target="energy_kwh"))
+    
+        # 2. Automatic stripping in strip_discovery_cluster_labels & evaluate_f1_f10_catalog guarantees zero leakage
+        clean_df, removed = strip_discovery_cluster_labels(tagged_df)
+        assert removed == ["regime_cluster_k"]
+        assert "regime_cluster_k" not in clean_df.columns
+    
+        vsg = VariableSelectionGate(
+            clean_df.reset_index(drop=True), targets=["energy_kwh"], time_col="timestamp", dataset_sha256="mt5_sha"
+        )
+        vsg.accept()
+        tcp = TestConfigPanel(vsg)
+        tcp.lock_preregistration()
+    
+        # Even if caller passes tagged_df (with cluster column attached!) to evaluate_f1_f10_catalog, it strips it before fitting
+>       entries = evaluate_f1_f10_catalog(
+            tagged_df.reset_index(drop=True),
+            target_col="energy_kwh",
+            predictor_cols=["oat_c", "occ", "regime_cluster_k"],
+            vsg=vsg,
+            tcp=tcp,
+            lite_profile=True,
+            seed=42,
+        )
+
+tests/gates/test_phase5_mining_isolation_and_perf.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+energybaseline/models/__init__.py:95: in evaluate_f1_f10_catalog
+    assert_bound_inference(df, vsg.time_col, [target_col], vsg, tcp)
+energybaseline/core/authorization.py:24: in assert_bound_inference
+    assert_bound_vsg(frame, time_col, targets, vsg)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+frame =       timestamp      oat_c       occ  energy_kwh  regime_cluster_k
+0    2025-01-01   7.516173  0.345329  131.640820   ...202.610320                 1
+119  2025-04-30  23.427115  0.888035  192.142270                 1
+
+[120 rows x 5 columns]
+time_col = 'timestamp', targets = ['energy_kwh']
+vsg = <energybaseline.core.vsg.VariableSelectionGate object at 0x7ff406fd34d0>
+
+    def assert_bound_vsg(frame, time_col, targets, vsg):
+        vsg.assert_accepted()
+        fingerprint = getattr(vsg, "input_frame_sha256", None)
+        if fingerprint is None or sha256_dataframe(frame) != fingerprint:
+>           raise ComplianceGateError(
+                "The accepted VSG is not bound to these input values, columns, dtypes and timestamps. Rebuild and accept the gates."
+            )
+E           energybaseline.core.vsg.ComplianceGateError: The accepted VSG is not bound to these input values, columns, dtypes and timestamps. Rebuild and accept the gates.
+
+energybaseline/core/authorization.py:16: ComplianceGateError
+=========================== short test summary info ============================
+FAILED tests/gates/test_phase5_mining_isolation_and_perf.py::test_mt5_proof_discovery_cluster_labels_never_reach_any_model
+1 failed, 491 passed in 987.30s (0:16:27)

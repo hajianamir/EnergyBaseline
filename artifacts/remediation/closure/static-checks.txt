@@ -1,0 +1,40 @@
+$ /home/user/EnergyBaseline/.venv/bin/python -m pip check
+No broken requirements found.
+Exit code: 0
+
+$ /home/user/EnergyBaseline/.venv/bin/python -m ruff check .
+All checks passed!
+Exit code: 0
+
+$ /home/user/EnergyBaseline/.venv/bin/python -m ruff format --check .
+102 files already formatted
+Exit code: 0
+
+$ /home/user/EnergyBaseline/.venv/bin/python -m pyflakes energybaseline
+Exit code: 0
+
+$ /home/user/EnergyBaseline/.venv/bin/python -m compileall -q energybaseline
+Exit code: 0
+
+$ /home/user/EnergyBaseline/.venv/bin/python scripts/gates/guard_web_free.py
+OK [guard_web_free] clean (/home/user/EnergyBaseline)
+Exit code: 0
+
+$ /home/user/EnergyBaseline/.venv/bin/python scripts/gates/guard_env_readers.py
+OK [guard_env_readers] clean (/home/user/EnergyBaseline)
+Exit code: 0
+
+$ /home/user/EnergyBaseline/.venv/bin/python scripts/gates/guard_tests_integrity.py
+OK [guard_tests_integrity] verified 4 baseline test files
+Exit code: 0
+
+$ /home/user/EnergyBaseline/.venv/bin/python scripts/gates/guard_no_qthread_compute.py
+OK [guard_no_qthread_compute] clean (/home/user/EnergyBaseline)
+Exit code: 0
+
+$ git diff --check
+Exit code: 0
+
+$ git diff --exit-code HEAD -- LICENSE tests artifacts/review_baseline
+Exit code: 0
+

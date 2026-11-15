@@ -1,0 +1,15 @@
+{
+  "commit_object_sha256": "6603b87882d0797837f701aaef4be6279d34466a6d287d3649d012c23a7b26ea",
+  "existing_tests_changed": false,
+  "files": {
+    "REPORT.md": "4f7a74ce90cb1657070fca776c8ed20573e22b27d5cdc8679cf0726ea03d27b9",
+    "inventory.json": "e528fb48986116b7f0cc29dfa19ddfa9a66edc140ff6920bb86b9e33f3b992b6",
+    "probe_results.json": "9dd57fad1215c172b912c81d21f2d0ebe43e48fdf494064a196bf7622658422c",
+    "probe_run.txt": "0892a73a48eb6bd58b375a92940755330b5d8da0bc020370fa1cdd72aef6ad45",
+    "review_probe.py": "3edcebabe2fec9f534e79d8762382373026ff785e88623d3b8336a4d93727e4c",
+    "static_checks.txt": "a262a4a812663402b28cc38b5f374587dab9c334cfb3bd83704503b3a36bfa68"
+  },
+  "full_suite_executed_for_this_review": false,
+  "product_code_changed": false,
+  "reviewed_commit": "fe345ded40aae652fe1fb99617ca314211d9e5cf"
+}

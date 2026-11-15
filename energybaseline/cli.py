@@ -467,7 +467,7 @@ def _cmd_test_catalog(args: argparse.Namespace) -> int:
         t_up = tid.strip().upper()
         if t_up in tcp.test_panels:
             tcp.configure_test_panel(t_up, enabled=False)
-    tcp.accept()
+    tcp.lock_preregistration()
 
     suites: dict[str, list[dict[str, Any]]] = {}
     for target in vsg.targets:
@@ -575,6 +575,7 @@ def _cmd_model_catalog(args: argparse.Namespace) -> int:
 
 
 def _cmd_scoring_register(args: argparse.Namespace) -> int:
+    sys.stderr.write("DEPRECATED: scoring-register uses the legacy energy portfolio contract. Use analyze for shared neutral-by-default SDK/desktop evaluation.\n")
     from .models import (
         MANDATORY_PORTFOLIO_CLASSES,
         SampleSizeGateSkippedError,
@@ -768,6 +769,7 @@ def _cmd_baseline_lock(args: argparse.Namespace) -> int:
     coefs = {"intercept": float(est.intercept_), **{k: float(v) for k, v in est.coef_raw_.items()}}
     rec = mgr.lock_baseline(
         run_id="cli-phase6",
+        domain_pack="energy",
         target=target,
         model_name="mlr",
         family=est.family_id,
@@ -782,10 +784,10 @@ def _cmd_baseline_lock(args: argparse.Namespace) -> int:
         thresholds={"max_cvrmse": 15.0, "max_nmbe": 5.0, "min_r2": 0.75},
         random_seed=42,
         calibration_metrics=m.to_dict(),
-        composite_score=92.5,
+        composite_score=0.0,  # audit-only round trip, not a production ranking claim
         validity_envelope=env.to_dict(),
         locked_by="cli-audit",
-        notes="Phase 6 Gate G6 CLI locked baseline & Excel formula round-trip check",
+        notes="Audit-only in-sample formula round-trip; composite ranking not evaluated. Not an accepted production baseline.",
     )
     loaded = mgr.load_verified_artifact(rec)
     _ = loaded
@@ -842,7 +844,7 @@ def _cmd_monitoring_run(args: argparse.Namespace) -> int:
     assert_safe_payload(config)
     record = LockedBaselineRecord(**json.loads(Path(args.baseline).read_text(encoding="utf-8")))
     manager = BaselineLockManager(Path(args.baseline).parent)
-    artifact = manager.load_verified_artifact(record)
+    artifact = manager.load_verified_artifact(record, trusted_record_sha256=args.trusted_record_sha256)
     schema = ReportingSchema(drivers=tuple(config["drivers"]),target=record.target,
         units=tuple(config["units"].items()),step_seconds=config["step_seconds"],
         time_column=config.get("time_column","timestamp"))
@@ -895,8 +897,35 @@ def _cmd_audit_verify(args):
     return 0
 
 
+def _cmd_analyze(args):
+    """The same raw-fold evaluator used by desktop and the public SDK."""
+    from .sdk import analyze_request
+    from .contracts import AnalysisRequest
+    frame = ingest.load_file(args.dataset)
+    targets = [name.strip() for name in args.targets.split(",") if name.strip()]
+    if not targets:
+        raise ValueError("At least one explicit target is required.")
+    config = json.loads(Path(args.config).read_text(encoding="utf-8")) if args.config else {}
+    if not isinstance(config, dict):
+        raise ValueError("Analysis configuration must be a JSON object.")
+    request = AnalysisRequest(args.time_col, tuple(targets), args.domain_pack, config)
+    config = {**request.config, "domain_pack": request.domain_pack}
+    gate_args = {}
+    if args.inference:
+        vsg = VariableSelectionGate(frame, targets=targets, time_col=args.time_col, config=config)
+        vsg.accept()
+        tcp = TestConfigPanel(vsg, config=config)
+        tcp.lock_preregistration()
+        gate_args = {"vsg": vsg, "tcp": tcp, "enforce_compliance_gates": True}
+    response = analyze_request(frame, request, dataset_sha=ingest.sha256_file(args.dataset), **gate_args)
+    _write_or_print(response.to_summary(), args.out)
+    return 0 if all(result.status == "ok" for result in response.run.targets.values()) else 1
+
+
+
 CLI_COMMAND_HANDLERS: Mapping[str, Callable[[argparse.Namespace], int]] = MappingProxyType(
     {
+        "analyze": _cmd_analyze,
         "schema-suggest": _cmd_schema_suggest,
         "schema-edit": _cmd_schema_edit,
         "schema-validate": _cmd_schema_validate,
@@ -929,6 +958,15 @@ def build_parser() -> argparse.ArgumentParser:
         description="EnergyBaseline Phase 2 column schema & temporal validation CLI (DAT-6).",
     )
     sub = parser.add_subparsers(dest="subcommand", required=True)
+
+    p_analysis = sub.add_parser("analyze", help="Analyze temporal regression using the shared raw-fold SDK/desktop evaluator.")
+    p_analysis.add_argument("dataset")
+    p_analysis.add_argument("--time-col", required=True)
+    p_analysis.add_argument("--targets", required=True)
+    p_analysis.add_argument("--domain-pack", choices=("neutral", "energy", "water", "manufacturing"), default="neutral")
+    p_analysis.add_argument("--config", help="Path to a JSON configuration object.")
+    p_analysis.add_argument("--inference", action="store_true", help="Explicitly accept VSG and lock TCP for these exact input values before inference.")
+    p_analysis.add_argument("--out")
 
     p_sug = sub.add_parser("schema-suggest", help="Inspect a dataset and emit a suggested DatasetSchema JSON envelope.")
     p_sug.add_argument("dataset", help="Path to CSV / TSV / Excel / Parquet dataset.")
@@ -1085,6 +1123,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_mon = sub.add_parser("monitoring-run", help="Verified locked-baseline monitoring and audited batch append.")
     p_mon.add_argument("reporting")
     p_mon.add_argument("--baseline", required=True, help="Locked baseline manifest.")
+    p_mon.add_argument("--trusted-record-sha256", help="Independently verified record digest authorizing executable external model loading.")
     p_mon.add_argument("--config", required=True, help="JSON drivers, units, step_seconds, time_column.")
     p_mon.add_argument("--reference", required=True, help="Frozen calibration-period data, not reporting outcomes.")
     p_mon.add_argument("--history", required=True)

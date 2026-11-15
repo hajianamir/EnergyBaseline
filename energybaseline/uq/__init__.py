@@ -7,7 +7,9 @@ from .savings_uncertainty import savings_uncertainty
 
 
 def run_uq_catalog(adapter, X_holdout, y_holdout, *, tcp, sequential=False, gamma=0.01):
-    tcp.assert_accepted()
+    from ..core.authorization import assert_locked_inference
+
+    assert_locked_inference(tcp)
     import numpy as np
     from .calibration import vector
 

@@ -1,0 +1,22 @@
+{
+  "phase7": {
+    "hashes_verified": 11,
+    "drift": []
+  },
+  "phase8": {
+    "hashes_verified": 12,
+    "drift": []
+  },
+  "source": {
+    "files": 293,
+    "drift": []
+  },
+  "preserved_baseline": {
+    "tests/conftest.py": true,
+    "tests/test_config_db.py": true,
+    "tests/test_core.py": true,
+    "tests/test_pipeline.py": true,
+    "LICENSE": true
+  },
+  "review_baseline_changed": []
+}

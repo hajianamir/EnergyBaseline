@@ -1,0 +1,227 @@
+Branch: arena/5b0e8eef-energybaseline
+Base: fe345ded40aae652fe1fb99617ca314211d9e5cf
+
+Command: PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest -q tests --ignore=tests/gui --tb=short
+........................................................................ [ 20%]
+........................................................................ [ 40%]
+........................................................................ [ 60%]
+........................................................................ [ 80%]
+..........................................................F....F.....    [100%]
+=================================== FAILURES ===================================
+___________________ test_monthly_run_shortlist_and_formulas ____________________
+tests/test_pipeline.py:37: in test_monthly_run_shortlist_and_formulas
+    assert s["formula"]["text"] and "ŷ" in s["formula"]["text"] or "NN" in s["formula"]["text"]
+E   AssertionError: assert (('Architecture: Gaussian Process (9.64**2 * RBF(length_scale=16.5) + WhiteKernel(noise_level=0.0336), 36 training point...00] y_surr ~= 10955 (+66.47)*Avg_Temp_C (-208)*sin_year1 (-585.6)*cos_year1 (+743.7)*HDD(Tb=15.2) (+1379)*CDD(Tb=18.3)' and 'ŷ' in 'Architecture: Gaussian Process (9.64**2 * RBF(length_scale=16.5) + WhiteKernel(noise_level=0.0336), 36 training point...00] y_surr ~= 10955 (+66.47)*Avg_Temp_C (-208)*sin_year1 (-585.6)*cos_year1 (+743.7)*HDD(Tb=15.2) (+1379)*CDD(Tb=18.3)') or 'NN' in 'Architecture: Gaussian Process (9.64**2 * RBF(length_scale=16.5) + WhiteKernel(noise_level=0.0336), 36 training point...00] y_surr ~= 10955 (+66.47)*Avg_Temp_C (-208)*sin_year1 (-585.6)*cos_year1 (+743.7)*HDD(Tb=15.2) (+1379)*CDD(Tb=18.3)')
+______________________ test_daily_multitarget_independent ______________________
+tests/test_pipeline.py:127: in test_daily_multitarget_independent
+    assert e.status == g.status == "ok"
+E   AssertionError: assert 'failed' == 'ok'
+E     
+E     - ok
+E     + failed
+---------------------------- Captured stdout setup -----------------------------
+Samples written to /tmp/pytest-of-user/pytest-16/generated_samples0
+------------------------------ Captured log call -------------------------------
+ERROR    energybaseline.pipeline:pipeline.py:577 target Electricity_kWh failed: Invalid value '[ 234.      953.     1017.     1111.     1113.     1011.      284.
+  256.     1092.     1221.5512 1060.     1125.      987.      240.
+  257.     1082.     1115.     1028.      975.     1073.      275.
+  291.     1088.     1018.     1011.     1012.     1030.      249.
+  295.      985.     1022.      909.9488 1191.     1117.      253.
+  276.     1074.     1051.      942.     1003.      878.9488  237.
+  244.     1087.     1008.     1036.     1074.     1019.      270.
+  250.      998.      936.     1009.     1129.     1061.      244.
+  241.     1043.     1036.     1105.     1080.      950.      285.
+  289.     1139.      965.     1078.     1029.     1160.      271.
+  242.     1092.     1058.     1100.      946.     1045.      254.
+  277.     1036.     1139.     1090.     1051.      968.      226.
+  256.      910.9488 1117.     1143.     1014.     1104.      268.
+  287.     1096.     1147.     1077.      999.     1030.      264.
+  244.     1095.      994.     1090.     1060.      979.      281.
+  268.     1090.     1099.     1006.     1052.      977.      293.
+  263.     1062.     1053.     1024.     1039.     1165.      237.
+  254.      942.     1109.     1124.     1097.     1012.      261.
+  250.     1098.      987.     1082.     1076.     1047.      222.
+  268.     1097.     1087.      989.      898.     1109.      239.
+  270.     1014.     1039.     1112.     1120.     1092.      262.
+  247.     1044.     1089.     1162.     1201.     1154.      213.
+  265.     1115.     1221.5512  938.     1162.     1137.      308.
+  265.     1078.     1129.     1005.     1040.      885.      279.
+  246.     1070.     1085.     1041.     1222.     1041.      281.
+  266.     1166.     1156.     1029.     1056.     1055.      222.
+  242.     1049.     1069.     1223.     1028.     1105.      282.
+  245.     1080.      994.     1124.      998.     1157.      289.
+  269.      986.     1001.      955.     1059.      993.      278.
+  245.     1218.      935.     1075.     1117.      878.9488  276.
+  302.      984.     1138.     1204.     1139.     1093.      298.
+  249.     1076.     1049.     1113.     1076.    ]' for dtype 'int64'
+Traceback (most recent call last):
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/internals/blocks.py", line 1179, in setitem
+    casted = np_can_hold_element(values.dtype, value)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/dtypes/cast.py", line 1753, in np_can_hold_element
+    raise LossySetitemError
+pandas.errors.LossySetitemError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/user/EnergyBaseline/energybaseline/core/pipeline.py", line 317, in analyze_target
+    for train_idx, valid_idx in folds:
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/EnergyBaseline/energybaseline/core/evaluation.py", line 119, in prepare
+    for column in prep.predictors + prep.cat_cols:
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/indexing.py", line 1010, in __setitem__
+    iloc._setitem_with_indexer(indexer, value, self.name)
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/indexing.py", line 2651, in _setitem_with_indexer
+    self._setitem_with_indexer_split_path(indexer, value, name)
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/indexing.py", line 2693, in _setitem_with_indexer_split_path
+    self._setitem_single_column(ilocs[0], value, pi)
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/indexing.py", line 2898, in _setitem_single_column
+    self.obj._mgr.column_setitem(loc, plane_indexer, value)
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/internals/managers.py", line 1568, in column_setitem
+    new_mgr = col_mgr.setitem((idx,), value)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/internals/managers.py", line 625, in setitem
+    return self.apply("setitem", indexer=indexer, value=value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/internals/managers.py", line 456, in apply
+    applied = getattr(b, f)(**kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/internals/blocks.py", line 1182, in setitem
+    nb = self.coerce_to_target_dtype(value, raise_on_upcast=True)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/internals/blocks.py", line 484, in coerce_to_target_dtype
+    raise TypeError(f"Invalid value '{other}' for dtype '{self.values.dtype}'")
+TypeError: Invalid value '[ 234.      953.     1017.     1111.     1113.     1011.      284.
+  256.     1092.     1221.5512 1060.     1125.      987.      240.
+  257.     1082.     1115.     1028.      975.     1073.      275.
+  291.     1088.     1018.     1011.     1012.     1030.      249.
+  295.      985.     1022.      909.9488 1191.     1117.      253.
+  276.     1074.     1051.      942.     1003.      878.9488  237.
+  244.     1087.     1008.     1036.     1074.     1019.      270.
+  250.      998.      936.     1009.     1129.     1061.      244.
+  241.     1043.     1036.     1105.     1080.      950.      285.
+  289.     1139.      965.     1078.     1029.     1160.      271.
+  242.     1092.     1058.     1100.      946.     1045.      254.
+  277.     1036.     1139.     1090.     1051.      968.      226.
+  256.      910.9488 1117.     1143.     1014.     1104.      268.
+  287.     1096.     1147.     1077.      999.     1030.      264.
+  244.     1095.      994.     1090.     1060.      979.      281.
+  268.     1090.     1099.     1006.     1052.      977.      293.
+  263.     1062.     1053.     1024.     1039.     1165.      237.
+  254.      942.     1109.     1124.     1097.     1012.      261.
+  250.     1098.      987.     1082.     1076.     1047.      222.
+  268.     1097.     1087.      989.      898.     1109.      239.
+  270.     1014.     1039.     1112.     1120.     1092.      262.
+  247.     1044.     1089.     1162.     1201.     1154.      213.
+  265.     1115.     1221.5512  938.     1162.     1137.      308.
+  265.     1078.     1129.     1005.     1040.      885.      279.
+  246.     1070.     1085.     1041.     1222.     1041.      281.
+  266.     1166.     1156.     1029.     1056.     1055.      222.
+  242.     1049.     1069.     1223.     1028.     1105.      282.
+  245.     1080.      994.     1124.      998.     1157.      289.
+  269.      986.     1001.      955.     1059.      993.      278.
+  245.     1218.      935.     1075.     1117.      878.9488  276.
+  302.      984.     1138.     1204.     1139.     1093.      298.
+  249.     1076.     1049.     1113.     1076.    ]' for dtype 'int64'
+
+ERROR    energybaseline.pipeline:pipeline.py:577 target Gas_m3 failed: Invalid value '[ 251.        265.        929.624275  916.        953.       1100.
+ 1121.        250.        235.       1214.       1027.       1063.
+ 1078.        893.624275  245.        251.        929.624275 1020.
+ 1047.       1025.       1017.        251.        267.       1083.
+  900.624275  915.       1026.        997.        266.        264.
+ 1106.        949.       1078.        929.       1037.        244.
+  212.       1100.       1062.        931.        973.       1069.
+  254.        249.       1085.       1061.       1044.        903.124275
+ 1036.        244.        255.       1134.       1047.       1048.
+ 1105.       1057.        246.        262.       1238.375725 1143.
+  989.       1062.        981.        241.        259.       1106.
+ 1063.        969.       1056.       1072.       1154.        213.
+  265.       1115.       1209.375725  938.       1162.       1137.
+  308.        265.       1078.       1129.       1005.       1040.
+  893.624275  279.        246.       1070.       1085.       1041.
+ 1211.875725 1041.        281.        266.       1166.       1156.
+ 1029.       1056.       1055.        222.        242.       1049.
+ 1069.       1196.875725 1028.       1105.        282.        245.
+ 1080.        994.       1124.        998.       1157.        289.
+  269.        986.       1001.        955.       1059.        993.
+  278.        245.       1218.        935.       1075.       1117.
+  893.624275  276.        302.        984.       1138.       1196.875725
+ 1139.       1093.        298.        249.       1076.       1049.
+ 1113.       1076.      ]' for dtype 'int64'
+Traceback (most recent call last):
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/internals/blocks.py", line 1179, in setitem
+    casted = np_can_hold_element(values.dtype, value)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/dtypes/cast.py", line 1753, in np_can_hold_element
+    raise LossySetitemError
+pandas.errors.LossySetitemError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/user/EnergyBaseline/energybaseline/core/pipeline.py", line 358, in analyze_target
+    if ca is not None and cb is not None:
+                      ^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/EnergyBaseline/energybaseline/core/evaluation.py", line 198, in ensemble_predictions
+    for train, valid in self.folds:
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/EnergyBaseline/energybaseline/core/evaluation.py", line 158, in inner_folds
+    for itr, ite in make_folds(len(train), 3, ctx.cv_scheme, ctx.gap):
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/EnergyBaseline/energybaseline/core/evaluation.py", line 119, in prepare
+    for column in prep.predictors + prep.cat_cols:
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/indexing.py", line 1010, in __setitem__
+    iloc._setitem_with_indexer(indexer, value, self.name)
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/indexing.py", line 2651, in _setitem_with_indexer
+    self._setitem_with_indexer_split_path(indexer, value, name)
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/indexing.py", line 2693, in _setitem_with_indexer_split_path
+    self._setitem_single_column(ilocs[0], value, pi)
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/indexing.py", line 2898, in _setitem_single_column
+    self.obj._mgr.column_setitem(loc, plane_indexer, value)
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/internals/managers.py", line 1568, in column_setitem
+    new_mgr = col_mgr.setitem((idx,), value)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/internals/managers.py", line 625, in setitem
+    return self.apply("setitem", indexer=indexer, value=value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/internals/managers.py", line 456, in apply
+    applied = getattr(b, f)(**kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/internals/blocks.py", line 1182, in setitem
+    nb = self.coerce_to_target_dtype(value, raise_on_upcast=True)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/EnergyBaseline/.venv/lib/python3.11/site-packages/pandas/core/internals/blocks.py", line 484, in coerce_to_target_dtype
+    raise TypeError(f"Invalid value '{other}' for dtype '{self.values.dtype}'")
+TypeError: Invalid value '[ 251.        265.        929.624275  916.        953.       1100.
+ 1121.        250.        235.       1214.       1027.       1063.
+ 1078.        893.624275  245.        251.        929.624275 1020.
+ 1047.       1025.       1017.        251.        267.       1083.
+  900.624275  915.       1026.        997.        266.        264.
+ 1106.        949.       1078.        929.       1037.        244.
+  212.       1100.       1062.        931.        973.       1069.
+  254.        249.       1085.       1061.       1044.        903.124275
+ 1036.        244.        255.       1134.       1047.       1048.
+ 1105.       1057.        246.        262.       1238.375725 1143.
+  989.       1062.        981.        241.        259.       1106.
+ 1063.        969.       1056.       1072.       1154.        213.
+  265.       1115.       1209.375725  938.       1162.       1137.
+  308.        265.       1078.       1129.       1005.       1040.
+  893.624275  279.        246.       1070.       1085.       1041.
+ 1211.875725 1041.        281.        266.       1166.       1156.
+ 1029.       1056.       1055.        222.        242.       1049.
+ 1069.       1196.875725 1028.       1105.        282.        245.
+ 1080.        994.       1124.        998.       1157.        289.
+  269.        986.       1001.        955.       1059.        993.
+  278.        245.       1218.        935.       1075.       1117.
+  893.624275  276.        302.        984.       1138.       1196.875725
+ 1139.       1093.        298.        249.       1076.       1049.
+ 1113.       1076.      ]' for dtype 'int64'
+=========================== short test summary info ============================
+FAILED tests/test_pipeline.py::test_monthly_run_shortlist_and_formulas - Asse...
+FAILED tests/test_pipeline.py::test_daily_multitarget_independent - Assertion...
+2 failed, 355 passed in 487.74s (0:08:07)
+
+Exit code: 1

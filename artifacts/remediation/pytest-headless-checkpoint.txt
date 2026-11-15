@@ -1,0 +1,14 @@
+UTC start: 2026-11-14T19:27:00Z
+Branch: arena/5b0e8eef-energybaseline
+Base HEAD: fe345ded40aae652fe1fb99617ca314211d9e5cf
+
+Command: PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest -q tests --ignore=tests/gui --tb=short
+........................................................................ [ 21%]
+........................................................................ [ 43%]
+........................................................................ [ 64%]
+........................................................................ [ 86%]
+.............................................                            [100%]
+333 passed in 516.48s (0:08:36)
+
+Exit code: 0
+UTC end: 2026-11-14T19:35:40Z

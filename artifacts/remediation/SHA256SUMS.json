@@ -1,0 +1,8 @@
+{
+  "gui-environment-probe.txt": "f345de688fccf7f47f78419d49a48fc15c0003de14dee2a45740e686f7e6d243",
+  "pytest-focused-checkpoint.txt": "3ced3d1a483952191a94c7ecc2e6cf47262b521dd782952c96967ab23ff48179",
+  "pytest-headless-checkpoint.txt": "bd1b2412306ef9f53435bc2cb1e8a8e19b5c62e5f0836b6935fdcf71a396c664",
+  "pytest-non-gui-initial.txt": "75d30cda8f142199aa08f399f63e177188189d5cb1ad464735bbb34091274417",
+  "source-manifest.json": "c68f265ad141c509686e92b621ae207e2d12bd18a4c0265791d22da2afcb7469",
+  "static-checkpoint.txt": "aff99a7102d9f9ea10374f5f7d5c1bc46c63517d673a752c0e95327c380b980c"
+}

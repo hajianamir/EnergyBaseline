@@ -1,0 +1,40 @@
+$ /home/user/EnergyBaseline/.venv/bin/python -m pip check
+No broken requirements found.
+Exit code: 0
+
+$ /home/user/EnergyBaseline/.venv/bin/python -m ruff check .
+All checks passed!
+Exit code: 0
+
+$ /home/user/EnergyBaseline/.venv/bin/python -m ruff format --check .
+104 files already formatted
+Exit code: 0
+
+$ /home/user/EnergyBaseline/.venv/bin/python -m pyflakes energybaseline
+Exit code: 0
+
+$ /home/user/EnergyBaseline/.venv/bin/python -m compileall -q energybaseline
+Exit code: 0
+
+$ /home/user/EnergyBaseline/.venv/bin/python scripts/gates/guard_web_free.py
+OK [guard_web_free] clean (/home/user/EnergyBaseline)
+Exit code: 0
+
+$ /home/user/EnergyBaseline/.venv/bin/python scripts/gates/guard_env_readers.py
+OK [guard_env_readers] clean (/home/user/EnergyBaseline)
+Exit code: 0
+
+$ /home/user/EnergyBaseline/.venv/bin/python scripts/gates/guard_tests_integrity.py
+OK [guard_tests_integrity] verified 4 baseline test files
+Exit code: 0
+
+$ /home/user/EnergyBaseline/.venv/bin/python scripts/gates/guard_no_qthread_compute.py
+OK [guard_no_qthread_compute] clean (/home/user/EnergyBaseline)
+Exit code: 0
+
+$ git diff --check
+Exit code: 0
+
+$ git diff --exit-code fe345ded40aae652fe1fb99617ca314211d9e5cf -- LICENSE artifacts/review_baseline tests/.baseline.sha256 tests/conftest.py tests/fixtures/__init__.py tests/fixtures/phase8.py tests/fixtures/synthetic.py tests/gates/__init__.py tests/gates/test_gen_matrix.py tests/gates/test_guard_env_readers.py tests/gates/test_guard_tests_integrity.py tests/gates/test_guard_web_free.py tests/gates/test_phase0_contracts.py tests/gates/test_phase1_db_ladder.py tests/gates/test_phase1_paths_and_commands.py tests/gates/test_phase1_pool_and_lifecycle.py tests/gates/test_phase2_ingest_and_sql.py tests/gates/test_phase2_quality_and_cli.py tests/gates/test_phase2_schema_and_db.py tests/gates/test_phase2_temporal_and_dst.py tests/gates/test_phase3_auto_and_fuzz.py tests/gates/test_phase3_tcp_cache_whatif.py tests/gates/test_phase3_vsg_integrity_provenance.py tests/gates/test_phase4_g4a_t1_t4.py tests/gates/test_phase4_g4b_t5_t9.py tests/gates/test_phase4_g4c_t10_t14.py tests/gates/test_phase5_f1_f10_models.py tests/gates/test_phase5_mining_isolation_and_perf.py tests/gates/test_phase6_scoring_top5_and_lock.py tests/gates/test_phase6_validation_and_portfolio.py tests/gates/test_phase7_uq_monitoring_causal.py tests/gates/test_phase8_reporting_and_audit.py tests/gates/test_r_reference_workflow_runtime.py tests/gui/__init__.py tests/gui/test_phase1_gui.py tests/gui/test_phase2_gui_schema.py tests/gui/test_phase3_gui_vsg_tcp.py tests/gui/test_phase5_gui_tables_ux5_ux8.py tests/gui/test_phase7_gui_snapshot.py tests/gui/test_phase8_report_preview.py tests/gui/test_qapp_smoke.py tests/reference/README.md tests/reference/chow.R tests/reference/chow.json tests/reference/diebold_mariano.R tests/reference/diebold_mariano.json tests/reference/little_mcar.R tests/reference/little_mcar.json tests/reference/mcs.R tests/reference/mcs.json tests/reference/nemenyi.R tests/reference/nemenyi.json tests/reference/pettitt.R tests/reference/pettitt.json tests/reference/quandt_andrews.R tests/reference/quandt_andrews.json tests/test_config_db.py tests/test_core.py tests/test_pipeline.py tests/test_reference_staleness.py
+Exit code: 0
+

@@ -1,0 +1,6 @@
+{
+  "malformed_cases": 10,
+  "ok": true,
+  "rejected": 10,
+  "valid_rows_accepted": 120
+}

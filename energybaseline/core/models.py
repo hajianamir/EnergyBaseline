@@ -5,7 +5,7 @@ import logging
 import math
 import time
 import warnings
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import Callable
 
 import numpy as np
@@ -42,30 +42,21 @@ class Ctx:
     families: tuple = ("linear", "tree", "kernel", "nn")
     raw_names: list = field(default_factory=list)
     temp_col: str | None = None
+    evaluation_plan: object | None = field(default=None, repr=False)
+    allow_inference: bool = False
+    energy_policy: bool = True  # compatibility; product callers pass the resolved domain
     cancel: Callable[[], bool] = lambda: False
 
 
 # ============================================================== folds
 def make_folds(n: int, k: int, scheme: str, gap: int) -> list[tuple[np.ndarray, np.ndarray]]:
-    idx = np.arange(n)
-    out = []
-    if scheme == "forward_chaining":
-        b = np.linspace(int(n * 0.5), n, k + 1).astype(int)
-        for i in range(k):
-            tr = idx[: max(1, b[i] - gap)]
-            te = idx[b[i]: b[i + 1]]
-            if len(te) and len(tr) >= 5:
-                out.append((tr, te))
-    else:
-        b = np.linspace(0, n, k + 1).astype(int)
-        for i in range(k):
-            te = idx[b[i]: b[i + 1]]
-            mask = np.ones(n, bool)
-            mask[max(0, b[i] - gap): min(n, b[i + 1] + gap)] = False
-            tr = idx[mask]
-            if len(te) and len(tr) >= 5:
-                out.append((tr, te))
-    return out
+    from ..validation.walkforward import generate_walkforward_folds
+    modes = {"forward_chaining": "expanding", "blocked_kfold": "blocked", "expanding": "expanding", "blocked": "blocked", "rolling": "rolling"}
+    if scheme not in modes:
+        raise ValueError("Unsupported temporal validation scheme.")
+    folds, _ = generate_walkforward_folds(n, n_folds=k, mode=modes[scheme], steps_per_day=1.0,
+                                         explicit_purge_gap=gap, min_train_size=8)
+    return [(fold.train_idx, fold.val_idx) for fold in folds]
 
 
 # ============================================================== metrics / diagnostics
@@ -86,10 +77,18 @@ def metrics(y: np.ndarray, p: np.ndarray) -> dict:
         "mae": float(np.mean(np.abs(res))),
         "mape": float(100 * np.mean(np.abs(res[nz] / y[nz]))) if nz.any() else float("nan"),
         "smape": float(100 * np.mean(2 * np.abs(res) / np.maximum(np.abs(y) + np.abs(p), 1e-12))),
+        "wape": float(100 * np.sum(np.abs(res)) / max(float(np.sum(np.abs(y))), 1e-12)),
     }
 
 
-def diagnostics(y: np.ndarray, p: np.ndarray) -> dict:
+def diagnostics(y: np.ndarray, p: np.ndarray, *, allow_inference: bool = False) -> dict:
+    if not allow_inference:
+        residual = np.asarray(y, float) - np.asarray(p, float)
+        return {"jarque_bera_p": float("nan"), "jarque_bera_stat": float("nan"),
+                "durbin_watson": float("nan"), "ljung_box_p": float("nan"),
+                "breusch_pagan_p": float("nan"), "tests_passed": 0,
+                "residual_mean": float(residual.mean()), "residual_std": float(residual.std()),
+                "inference_status": "not run: accepted VSG and locked TCP required"}
     from statsmodels.stats.diagnostic import acorr_ljungbox, het_breuschpagan
     from statsmodels.stats.stattools import durbin_watson
     res = np.asarray(y, float) - np.asarray(p, float)
@@ -198,7 +197,8 @@ class PiecewiseDesign(Design):
         if not cand:
             raise Unavailable("no continuous raw driver for a change-point model")
         self.x = self.prefer if self.prefer in cand else max(cand, key=lambda c: abs(np.nan_to_num(np.corrcoef(X[c].fillna(X[c].median()), y)[0, 1])))
-        x = X[self.x].fillna(X[self.x].median()).values
+        self.median_ = float(X[self.x].median()) if X[self.x].notna().any() else 0.0
+        x = X[self.x].fillna(self.median_).values
         qs = np.unique(np.quantile(x, np.linspace(0.1, 0.9, 9)))
         n = len(y)
         best = (np.inf, None, None)
@@ -222,7 +222,7 @@ class PiecewiseDesign(Design):
         return self
 
     def transform(self, X):
-        x = X[self.x].fillna(X[self.x].median() if X[self.x].notna().any() else 0).values
+        x = X[self.x].fillna(self.median_).values
         out = pd.DataFrame(index=X.index)
         if self.c1 is not None:
             out[f"max(0, {self.c1:.4g} - {self.x})"] = np.maximum(0, self.c1 - x)
@@ -249,6 +249,7 @@ class TOWTDesign(Design):
         self.buckets = sorted(set(b.tolist()))[1:]  # first bucket is the reference level
         tc = self.temp_col if self.temp_col in X.columns else None
         self.tc = tc
+        self.median_ = float(X[tc].median()) if tc and X[tc].notna().any() else 0.0
         self.knots = [float(v) for v in np.unique(np.quantile(X[tc].dropna(), [0.2, 0.4, 0.6, 0.8]))] if tc else []
         self.rest = [c for c in _base_cols(X) if c != tc and not c.startswith(("sin_", "cos_", "is_weekend", "is_holiday"))]
         return self
@@ -263,7 +264,7 @@ class TOWTDesign(Design):
         for v in self.buckets:
             out[self._label(v)] = (b == v).astype(float)
         if self.tc:
-            T = X[self.tc].fillna(X[self.tc].median())
+            T = X[self.tc].fillna(self.median_)
             out[self.tc] = T
             for k in self.knots:
                 out[f"max(0, {self.tc} - {k:.4g})"] = np.maximum(0, T - k)
@@ -345,42 +346,42 @@ class _RandTrial:
         return ch[int(self.rng.integers(0, len(ch)))]
 
 
-def hpo(build, space, A, y, ctx: Ctx, max_rows=2500) -> tuple[dict, str]:
-    n = len(y)
-    if ctx.hpo_trials <= 0 or n < 80:
-        return {}, "HPO skipped (n<80 or trials=0): conservative defaults"
-    stride = max(1, math.ceil(n / max_rows))
-    idx = np.arange(0, n, stride)
-    As, ys = A[idx], y[idx]
-    gap = max(1, ctx.gap // stride)
-    folds = make_folds(len(ys), 3, ctx.cv_scheme, gap)
-    if not folds:
-        return {}, "HPO skipped (too few rows for inner folds)"
+def hpo(candidate, X, y, ctx: Ctx) -> tuple[dict, str]:
+    """Tune on exact temporal folds, refitting design and scaling per inner fit.
 
-    def obj(trial):
-        p = space(trial)
-        err = []
-        for tr, te in folds:
-            m = build(p).fit(As[tr], ys[tr])
-            err.append(np.sqrt(np.mean((m.predict(As[te]) - ys[te]) ** 2)))
-        return float(np.mean(err))
+    This compatibility path accepts an already engineered input matrix; raw
+    preprocessing belongs to RawEvaluationPlan, not to this estimator API.
+    """
+    if ctx.hpo_trials <= 0 or len(y) < 80:
+        return {}, "HPO skipped (n<80 or trials=0): conservative defaults"
+    folds = make_folds(len(y), 3, ctx.cv_scheme, ctx.gap)
+    if not folds:
+        return {}, "HPO skipped (too few rows for the configured embargo)"
+
+    def objective(params):
+        errors = []
+        for train, valid in folds:
+            if ctx.cancel():
+                raise InterruptedError("cancelled")
+            model = candidate.fit(X.iloc[train], y[train], ctx, tune=False, params_override=params)
+            errors.append(float(np.mean((model.predict(X.iloc[valid]) - y[valid]) ** 2)))
+        return float(np.mean(errors))
 
     try:
         import optuna
-        optuna.logging.set_verbosity(optuna.logging.WARNING)
-        study = optuna.create_study(direction="minimize", sampler=optuna.samplers.TPESampler(seed=ctx.seed))
-        study.optimize(obj, n_trials=ctx.hpo_trials, show_progress_bar=False)
-        return study.best_params, f"Optuna TPE, {ctx.hpo_trials} trials, inner {len(folds)}-fold on {len(ys)} rows"
     except ImportError:
         rng = np.random.default_rng(ctx.seed)
-        best, bp = np.inf, {}
+        best, params = np.inf, {}
         for _ in range(ctx.hpo_trials):
-            t = _RandTrial(rng)
-            p = space(t)
-            v = obj(type("T", (), {"suggest_int": t.suggest_int, "suggest_float": t.suggest_float, "suggest_categorical": t.suggest_categorical})())
-            if v < best:
-                best, bp = v, p
-        return bp, f"random search (optuna not installed), {ctx.hpo_trials} trials"
+            values = candidate.space(_RandTrial(rng))
+            loss = objective(values)
+            if loss < best:
+                best, params = loss, values
+        return params, f"random search, {ctx.hpo_trials} trials, exact temporal folds"
+    optuna.logging.set_verbosity(optuna.logging.WARNING)
+    study = optuna.create_study(direction="minimize", sampler=optuna.samplers.TPESampler(seed=ctx.seed))
+    study.optimize(lambda trial: objective(candidate.space(trial)), n_trials=ctx.hpo_trials, show_progress_bar=False)
+    return study.best_params, f"Optuna TPE, {ctx.hpo_trials} trials, {len(folds)} exact temporal folds with fold-local design/scaling"
 
 
 # ============================================================== candidates
@@ -389,7 +390,12 @@ class Candidate:
         self.name, self.family, self.tier, self.kind = name, family, tier, kind
         self.design, self.est, self.space, self.scale, self.cap, self.desc, self.fam_key = design, est, space, scale, cap, desc, fam_key
 
-    def fit(self, X: pd.DataFrame, y: np.ndarray, ctx: Ctx, tune: bool = True) -> "Fitted":
+    def fit(self, X: pd.DataFrame, y: np.ndarray, ctx: Ctx, tune: bool = True, *, params_override: dict | None = None) -> "Fitted":
+        params, hpo_note = {}, "fixed conservative defaults (no implicit estimator CV)"
+        if tune and self.space is not None and params_override is None:
+            params, hpo_note = hpo(self, X, np.asarray(y), ctx)
+        if params_override is not None:
+            params = dict(params_override)
         des = self.design(ctx).fit(X, y)
         D = des.transform(X)
         A = np.nan_to_num(D.values.astype(float))
@@ -400,9 +406,6 @@ class Candidate:
             Af, yf = A[sel], y[sel]
         scaler = StandardScaler().fit(Af) if (self.scale and A.shape[1] > 0) else None
         As = scaler.transform(Af) if scaler else Af
-        params, hpo_note = {}, "no hyper-parameter search (parameter-free or internally cross-validated)"
-        if tune and self.space is not None:
-            params, hpo_note = hpo(lambda p: self.est(p, ctx), self.space, As, yf, ctx)
         est = self.est(params, ctx).fit(As, yf)
         f = Fitted(self, des, scaler, est, names, params, hpo_note, ctx)
         f.cand = None  # candidates hold lambdas (not picklable)
@@ -493,7 +496,7 @@ class Fitted:
             )
         if hasattr(e, "describe"):
             return {
-                "text": f"Architecture: {self.name} with features [{feats}]\n{e.describe(self.names)}\nArtifact: {artifact}{surr_block}",
+                "text": f"Prediction mapping: ŷ({t}) = fitted_model(X); executable artifact required.\nArchitecture: {self.name} with features [{feats}]\n{e.describe(self.names)}\nArtifact: {artifact}{surr_block}",
                 "terms": [],
                 "kind": "network",
                 "is_parametric": False,
@@ -513,7 +516,7 @@ class Fitted:
         else:
             txt = f"Architecture: {type(e).__name__}, hyperparameters={self.params}"
         return {
-            "text": f"{txt}\nFeatures ({len(self.names)}): {feats}\nExported model artifact: {artifact}{surr_block}",
+            "text": f"Prediction mapping: ŷ({t}) = fitted_model(X); executable artifact required.\n{txt}\nFeatures ({len(self.names)}): {feats}\nExported model artifact: {artifact}{surr_block}",
             "terms": [],
             "kind": "ensemble/kernel",
             "is_parametric": False,
@@ -572,28 +575,26 @@ def build_portfolio(ctx: Ctx, n: int) -> tuple[list[Candidate], list[dict]]:
     from sklearn.ensemble import ExtraTreesRegressor, GradientBoostingRegressor, RandomForestRegressor
     from sklearn.gaussian_process import GaussianProcessRegressor
     from sklearn.gaussian_process.kernels import ConstantKernel, RBF, WhiteKernel
-    from sklearn.linear_model import BayesianRidge, ElasticNetCV, LassoCV, LinearRegression, QuantileRegressor, RidgeCV
-    from sklearn.model_selection import TimeSeriesSplit
+    from sklearn.linear_model import BayesianRidge, ElasticNet, Lasso, LinearRegression, QuantileRegressor, Ridge
     from sklearn.svm import SVR
 
     seed, nj = ctx.seed, ctx.n_jobs
     L = "Linear / statistical"
     cands: list[Candidate] = []
     missing: list[dict] = []
-    kf = TimeSeriesSplit(n_splits=3)
-    alphas = np.logspace(-3, 3, 13)
+    regularization = lambda t: dict(alpha=t.suggest_float("alpha", 1e-3, 1e3, log=True))  # noqa: E731
 
     cands += [
         Candidate("Mean baseline", L, 1, "linear", lambda c: ColsDesign(only=[]), lambda p, c: MeanEst(), scale=False, desc="constant mean (null model)"),
         Candidate("Degree-day regression", L, 1, "linear", lambda c: ColsDesign(dd_only=True), lambda p, c: LinearRegression(), desc="y = b0 + b1·HDD + b2·CDD"),
         Candidate("Multiple linear regression (MLR)", L, 1, "linear", lambda c: ColsDesign(), lambda p, c: LinearRegression()),
-        Candidate("Ridge regression", L, 1, "linear", lambda c: ColsDesign(ix=True), lambda p, c: RidgeCV(alphas=alphas)),
-        Candidate("Lasso regression", L, 1, "linear", lambda c: ColsDesign(ix=True), lambda p, c: LassoCV(cv=kf, random_state=seed, max_iter=20000)),
-        Candidate("Elastic Net", L, 1, "linear", lambda c: ColsDesign(ix=True), lambda p, c: ElasticNetCV(cv=kf, l1_ratio=[0.2, 0.5, 0.8], random_state=seed, max_iter=20000)),
-        Candidate("Polynomial regression (deg 2)", L, 2, "linear", lambda c: PolyDesign(3), lambda p, c: RidgeCV(alphas=alphas)),
+        Candidate("Ridge regression", L, 1, "linear", lambda c: ColsDesign(ix=True), lambda p, c: Ridge(**{**dict(alpha=1.0), **p}), space=regularization),
+        Candidate("Lasso regression", L, 1, "linear", lambda c: ColsDesign(ix=True), lambda p, c: Lasso(**{**dict(alpha=0.01, random_state=seed, max_iter=20000), **p}), space=regularization),
+        Candidate("Elastic Net", L, 1, "linear", lambda c: ColsDesign(ix=True), lambda p, c: ElasticNet(**{**dict(alpha=0.01, l1_ratio=0.5, random_state=seed, max_iter=20000), **p}), space=lambda t: {**regularization(t), "l1_ratio": t.suggest_float("l1_ratio", 0.2, 0.8)}),
+        Candidate("Polynomial regression (deg 2)", L, 2, "linear", lambda c: PolyDesign(3), lambda p, c: Ridge(**{**dict(alpha=1.0), **p}), space=regularization),
         Candidate("Piecewise / change-point regression", L, 2, "linear", lambda c: PiecewiseDesign(c.raw_names, c.temp_col), lambda p, c: LinearRegression()),
-        Candidate("TOWT (time-of-week & temperature)", L, 2, "linear", lambda c: TOWTDesign(c), lambda p, c: RidgeCV(alphas=np.logspace(-4, 1, 6))),
-        Candidate("GAM (B-spline additive)", L, 2, "linear", lambda c: SplineDesign(4), lambda p, c: RidgeCV(alphas=alphas)),
+        Candidate("TOWT (time-of-week & temperature)", L, 2, "linear", lambda c: TOWTDesign(c), lambda p, c: Ridge(**{**dict(alpha=0.1), **p}), space=regularization),
+        Candidate("GAM (B-spline additive)", L, 2, "linear", lambda c: SplineDesign(4), lambda p, c: Ridge(**{**dict(alpha=1.0), **p}), space=regularization),
         Candidate("Bayesian ridge", L, 1, "linear", lambda c: ColsDesign(), lambda p, c: BayesianRidge()),
         Candidate("Quantile regression (median)", L, 2, "linear", lambda c: ColsDesign(), lambda p, c: QuantileRegressor(quantile=0.5, alpha=0.0, solver="highs")),
     ]
@@ -648,6 +649,8 @@ def build_portfolio(ctx: Ctx, n: int) -> tuple[list[Candidate], list[dict]]:
         missing.append({"model": m, "reason": "optional architecture not implemented in v3.0 (marked optional in the specification)"})
     if not _have("prophet"):
         pass
+    if not ctx.energy_policy:
+        cands = [c for c in cands if c.name not in ("Degree-day regression", "TOWT (time-of-week & temperature)")]
     return cands, missing
 
 
@@ -682,26 +685,37 @@ def evaluate_candidate(cand: Candidate, X: pd.DataFrame, y: np.ndarray, folds, c
 
     assert_no_cluster_labels_in_model_inputs(X)
     t0 = time.time()
-    n = len(y)
-    oof = np.full(n, np.nan)
+    plan = ctx.evaluation_plan
+    evaluation_y = y if plan is None else plan.y
+    oof_evaluation = np.full(len(evaluation_y), np.nan)
     fold_cv = []
-    for tr, te in folds:
+    for tr, te in (folds if plan is None else plan.folds):
         if ctx.cancel():
             raise InterruptedError("cancelled")
-        # Fit fold-local medians exclusively on training rows (VAL-4 leakage safety)
-        X_tr_raw = X.iloc[tr]
-        fold_med = X_tr_raw.median(numeric_only=True).fillna(0.0)
-        X_tr_clean = X_tr_raw.fillna(fold_med).fillna(0.0)
-        X_te_clean = X.iloc[te].fillna(fold_med).fillna(0.0)
-        m = cand.fit(X_tr_clean, y[tr], ctx, tune=True)
-        oof[te] = m.predict(X_te_clean)
-        fold_cv.append(metrics(y[te], oof[te])["cvrmse"])
-    cov = ~np.isnan(oof)
+        if plan is None:
+            X_tr_raw = X.iloc[tr]
+            fold_med = X_tr_raw.median(numeric_only=True).fillna(0.0)
+            X_tr_clean = X_tr_raw.fillna(fold_med).fillna(0.0)
+            X_te_clean = X.iloc[te].fillna(fold_med).fillna(0.0)
+            m = cand.fit(X_tr_clean, y[tr], ctx, tune=True)
+        else:
+            prepared = plan.prepare(tr, te)
+            local = replace(ctx, raw_names=prepared.raw_names, temp_col=prepared.temp_col)
+            m = plan.fit(cand, prepared.train_X, prepared.train_y, local, tr)
+            X_te_clean = prepared.valid_X
+        prediction = m.predict(X_te_clean)
+        if not np.isfinite(prediction).all():
+            raise ValueError("Non-finite validation predictions are not valid evidence.")
+        oof_evaluation[te] = prediction
+        fold_cv.append(metrics(evaluation_y[te], prediction)["cvrmse"])
+    cov = np.isfinite(oof_evaluation)
     if cov.sum() < 5:
         raise RuntimeError("no out-of-fold predictions produced")
     full_med = X.median(numeric_only=True).fillna(0.0)
     X_full_clean = X.fillna(full_med).fillna(0.0)
-    final = cand.fit(X_full_clean, y, ctx, tune=True)
+    final = (cand.fit(X_full_clean, y, ctx, tune=True) if plan is None else
+             plan.fit(cand, X_full_clean, y, ctx, np.arange(len(plan.y))))
+    oof = oof_evaluation if plan is None else plan.aligned(oof_evaluation, X.index)
     ptrain = final.predict(X_full_clean)
     if final.kind != "linear":
         try:
@@ -710,21 +724,21 @@ def evaluate_candidate(cand: Candidate, X: pd.DataFrame, y: np.ndarray, folds, c
             final._surrogate_info = fit_labelled_diagnostic_surrogate(X_full_clean, ptrain, seed=ctx.seed).to_dict()
         except Exception:
             final._surrogate_info = None
-    m = metrics(y[cov], oof[cov])
+    m = metrics(evaluation_y[cov], oof_evaluation[cov])
     tm = metrics(y, ptrain)
     k = final.n_params()
-    rss = float(np.sum((y[cov] - oof[cov]) ** 2))
+    rss = float(np.sum((evaluation_y[cov] - oof_evaluation[cov]) ** 2))
     nc = int(cov.sum())
     ll = nc * math.log(max(rss, 1e-12) / nc)
     res = {
-        "name": cand.name, "family": cand.family, "tier": cand.tier, "kind": cand.kind, "oof": oof, "metrics": m,
+        "name": cand.name, "family": cand.family, "tier": cand.tier, "kind": cand.kind, "oof": oof, "evaluation_oof": oof_evaluation, "metrics": m,
         "train_metrics": tm, "fold_cvrmse": fold_cv, "robustness": float(np.std(fold_cv) / max(np.mean(fold_cv), 1e-9)) if len(fold_cv) > 1 else 0.0,
         "n_params": k, "aic": ll + 2 * k, "bic": ll + k * math.log(nc), "model": final, "hpo": final.hpo_note,
-        "params": final.params, "seconds": time.time() - t0, "diagnostics": diagnostics(y[cov], oof[cov]),
+        "params": final.params, "seconds": time.time() - t0, "diagnostics": diagnostics(evaluation_y[cov], oof_evaluation[cov], allow_inference=ctx.allow_inference),
     }
-    q = np.quantile((y[cov] - oof[cov]), [0.025, 0.975])
+    q = np.quantile((evaluation_y[cov] - oof_evaluation[cov]), [0.025, 0.975])
     res["resid_q"] = (float(q[0]), float(q[1]))
-    res["plausibility"], res["plaus_notes"] = plausibility(final, X, y)
+    res["plausibility"], res["plaus_notes"] = plausibility(final, X, y) if ctx.energy_policy else (1.0, ["Energy physical constraints not applicable: neutral domain policy."])
     e = getattr(final.est, "est", final.est)
     if hasattr(e, "history_"):
         res["history"] = e.history_

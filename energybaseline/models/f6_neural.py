@@ -92,8 +92,9 @@ class F6NeuralBaseline:
 
         Z = (X_mat - self._mu_) / self._sd_
         t_norm = (yv - self._ymu_) / self._ysd_
-        n_val = max(6, int(round(0.15 * n)))
-        n_tr = n - n_val
+        # No implicit validation split after learned preprocessing. External
+        # temporal CV owns validation; convergence here uses training loss only.
+        n_tr = n
         self.history_ = {"train_loss": [], "val_loss": []}
 
         if self.variant == "mlp":
@@ -113,9 +114,9 @@ class F6NeuralBaseline:
             for _ in range(self.max_epochs):
                 net.partial_fit(Z[:n_tr], t_norm[:n_tr])
                 tr_l = float(np.mean((net.predict(Z[:n_tr]) - t_norm[:n_tr]) ** 2))
-                va_l = float(np.mean((net.predict(Z[n_tr:]) - t_norm[n_tr:]) ** 2))
+                va_l = tr_l
                 self.history_["train_loss"].append(tr_l)
-                self.history_["val_loss"].append(va_l)
+                # No validation evidence is claimed by the estimator.
                 if va_l < best_val - 1e-6:
                     best_val = va_l
                     best_weights = (copy.deepcopy(net.coefs_), copy.deepcopy(net.intercepts_))
@@ -140,8 +141,8 @@ class F6NeuralBaseline:
             W = _sliding_windows(Z, self.seq_len)
             X_tr_t = torch.tensor(W[:n_tr], dtype=torch.float32)
             y_tr_t = torch.tensor(t_norm[:n_tr], dtype=torch.float32)
-            X_va_t = torch.tensor(W[n_tr:], dtype=torch.float32)
-            y_va_t = torch.tensor(t_norm[n_tr:], dtype=torch.float32)
+            X_va_t = torch.tensor(W[:n_tr], dtype=torch.float32)
+            y_va_t = torch.tensor(t_norm[:n_tr], dtype=torch.float32)
 
             h_dim = int(self.hidden_sizes[0])
 
@@ -175,7 +176,7 @@ class F6NeuralBaseline:
                     tr_l = float(loss.item())
                     va_l = float(loss_fn(model(X_va_t), y_va_t).item())
                 self.history_["train_loss"].append(tr_l)
-                self.history_["val_loss"].append(va_l)
+                # No validation evidence is claimed by the estimator.
                 if va_l < best_val - 1e-6:
                     best_val = va_l
                     best_state = copy.deepcopy(model.state_dict())

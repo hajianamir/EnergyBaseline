@@ -119,9 +119,14 @@ def predict_deviation(df: pd.DataFrame, bundle: dict, time_col: str | None = Non
     if len(finite):
         out.attrs["cusum"] = cusum_chart(finite)
         out.attrs["ewma"] = ewma_chart(finite)
-    out["savings"] = -out["deviation"]
-    out["cumulative_savings"] = -out["cum_deviation"]
-    out["enpi_ratio"] = np.where(out["baseline"].abs()>1e-9,out["actual"]/out["baseline"],np.nan)
+    out["actual_to_baseline_ratio"] = np.where(out["baseline"].abs()>1e-9,out["actual"]/out["baseline"],np.nan)
+    from .domain import resolve_domain
+    policy = resolve_domain({"domain_pack": bundle.get("domain_policy", {}).get("key", "legacy_energy")})
+    out.attrs["domain_policy"] = policy.to_dict()
+    if policy.energy:
+        out["savings"] = -out["deviation"]
+        out["cumulative_savings"] = -out["cum_deviation"]
+        out["enpi_ratio"] = out["actual_to_baseline_ratio"]
     return out
 
 

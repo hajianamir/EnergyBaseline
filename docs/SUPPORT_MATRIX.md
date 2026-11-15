@@ -24,8 +24,8 @@ All performance budgets (`PER-1..6`, `AC-23`) and DPI/layout acceptance checks (
 
 ## 3. Python Runtime (`S1`)
 
-- **Pinned Windows CI & Packaging Runtime:** **CPython `3.11.9` (64-bit)** (`ubuntu-latest` Ubuntu 26.04 CI runner uses `3.11.18`, the matching `3.11.x` build published in `actions/python-versions` for Ubuntu 26.04)
-- **Supported Version Range:** `>=3.11,<3.12` (`pyproject.toml`)
+- **Pinned Windows CI & Packaging Runtime:** **CPython `3.12.x` (64-bit)** (the shared `.python-version` selects the latest available 3.12 patch for each runner; Windows and Ubuntu 26.04 can resolve different patch versions)
+- **Supported Version Range:** `>=3.12,<3.13` (`pyproject.toml`)
 - **Installation Manifest:** `requirements.lock` (`pip install --require-hashes -r requirements.lock`)
 
 ## 4. Packaging Profiles & PyTorch Wheel Specification (`D3 = A`)

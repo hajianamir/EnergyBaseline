@@ -1,0 +1,367 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFF..FFFFFFFFFFFF                               [100%]
+=================================== FAILURES ===================================
+________ test_tls_requires_certificate_and_hostname_verification[MySQL] ________
+tests/gates/test_stepwise_review_regressions.py:40: in test_tls_requires_certificate_and_hostname_verification
+    assert isinstance(context, ssl.SSLContext)
+E   AssertionError: assert False
+E    +  where False = isinstance({'check_hostname': False}, <class 'ssl.SSLContext'>)
+E    +    where <class 'ssl.SSLContext'> = ssl.SSLContext
+_____ test_tls_requires_certificate_and_hostname_verification[PostgreSQL] ______
+tests/gates/test_stepwise_review_regressions.py:43: in test_tls_requires_certificate_and_hostname_verification
+    assert args["sslmode"] == "verify-full"
+E   AssertionError: assert 'require' == 'verify-full'
+E     
+E     - verify-full
+E     + require
+_____ test_tls_requires_certificate_and_hostname_verification[SQL Server] ______
+tests/gates/test_stepwise_review_regressions.py:46: in test_tls_requires_certificate_and_hostname_verification
+    assert "Encrypt=yes;TrustServerCertificate=no;" in cs
+E   AssertionError: assert 'Encrypt=yes;TrustServerCertificate=no;' in 'DRIVER={ODBC Driver 18 for SQL Server};SERVER=db.example,1433;DATABASE=;UID=;PWD=;ApplicationIntent=ReadOnly;Encrypt=yes;TrustServerCertificate=yes;'
+_______ test_generated_odbc_credentials_cannot_add_connection_attributes _______
+tests/gates/test_stepwise_review_regressions.py:65: in test_generated_odbc_credentials_cannot_add_connection_attributes
+    assert "SERVER={db;Encrypt=no,1433};" in cs
+E   AssertionError: assert 'SERVER={db;Encrypt=no,1433};' in 'DRIVER={ODBC Driver 18 for SQL Server};SERVER=db;Encrypt=no,1433;DATABASE=d}b;UID=u;id;PWD=p};UID=attacker;ApplicationIntent=ReadOnly;Encrypt=no;TrustServerCertificate=yes;'
+___ test_query_bounds_reject_noninteger_values_before_connect[True-max_rows] ___
+tests/gates/test_stepwise_review_regressions.py:79: in test_query_bounds_reject_noninteger_values_before_connect
+    sqlsource.run_query(sqlsource.ConnectionProfile("test"), "SELECT 1", **{field: value})
+energybaseline/core/sqlsource.py:465: in run_query
+    eng = _engine(p, timeout_seconds=timeout_seconds)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/gates/test_stepwise_review_regressions.py:75: in forbidden
+    pytest.fail("Malformed bounds reached the connection boundary")
+E   Failed: Malformed bounds reached the connection boundary
+_ test_query_bounds_reject_noninteger_values_before_connect[True-timeout_seconds] _
+tests/gates/test_stepwise_review_regressions.py:79: in test_query_bounds_reject_noninteger_values_before_connect
+    sqlsource.run_query(sqlsource.ConnectionProfile("test"), "SELECT 1", **{field: value})
+energybaseline/core/sqlsource.py:465: in run_query
+    eng = _engine(p, timeout_seconds=timeout_seconds)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/gates/test_stepwise_review_regressions.py:75: in forbidden
+    pytest.fail("Malformed bounds reached the connection boundary")
+E   Failed: Malformed bounds reached the connection boundary
+___ test_query_bounds_reject_noninteger_values_before_connect[1.5-max_rows] ____
+tests/gates/test_stepwise_review_regressions.py:79: in test_query_bounds_reject_noninteger_values_before_connect
+    sqlsource.run_query(sqlsource.ConnectionProfile("test"), "SELECT 1", **{field: value})
+energybaseline/core/sqlsource.py:465: in run_query
+    eng = _engine(p, timeout_seconds=timeout_seconds)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/gates/test_stepwise_review_regressions.py:75: in forbidden
+    pytest.fail("Malformed bounds reached the connection boundary")
+E   Failed: Malformed bounds reached the connection boundary
+_ test_query_bounds_reject_noninteger_values_before_connect[1.5-timeout_seconds] _
+tests/gates/test_stepwise_review_regressions.py:79: in test_query_bounds_reject_noninteger_values_before_connect
+    sqlsource.run_query(sqlsource.ConnectionProfile("test"), "SELECT 1", **{field: value})
+energybaseline/core/sqlsource.py:465: in run_query
+    eng = _engine(p, timeout_seconds=timeout_seconds)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/gates/test_stepwise_review_regressions.py:75: in forbidden
+    pytest.fail("Malformed bounds reached the connection boundary")
+E   Failed: Malformed bounds reached the connection boundary
+___ test_query_bounds_reject_noninteger_values_before_connect[nan-max_rows] ____
+tests/gates/test_stepwise_review_regressions.py:79: in test_query_bounds_reject_noninteger_values_before_connect
+    sqlsource.run_query(sqlsource.ConnectionProfile("test"), "SELECT 1", **{field: value})
+energybaseline/core/sqlsource.py:465: in run_query
+    eng = _engine(p, timeout_seconds=timeout_seconds)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/gates/test_stepwise_review_regressions.py:75: in forbidden
+    pytest.fail("Malformed bounds reached the connection boundary")
+E   Failed: Malformed bounds reached the connection boundary
+_ test_query_bounds_reject_noninteger_values_before_connect[nan-timeout_seconds] _
+tests/gates/test_stepwise_review_regressions.py:79: in test_query_bounds_reject_noninteger_values_before_connect
+    sqlsource.run_query(sqlsource.ConnectionProfile("test"), "SELECT 1", **{field: value})
+energybaseline/core/sqlsource.py:465: in run_query
+    eng = _engine(p, timeout_seconds=timeout_seconds)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/gates/test_stepwise_review_regressions.py:75: in forbidden
+    pytest.fail("Malformed bounds reached the connection boundary")
+E   Failed: Malformed bounds reached the connection boundary
+___ test_query_bounds_reject_noninteger_values_before_connect[inf-max_rows] ____
+tests/gates/test_stepwise_review_regressions.py:79: in test_query_bounds_reject_noninteger_values_before_connect
+    sqlsource.run_query(sqlsource.ConnectionProfile("test"), "SELECT 1", **{field: value})
+energybaseline/core/sqlsource.py:465: in run_query
+    eng = _engine(p, timeout_seconds=timeout_seconds)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/gates/test_stepwise_review_regressions.py:75: in forbidden
+    pytest.fail("Malformed bounds reached the connection boundary")
+E   Failed: Malformed bounds reached the connection boundary
+_ test_query_bounds_reject_noninteger_values_before_connect[inf-timeout_seconds] _
+tests/gates/test_stepwise_review_regressions.py:79: in test_query_bounds_reject_noninteger_values_before_connect
+    sqlsource.run_query(sqlsource.ConnectionProfile("test"), "SELECT 1", **{field: value})
+energybaseline/core/sqlsource.py:465: in run_query
+    eng = _engine(p, timeout_seconds=timeout_seconds)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/gates/test_stepwise_review_regressions.py:75: in forbidden
+    pytest.fail("Malformed bounds reached the connection boundary")
+E   Failed: Malformed bounds reached the connection boundary
+____ test_query_bounds_reject_noninteger_values_before_connect[2-max_rows] _____
+tests/gates/test_stepwise_review_regressions.py:79: in test_query_bounds_reject_noninteger_values_before_connect
+    sqlsource.run_query(sqlsource.ConnectionProfile("test"), "SELECT 1", **{field: value})
+energybaseline/core/sqlsource.py:447: in run_query
+    if max_rows <= 0:
+       ^^^^^^^^^^^^^
+E   TypeError: '<=' not supported between instances of 'str' and 'int'
+_ test_query_bounds_reject_noninteger_values_before_connect[2-timeout_seconds] _
+tests/gates/test_stepwise_review_regressions.py:79: in test_query_bounds_reject_noninteger_values_before_connect
+    sqlsource.run_query(sqlsource.ConnectionProfile("test"), "SELECT 1", **{field: value})
+energybaseline/core/sqlsource.py:449: in run_query
+    if timeout_seconds <= 0:
+       ^^^^^^^^^^^^^^^^^^^^
+E   TypeError: '<=' not supported between instances of 'str' and 'int'
+___ test_query_bounds_reject_noninteger_values_before_connect[None-max_rows] ___
+tests/gates/test_stepwise_review_regressions.py:79: in test_query_bounds_reject_noninteger_values_before_connect
+    sqlsource.run_query(sqlsource.ConnectionProfile("test"), "SELECT 1", **{field: value})
+energybaseline/core/sqlsource.py:447: in run_query
+    if max_rows <= 0:
+       ^^^^^^^^^^^^^
+E   TypeError: '<=' not supported between instances of 'NoneType' and 'int'
+_ test_query_bounds_reject_noninteger_values_before_connect[None-timeout_seconds] _
+tests/gates/test_stepwise_review_regressions.py:79: in test_query_bounds_reject_noninteger_values_before_connect
+    sqlsource.run_query(sqlsource.ConnectionProfile("test"), "SELECT 1", **{field: value})
+energybaseline/core/sqlsource.py:449: in run_query
+    if timeout_seconds <= 0:
+       ^^^^^^^^^^^^^^^^^^^^
+E   TypeError: '<=' not supported between instances of 'NoneType' and 'int'
+___________ test_sdk_does_not_replace_falsey_malformed_config[False] ___________
+tests/gates/test_stepwise_review_regressions.py:86: in test_sdk_does_not_replace_falsey_malformed_config
+    sdk.analyze(pd.DataFrame({"t": [1], "y": [2]}), "t", ["y"], config)
+energybaseline/sdk.py:25: in analyze
+    return run_analysis(df, request.time_col, list(request.targets), cfg, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/gates/test_stepwise_review_regressions.py:84: in <lambda>
+    monkeypatch.setattr(sdk, "run_analysis", lambda *a, **k: pytest.fail("Malformed request executed"))
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: Malformed request executed
+_____________ test_sdk_does_not_replace_falsey_malformed_config[0] _____________
+tests/gates/test_stepwise_review_regressions.py:86: in test_sdk_does_not_replace_falsey_malformed_config
+    sdk.analyze(pd.DataFrame({"t": [1], "y": [2]}), "t", ["y"], config)
+energybaseline/sdk.py:25: in analyze
+    return run_analysis(df, request.time_col, list(request.targets), cfg, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/gates/test_stepwise_review_regressions.py:84: in <lambda>
+    monkeypatch.setattr(sdk, "run_analysis", lambda *a, **k: pytest.fail("Malformed request executed"))
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: Malformed request executed
+_____________ test_sdk_does_not_replace_falsey_malformed_config[] ______________
+tests/gates/test_stepwise_review_regressions.py:86: in test_sdk_does_not_replace_falsey_malformed_config
+    sdk.analyze(pd.DataFrame({"t": [1], "y": [2]}), "t", ["y"], config)
+energybaseline/sdk.py:25: in analyze
+    return run_analysis(df, request.time_col, list(request.targets), cfg, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/gates/test_stepwise_review_regressions.py:84: in <lambda>
+    monkeypatch.setattr(sdk, "run_analysis", lambda *a, **k: pytest.fail("Malformed request executed"))
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: Malformed request executed
+__________ test_sdk_does_not_replace_falsey_malformed_config[config3] __________
+tests/gates/test_stepwise_review_regressions.py:86: in test_sdk_does_not_replace_falsey_malformed_config
+    sdk.analyze(pd.DataFrame({"t": [1], "y": [2]}), "t", ["y"], config)
+energybaseline/sdk.py:25: in analyze
+    return run_analysis(df, request.time_col, list(request.targets), cfg, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/gates/test_stepwise_review_regressions.py:84: in <lambda>
+    monkeypatch.setattr(sdk, "run_analysis", lambda *a, **k: pytest.fail("Malformed request executed"))
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: Malformed request executed
+__________ test_missing_request_fields_raise_contract_error[payload0] __________
+tests/gates/test_stepwise_review_regressions.py:92: in test_missing_request_fields_raise_contract_error
+    AnalysisRequest.from_dict(payload)
+energybaseline/contracts.py:58: in from_dict
+    return cls(**payload)
+           ^^^^^^^^^^^^^^
+E   TypeError: AnalysisRequest.__init__() missing 2 required positional arguments: 'time_col' and 'targets'
+__________ test_missing_request_fields_raise_contract_error[payload1] __________
+tests/gates/test_stepwise_review_regressions.py:92: in test_missing_request_fields_raise_contract_error
+    AnalysisRequest.from_dict(payload)
+energybaseline/contracts.py:58: in from_dict
+    return cls(**payload)
+           ^^^^^^^^^^^^^^
+E   TypeError: AnalysisRequest.__init__() missing 1 required positional argument: 'targets'
+__________ test_missing_request_fields_raise_contract_error[payload2] __________
+tests/gates/test_stepwise_review_regressions.py:92: in test_missing_request_fields_raise_contract_error
+    AnalysisRequest.from_dict(payload)
+energybaseline/contracts.py:58: in from_dict
+    return cls(**payload)
+           ^^^^^^^^^^^^^^
+E   TypeError: AnalysisRequest.__init__() missing 1 required positional argument: 'time_col'
+__________ test_long_single_line_csv_content_is_not_a_filesystem_path __________
+tests/gates/test_stepwise_review_regressions.py:96: in test_long_single_line_csv_content_is_not_a_filesystem_path
+    assert detect_csv_dialect(",".join("column" + str(i) for i in range(2000))) == (",", ".")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+energybaseline/core/ingest.py:233: in detect_csv_dialect
+    if isinstance(sample_text, Path) or (isinstance(sample_text, str) and "\n" not in sample_text and Path(sample_text).is_file()):
+                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.11/pathlib.py:1268: in is_file
+    return S_ISREG(self.stat().st_mode)
+                   ^^^^^^^^^^^
+/usr/lib/python3.11/pathlib.py:1014: in stat
+    return os.stat(self, follow_symlinks=follow_symlinks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   OSError: [Errno 36] File name too long: 'column0,column1,column2,column3,column4,column5,column6,column7,column8,column9,column10,column11,column12,column13,column14,column15,column16,column17,column18,column19,column20,column21,column22,column23,column24,column25,column26,column27,column28,column29,column30,column31,column32,column33,column34,column35,column36,column37,column38,column39,column40,column41,column42,column43,column44,column45,column46,column47,column48,column49,column50,column51,column52,column53,column54,column55,column56,column57,column58,column59,column60,column61,column62,column63,column64,column65,column66,column67,column68,column69,column70,column71,column72,column73,column74,column75,column76,column77,column78,column79,column80,column81,column82,column83,column84,column85,column86,column87,column88,column89,column90,column91,column92,column93,column94,column95,column96,column97,column98,column99,column100,column101,column102,column103,column104,column105,column106,column107,column108,column109,column110,column111,column112,column113,column114,column115,column116,column117,column118,column119,column120,column121,column122,column123,column124,column125,column126,column127,column128,column129,column130,column131,column132,column133,column134,column135,column136,column137,column138,column139,column140,column141,column142,column143,column144,column145,column146,column147,column148,column149,column150,column151,column152,column153,column154,column155,column156,column157,column158,column159,column160,column161,column162,column163,column164,column165,column166,column167,column168,column169,column170,column171,column172,column173,column174,column175,column176,column177,column178,column179,column180,column181,column182,column183,column184,column185,column186,column187,column188,column189,column190,column191,column192,column193,column194,column195,column196,column197,column198,column199,column200,column201,column202,column203,column204,column205,column206,column207,column208,column209,column210,column211,column212,column213,column214,column215,column216,column217,column218,column219,column220,column221,column222,column223,column224,column225,column226,column227,column228,column229,column230,column231,column232,column233,column234,column235,column236,column237,column238,column239,column240,column241,column242,column243,column244,column245,column246,column247,column248,column249,column250,column251,column252,column253,column254,column255,column256,column257,column258,column259,column260,column261,column262,column263,column264,column265,column266,column267,column268,column269,column270,column271,column272,column273,column274,column275,column276,column277,column278,column279,column280,column281,column282,column283,column284,column285,column286,column287,column288,column289,column290,column291,column292,column293,column294,column295,column296,column297,column298,column299,column300,column301,column302,column303,column304,column305,column306,column307,column308,column309,column310,column311,column312,column313,column314,column315,column316,column317,column318,column319,column320,column321,column322,column323,column324,column325,column326,column327,column328,column329,column330,column331,column332,column333,column334,column335,column336,column337,column338,column339,column340,column341,column342,column343,column344,column345,column346,column347,column348,column349,column350,column351,column352,column353,column354,column355,column356,column357,column358,column359,column360,column361,column362,column363,column364,column365,column366,column367,column368,column369,column370,column371,column372,column373,column374,column375,column376,column377,column378,column379,column380,column381,column382,column383,column384,column385,column386,column387,column388,column389,column390,column391,column392,column393,column394,column395,column396,column397,column398,column399,column400,column401,column402,column403,column404,column405,column406,column407,column408,column409,column410,column411,column412,column413,column414,column415,column416,column417,column418,column419,column420,column421,column422,column423,column424,column425,column426,column427,column428,column429,column430,column431,column432,column433,column434,column435,column436,column437,column438,column439,column440,column441,column442,column443,column444,column445,column446,column447,column448,column449,column450,column451,column452,column453,column454,column455,column456,column457,column458,column459,column460,column461,column462,column463,column464,column465,column466,column467,column468,column469,column470,column471,column472,column473,column474,column475,column476,column477,column478,column479,column480,column481,column482,column483,column484,column485,column486,column487,column488,column489,column490,column491,column492,column493,column494,column495,column496,column497,column498,column499,column500,column501,column502,column503,column504,column505,column506,column507,column508,column509,column510,column511,column512,column513,column514,column515,column516,column517,column518,column519,column520,column521,column522,column523,column524,column525,column526,column527,column528,column529,column530,column531,column532,column533,column534,column535,column536,column537,column538,column539,column540,column541,column542,column543,column544,column545,column546,column547,column548,column549,column550,column551,column552,column553,column554,column555,column556,column557,column558,column559,column560,column561,column562,column563,column564,column565,column566,column567,column568,column569,column570,column571,column572,column573,column574,column575,column576,column577,column578,column579,column580,column581,column582,column583,column584,column585,column586,column587,column588,column589,column590,column591,column592,column593,column594,column595,column596,column597,column598,column599,column600,column601,column602,column603,column604,column605,column606,column607,column608,column609,column610,column611,column612,column613,column614,column615,column616,column617,column618,column619,column620,column621,column622,column623,column624,column625,column626,column627,column628,column629,column630,column631,column632,column633,column634,column635,column636,column637,column638,column639,column640,column641,column642,column643,column644,column645,column646,column647,column648,column649,column650,column651,column652,column653,column654,column655,column656,column657,column658,column659,column660,column661,column662,column663,column664,column665,column666,column667,column668,column669,column670,column671,column672,column673,column674,column675,column676,column677,column678,column679,column680,column681,column682,column683,column684,column685,column686,column687,column688,column689,column690,column691,column692,column693,column694,column695,column696,column697,column698,column699,column700,column701,column702,column703,column704,column705,column706,column707,column708,column709,column710,column711,column712,column713,column714,column715,column716,column717,column718,column719,column720,column721,column722,column723,column724,column725,column726,column727,column728,column729,column730,column731,column732,column733,column734,column735,column736,column737,column738,column739,column740,column741,column742,column743,column744,column745,column746,column747,column748,column749,column750,column751,column752,column753,column754,column755,column756,column757,column758,column759,column760,column761,column762,column763,column764,column765,column766,column767,column768,column769,column770,column771,column772,column773,column774,column775,column776,column777,column778,column779,column780,column781,column782,column783,column784,column785,column786,column787,column788,column789,column790,column791,column792,column793,column794,column795,column796,column797,column798,column799,column800,column801,column802,column803,column804,column805,column806,column807,column808,column809,column810,column811,column812,column813,column814,column815,column816,column817,column818,column819,column820,column821,column822,column823,column824,column825,column826,column827,column828,column829,column830,column831,column832,column833,column834,column835,column836,column837,column838,column839,column840,column841,column842,column843,column844,column845,column846,column847,column848,column849,column850,column851,column852,column853,column854,column855,column856,column857,column858,column859,column860,column861,column862,column863,column864,column865,column866,column867,column868,column869,column870,column871,column872,column873,column874,column875,column876,column877,column878,column879,column880,column881,column882,column883,column884,column885,column886,column887,column888,column889,column890,column891,column892,column893,column894,column895,column896,column897,column898,column899,column900,column901,column902,column903,column904,column905,column906,column907,column908,column909,column910,column911,column912,column913,column914,column915,column916,column917,column918,column919,column920,column921,column922,column923,column924,column925,column926,column927,column928,column929,column930,column931,column932,column933,column934,column935,column936,column937,column938,column939,column940,column941,column942,column943,column944,column945,column946,column947,column948,column949,column950,column951,column952,column953,column954,column955,column956,column957,column958,column959,column960,column961,column962,column963,column964,column965,column966,column967,column968,column969,column970,column971,column972,column973,column974,column975,column976,column977,column978,column979,column980,column981,column982,column983,column984,column985,column986,column987,column988,column989,column990,column991,column992,column993,column994,column995,column996,column997,column998,column999,column1000,column1001,column1002,column1003,column1004,column1005,column1006,column1007,column1008,column1009,column1010,column1011,column1012,column1013,column1014,column1015,column1016,column1017,column1018,column1019,column1020,column1021,column1022,column1023,column1024,column1025,column1026,column1027,column1028,column1029,column1030,column1031,column1032,column1033,column1034,column1035,column1036,column1037,column1038,column1039,column1040,column1041,column1042,column1043,column1044,column1045,column1046,column1047,column1048,column1049,column1050,column1051,column1052,column1053,column1054,column1055,column1056,column1057,column1058,column1059,column1060,column1061,column1062,column1063,column1064,column1065,column1066,column1067,column1068,column1069,column1070,column1071,column1072,column1073,column1074,column1075,column1076,column1077,column1078,column1079,column1080,column1081,column1082,column1083,column1084,column1085,column1086,column1087,column1088,column1089,column1090,column1091,column1092,column1093,column1094,column1095,column1096,column1097,column1098,column1099,column1100,column1101,column1102,column1103,column1104,column1105,column1106,column1107,column1108,column1109,column1110,column1111,column1112,column1113,column1114,column1115,column1116,column1117,column1118,column1119,column1120,column1121,column1122,column1123,column1124,column1125,column1126,column1127,column1128,column1129,column1130,column1131,column1132,column1133,column1134,column1135,column1136,column1137,column1138,column1139,column1140,column1141,column1142,column1143,column1144,column1145,column1146,column1147,column1148,column1149,column1150,column1151,column1152,column1153,column1154,column1155,column1156,column1157,column1158,column1159,column1160,column1161,column1162,column1163,column1164,column1165,column1166,column1167,column1168,column1169,column1170,column1171,column1172,column1173,column1174,column1175,column1176,column1177,column1178,column1179,column1180,column1181,column1182,column1183,column1184,column1185,column1186,column1187,column1188,column1189,column1190,column1191,column1192,column1193,column1194,column1195,column1196,column1197,column1198,column1199,column1200,column1201,column1202,column1203,column1204,column1205,column1206,column1207,column1208,column1209,column1210,column1211,column1212,column1213,column1214,column1215,column1216,column1217,column1218,column1219,column1220,column1221,column1222,column1223,column1224,column1225,column1226,column1227,column1228,column1229,column1230,column1231,column1232,column1233,column1234,column1235,column1236,column1237,column1238,column1239,column1240,column1241,column1242,column1243,column1244,column1245,column1246,column1247,column1248,column1249,column1250,column1251,column1252,column1253,column1254,column1255,column1256,column1257,column1258,column1259,column1260,column1261,column1262,column1263,column1264,column1265,column1266,column1267,column1268,column1269,column1270,column1271,column1272,column1273,column1274,column1275,column1276,column1277,column1278,column1279,column1280,column1281,column1282,column1283,column1284,column1285,column1286,column1287,column1288,column1289,column1290,column1291,column1292,column1293,column1294,column1295,column1296,column1297,column1298,column1299,column1300,column1301,column1302,column1303,column1304,column1305,column1306,column1307,column1308,column1309,column1310,column1311,column1312,column1313,column1314,column1315,column1316,column1317,column1318,column1319,column1320,column1321,column1322,column1323,column1324,column1325,column1326,column1327,column1328,column1329,column1330,column1331,column1332,column1333,column1334,column1335,column1336,column1337,column1338,column1339,column1340,column1341,column1342,column1343,column1344,column1345,column1346,column1347,column1348,column1349,column1350,column1351,column1352,column1353,column1354,column1355,column1356,column1357,column1358,column1359,column1360,column1361,column1362,column1363,column1364,column1365,column1366,column1367,column1368,column1369,column1370,column1371,column1372,column1373,column1374,column1375,column1376,column1377,column1378,column1379,column1380,column1381,column1382,column1383,column1384,column1385,column1386,column1387,column1388,column1389,column1390,column1391,column1392,column1393,column1394,column1395,column1396,column1397,column1398,column1399,column1400,column1401,column1402,column1403,column1404,column1405,column1406,column1407,column1408,column1409,column1410,column1411,column1412,column1413,column1414,column1415,column1416,column1417,column1418,column1419,column1420,column1421,column1422,column1423,column1424,column1425,column1426,column1427,column1428,column1429,column1430,column1431,column1432,column1433,column1434,column1435,column1436,column1437,column1438,column1439,column1440,column1441,column1442,column1443,column1444,column1445,column1446,column1447,column1448,column1449,column1450,column1451,column1452,column1453,column1454,column1455,column1456,column1457,column1458,column1459,column1460,column1461,column1462,column1463,column1464,column1465,column1466,column1467,column1468,column1469,column1470,column1471,column1472,column1473,column1474,column1475,column1476,column1477,column1478,column1479,column1480,column1481,column1482,column1483,column1484,column1485,column1486,column1487,column1488,column1489,column1490,column1491,column1492,column1493,column1494,column1495,column1496,column1497,column1498,column1499,column1500,column1501,column1502,column1503,column1504,column1505,column1506,column1507,column1508,column1509,column1510,column1511,column1512,column1513,column1514,column1515,column1516,column1517,column1518,column1519,column1520,column1521,column1522,column1523,column1524,column1525,column1526,column1527,column1528,column1529,column1530,column1531,column1532,column1533,column1534,column1535,column1536,column1537,column1538,column1539,column1540,column1541,column1542,column1543,column1544,column1545,column1546,column1547,column1548,column1549,column1550,column1551,column1552,column1553,column1554,column1555,column1556,column1557,column1558,column1559,column1560,column1561,column1562,column1563,column1564,column1565,column1566,column1567,column1568,column1569,column1570,column1571,column1572,column1573,column1574,column1575,column1576,column1577,column1578,column1579,column1580,column1581,column1582,column1583,column1584,column1585,column1586,column1587,column1588,column1589,column1590,column1591,column1592,column1593,column1594,column1595,column1596,column1597,column1598,column1599,column1600,column1601,column1602,column1603,column1604,column1605,column1606,column1607,column1608,column1609,column1610,column1611,column1612,column1613,column1614,column1615,column1616,column1617,column1618,column1619,column1620,column1621,column1622,column1623,column1624,column1625,column1626,column1627,column1628,column1629,column1630,column1631,column1632,column1633,column1634,column1635,column1636,column1637,column1638,column1639,column1640,column1641,column1642,column1643,column1644,column1645,column1646,column1647,column1648,column1649,column1650,column1651,column1652,column1653,column1654,column1655,column1656,column1657,column1658,column1659,column1660,column1661,column1662,column1663,column1664,column1665,column1666,column1667,column1668,column1669,column1670,column1671,column1672,column1673,column1674,column1675,column1676,column1677,column1678,column1679,column1680,column1681,column1682,column1683,column1684,column1685,column1686,column1687,column1688,column1689,column1690,column1691,column1692,column1693,column1694,column1695,column1696,column1697,column1698,column1699,column1700,column1701,column1702,column1703,column1704,column1705,column1706,column1707,column1708,column1709,column1710,column1711,column1712,column1713,column1714,column1715,column1716,column1717,column1718,column1719,column1720,column1721,column1722,column1723,column1724,column1725,column1726,column1727,column1728,column1729,column1730,column1731,column1732,column1733,column1734,column1735,column1736,column1737,column1738,column1739,column1740,column1741,column1742,column1743,column1744,column1745,column1746,column1747,column1748,column1749,column1750,column1751,column1752,column1753,column1754,column1755,column1756,column1757,column1758,column1759,column1760,column1761,column1762,column1763,column1764,column1765,column1766,column1767,column1768,column1769,column1770,column1771,column1772,column1773,column1774,column1775,column1776,column1777,column1778,column1779,column1780,column1781,column1782,column1783,column1784,column1785,column1786,column1787,column1788,column1789,column1790,column1791,column1792,column1793,column1794,column1795,column1796,column1797,column1798,column1799,column1800,column1801,column1802,column1803,column1804,column1805,column1806,column1807,column1808,column1809,column1810,column1811,column1812,column1813,column1814,column1815,column1816,column1817,column1818,column1819,column1820,column1821,column1822,column1823,column1824,column1825,column1826,column1827,column1828,column1829,column1830,column1831,column1832,column1833,column1834,column1835,column1836,column1837,column1838,column1839,column1840,column1841,column1842,column1843,column1844,column1845,column1846,column1847,column1848,column1849,column1850,column1851,column1852,column1853,column1854,column1855,column1856,column1857,column1858,column1859,column1860,column1861,column1862,column1863,column1864,column1865,column1866,column1867,column1868,column1869,column1870,column1871,column1872,column1873,column1874,column1875,column1876,column1877,column1878,column1879,column1880,column1881,column1882,column1883,column1884,column1885,column1886,column1887,column1888,column1889,column1890,column1891,column1892,column1893,column1894,column1895,column1896,column1897,column1898,column1899,column1900,column1901,column1902,column1903,column1904,column1905,column1906,column1907,column1908,column1909,column1910,column1911,column1912,column1913,column1914,column1915,column1916,column1917,column1918,column1919,column1920,column1921,column1922,column1923,column1924,column1925,column1926,column1927,column1928,column1929,column1930,column1931,column1932,column1933,column1934,column1935,column1936,column1937,column1938,column1939,column1940,column1941,column1942,column1943,column1944,column1945,column1946,column1947,column1948,column1949,column1950,column1951,column1952,column1953,column1954,column1955,column1956,column1957,column1958,column1959,column1960,column1961,column1962,column1963,column1964,column1965,column1966,column1967,column1968,column1969,column1970,column1971,column1972,column1973,column1974,column1975,column1976,column1977,column1978,column1979,column1980,column1981,column1982,column1983,column1984,column1985,column1986,column1987,column1988,column1989,column1990,column1991,column1992,column1993,column1994,column1995,column1996,column1997,column1998,column1999'
+_ test_uncertainty_rejects_nonfinite_or_negative_standard_uncertainties[nan-measurement_sd] _
+tests/gates/test_stepwise_review_regressions.py:102: in test_uncertainty_rejects_nonfinite_or_negative_standard_uncertainties
+    with pytest.raises(ValueError):
+E   Failed: DID NOT RAISE ValueError
+_ test_uncertainty_rejects_nonfinite_or_negative_standard_uncertainties[nan-static_factor_sd] _
+tests/gates/test_stepwise_review_regressions.py:102: in test_uncertainty_rejects_nonfinite_or_negative_standard_uncertainties
+    with pytest.raises(ValueError):
+E   Failed: DID NOT RAISE ValueError
+_ test_uncertainty_rejects_nonfinite_or_negative_standard_uncertainties[inf-measurement_sd] _
+tests/gates/test_stepwise_review_regressions.py:102: in test_uncertainty_rejects_nonfinite_or_negative_standard_uncertainties
+    with pytest.raises(ValueError):
+E   Failed: DID NOT RAISE ValueError
+_ test_uncertainty_rejects_nonfinite_or_negative_standard_uncertainties[inf-static_factor_sd] _
+tests/gates/test_stepwise_review_regressions.py:102: in test_uncertainty_rejects_nonfinite_or_negative_standard_uncertainties
+    with pytest.raises(ValueError):
+E   Failed: DID NOT RAISE ValueError
+_ test_all_inference_gateways_require_unchanged_locked_preregistration[uq-unlocked] _
+tests/gates/test_stepwise_review_regressions.py:130: in test_all_inference_gateways_require_unchanged_locked_preregistration
+    run_uq_catalog(None, None, None, tcp=panel)
+energybaseline/uq/__init__.py:14: in run_uq_catalog
+    y = vector(y_holdout, minimum=3)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+energybaseline/uq/calibration.py:13: in vector
+    raise ValueError("Expected a finite nonempty one-dimensional array")
+E   ValueError: Expected a finite nonempty one-dimensional array
+_ test_all_inference_gateways_require_unchanged_locked_preregistration[uq-mutated] _
+tests/gates/test_stepwise_review_regressions.py:130: in test_all_inference_gateways_require_unchanged_locked_preregistration
+    run_uq_catalog(None, None, None, tcp=panel)
+energybaseline/uq/__init__.py:14: in run_uq_catalog
+    y = vector(y_holdout, minimum=3)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+energybaseline/uq/calibration.py:13: in vector
+    raise ValueError("Expected a finite nonempty one-dimensional array")
+E   ValueError: Expected a finite nonempty one-dimensional array
+_ test_all_inference_gateways_require_unchanged_locked_preregistration[drift-unlocked] _
+tests/gates/test_stepwise_review_regressions.py:132: in test_all_inference_gateways_require_unchanged_locked_preregistration
+    run_drift_monitor({}, {}, [], [], tcp=panel)
+energybaseline/monitoring/drift.py:97: in run_drift_monitor
+    regime = residual_regime(reference_residuals, residuals)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+energybaseline/monitoring/drift.py:35: in residual_regime
+    r, c = vector(reference, minimum=20), vector(current, minimum=20)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+energybaseline/uq/calibration.py:13: in vector
+    raise ValueError("Expected a finite nonempty one-dimensional array")
+E   ValueError: Expected a finite nonempty one-dimensional array
+_ test_all_inference_gateways_require_unchanged_locked_preregistration[drift-mutated] _
+tests/gates/test_stepwise_review_regressions.py:132: in test_all_inference_gateways_require_unchanged_locked_preregistration
+    run_drift_monitor({}, {}, [], [], tcp=panel)
+energybaseline/monitoring/drift.py:97: in run_drift_monitor
+    regime = residual_regime(reference_residuals, residuals)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+energybaseline/monitoring/drift.py:35: in residual_regime
+    r, c = vector(reference, minimum=20), vector(current, minimum=20)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+energybaseline/uq/calibration.py:13: in vector
+    raise ValueError("Expected a finite nonempty one-dimensional array")
+E   ValueError: Expected a finite nonempty one-dimensional array
+_ test_all_inference_gateways_require_unchanged_locked_preregistration[causal-unlocked] _
+tests/gates/test_stepwise_review_regressions.py:134: in test_all_inference_gateways_require_unchanged_locked_preregistration
+    run_causal_mv([], [], [], [], [], tcp=panel)
+energybaseline/causal/mv.py:65: in run_causal_mv
+    y = vector(outcome, minimum=40)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+energybaseline/uq/calibration.py:13: in vector
+    raise ValueError("Expected a finite nonempty one-dimensional array")
+E   ValueError: Expected a finite nonempty one-dimensional array
+_ test_all_inference_gateways_require_unchanged_locked_preregistration[causal-mutated] _
+tests/gates/test_stepwise_review_regressions.py:134: in test_all_inference_gateways_require_unchanged_locked_preregistration
+    run_causal_mv([], [], [], [], [], tcp=panel)
+energybaseline/causal/mv.py:65: in run_causal_mv
+    y = vector(outcome, minimum=40)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+energybaseline/uq/calibration.py:13: in vector
+    raise ValueError("Expected a finite nonempty one-dimensional array")
+E   ValueError: Expected a finite nonempty one-dimensional array
+_ test_all_inference_gateways_require_unchanged_locked_preregistration[optional-unlocked] _
+energybaseline/causal/mv.py:147: in optional_backend_effect
+    from dowhy import CausalModel
+E   ModuleNotFoundError: No module named 'dowhy'
+
+The above exception was the direct cause of the following exception:
+tests/gates/test_stepwise_review_regressions.py:136: in test_all_inference_gateways_require_unchanged_locked_preregistration
+    optional_backend_effect(None, treatment="g", outcome="y", common_causes=[], tcp=panel)
+energybaseline/causal/mv.py:151: in optional_backend_effect
+    raise CausalBackendUnavailable(f"Optional {backend} backend is not installed") from exc
+E   energybaseline.causal.mv.CausalBackendUnavailable: Optional dowhy backend is not installed
+_ test_all_inference_gateways_require_unchanged_locked_preregistration[optional-mutated] _
+energybaseline/causal/mv.py:147: in optional_backend_effect
+    from dowhy import CausalModel
+E   ModuleNotFoundError: No module named 'dowhy'
+
+The above exception was the direct cause of the following exception:
+tests/gates/test_stepwise_review_regressions.py:136: in test_all_inference_gateways_require_unchanged_locked_preregistration
+    optional_backend_effect(None, treatment="g", outcome="y", common_causes=[], tcp=panel)
+energybaseline/causal/mv.py:151: in optional_backend_effect
+    raise CausalBackendUnavailable(f"Optional {backend} backend is not installed") from exc
+E   energybaseline.causal.mv.CausalBackendUnavailable: Optional dowhy backend is not installed
+_ test_all_inference_gateways_require_unchanged_locked_preregistration[models-unlocked] _
+tests/gates/test_stepwise_review_regressions.py:138: in test_all_inference_gateways_require_unchanged_locked_preregistration
+    evaluate_f1_f10_catalog(frame, target_col="y", vsg=gate, tcp=panel)
+energybaseline/models/__init__.py:105: in evaluate_f1_f10_catalog
+    raise ValueError(f"No valid predictor columns available for target '{target_col}'.")
+E   ValueError: No valid predictor columns available for target 'y'.
+_ test_all_inference_gateways_require_unchanged_locked_preregistration[models-mutated] _
+tests/gates/test_stepwise_review_regressions.py:138: in test_all_inference_gateways_require_unchanged_locked_preregistration
+    evaluate_f1_f10_catalog(frame, target_col="y", vsg=gate, tcp=panel)
+energybaseline/models/__init__.py:105: in evaluate_f1_f10_catalog
+    raise ValueError(f"No valid predictor columns available for target '{target_col}'.")
+E   ValueError: No valid predictor columns available for target 'y'.
+________ test_approved_single_color_palette_renders_without_index_error ________
+tests/gates/test_stepwise_review_regressions.py:154: in test_approved_single_color_palette_renders_without_index_error
+    figure = figure_for(model, chart_id)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+energybaseline/report/charts.py:67: in figure_for
+    ax.plot(x, actual, color=colors[5], label="Actual")
+                             ^^^^^^^^^
+E   IndexError: list index out of range
+_____ test_excel_contents_titles_are_literals_and_links_escape_apostrophes _____
+tests/gates/test_stepwise_review_regressions.py:168: in test_excel_contents_titles_are_literals_and_links_escape_apostrophes
+    assert cell.value == "=1+1" and cell.data_type == "s"
+E   AssertionError: assert ('=1+1' == '=1+1'
+E     
+E       =1+1 and 'f' == 's'
+E     
+E     - s
+E     + f)
+=========================== short test summary info ============================
+FAILED tests/gates/test_stepwise_review_regressions.py::test_tls_requires_certificate_and_hostname_verification[MySQL]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_tls_requires_certificate_and_hostname_verification[PostgreSQL]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_tls_requires_certificate_and_hostname_verification[SQL Server]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_generated_odbc_credentials_cannot_add_connection_attributes
+FAILED tests/gates/test_stepwise_review_regressions.py::test_query_bounds_reject_noninteger_values_before_connect[True-max_rows]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_query_bounds_reject_noninteger_values_before_connect[True-timeout_seconds]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_query_bounds_reject_noninteger_values_before_connect[1.5-max_rows]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_query_bounds_reject_noninteger_values_before_connect[1.5-timeout_seconds]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_query_bounds_reject_noninteger_values_before_connect[nan-max_rows]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_query_bounds_reject_noninteger_values_before_connect[nan-timeout_seconds]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_query_bounds_reject_noninteger_values_before_connect[inf-max_rows]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_query_bounds_reject_noninteger_values_before_connect[inf-timeout_seconds]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_query_bounds_reject_noninteger_values_before_connect[2-max_rows]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_query_bounds_reject_noninteger_values_before_connect[2-timeout_seconds]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_query_bounds_reject_noninteger_values_before_connect[None-max_rows]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_query_bounds_reject_noninteger_values_before_connect[None-timeout_seconds]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_sdk_does_not_replace_falsey_malformed_config[False]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_sdk_does_not_replace_falsey_malformed_config[0]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_sdk_does_not_replace_falsey_malformed_config[]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_sdk_does_not_replace_falsey_malformed_config[config3]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_missing_request_fields_raise_contract_error[payload0]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_missing_request_fields_raise_contract_error[payload1]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_missing_request_fields_raise_contract_error[payload2]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_long_single_line_csv_content_is_not_a_filesystem_path
+FAILED tests/gates/test_stepwise_review_regressions.py::test_uncertainty_rejects_nonfinite_or_negative_standard_uncertainties[nan-measurement_sd]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_uncertainty_rejects_nonfinite_or_negative_standard_uncertainties[nan-static_factor_sd]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_uncertainty_rejects_nonfinite_or_negative_standard_uncertainties[inf-measurement_sd]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_uncertainty_rejects_nonfinite_or_negative_standard_uncertainties[inf-static_factor_sd]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_all_inference_gateways_require_unchanged_locked_preregistration[uq-unlocked]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_all_inference_gateways_require_unchanged_locked_preregistration[uq-mutated]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_all_inference_gateways_require_unchanged_locked_preregistration[drift-unlocked]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_all_inference_gateways_require_unchanged_locked_preregistration[drift-mutated]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_all_inference_gateways_require_unchanged_locked_preregistration[causal-unlocked]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_all_inference_gateways_require_unchanged_locked_preregistration[causal-mutated]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_all_inference_gateways_require_unchanged_locked_preregistration[optional-unlocked]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_all_inference_gateways_require_unchanged_locked_preregistration[optional-mutated]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_all_inference_gateways_require_unchanged_locked_preregistration[models-unlocked]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_all_inference_gateways_require_unchanged_locked_preregistration[models-mutated]
+FAILED tests/gates/test_stepwise_review_regressions.py::test_approved_single_color_palette_renders_without_index_error
+FAILED tests/gates/test_stepwise_review_regressions.py::test_excel_contents_titles_are_literals_and_links_escape_apostrophes
+40 failed, 2 passed in 12.43s

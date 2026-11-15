@@ -1,0 +1,28 @@
+{
+  "evidence_schema_version": 1,
+  "adapter": "pyodbc/unixODBC/SQLite ODBC",
+  "native_runtime": true,
+  "mocked": false,
+  "metadata": {
+    "pyodbc": "5.5.0",
+    "dbms": "SQLite",
+    "driver_version": "0.99991",
+    "driver_manager": "03.52.0002.0003",
+    "driver_reported_read_only_before_enforcement": false,
+    "advisory_flag_prevented_write": false
+  },
+  "checks": {
+    "backend_policy_installed": true,
+    "backend_confirms_query_only": true,
+    "database_rejects_write_even_without_ast": true,
+    "injection_shaped_bound_value_remains_literal": true,
+    "qmark_repetition_and_order": true,
+    "bound_date_range": true,
+    "bounded_driver_fetch": true,
+    "table_survives_bound_value": true,
+    "ast_rejects_write": true,
+    "driver_failure_redacts_bound_value": true
+  },
+  "passed": true,
+  "scope": "Local synthetic SQLite ODBC only; not SQL Server/MySQL/TLS certification."
+}

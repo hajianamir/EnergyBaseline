@@ -14,12 +14,15 @@ import pandas as pd
 from sqlalchemy import select
 
 from ..config import ensure_dirs
+from ..config.redaction import safe_database_error
 from ..db import models as M
 from ..db.session import session_scope
 from .pipeline import RunResult
 from .schema import DatasetSchema, NonRoutineEventSpec, SchemaIntegrityError, SchemaValidationError
 
 log = logging.getLogger("energybaseline.store")
+# Process-issued digests are provenance approvals, not values learned from disk.
+_issued_artifact_digests: set[str] = set()
 
 
 def audit(message: str, category: str = "general", level: str = "INFO", run_id: int | None = None, detail: dict | None = None) -> None:
@@ -27,7 +30,7 @@ def audit(message: str, category: str = "general", level: str = "INFO", run_id: 
         with session_scope() as s:
             s.add(M.AuditLog(run_id=run_id, level=level, category=category, message=message, detail_json=json.dumps(detail or {}, default=str)))
     except Exception as exc:  # audit must never break the app
-        log.warning("audit write failed: %s", exc)
+        log.warning("audit write failed: %s", safe_database_error(exc))
 
 
 def register_dataset(name: str, path: str, sha: str, df: pd.DataFrame) -> int:
@@ -68,6 +71,7 @@ def _write_sha256_sidecar(path: Path) -> str:
 
     digest = compute_file_sha256(path)
     Path(f"{path}.sha256").write_text(f"{digest}  {path.name}\n", encoding="utf-8")
+    _issued_artifact_digests.add(digest)
     return digest
 
 
@@ -79,14 +83,40 @@ def _verify_sha256_sidecar_if_present(path: Path) -> str:
         raise FileNotFoundError(str(p))
     actual = compute_file_sha256(p)
     sidecar = Path(f"{p}.sha256")
+    if not sidecar.is_file():
+        raise ArtifactIntegrityError("An integrity sidecar is required before loading a model artifact. Recreate or explicitly migrate this legacy run; no model was loaded.")
     if sidecar.is_file():
-        expected = sidecar.read_text(encoding="utf-8").strip().split()[0]
+        tokens = sidecar.read_text(encoding="utf-8").strip().split()
+        if not tokens or len(tokens[0]) != 64 or any(c not in "0123456789abcdef" for c in tokens[0]):
+            raise ArtifactIntegrityError("Invalid artifact integrity manifest; no model was loaded.")
+        expected = tokens[0]
         if actual != expected:
             raise ArtifactIntegrityError(
                 f"G-9 SHA-256 verification FAILED before joblib.load('{p}'): expected {expected}, got {actual}."
             )
     return actual
 
+
+
+def _load_approved_artifact(path: Path, *, trusted_artifact_sha256: str | None = None):
+    """Load exact verified bytes only after independent executable-code approval.
+
+    Sidecars prove integrity, not provenance. Across application restarts, supply
+    an approved digest from an independently trusted channel; never self-approve
+    an imported artifact by copying its adjacent sidecar.
+    """
+    from ..lock.baseline_lock import ArtifactIntegrityError
+
+    payload = Path(path).read_bytes()
+    digest = hashlib.sha256(payload).hexdigest()
+    if digest not in _issued_artifact_digests and digest != trusted_artifact_sha256:
+        raise ArtifactIntegrityError(
+            "External or previous-session executable artifact requires an independently trusted artifact SHA-256; no model was loaded."
+        )
+    verified = _verify_sha256_sidecar_if_present(path)
+    if verified != digest:
+        raise ArtifactIntegrityError("Artifact changed during verification; no model was loaded.")
+    return joblib.load(io.BytesIO(payload))
 
 def save_run(run_id: int, run: RunResult, bundles: dict) -> str:
     run.run_id = run_id
@@ -123,14 +153,13 @@ def save_run(run_id: int, run: RunResult, bundles: dict) -> str:
     return str(path)
 
 
-def load_run(run_id: int) -> RunResult:
+def load_run(run_id: int, *, trusted_artifact_sha256: str | None = None) -> RunResult:
     with session_scope() as s:
         r = s.get(M.Run, run_id)
         if r is None or not r.results_path:
             raise FileNotFoundError(f"Run {run_id} has no stored results")
         path = r.results_path
-    _verify_sha256_sidecar_if_present(Path(path))
-    run = joblib.load(path)
+    run = _load_approved_artifact(Path(path), trusted_artifact_sha256=trusted_artifact_sha256)
     run.run_id = run_id
     return run
 
@@ -141,8 +170,44 @@ def list_runs() -> list[dict]:
         return [{"id": r.id, "started": str(r.started_at), "status": r.status, "targets": json.loads(r.targets_json or "[]")} for r in rows]
 
 
-def lock_baseline(run_id: int, target: str, model_name: str, note: str = "") -> dict:
-    """Lock (or append a new immutable version for) the baseline selection; prior versions remain intact."""
+def lock_baseline(run_id: int, target: str, model_name: str, note: str = "", *, trusted_artifact_sha256: str | None = None) -> dict:
+    """Verify and persist an immutable artifact before changing active selection.
+
+    Missing/untrusted artifacts and lock-write failures fail closed. A failed DB
+    transaction can leave an inactive immutable audit record, never a false
+    active selection backed by a failed artifact write.
+    """
+    from ..lock.baseline_lock import BaselineLockManager
+
+    bundle = load_bundle(run_id, target, model_name, trusted_artifact_sha256=trusted_artifact_sha256)
+    lock_dir = ensure_dirs()["runs"] / f"run_{run_id}" / "locks"
+    mgr = BaselineLockManager(lock_dir)
+    fml = bundle.get("formula") or {}
+    is_param = bool(fml.get("kind") == "equation")
+    coefs: dict[str, float] = {}
+    if is_param:
+        coefs["intercept"] = float(fml.get("intercept", 0.0))
+        for k_t, v_t in fml.get("terms") or []:
+            coefs[str(k_t)] = float(v_t)
+    rec = mgr.lock_baseline(
+        run_id=str(run_id),
+        target=target,
+        model_name=model_name,
+        family=str(getattr(bundle.get("model"), "family", "Baseline")),
+        is_parametric=is_param,
+        fitted_artifact=bundle,
+        formula_or_architecture=str(fml.get("text", model_name)),
+        coefficients=coefs,
+        selected_features=list(bundle.get("required_columns") or ()),
+        baseline_window={"window": str(bundle.get("baseline_window", "")), "granularity": str(bundle.get("granularity", ""))},
+        thresholds={k: float(v) for k, v in (bundle.get("thresholds") or {}).items() if isinstance(v, (int, float))},
+        random_seed=int(bundle.get("seed", 42)),
+        calibration_metrics={k: float(v) for k, v in (bundle.get("metrics") or {}).items() if isinstance(v, (int, float))},
+        validity_envelope={"drivers": list((bundle.get("train_stats") or {}).keys())},
+        preprocessing_summary={"domain_policy": bundle.get("domain_policy", {}), "validation_contract": bundle.get("validation_contract", {})},
+        domain_pack=bundle.get("domain_policy", {}).get("key", "legacy_energy"),
+        notes=note,
+    )
     with session_scope() as s:
         prev = s.execute(select(M.Selection).where(M.Selection.run_id == run_id, M.Selection.target == target, M.Selection.active.is_(True))).scalars().all()
         for p in prev:
@@ -153,46 +218,8 @@ def lock_baseline(run_id: int, target: str, model_name: str, note: str = "") -> 
         out = {"id": sel.id, "run_id": run_id, "target": target, "model": model_name, "note": note, "at": str(sel.selected_at),
                "replaced": [p.model_name for p in prev]}
 
-    # Also write immutable versioned LockedBaselineRecord (SC-10, AC-04, G-9) when run bundle exists
-    try:
-        from ..lock.baseline_lock import BaselineLockManager
-
-        lock_dir = ensure_dirs()["runs"] / f"run_{run_id}" / "locks"
-        ap = artifact_path(run_id, target, model_name)
-        if ap.is_file():
-            bundle = load_bundle(run_id, target, model_name)
-            mgr = BaselineLockManager(lock_dir)
-            fml = bundle.get("formula") or {}
-            is_param = bool(fml.get("kind") == "equation")
-            coefs: dict[str, float] = {}
-            if is_param:
-                coefs["intercept"] = float(fml.get("intercept", 0.0))
-                for k_t, v_t in fml.get("terms") or []:
-                    coefs[str(k_t)] = float(v_t)
-            rec = mgr.lock_baseline(
-                run_id=str(run_id),
-                target=target,
-                model_name=model_name,
-                family=str(getattr(bundle.get("model"), "family", "Baseline")),
-                is_parametric=is_param,
-                fitted_artifact=bundle,
-                formula_or_architecture=str(fml.get("text", model_name)),
-                coefficients=coefs,
-                selected_features=list(bundle.get("required_columns") or ()),
-                baseline_window={"window": str(bundle.get("baseline_window", "")), "granularity": str(bundle.get("granularity", ""))},
-                thresholds={k: float(v) for k, v in (bundle.get("thresholds") or {}).items() if isinstance(v, (int, float))},
-                random_seed=int(bundle.get("seed", 42)),
-                calibration_metrics={k: float(v) for k, v in (bundle.get("metrics") or {}).items() if isinstance(v, (int, float))},
-                validity_envelope={"drivers": list((bundle.get("train_stats") or {}).keys())},
-                notes=note,
-            )
-            out["version"] = rec.version
-            out["artifact_sha256"] = rec.artifact_sha256
-            out["record_sha256"] = rec.record_sha256
-            out["lock_manifest_path"] = rec.manifest_path
-    except Exception:
-        pass
-
+    out.update(version=rec.version, artifact_sha256=rec.artifact_sha256,
+               record_sha256=rec.record_sha256, lock_manifest_path=rec.manifest_path)
     audit(f"Baseline selected for '{target}': {model_name}" + (f" (replaces {out['replaced']})" if out["replaced"] else "") + (f" - note: {note}" if note else ""),
           "selection", run_id=run_id, detail=out)
     return out
@@ -213,10 +240,9 @@ def active_selection(run_id: int, target: str) -> dict | None:
     return None
 
 
-def load_bundle(run_id: int, target: str, model: str) -> dict:
+def load_bundle(run_id: int, target: str, model: str, *, trusted_artifact_sha256: str | None = None) -> dict:
     ap = artifact_path(run_id, target, model)
-    _verify_sha256_sidecar_if_present(ap)
-    return joblib.load(ap)
+    return _load_approved_artifact(ap, trusted_artifact_sha256=trusted_artifact_sha256)
 
 
 def audit_entries(run_id: int | None = None, limit: int = 2000) -> list[dict]:

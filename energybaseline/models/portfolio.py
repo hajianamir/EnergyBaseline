@@ -22,8 +22,7 @@ import lightgbm as lgb
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import ExtraTreesRegressor, GradientBoostingRegressor, RandomForestRegressor
-from sklearn.linear_model import ElasticNetCV, LassoCV, LinearRegression, RidgeCV
-from sklearn.model_selection import TimeSeriesSplit
+from sklearn.linear_model import ElasticNet, Lasso, LinearRegression, Ridge
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVR
@@ -283,7 +282,7 @@ class MLRBaselineWrapper(_LinearFamilyWrapper):
 
 
 class RidgeBaselineWrapper(_LinearFamilyWrapper):
-    """[M] Ridge L2-penalized regression wrapper with temporal CV alpha selection."""
+    """[M] Ridge L2-penalized regression wrapper with fixed conservative alpha; tuning belongs to the raw evaluator."""
 
     model_key = "ridge"
     family_id = "F3"
@@ -300,13 +299,12 @@ class RidgeBaselineWrapper(_LinearFamilyWrapper):
             return self
         sc = StandardScaler().fit(df[self.selected_cols_].to_numpy(dtype=float))
         Z = sc.transform(df[self.selected_cols_].to_numpy(dtype=float))
-        tscv = TimeSeriesSplit(n_splits=min(4, max(2, len(yv) // 12)))
-        reg = RidgeCV(alphas=np.logspace(-3, 3, 19), cv=tscv).fit(Z, yv)
+        reg = Ridge(alpha=1.0).fit(Z, yv)
         scale_safe = np.where(sc.scale_ > 1e-12, sc.scale_, 1.0)
         beta_raw = reg.coef_ / scale_safe
         self.intercept_ = float(reg.intercept_ - np.dot(beta_raw, sc.mean_))
         self.coef_raw_ = {c: float(b) for c, b in zip(self.selected_cols_, beta_raw)}
-        self.alpha_ = float(reg.alpha_)
+        self.alpha_ = float(reg.alpha)
         return self
 
     def hyperparameters(self) -> dict[str, Any]:
@@ -331,13 +329,12 @@ class LassoBaselineWrapper(_LinearFamilyWrapper):
             return self
         sc = StandardScaler().fit(df[self.selected_cols_].to_numpy(dtype=float))
         Z = sc.transform(df[self.selected_cols_].to_numpy(dtype=float))
-        tscv = TimeSeriesSplit(n_splits=min(4, max(2, len(yv) // 12)))
-        reg = LassoCV(cv=tscv, random_state=self.seed, max_iter=12000).fit(Z, yv)
+        reg = Lasso(alpha=0.01, random_state=self.seed, max_iter=12000).fit(Z, yv)
         scale_safe = np.where(sc.scale_ > 1e-12, sc.scale_, 1.0)
         beta_raw = reg.coef_ / scale_safe
         self.intercept_ = float(reg.intercept_ - np.dot(beta_raw, sc.mean_))
         self.coef_raw_ = {c: float(b) for c, b in zip(self.selected_cols_, beta_raw)}
-        self.alpha_ = float(reg.alpha_)
+        self.alpha_ = float(reg.alpha)
         return self
 
     def hyperparameters(self) -> dict[str, Any]:
@@ -345,7 +342,7 @@ class LassoBaselineWrapper(_LinearFamilyWrapper):
 
 
 class ElasticNetBaselineWrapper(_LinearFamilyWrapper):
-    """[M] ElasticNet (L1 + L2) regression wrapper with temporal CV tuning."""
+    """[M] ElasticNet (L1 + L2) regression wrapper with fixed conservative parameters; no hidden internal CV."""
 
     model_key = "elasticnet"
     family_id = "F3"
@@ -362,20 +359,13 @@ class ElasticNetBaselineWrapper(_LinearFamilyWrapper):
             return self
         sc = StandardScaler().fit(df[self.selected_cols_].to_numpy(dtype=float))
         Z = sc.transform(df[self.selected_cols_].to_numpy(dtype=float))
-        tscv = TimeSeriesSplit(n_splits=min(4, max(2, len(yv) // 12)))
-        reg = ElasticNetCV(
-            l1_ratio=[0.15, 0.5, 0.85, 0.99],
-            eps=1e-5,
-            cv=tscv,
-            random_state=self.seed,
-            max_iter=12000,
-        ).fit(Z, yv)
+        reg = ElasticNet(alpha=0.01, l1_ratio=0.5, random_state=self.seed, max_iter=12000).fit(Z, yv)
         scale_safe = np.where(sc.scale_ > 1e-12, sc.scale_, 1.0)
         beta_raw = reg.coef_ / scale_safe
         self.intercept_ = float(reg.intercept_ - np.dot(beta_raw, sc.mean_))
         self.coef_raw_ = {c: float(b) for c, b in zip(self.selected_cols_, beta_raw)}
-        self.alpha_ = float(reg.alpha_)
-        self.l1_ratio_ = float(reg.l1_ratio_)
+        self.alpha_ = float(reg.alpha)
+        self.l1_ratio_ = float(reg.l1_ratio)
         return self
 
     def hyperparameters(self) -> dict[str, Any]:
@@ -954,7 +944,7 @@ class MLPWrapper(_NonParametricTabularWrapper):
             hidden_layer_sizes=self.hidden_layer_sizes,
             alpha=self.alpha,
             max_iter=700,
-            early_stopping=len(yv) >= 80,
+            early_stopping=False,
             random_state=self.seed,
         ).fit(Z, yz)
         return self
@@ -1077,7 +1067,7 @@ def get_portfolio_registry() -> list[PortfolioModelSpec]:
         # Should [S] portfolio
         PortfolioModelSpec("catboost", "CatBoost Regressor", "F6", "S", False, "CatBoostRegressor", True, "Symmetric oblivious GBDT (F6)"),
         PortfolioModelSpec("huber_quantile", "Huber & Quantile Robust Regression", "F3", "S", True, "HuberRegressor/QuantileRegressor", True, "Outlier-resistant linear estimators (F3)"),
-        PortfolioModelSpec("gam_spline", "Penalized B-Spline Additive GAM", "F4", "S", True, "SplineTransformer+RidgeCV", True, "Smooth nonlinear thermal response (F4)"),
+        PortfolioModelSpec("gam_spline", "Penalized B-Spline Additive GAM", "F4", "S", True, "SplineTransformer+Ridge", True, "Smooth nonlinear thermal response (F4)"),
         PortfolioModelSpec("sarimax_arima", "SARIMAX / Dynamic ARX", "F7", "S", True, "SARIMAX", True, "Autoregressive exogenous state-space (F7)"),
         PortfolioModelSpec("stl_fourier", "STL + Fourier Harmonic Regression", "F8", "S", True, "STL+HarmonicOLS", True, "Explicit seasonal decomposition (F8)"),
         PortfolioModelSpec("regime_segmented", "Exogenous Regime-Segmented Linear", "F2", "S", True, "RegimeSegmented", True, "Calendar/driver-only segmented OLS (MT-5 safe)"),

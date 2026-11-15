@@ -65,7 +65,7 @@ def test_ci_workflows_structure() -> None:
     assert "windows-latest" in os_matrix and "ubuntu-latest" in os_matrix
 
     for token in (
-        "3.11.9",
+        "python-version-file",
         "requirements.lock",
         "--require-hashes",
         "ruff check",
@@ -115,7 +115,7 @@ def test_process_documents_present_and_english() -> None:
         assert sid in assumptions
 
     support = (ROOT / "docs" / "SUPPORT_MATRIX.md").read_text(encoding="utf-8")
-    for item in ("3.11.9", "Windows 10 22H2", "Windows 11", "8-core", "16 GB", "1920", "torch==2.15.0"):
+    for item in ("3.12", "Windows 10 22H2", "Windows 11", "8-core", "16 GB", "1920", "torch==2.15.0"):
         assert item in support, f"Missing '{item}' in docs/SUPPORT_MATRIX.md"
 
 

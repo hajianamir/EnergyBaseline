@@ -1,0 +1,755 @@
++ /home/user/EnergyBaseline/.cache/native-rebuild/toolenv/bin/python -m pip install meson==1.9.1 ninja==1.13.2 cmake==4.4.5 mako==1.4.3 pkgconf==3.0.7.post0
+Requirement already satisfied: meson==1.9.1 in ./toolenv/lib/python3.11/site-packages (1.9.1)
+Requirement already satisfied: ninja==1.13.2 in ./toolenv/lib/python3.11/site-packages (1.13.2)
+Requirement already satisfied: cmake==4.4.5 in ./toolenv/lib/python3.11/site-packages (4.4.5)
+Requirement already satisfied: mako==1.4.3 in ./toolenv/lib/python3.11/site-packages (1.4.3)
+Requirement already satisfied: pkgconf==3.0.7.post0 in ./toolenv/lib/python3.11/site-packages (3.0.7.post0)
+Requirement already satisfied: MarkupSafe>=2.0 in ./toolenv/lib/python3.11/site-packages (from mako==1.4.3) (3.0.4)
++ cmake -S /home/user/EnergyBaseline/.cache/native-rebuild/libexpat-R_2_6_4/expat -B /home/user/EnergyBaseline/.cache/native-rebuild/expat-build -G Ninja -DCMAKE_INSTALL_PREFIX=/home/user/EnergyBaseline/.cache/native-rebuild/prefix -DCMAKE_PREFIX_PATH=/home/user/EnergyBaseline/.cache/native-rebuild/prefix -DEXPAT_BUILD_DOCS=OFF -DEXPAT_BUILD_EXAMPLES=OFF -DEXPAT_BUILD_TESTS=OFF -DEXPAT_BUILD_TOOLS=OFF -DEXPAT_SHARED_LIBS=ON
+CMake Warning (deprecated) at CMakeLists.txt:37 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+This warning is for project developers.  Use -Wno-author or -Wno-deprecated
+to suppress it.
+
+-- ===========================================================================
+-- 
+-- Configuration
+--   Generator .................. Ninja
+--   Build type ................. NoConfig
+--   Prefix ..................... /home/user/EnergyBaseline/.cache/native-rebuild/prefix
+--   Shared libraries ........... ON
+--   Character type ............. char (UTF-8)
+--   Library name postfix ....... 
+-- 
+--   Build documentation ........ OFF
+--   Build examples ............. OFF
+--   Build fuzzers .............. OFF
+--   Build tests ................ OFF
+--   Build tools (xmlwf) ........ OFF
+--   Build pkg-config file ...... ON
+--   Install files .............. ON
+-- 
+--   Features
+--     // Advanced options, changes not advised
+--     Attributes info .......... OFF
+--     Context bytes ............ 1024
+--     DTD support .............. ON
+--     General entities ......... ON
+--     Large size ............... OFF
+--     Minimum size ............. OFF
+--     Namespace support ........ ON
+-- 
+--   Entropy sources
+--     getrandom ................ 1
+--     syscall SYS_getrandom .... 1
+--     libbsd ................... OFF
+--     /dev/random .............. ON
+-- 
+-- ===========================================================================
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/user/EnergyBaseline/.cache/native-rebuild/expat-build
++ cmake --build /home/user/EnergyBaseline/.cache/native-rebuild/expat-build -j2
+ninja: no work to do.
++ cmake --install /home/user/EnergyBaseline/.cache/native-rebuild/expat-build
+-- Install configuration: "NoConfig"
+-- Up-to-date: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/expat_config.h
+-- Up-to-date: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libexpat.so.1.10.0
+-- Up-to-date: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libexpat.so.1
+-- Up-to-date: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libexpat.so
+-- Up-to-date: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/expat.h
+-- Up-to-date: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/expat_external.h
+-- Up-to-date: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/pkgconfig/expat.pc
+-- Up-to-date: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/share/doc/expat/AUTHORS
+-- Up-to-date: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/share/doc/expat/changelog
+-- Up-to-date: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/cmake/expat-2.6.4/expat-config.cmake
+-- Up-to-date: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/cmake/expat-2.6.4/expat-config-version.cmake
+-- Up-to-date: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/cmake/expat-2.6.4/expat.cmake
+-- Up-to-date: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/cmake/expat-2.6.4/expat-noconfig.cmake
++ cmake -S /home/user/EnergyBaseline/.cache/native-rebuild/dbus-da0db314a3c3fca7290ca0263e1ed0954ad9a90d -B /home/user/EnergyBaseline/.cache/native-rebuild/dbus-build -G Ninja -DCMAKE_INSTALL_PREFIX=/home/user/EnergyBaseline/.cache/native-rebuild/prefix -DCMAKE_PREFIX_PATH=/home/user/EnergyBaseline/.cache/native-rebuild/prefix -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DDBUS_BUILD_TESTS=OFF -DDBUS_WITH_GLIB=OFF
+CMake Warning (author) at CMakeLists.txt:8 (project):
+  cmake_minimum_required() should be called prior to this top-level project()
+  call.  Please see the cmake-commands(7) manual for usage documentation of
+  both commands.
+This warning is for project developers.  Use -Wno-author to suppress it.
+
+CMake Warning (deprecated) at CMakeLists.txt:11 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+This warning is for project developers.  Use -Wno-author or -Wno-deprecated
+to suppress it.
+
+-- Generate config.h.in with autogen.sh to enable cmake header difference check.
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Found EXPAT: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libexpat.so (found version "2.6.4")
+-- Could NOT find X11 (missing: X11_X11_INCLUDE_PATH X11_X11_LIB) 
+-- Found PkgConfig: /home/user/EnergyBaseline/.cache/native-rebuild/toolenv/bin/pkg-config (found version "3.0.7")
+CMake Warning (author) at /home/user/EnergyBaseline/.cache/native-rebuild/toolenv/lib/python3.11/site-packages/cmake/data/share/cmake-4.4/Modules/FindPackageHandleStandardArgs.cmake:493 (message):
+  The package name passed to find_package_handle_standard_args() (GLIB2) does
+  not match the name of the calling package (GLib2).  This can lead to
+  problems in calling code that expects find_package() result variables
+  (e.g., `_FOUND`) to follow a certain pattern.
+Call Stack (most recent call first):
+  cmake/modules/FindGLib2.cmake:63 (find_package_handle_standard_args)
+  CMakeLists.txt:142 (find_package)
+This warning is for project developers.  Use -Wno-author to suppress it.
+
+-- Could NOT find GLIB2 (missing: GLIB2_LIBRARIES GLIB2_MAIN_INCLUDE_DIR) 
+-- Looking for alloca.h
+-- Looking for alloca.h - found
+-- Looking for byteswap.h
+-- Looking for byteswap.h - found
+-- Looking for crt/externs.h
+-- Looking for crt/externs.h - not found
+-- Looking for dirent.h
+-- Looking for dirent.h - found
+-- Looking for dlfcn.h
+-- Looking for dlfcn.h - found
+-- Looking for execinfo.h
+-- Looking for execinfo.h - found
+-- Looking for errno.h
+-- Looking for errno.h - found
+-- Looking for expat.h
+-- Looking for expat.h - not found
+-- Looking for grp.h
+-- Looking for grp.h - found
+-- Looking for inttypes.h
+-- Looking for inttypes.h - found
+-- Looking for io.h
+-- Looking for io.h - not found
+-- Looking for locale.h
+-- Looking for locale.h - found
+-- Looking for memory.h
+-- Looking for memory.h - found
+-- Looking for signal.h
+-- Looking for signal.h - found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stdlib.h
+-- Looking for stdlib.h - found
+-- Looking for stdio.h
+-- Looking for stdio.h - found
+-- Looking for string.h
+-- Looking for string.h - found
+-- Looking for strings.h
+-- Looking for strings.h - found
+-- Looking for syslog.h
+-- Looking for syslog.h - found
+-- Looking for 3 include files stdint.h, ..., sys/event.h
+-- Looking for 3 include files stdint.h, ..., sys/event.h - not found
+-- Looking for sys/inotify.h
+-- Looking for sys/inotify.h - found
+-- Looking for sys/random.h
+-- Looking for sys/random.h - found
+-- Looking for sys/resource.h
+-- Looking for sys/resource.h - found
+-- Looking for sys/stat.h
+-- Looking for sys/stat.h - found
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for sys/uio.h
+-- Looking for sys/uio.h - found
+-- Looking for sys/prctl.h
+-- Looking for sys/prctl.h - found
+-- Looking for sys/syslimits.h
+-- Looking for sys/syslimits.h - not found
+-- Looking for sys/time.h
+-- Looking for sys/time.h - found
+-- Looking for sys/wait.h
+-- Looking for sys/wait.h - found
+-- Looking for time.h
+-- Looking for time.h - found
+-- Looking for ws2tcpip.h
+-- Looking for ws2tcpip.h - not found
+-- Looking for unistd.h
+-- Looking for unistd.h - found
+-- Looking for sys/inotify.h
+-- Looking for sys/inotify.h - found
+-- Looking for backtrace
+-- Looking for backtrace - found
+-- Looking for getgrouplist
+-- Looking for getgrouplist - found
+-- Looking for getpeerucred
+-- Looking for getpeerucred - not found
+-- Looking for nanosleep
+-- Looking for nanosleep - found
+-- Looking for getpwnam_r
+-- Looking for getpwnam_r - found
+-- Looking for setenv
+-- Looking for setenv - found
+-- Looking for unsetenv
+-- Looking for unsetenv - found
+-- Looking for clearenv
+-- Looking for clearenv - found
+-- Looking for writev
+-- Looking for writev - found
+-- Looking for setrlimit
+-- Looking for setrlimit - found
+-- Looking for socketpair
+-- Looking for socketpair - found
+-- Looking for setlocale
+-- Looking for setlocale - found
+-- Looking for localeconv
+-- Looking for localeconv - found
+-- Looking for poll
+-- Looking for poll - found
+-- Looking for strtoll
+-- Looking for strtoll - found
+-- Looking for strtoull
+-- Looking for strtoull - found
+-- Looking for pipe2
+-- Looking for pipe2 - found
+-- Looking for accept4
+-- Looking for accept4 - found
+-- Looking for inotify_init1
+-- Looking for inotify_init1 - found
+-- Looking for SCM_RIGHTS
+-- Looking for SCM_RIGHTS - found
+-- Looking for prctl
+-- Looking for prctl - found
+-- Looking for raise
+-- Looking for raise - found
+-- Looking for getrandom
+-- Looking for getrandom - found
+-- Looking for getrlimit
+-- Looking for getrlimit - found
+-- Looking for prlimit
+-- Looking for prlimit - found
+-- Performing Test HAVE_CMSGCRED
+-- Performing Test HAVE_CMSGCRED - Failed
+-- Performing Test DBUS_HAVE_LINUX_EPOLL
+-- Performing Test DBUS_HAVE_LINUX_EPOLL - Success
+-- Performing Test HAVE_VA_COPY
+-- Performing Test HAVE_VA_COPY - Success
+-- Performing Test HAVE___VA_COPY
+-- Performing Test HAVE___VA_COPY - Success
+-- Performing Test DBUS_USE_SYNC
+-- Performing Test DBUS_USE_SYNC - Success
+-- Performing Test HAVE_DIRFD
+-- Performing Test HAVE_DIRFD - Failed
+-- Performing Test HAVE_DDFD
+-- Performing Test HAVE_DDFD - Failed
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Check size of short
+-- Check size of short - done
+-- Check size of int
+-- Check size of int - done
+-- Check size of long
+-- Check size of long - done
+-- Check size of long long
+-- Check size of long long - done
+-- Check size of __int64
+-- Check size of __int64 - failed
+-- Check size of socklen_t
+-- Check size of socklen_t - done
+-- Could NOT find DocBookXSL (missing: DocBookXSL_DIR) 
+ 
+set -DDBUS_INSTALL_SYSTEM_LIBS=1 to install runtime libraries too
+set DBUSDIR (environment or cmake option) to overwrite the default install directory 
+ 
+ 
+                  D-BUS 1.13.15                               
+                  =============                                       
+                                                                      
+        install prefix:           /home/user/EnergyBaseline/.cache/native-rebuild/prefix                           
+        install exec_prefix:      /home/user/EnergyBaseline/.cache/native-rebuild/prefix                      
+        install libdir:           /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib        
+        install bindir:           /home/user/EnergyBaseline/.cache/native-rebuild/prefix/bin        
+        install sysconfdir:       /home/user/EnergyBaseline/.cache/native-rebuild/prefix/etc    
+        install datadir:          /home/user/EnergyBaseline/.cache/native-rebuild/prefix/share       
+        source code location:     /home/user/EnergyBaseline/.cache/native-rebuild/dbus-da0db314a3c3fca7290ca0263e1ed0954ad9a90d/..                  
+        build dir:                /home/user/EnergyBaseline/.cache/native-rebuild/dbus-build                 
+        c compiler:               cc                       
+        cflags:                     -Wsign-compare                    
+        cflags debug:             -g   -Wl,--export-dynamic  -D_DEBUG              
+        cflags release:           -O3 -DNDEBUG -Wl,--export-dynamic            
+        cxx compiler:             c++                     
+        cxxflags:                   -Wsign-compare                  
+        cxxflags debug:           -g            
+        cxxflags release:         -O3 -DNDEBUG          
+        64-bit int:               long                  
+        32-bit int:               int                  
+        16-bit int:               short                  
+        Doxygen:                  DOXYGEN-NOTFOUND                          
+        Docbook Generator:                   
+        gcc coverage profiling:   OFF                
+        Building unit tests:      OFF                 
+        Building with GLib:       OFF                   
+        Building verbose mode:    ON         
+        Building w/o assertions:  OFF              
+        Building w/o checks:      OFF              
+        Building bus stats API:   OFF                
+        installing system libs:   OFF         
+        Building inotify support: 1          
+        Building kqueue support:             
+        Building Doxygen docs:             
+        Building XML docs:                     
+        Daemon executable name:   dbus-daemon
+        System bus address:       unix:path=/home/user/EnergyBaseline/.cache/native-rebuild/prefix/var/run/dbus/system_bus_socket  
+        System bus socket:                       
+        System bus PID file:      /home/user/EnergyBaseline/.cache/native-rebuild/prefix/var/run/dbus/pid             
+        System bus user:          messagebus                        
+        Session bus socket dir:   /tmp          
+        pam_console auth dir:     (none)                              
+        'make check' socket dir:                    
+        Test listen address:                            
+ 
+NOTE: building with verbose mode increases library size, may slightly increase security risk, and decreases performance.
+NOTE: building with assertions increases library size and decreases performance.
+ 
+-- Configuring done (6.1s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/user/EnergyBaseline/.cache/native-rebuild/dbus-build
++ cmake --build /home/user/EnergyBaseline/.cache/native-rebuild/dbus-build -j2
+[1/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-address.c.o
+[2/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-bus.c.o
+[3/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-auth.c.o
+[4/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-credentials.c.o
+[5/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-errors.c.o
+[6/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-connection.c.o
+[7/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-keyring.c.o
+[8/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-marshal-byteswap.c.o
+[9/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-marshal-header.c.o
+[10/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-marshal-recursive.c.o
+[11/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-marshal-validate.c.o
+[12/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-misc.c.o
+[13/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-nonce.c.o
+[14/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-object-tree.c.o
+[15/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-pending-call.c.o
+[16/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-resources.c.o
+[17/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-server.c.o
+[18/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-server-socket.c.o
+[19/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-server-debug-pipe.c.o
+[20/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-message.c.o
+[21/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-sha.c.o
+[22/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-syntax.c.o
+[23/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-signature.c.o
+[24/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-timeout.c.o
+[25/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-threads.c.o
+[26/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-transport.c.o
+[27/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-watch.c.o
+[28/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-transport-unix.c.o
+[29/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-server-unix.c.o
+[30/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-transport-socket.c.o
+[31/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-dataslot.c.o
+[32/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-file.c.o
+[33/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-hash.c.o
+[34/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-list.c.o
+[35/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-internals.c.o
+[36/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-marshal-basic.c.o
+[37/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-mempool.c.o
+[38/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-memory.c.o
+[39/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-sysdeps.c.o
+[40/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-pipe.c.o
+[41/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-file-unix.c.o
+[42/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-pipe-unix.c.o
+[43/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-string.c.o
+[44/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-sysdeps-pthread.c.o
+[45/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-sysdeps-unix.c.o
+[46/114] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-asv-util.c.o
+[47/114] Building C object dbus/CMakeFiles/dbus-1.dir/dbus-userdb.c.o
+[48/114] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-mainloop.c.o
+[49/114] Linking C shared library lib/libdbus-1.so.3.27.0
+[50/114] Creating library symlink lib/libdbus-1.so.3 lib/libdbus-1.so
+[51/114] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-message-util.c.o
+[52/114] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-shell.c.o
+[53/114] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-pollable-set.c.o
+[54/114] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-pollable-set-poll.c.o
+[55/114] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-sysdeps-util.c.o
+[56/114] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-string-util.c.o
+[57/114] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-userdb-util.c.o
+[58/114] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-spawn-unix.c.o
+[59/114] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-sysdeps-util-unix.c.o
+[60/114] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/activation.c.o
+[61/114] Building C object dbus/CMakeFiles/dbus-internal.dir/dbus-pollable-set-epoll.c.o
+[62/114] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/apparmor.c.o
+[63/114] Linking C static library lib/libdbus-internal.a
+[64/114] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/audit.c.o
+[65/114] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/config-loader-expat.c.o
+[66/114] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/bus.c.o
+[67/114] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/config-parser-common.c.o
+[68/114] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/config-parser.c.o
+[69/114] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/containers.c.o
+[70/114] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/desktop-file.c.o
+[71/114] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/dispatch.c.o
+[72/114] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/connection.c.o
+[73/114] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/driver.c.o
+[74/114] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/expirelist.c.o
+[75/114] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/policy.c.o
+[76/114] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/selinux.c.o
+[77/114] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/services.c.o
+[78/114] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/test.c.o
+[79/114] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/utils.c.o
+[80/114] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/dir-watch-inotify.c.o
+[81/114] Building C object bus/CMakeFiles/dbus-daemon-internal.dir/signals.c.o
+[82/114] Building C object bus/CMakeFiles/launch-helper-internal.dir/config-parser-common.c.o
+[83/114] Building C object bus/CMakeFiles/launch-helper-internal.dir/config-parser-trivial.c.o
+[84/114] Building C object bus/CMakeFiles/launch-helper-internal.dir/config-loader-expat.c.o
+[85/114] Building C object bus/CMakeFiles/launch-helper-internal.dir/desktop-file.c.o
+[86/114] Building C object bus/CMakeFiles/launch-helper-internal.dir/utils.c.o
+[87/114] Linking C static library lib/libdbus-daemon-internal.a
+[88/114] Linking C static library lib/liblaunch-helper-internal.a
+[89/114] Building C object bus/CMakeFiles/dbus-daemon.dir/main.c.o
+[90/114] Building C object bus/CMakeFiles/dbus-daemon-launch-helper.dir/activation-helper-bin.c.o
+[91/114] Building C object bus/CMakeFiles/dbus-daemon-launch-helper.dir/activation-helper.c.o
+[92/114] Building C object tools/CMakeFiles/dbus-send.dir/dbus-print-message.c.o
+[93/114] Building C object tools/CMakeFiles/dbus-send.dir/dbus-send.c.o
+[94/114] Building C object tools/CMakeFiles/dbus-send.dir/tool-common.c.o
+[95/114] Building C object tools/CMakeFiles/dbus-test-tool.dir/dbus-echo.c.o
+[96/114] Building C object tools/CMakeFiles/dbus-test-tool.dir/dbus-spam.c.o
+[97/114] Building C object tools/CMakeFiles/dbus-test-tool.dir/tool-common.c.o
+[98/114] Building C object tools/CMakeFiles/dbus-test-tool.dir/test-tool.c.o
+[99/114] Building C object tools/CMakeFiles/dbus-update-activation-environment.dir/tool-common.c.o
+[100/114] Building C object tools/CMakeFiles/dbus-update-activation-environment.dir/dbus-update-activation-environment.c.o
+[101/114] Building C object tools/CMakeFiles/dbus-launch.dir/tool-common.c.o
+[102/114] Building C object tools/CMakeFiles/dbus-monitor.dir/dbus-monitor.c.o
+[103/114] Building C object tools/CMakeFiles/dbus-launch.dir/dbus-launch.c.o
+[104/114] Building C object tools/CMakeFiles/dbus-monitor.dir/tool-common.c.o
+[105/114] Building C object tools/CMakeFiles/dbus-monitor.dir/dbus-print-message.c.o
+[106/114] Building C object tools/CMakeFiles/dbus-run-session.dir/dbus-run-session.c.o
+[107/114] Linking C executable bin/dbus-daemon
+[108/114] Linking C executable bin/dbus-daemon-launch-helper
+[109/114] Linking C executable bin/dbus-send
+[110/114] Linking C executable bin/dbus-test-tool
+[111/114] Linking C executable bin/dbus-update-activation-environment
+[112/114] Linking C executable bin/dbus-monitor
+[113/114] Linking C executable bin/dbus-launch
+[114/114] Linking C executable bin/dbus-run-session
++ cmake --install /home/user/EnergyBaseline/.cache/native-rebuild/dbus-build
+-- Install configuration: ""
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/cmake/DBus1/DBus1Config.cmake
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/cmake/DBus1/DBus1ConfigVersion.cmake
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/pkgconfig/dbus-1.pc
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libdbus-1.so.3.27.0
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libdbus-1.so.3
+-- Set non-toolchain portion of runtime path of "/home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libdbus-1.so.3.27.0" to ""
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libdbus-1.so
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/dbus-1.0/dbus/dbus.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/dbus-1.0/dbus/dbus-address.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/dbus-1.0/dbus/dbus-bus.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/dbus-1.0/dbus/dbus-connection.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/dbus-1.0/dbus/dbus-errors.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/dbus-1.0/dbus/dbus-macros.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/dbus-1.0/dbus/dbus-memory.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/dbus-1.0/dbus/dbus-message.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/dbus-1.0/dbus/dbus-misc.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/dbus-1.0/dbus/dbus-pending-call.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/dbus-1.0/dbus/dbus-protocol.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/dbus-1.0/dbus/dbus-server.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/dbus-1.0/dbus/dbus-shared.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/dbus-1.0/dbus/dbus-signature.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/dbus-1.0/dbus/dbus-syntax.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/dbus-1.0/dbus/dbus-threads.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/dbus-1.0/dbus/dbus-types.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/dbus-1.0/include/dbus/dbus-arch-deps.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/bin/dbus-daemon
+-- Set non-toolchain portion of runtime path of "/home/user/EnergyBaseline/.cache/native-rebuild/prefix/bin/dbus-daemon" to ""
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/share/dbus-1/session.conf
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/etc/dbus-1/session.conf
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/share/dbus-1/session.d
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/share/dbus-1/services
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/share/dbus-1/system.conf
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/etc/dbus-1/system.conf
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/share/dbus-1/system.d
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/share/dbus-1/system-services
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/var/run/dbus
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/share/doc/dbus/examples/example-session-disable-stats.conf
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/share/doc/dbus/examples/example-system-enable-stats.conf
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/bin/dbus-send
+-- Set non-toolchain portion of runtime path of "/home/user/EnergyBaseline/.cache/native-rebuild/prefix/bin/dbus-send" to ""
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/bin/dbus-test-tool
+-- Set non-toolchain portion of runtime path of "/home/user/EnergyBaseline/.cache/native-rebuild/prefix/bin/dbus-test-tool" to ""
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/bin/dbus-update-activation-environment
+-- Set non-toolchain portion of runtime path of "/home/user/EnergyBaseline/.cache/native-rebuild/prefix/bin/dbus-update-activation-environment" to ""
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/bin/dbus-launch
+-- Set non-toolchain portion of runtime path of "/home/user/EnergyBaseline/.cache/native-rebuild/prefix/bin/dbus-launch" to ""
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/bin/dbus-monitor
+-- Set non-toolchain portion of runtime path of "/home/user/EnergyBaseline/.cache/native-rebuild/prefix/bin/dbus-monitor" to ""
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/bin/dbus-run-session
+-- Set non-toolchain portion of runtime path of "/home/user/EnergyBaseline/.cache/native-rebuild/prefix/bin/dbus-run-session" to ""
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/var/lib/dbus
+-- Installing: /home/user/EnergyBaseline/.cache/native-rebuild/prefix/share/doc/dbus/examples/GetAllMatchRules.py
++ meson setup /home/user/EnergyBaseline/.cache/native-rebuild/gl-build /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0 --prefix=/home/user/EnergyBaseline/.cache/native-rebuild/prefix --libdir=lib -Dx11=enabled -Dglx=enabled
+The Meson build system
+Version: 1.9.1
+Source dir: /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0
+Build dir: /home/user/EnergyBaseline/.cache/native-rebuild/gl-build
+Build type: native build
+Project name: glvnd
+Project version: 1.7.0
+C compiler for the host machine: cc (gcc 12.2.0 "cc (Debian 12.2.0-14+deb12u1) 12.2.0")
+C linker for the host machine: cc ld.bfd 2.40
+Host machine cpu family: x86_64
+Host machine cpu: x86_64
+Program python3 found: YES (/home/user/EnergyBaseline/.cache/native-rebuild/toolenv/bin/python)
+Program nm found: YES (/usr/bin/nm)
+Message: Host CPU family: x86_64
+Message: Host CPU: x86_64
+Library dl found: YES
+Library m found: YES
+Run-time dependency threads found: YES
+Found pkg-config: YES (/home/user/EnergyBaseline/.cache/native-rebuild/toolenv/bin/pkg-config) 3.0.7
+Run-time dependency x11 found: YES 1.8.4
+Run-time dependency xext found: YES 1.3.4
+Run-time dependency glproto found: YES 1.4.17
+Checking if "typeof" compiles: YES 
+Checking if "__thread" compiles: YES 
+Message: Using TLS variable for dispatch table: true
+Header "features.h" has symbol "__GLIBC__" : YES 
+Message: Using dispatch stub type: x86_64_tls
+Compiler for C supports function attribute constructor: YES 
+Checking if "pthread rwlock" compiles: YES 
+Checking if "sync intrinsics" compiles: YES 
+Checking for function "mincore" : YES 
+Header "dlfcn.h" has symbol "RTLD_NOLOAD" : YES 
+Checking whether type "struct dirent" has member "d_type" : YES 
+Program cp found: YES (/usr/bin/cp)
+Build targets in project: 51
+NOTICE: Future-deprecated features used:
+ * 0.55.0: {'ExternalProgram.path'}
+
+glvnd 1.7.0
+
+  User defined options
+    glx   : enabled
+    libdir: lib
+    prefix: /home/user/EnergyBaseline/.cache/native-rebuild/prefix
+    x11   : enabled
+
+Found ninja-1.13.2.git.kitware.jobserver-pipe-1 at /home/user/EnergyBaseline/.cache/native-rebuild/toolenv/bin/ninja
++ meson compile -C /home/user/EnergyBaseline/.cache/native-rebuild/gl-build -j2
+ninja: Entering directory `/home/user/EnergyBaseline/.cache/native-rebuild/gl-build'
+[1/133] Compiling C object src/util/libglvnd_pthread.a.p/glvnd_pthread.c.o
+[2/133] Compiling C object src/util/libapp_error_check.a.p/app_error_check.c.o
+[3/133] Compiling C object src/util/libutils_misc.a.p/utils_misc.c.o
+[4/133] Compiling C object src/util/libtrace.a.p/trace.c.o
+[5/133] Linking static target src/util/libglvnd_pthread.a
+[6/133] Linking static target src/util/libapp_error_check.a
+[7/133] Linking static target src/util/libutils_misc.a
+[8/133] Linking static target src/util/libtrace.a
+[9/133] Compiling C object src/GLdispatch/libGLdispatch.so.0.0.0.p/GLdispatch.c.o
+[10/133] Compiling C object src/util/libwinsys_dispatch.a.p/winsys_dispatch.c.o
+[11/133] Generating src/generate/glapi_mapi_tmp.h with a custom command (wrapped by meson to capture output)
+[12/133] Generating src/GLX/g_glx_dispatch_stub_list.h with a custom command (wrapped by meson to capture output)
+[13/133] Compiling C object src/GLdispatch/vnd-glapi/liblibglapi.a.p/mapi_glapi.c.o
+[14/133] Compiling C object src/GLdispatch/vnd-glapi/liblibglapi.a.p/stub.c.o
+[15/133] Compiling C object src/GLdispatch/vnd-glapi/liblibglapi.a.p/u_current_tls.c.o
+[16/133] Compiling C object src/GLdispatch/vnd-glapi/liblibglapi.a.p/table.c.o
+In file included from ../libglvnd-1.7.0/src/GLdispatch/vnd-glapi/mapi_tmp.h:34,
+                 from ../libglvnd-1.7.0/src/GLdispatch/vnd-glapi/table.c:50:
+/home/user/EnergyBaseline/.cache/native-rebuild/gl-build/src/generate/glapi_mapi_tmp.h:1558:60: warning: argument 1 of type ‘const GLdouble *’ {aka ‘const double *’} declared as a pointer [-Warray-parameter=]
+ 1558 | GLAPI void APIENTRY glLoadTransposeMatrixd(const GLdouble *m);
+      |                                            ~~~~~~~~~~~~~~~~^
+In file included from ../libglvnd-1.7.0/src/GLdispatch/vnd-glapi/glapi.h:48,
+                 from ../libglvnd-1.7.0/src/GLdispatch/vnd-glapi/table.h:33,
+                 from ../libglvnd-1.7.0/src/GLdispatch/vnd-glapi/table.c:31:
+../libglvnd-1.7.0/include/GL/gl.h:1901:62: note: previously declared as an array ‘const GLdouble[16]’ {aka ‘const double[16]’}
+ 1901 | GLAPI void GLAPIENTRY glLoadTransposeMatrixd( const GLdouble m[16] );
+      |                                               ~~~~~~~~~~~~~~~^~~~~
+/home/user/EnergyBaseline/.cache/native-rebuild/gl-build/src/generate/glapi_mapi_tmp.h:1560:59: warning: argument 1 of type ‘const GLfloat *’ {aka ‘const float *’} declared as a pointer [-Warray-parameter=]
+ 1560 | GLAPI void APIENTRY glLoadTransposeMatrixf(const GLfloat *m);
+      |                                            ~~~~~~~~~~~~~~~^
+../libglvnd-1.7.0/include/GL/gl.h:1903:61: note: previously declared as an array ‘const GLfloat[16]’ {aka ‘const float[16]’}
+ 1903 | GLAPI void GLAPIENTRY glLoadTransposeMatrixf( const GLfloat m[16] );
+      |                                               ~~~~~~~~~~~~~~^~~~~
+/home/user/EnergyBaseline/.cache/native-rebuild/gl-build/src/generate/glapi_mapi_tmp.h:1662:60: warning: argument 1 of type ‘const GLdouble *’ {aka ‘const double *’} declared as a pointer [-Warray-parameter=]
+ 1662 | GLAPI void APIENTRY glMultTransposeMatrixd(const GLdouble *m);
+      |                                            ~~~~~~~~~~~~~~~~^
+../libglvnd-1.7.0/include/GL/gl.h:1905:62: note: previously declared as an array ‘const GLdouble[16]’ {aka ‘const double[16]’}
+ 1905 | GLAPI void GLAPIENTRY glMultTransposeMatrixd( const GLdouble m[16] );
+      |                                               ~~~~~~~~~~~~~~~^~~~~
+/home/user/EnergyBaseline/.cache/native-rebuild/gl-build/src/generate/glapi_mapi_tmp.h:1664:59: warning: argument 1 of type ‘const GLfloat *’ {aka ‘const float *’} declared as a pointer [-Warray-parameter=]
+ 1664 | GLAPI void APIENTRY glMultTransposeMatrixf(const GLfloat *m);
+      |                                            ~~~~~~~~~~~~~~~^
+../libglvnd-1.7.0/include/GL/gl.h:1907:61: note: previously declared as an array ‘const GLfloat[16]’ {aka ‘const float[16]’}
+ 1907 | GLAPI void GLAPIENTRY glMultTransposeMatrixf( const GLfloat m[16] );
+      |                                               ~~~~~~~~~~~~~~^~~~~
+[17/133] Compiling C object src/GLdispatch/vnd-glapi/liblibglapi.a.p/entry_simple_asm.c.o
+[18/133] Compiling C object src/GLdispatch/vnd-glapi/liblibglapi.a.p/entry_common.c.o
+[19/133] Linking static target src/util/libwinsys_dispatch.a
+[20/133] Compiling C object src/GLdispatch/vnd-glapi/liblibglapi.a.p/entry_x86_64_tls.c.o
+[21/133] Linking static target src/GLdispatch/vnd-glapi/liblibglapi.a
+[22/133] Linking target src/GLdispatch/libGLdispatch.so.0.0.0
+[23/133] Generating src/generate/g_glapi_mapi_opengl_tmp.h with a custom command (wrapped by meson to capture output)
+[24/133] Generating src/generate/g_egldispatchstubs.h with a custom command (wrapped by meson to capture output)
+[25/133] Generating src/generate/g_egldispatchstubs.c with a custom command (wrapped by meson to capture output)
+[26/133] Generating src/generate/g_glapi_mapi_gl_tmp.h with a custom command (wrapped by meson to capture output)
+[27/133] Generating symbol file src/GLdispatch/libGLdispatch.so.0.0.0.p/libGLdispatch.so.0.0.0.symbols
+[28/133] Compiling C object src/GLX/libGLX.so.0.0.0.p/libglxmapping.c.o
+[29/133] Compiling C object src/GLX/libGLX.so.0.0.0.p/libglx.c.o
+[30/133] Compiling C object src/GLX/libGLX.so.0.0.0.p/glvnd_genentry.c.o
+[31/133] Compiling C object src/GLX/libGLX.so.0.0.0.p/libglxproto.c.o
+[32/133] Generating src/generate/g_libglglxwrapper.c with a custom command (wrapped by meson to capture output)
+[33/133] Compiling C object src/util/libcJSON.a.p/cJSON.c.o
+[34/133] Compiling C object src/GLdispatch/vnd-glapi/libglapi_gl.a.p/entry_common.c.o
+[35/133] Compiling C object src/GLdispatch/vnd-glapi/libglapi_gl.a.p/stub.c.o
+[36/133] Compiling C object src/GLdispatch/vnd-glapi/libglapi_gl.a.p/entry_simple_asm.c.o
+[37/133] Compiling C object src/GLdispatch/vnd-glapi/libglapi_opengl.a.p/stub.c.o
+[38/133] Compiling C object src/GLdispatch/vnd-glapi/libglapi_gl.a.p/entry_x86_64_tls.c.o
+[39/133] Compiling C object src/GLdispatch/vnd-glapi/libglapi_opengl.a.p/entry_common.c.o
+[40/133] Compiling C object src/GLdispatch/vnd-glapi/libglapi_opengl.a.p/entry_simple_asm.c.o
+[41/133] Compiling C object src/GLdispatch/vnd-glapi/libglapi_opengl.a.p/entry_x86_64_tls.c.o
+[42/133] Compiling C object src/OpenGL/libopengl_main.a.p/libopengl.c.o
+[43/133] Compiling C object src/EGL/libegl_dispatch_stubs.a.p/meson-generated_.._.._generate_g_egldispatchstubs.c.o
+[44/133] Compiling C object src/EGL/libegl_dispatch_stubs.a.p/egldispatchstubs.c.o
+[45/133] Linking static target src/util/libcJSON.a
+[46/133] Linking target src/GLX/libGLX.so.0.0.0
+[47/133] Generating src/generate/g_glapi_mapi_glesv2_tmp.h with a custom command (wrapped by meson to capture output)
+[48/133] Linking static target src/GLdispatch/vnd-glapi/libglapi_gl.a
+[49/133] Generating src/generate/g_glapi_mapi_glesv1_tmp.h with a custom command (wrapped by meson to capture output)
+[50/133] Linking static target src/GLdispatch/vnd-glapi/libglapi_opengl.a
+[51/133] Linking static target src/OpenGL/libopengl_main.a
+[52/133] Linking static target src/EGL/libegl_dispatch_stubs.a
+[53/133] Compiling C object src/EGL/libEGL.so.1.1.0.p/libeglcurrent.c.o
+[54/133] Compiling C object src/EGL/libEGL.so.1.1.0.p/libegl.c.o
+[55/133] Compiling C object src/EGL/libEGL.so.1.1.0.p/libeglmapping.c.o
+[56/133] Compiling C object src/EGL/libEGL.so.1.1.0.p/libeglvendor.c.o
+[57/133] Generating symbol file src/GLX/libGLX.so.0.0.0.p/libGLX.so.0.0.0.symbols
+[58/133] Compiling C object src/EGL/libEGL.so.1.1.0.p/libeglerror.c.o
+[59/133] Compiling C object src/GL/libGL.so.1.7.0.p/libgl.c.o
+[60/133] Compiling C object src/GL/libGL.so.1.7.0.p/meson-generated_.._.._generate_g_libglglxwrapper.c.o
+[61/133] Compiling C object src/GLdispatch/vnd-glapi/libglapi_glesv1.a.p/entry_common.c.o
+[62/133] Compiling C object src/GLdispatch/vnd-glapi/libglapi_glesv1.a.p/stub.c.o
+[63/133] Compiling C object src/GLdispatch/vnd-glapi/libglapi_glesv1.a.p/entry_simple_asm.c.o
+[64/133] Compiling C object src/GLdispatch/vnd-glapi/libglapi_glesv1.a.p/entry_x86_64_tls.c.o
+[65/133] Compiling C object src/GLdispatch/vnd-glapi/libglapi_glesv2.a.p/stub.c.o
+[66/133] Compiling C object src/GLdispatch/vnd-glapi/libglapi_glesv2.a.p/entry_common.c.o
+[67/133] Compiling C object src/GLdispatch/vnd-glapi/libglapi_glesv2.a.p/entry_simple_asm.c.o
+[68/133] Compiling C object src/GLdispatch/vnd-glapi/libglapi_glesv2.a.p/entry_x86_64_tls.c.o
+[69/133] Linking target src/OpenGL/libOpenGL.so.0.0.0
+[70/133] Linking target src/EGL/libEGL.so.1.1.0
+[71/133] Linking target src/GL/libGL.so.1.7.0
+[72/133] Linking static target src/GLdispatch/vnd-glapi/libglapi_glesv1.a
+[73/133] Linking static target src/GLdispatch/vnd-glapi/libglapi_glesv2.a
+[74/133] Compiling C object tests/dummy/libpatchentrypoints.a.p/patchentrypoints.c.o
+[75/133] Generating symbol file src/OpenGL/libOpenGL.so.0.0.0.p/libOpenGL.so.0.0.0.symbols
+[76/133] Generating symbol file src/EGL/libEGL.so.1.1.0.p/libEGL.so.1.1.0.symbols
+[77/133] Linking static target tests/dummy/libpatchentrypoints.a
+[78/133] Generating symbol file src/GL/libGL.so.1.7.0.p/libGL.so.1.7.0.symbols
+[79/133] Compiling C object tests/dummy/libGLX_dummy.so.0.p/GLX_dummy.c.o
+[80/133] Compiling C object tests/dummy/libEGL_dummy0.so.0.p/EGL_dummy.c.o
+[81/133] Compiling C object tests/dummy/libEGL_dummy1.so.0.p/EGL_dummy.c.o
+[82/133] Compiling C object tests/testgldispatchthread.p/testgldispatchthread.c.o
+[83/133] Compiling C object tests/testgldispatch.p/testgldispatch.c.o
+[84/133] Compiling C object tests/glxcreatecontext.p/testglxcreatecontext.c.o
+[85/133] Compiling C object tests/glxcreatecontext.p/test_utils.c.o
+[86/133] Compiling C object tests/glxmakecurrent.p/test_utils.c.o
+[87/133] Compiling C object tests/glxmakecurrent.p/testglxmakecurrent.c.o
+[88/133] Compiling C object tests/glxmakecurrent_mt.p/testglxmakecurrent.c.o
+[89/133] Compiling C object tests/glxmakecurrent_mt.p/test_utils.c.o
+[90/133] Compiling C object tests/glxmakecurrent_oldlink.p/test_utils.c.o
+[91/133] Compiling C object tests/glxmakecurrent_oldlink.p/testglxmakecurrent.c.o
+[92/133] Compiling C object tests/testglxgetprocaddress_genentry.p/testglxgetprocaddress_genentry.c.o
+[93/133] Compiling C object tests/glxgetprocaddress.p/testglxgetprocaddress.c.o
+[94/133] Compiling C object tests/glxgetclientstr.p/testglxgetclientstr.c.o
+[95/133] Compiling C object tests/glxqueryversion.p/testglxqueryversion.c.o
+[96/133] Compiling C object tests/egldisplay.p/testegldisplay.c.o
+[97/133] Compiling C object tests/egldisplay.p/egl_test_utils.c.o
+[98/133] Compiling C object tests/egldevice.p/testegldevice.c.o
+[99/133] Compiling C object tests/egldevice.p/egl_test_utils.c.o
+[100/133] Compiling C object tests/eglgetprocaddress.p/testeglgetprocaddress.c.o
+[101/133] Compiling C object tests/eglgetprocaddress.p/egl_test_utils.c.o
+[102/133] Compiling C object tests/eglmakecurrent.p/egl_test_utils.c.o
+[103/133] Compiling C object tests/eglmakecurrent.p/testeglmakecurrent.c.o
+[104/133] Compiling C object tests/eglerror.p/testeglerror.c.o
+[105/133] Compiling C object tests/eglerror.p/egl_test_utils.c.o
+[106/133] Compiling C object tests/egldebug.p/egl_test_utils.c.o
+[107/133] Compiling C object tests/egldebug.p/testegldebug.c.o
+[108/133] Compiling C object tests/egldeviceadd.p/testegldeviceadd.c.o
+[109/133] Compiling C object tests/egldeviceadd.p/egl_test_utils.c.o
+[110/133] Compiling C object tests/eglcurrentcleanup.p/testeglcurrentcleanup.c.o
+[111/133] Linking target src/GLESv1/libGLESv1_CM.so.1.2.0
+[112/133] Linking target src/GLESv2/libGLESv2.so.2.1.0
+[113/133] Linking target tests/dummy/libGLX_dummy.so.0
+[114/133] Linking target tests/dummy/libEGL_dummy0.so.0
+[115/133] Linking target tests/dummy/libEGL_dummy1.so.0
+[116/133] Linking target tests/testgldispatch
+[117/133] Linking target tests/testgldispatchthread
+[118/133] Linking target tests/glxcreatecontext
+[119/133] Linking target tests/glxmakecurrent
+[120/133] Linking target tests/glxmakecurrent_mt
+[121/133] Linking target tests/glxmakecurrent_oldlink
+[122/133] Linking target tests/glxgetprocaddress
+[123/133] Linking target tests/testglxgetprocaddress_genentry
+[124/133] Linking target tests/glxgetclientstr
+[125/133] Linking target tests/glxqueryversion
+[126/133] Linking target tests/egldisplay
+[127/133] Linking target tests/egldevice
+[128/133] Linking target tests/eglgetprocaddress
+[129/133] Linking target tests/eglmakecurrent
+[130/133] Linking target tests/eglerror
+[131/133] Linking target tests/egldebug
+[132/133] Linking target tests/egldeviceadd
+[133/133] Linking target tests/eglcurrentcleanup
+INFO: autodetecting backend as ninja
+INFO: calculating backend command to run: /home/user/EnergyBaseline/.cache/native-rebuild/toolenv/bin/ninja -C /home/user/EnergyBaseline/.cache/native-rebuild/gl-build -j 2
++ meson install -C /home/user/EnergyBaseline/.cache/native-rebuild/gl-build
+ninja: Entering directory `/home/user/EnergyBaseline/.cache/native-rebuild/gl-build'
+ninja: no work to do.
+Installing src/GLdispatch/libGLdispatch.so.0.0.0 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib
+Installing src/OpenGL/libOpenGL.so.0.0.0 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib
+Installing src/EGL/libEGL.so.1.1.0 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib
+Installing src/GLX/libGLX.so.0.0.0 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib
+Installing src/GL/libGL.so.1.7.0 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib
+Installing src/GLESv1/libGLESv1_CM.so.1.2.0 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib
+Installing src/GLESv2/libGLESv2.so.2.1.0 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/glvnd/GLdispatchABI.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/glvnd
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/glvnd/libglxabi.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/glvnd
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/glvnd/libeglabi.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/glvnd
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/GL/gl.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/GL
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/GL/glcorearb.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/GL
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/GL/glext.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/GL
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/KHR/khrplatform.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/KHR
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/GL/glx.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/GL
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/GL/glxext.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/GL
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/GLES/egl.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/GLES
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/GLES/gl.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/GLES
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/GLES/glext.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/GLES
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/GLES/glplatform.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/GLES
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/GLES2/gl2ext.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/GLES2
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/GLES2/gl2.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/GLES2
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/GLES2/gl2platform.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/GLES2
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/GLES3/gl31.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/GLES3
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/GLES3/gl32.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/GLES3
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/GLES3/gl3.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/GLES3
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/GLES3/gl3ext.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/GLES3
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/GLES3/gl3platform.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/GLES3
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/EGL/egl.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/EGL
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/EGL/eglext.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/EGL
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/libglvnd-1.7.0/include/EGL/eglplatform.h to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/include/EGL
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/gl-build/meson-private/opengl.pc to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/pkgconfig
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/gl-build/meson-private/egl.pc to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/pkgconfig
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/gl-build/meson-private/glx.pc to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/pkgconfig
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/gl-build/meson-private/gl.pc to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/pkgconfig
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/gl-build/meson-private/glesv1_cm.pc to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/pkgconfig
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/gl-build/meson-private/glesv2.pc to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/pkgconfig
+Installing /home/user/EnergyBaseline/.cache/native-rebuild/gl-build/meson-private/libglvnd.pc to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/pkgconfig
+Installing symlink pointing to libGLdispatch.so.0.0.0 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libGLdispatch.so.0
+Installing symlink pointing to libGLdispatch.so.0 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libGLdispatch.so
+Installing symlink pointing to libOpenGL.so.0.0.0 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libOpenGL.so.0
+Installing symlink pointing to libOpenGL.so.0 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libOpenGL.so
+Installing symlink pointing to libEGL.so.1.1.0 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libEGL.so.1
+Installing symlink pointing to libEGL.so.1 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libEGL.so
+Installing symlink pointing to libGLX.so.0.0.0 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libGLX.so.0
+Installing symlink pointing to libGLX.so.0 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libGLX.so
+Installing symlink pointing to libGL.so.1.7.0 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libGL.so.1
+Installing symlink pointing to libGL.so.1 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libGL.so
+Installing symlink pointing to libGLESv1_CM.so.1.2.0 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libGLESv1_CM.so.1
+Installing symlink pointing to libGLESv1_CM.so.1 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libGLESv1_CM.so
+Installing symlink pointing to libGLESv2.so.2.1.0 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libGLESv2.so.2
+Installing symlink pointing to libGLESv2.so.2 to /home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib/libGLESv2.so
++ /home/user/EnergyBaseline/.venv/bin/python -c from PySide6.QtWidgets import QApplication; a=QApplication([]); print(a.platformName())
+offscreen
+Native runtime ready. Set LD_LIBRARY_PATH=/home/user/EnergyBaseline/.cache/native-rebuild/prefix/lib and QT_QPA_PLATFORM=offscreen.

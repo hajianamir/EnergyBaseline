@@ -1,0 +1,47 @@
+{
+  "source_commit": "d8489365c5ff26649543959abf005c1282aab5f3",
+  "coverage_run": {
+    "tests_passed": 498,
+    "tests_failed": 0,
+    "tests_skipped": 0,
+    "elapsed_seconds": 2156.54,
+    "core_line_coverage_percent": 85.66,
+    "process_exit_code": 139,
+    "accepted_as_clean_run": false,
+    "failure": "After reporting 498 passing tests and writing coverage/JUnit, custom sandbox Qt runtime emitted QObject shared-object deletion warning and segfaulted during interpreter teardown."
+  },
+  "gui_recheck": {
+    "tests_passed": 17,
+    "elapsed_seconds": 41.03,
+    "process_exit_code": 0,
+    "log": "gui-final.txt"
+  },
+  "complete_suite_clean_exit_recheck": "Interrupted on superseded source after native failure was identified; not acceptance.",
+  "first_production_fix_full_suite": {
+    "source_commit": "6511457d16b76d8e2d1afcf908b8d9e523edffab",
+    "tests_passed": 498,
+    "tests_skipped": 0,
+    "elapsed_seconds": 713.62,
+    "process_exit_code": 139,
+    "accepted_as_clean_run": false,
+    "log": "pytest-fixed.txt"
+  },
+  "strict_gui_isolation": {
+    "source_commit": "f0a6981d10cbab5ebd4365cfbe86b5886ea1c4bb",
+    "tests_passed": 17,
+    "elapsed_seconds": 40.03,
+    "process_exit_code": 0,
+    "log": "gui-isolation.txt"
+  },
+  "final_full_suite": {
+    "source_commit": "f0a6981d10cbab5ebd4365cfbe86b5886ea1c4bb",
+    "tests_passed": 498,
+    "tests_failed": 0,
+    "tests_skipped": 0,
+    "elapsed_seconds": 646.4,
+    "process_exit_code": 0,
+    "accepted_as_clean_run": true,
+    "log": "pytest-isolation.txt",
+    "junit": "pytest-isolation.xml"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "source_manifest": "final-source-manifest.json",
+  "checked_files": 199,
+  "source_drift": [],
+  "original_tests_license_review_baseline": "git diff --exit-code HEAD -- LICENSE tests artifacts/review_baseline passed in static-checks.txt",
+  "note": "New regression modules are additional files; original tracked tests were not edited."
+}

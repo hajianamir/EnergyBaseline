@@ -28,6 +28,7 @@ from ..core.telemetry import build_system_health, build_system_sbom
 from ..db.session import db_status
 from .advanced import AdvancedDialog, AutoPanel
 from .commands import CommandRegistry
+from .artifact_approval import load_with_artifact_approval
 from .page_monitor import MonitorPage
 from .page_status import StatusPage
 from .pages_results import ResultsPage, SelectionPage
@@ -42,9 +43,20 @@ class _Emitter(QObject):
 
 
 class QtLogHandler(logging.Handler):
-    def __init__(self):
+    def __init__(self, parent: QObject | None = None):
         super().__init__()
-        self.emitter = _Emitter()
+        self.emitter = _Emitter(parent)
+
+    def close(self):
+        # Logging's global handler list must not retain Qt slots past window or
+        # QApplication destruction. close() is also called at interpreter exit.
+        if self._closed:
+            return
+        try:
+            self.emitter.message.disconnect()
+        except (RuntimeError, TypeError):
+            pass
+        super().close()
 
     def emit(self, record):
         try:
@@ -97,6 +109,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         boot_selftest = boot_selftest or {}
         self.state = state
+        self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose, True)
         self.setWindowTitle(f"EnergyBaseline {__version__} - local-first energy baseline analytics")
         scr = QApplication.primaryScreen()
         avail = scr.availableGeometry() if scr is not None else None
@@ -132,7 +145,8 @@ class MainWindow(QMainWindow):
         self.log_dock.setMinimumHeight(50)
         self.log_dock.setWidget(self.log_view)
         self.addDockWidget(Qt.DockWidgetArea.BottomDockWidgetArea, self.log_dock)
-        handler = QtLogHandler()
+        handler = QtLogHandler(self)
+        self._log_handler = handler
         handler.emitter.message.connect(self.log_view.appendPlainText)
         from ..config import setup_logging
 
@@ -166,7 +180,7 @@ class MainWindow(QMainWindow):
             sw = self.mdi.addSubWindow(w)
             sw.setWindowTitle(title)
             sw.setWindowFlags(
-                Qt.WindowType.Window
+                Qt.WindowType.SubWindow
                 | Qt.WindowType.WindowTitleHint
                 | Qt.WindowType.WindowSystemMenuHint
                 | Qt.WindowType.WindowMinimizeButtonHint
@@ -215,6 +229,20 @@ class MainWindow(QMainWindow):
             f"Rung: {boot_selftest.get('rung', 'sqlite')} \u00b7 offline, local-first"
         )
         log.info("GUI started")
+
+    def closeEvent(self, event):
+        super().closeEvent(event)
+        if event.isAccepted():
+            logging.getLogger("energybaseline").removeHandler(self._log_handler)
+            self._log_handler.close()
+            # Timers/slots must not keep an invisible widget graph alive until
+            # interpreter shutdown, when Qt's shared objects may already be gone.
+            self.analysis_page._poll_timer.stop()
+            self.status_page._timer.stop()
+            try:
+                self.state.run_changed.disconnect(self._on_run)
+            except (RuntimeError, TypeError):
+                pass
 
     # ------------------------------------------------------------------
     def log_msg(self, msg: str):
@@ -300,7 +328,7 @@ class MainWindow(QMainWindow):
             return
         r = runs[labels.index(pick)]
         try:
-            run = store.load_run(r["id"])
+            run = load_with_artifact_approval(self, lambda **approval: store.load_run(r["id"], **approval))
         except Exception as exc:
             QMessageBox.critical(self, "Load run", f"Could not load the run: {exc}")
             return

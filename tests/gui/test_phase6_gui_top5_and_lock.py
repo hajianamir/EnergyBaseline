@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 from pathlib import Path
+import hashlib
 
 import pandas as pd
-from PySide6.QtWidgets import QLabel, QMessageBox, QWidget
+from PySide6.QtWidgets import QInputDialog, QLabel, QMessageBox, QWidget
 import pytest
 
 from energybaseline.core import store
@@ -86,15 +87,24 @@ def test_gui_top5_visible_before_lock_labelled_surrogates_separated_registers_an
     assert len(sel_page.candidate_cards["Energy_kWh"]) == len(tr.shortlist)
 
     # Verify non-parametric card explicitly displays APPROXIMATE_DIAGNOSTIC_SURROGATE + Fidelity R², never "Closed-form prediction equation"
-    np_card = sel_page.candidate_cards["Energy_kWh"][-1]
+    # The real evaluator can shortlist non-parametric candidates. Verify the
+    # actual artifact metadata, not the fallback fixture's literal fidelity.
+    np_index = next(i for i, candidate in enumerate(tr.shortlist) if candidate["formula"].get("surrogate"))
+    np_card = sel_page.candidate_cards["Energy_kWh"][np_index]
     card_labels = " | ".join(lbl.text() for lbl in np_card.findChildren(QLabel))
     assert "NOT model formula" in card_labels
     assert "APPROXIMATE_DIAGNOSTIC_SURROGATE" in card_labels
-    assert "0.941" in card_labels
+    fidelity = tr.shortlist[np_index]["formula"]["surrogate"]["fidelity_r2"]
+    assert f"{fidelity:.3f}" in card_labels
 
     # 3. Selecting Rank #2 (override) WITHOUT >= 15-char engineering justification is blocked by SC-7!
     warnings_shown: list[str] = []
-    monkeypatch.setattr(QMessageBox, "warning", lambda parent, title, text: warnings_shown.append(f"{title}: {text}"))
+
+    def show_warning(parent, title, text, *buttons):
+        warnings_shown.append(f"{title}: {text}")
+        return QMessageBox.StandardButton.Yes if title == "Executable-code trust" else QMessageBox.StandardButton.No
+
+    monkeypatch.setattr(QMessageBox, "warning", show_warning)
     monkeypatch.setattr(QMessageBox, "question", lambda *args, **kwargs: QMessageBox.StandardButton.Yes)
 
     btns = sel_page.groups["Energy_kWh"].buttons()
@@ -105,10 +115,30 @@ def test_gui_top5_visible_before_lock_labelled_surrogates_separated_registers_an
     assert "Energy_kWh" not in state.locked
     assert any("SC-7" in w for w in warnings_shown)
 
-    # 4. Providing documented >= 15-char justification succeeds and locks cleanly!
+    # 4. A documented override must also honor independent artifact approval.
     sel_page.notes["Energy_kWh"].setText(
-        "Selected Rank #2 linear change-point baseline for direct utility M&V auditability."
+        "Selected Rank #2 baseline for direct utility M&V auditability after model review."
     )
+    selected_model = btns[1].property("model")
+    # This test is the trusted producer of the saved bundle. Capture its bytes
+    # independently, never trust the adjacent sidecar as a provenance source.
+    approved_digest = hashlib.sha256(store.artifact_path(rid, "Energy_kWh", selected_model).read_bytes()).hexdigest()
+    monkeypatch.setattr(store, "_issued_artifact_digests", store._issued_artifact_digests - {approved_digest})
+    monkeypatch.delenv("EB_NONINTERACTIVE", raising=False)
+    approval_prompts: list[str] = []
+    supplied_digest = "0" * 64
+
+    def enter_independent_digest(parent, title, prompt):
+        approval_prompts.append(prompt)
+        return supplied_digest, True
+
+    monkeypatch.setattr(QInputDialog, "getText", enter_independent_digest)
     sel_page.lock("Energy_kWh")
+    assert "Energy_kWh" not in state.locked
+    assert any("artifact could not be verified" in warning for warning in warnings_shown)
+    supplied_digest = approved_digest
+    sel_page.lock("Energy_kWh")
+    assert len(approval_prompts) == 2
+    assert all("independently trusted" in prompt for prompt in approval_prompts)
     assert "Energy_kWh" in state.locked
     assert sel_page.is_shortlist_visible_before_lock("Energy_kWh") is False

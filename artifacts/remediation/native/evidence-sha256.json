@@ -1,0 +1,22 @@
+{
+  "files": {
+    "bootstrap-verification.txt": "44cf78787bf5e9eb6718144a59370c13641808a19ddb6cafb053e76fde852568",
+    "dbus-build.txt": "40d4246dc07b974db05996900308022ca239bad512a56d8876e44070be17d138",
+    "expat-build.txt": "106f444e1d6d19830ad61d508f665706884d1ae6621613fecd663a0df4bed895",
+    "format-check.txt": "c0e5e25bab31b3d55ca20587ad32a798a72f9d0cca80c542239bf4d1472695fc",
+    "gl-build.txt": "e03461190c27fb85741c9c45d14e0dcb0346cc1e5eea09aad380a593d2671274",
+    "native-runtime-environment.json": "4cfefbf170eca1d6afded3c5c449388f8d62ac2481e1633ae01bf73c1f2c5b56",
+    "native-runtime-sources.json": "ba837b1f0696df3ba395733cc267dda5e808ea46abf4d094b60aa31ffc27908b",
+    "pytest-focused.txt": "962fe0282c8b713d957bc1e011934a17f3f57015eb8d43d3c874cb6157e071ad",
+    "pytest-full-exploratory-stopped.txt": "32e1403ee7bacd401c9e6c496471fb1b324ecc70c84604fa6c99b86e04b0c4d1",
+    "pytest-full.txt": "1822b04d22f8fa622937bc3bd7da7bdc7f425f4ed24eb1c70b970ccb1c422510",
+    "pytest-full.xml": "e03372d44c2194c23a80bb02ab2235b83b81eb7668b100db44376a771cfcce1c",
+    "pytest-gui-final.txt": "24bd744f3d3e5293059b15b8f3bf2ba4678da847e674075dcdb71183d95fa461",
+    "pytest-gui-final.xml": "b45eea47a60e3894232efeb4b007cc426eef41cf15154af199408191a3573c0e",
+    "pytest-gui-initial.txt": "26575afe5b3e863aa1c775fb021027557568232572c3fc7e887b505c30f859f8",
+    "source-manifest.json": "0aedc4774d48b7f615a694c3039198118e422acebcc8203ab03d38926e22a334",
+    "source-verification.json": "4d89e6ff67a84c6e29384c86449f703f79fcebced2b9a34103cf0e8487b15c98",
+    "static-checks.txt": "23812f8623f80f4f5e8f5c6e9bdbb6ee3ec1dd01e389ff7c085a05a58fe5f617",
+    "summary.json": "d9662989708cd7f89f222d22c9c5b5cd471d19680d0ce4e2c65caf69ea0192e9"
+  }
+}

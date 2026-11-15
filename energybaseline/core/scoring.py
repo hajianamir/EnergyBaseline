@@ -3,7 +3,8 @@ from __future__ import annotations
 
 import numpy as np
 
-from .auto import AutoLog
+from .auto import AutoLog, is_auto
+from .domain import resolve_domain
 from .temporal import Granularity
 
 WEIGHTS = {
@@ -25,6 +26,25 @@ CRITERIA_TEXT = {
 
 
 def thresholds(g: Granularity, auto: AutoLog) -> dict:
+    policy = resolve_domain(auto.config)
+    if policy.key != "legacy_energy":
+        # Only recognized energy calibration intervals receive built-in limits.
+        # Daily/weekly are NOT represented as ASHRAE standard thresholds.
+        energy_limits = (15.0, 5.0, 0.75) if g.tier == "monthly" and g.freq.upper() in ("M", "MS", "ME") else ((30.0, 10.0, 0.5) if g.seconds == 3600 else (None, None, None))
+        values = energy_limits if policy.energy else (None, None, None)
+        out = {}
+        for key, default in zip(("max_cvrmse", "max_nmbe", "min_r2"), values):
+            raw = auto.config.get(key)
+            if is_auto(raw):
+                out[key] = default
+                auto.note(key, default, f"domain={policy.key}, granularity={g.label}",
+                          "No universal acceptance threshold; only the selected energy policy supplies recognized calibration limits.")
+            else:
+                value = float(auto.decide(key, lambda: (default, f"domain={policy.key}", "explicit acceptance override")))
+                if not np.isfinite(value) or (key != "min_r2" and value <= 0) or (key == "min_r2" and value > 1):
+                    raise ValueError(f"Invalid acceptance limit: {key}.")
+                out[key] = value
+        return out
     def _cv():
         if g.tier in ("subdaily", "daily"):
             return 30.0, f"granularity={g.label}", "ASHRAE Guideline 14: CV(RMSE) <= 30 % for hourly/daily calibration"
@@ -48,18 +68,24 @@ def thresholds(g: Granularity, auto: AutoLog) -> dict:
 
 
 def _ratio_to_best(vals: np.ndarray, higher_better=False) -> np.ndarray:
-    v = np.nan_to_num(vals.astype(float), nan=np.nan)
-    ok = ~np.isnan(v)
+    v = vals.astype(float)
+    ok = np.isfinite(v)
     out = np.zeros(len(v))
     if not ok.any():
         return out
     if higher_better:
-        best = np.nanmax(v)
+        best = np.max(v[ok])
         out[ok] = np.clip(v[ok], 0, None) / best if best > 0 else 0
     else:
         best = np.nanmin(v[ok])
         out[ok] = np.where(v[ok] > 0, best / np.maximum(v[ok], 1e-12), 1.0) if best > 0 else 1.0 / (1.0 + v[ok])
     return np.clip(out, 0, 1)
+
+
+def ranking_key(result: dict, *, score: float | None = None) -> tuple:
+    """Shared score/name ordering, with numerical ties at 1e-10 score points."""
+    value = float(result["score"] if score is None else score)
+    return (-round(value, 10) if np.isfinite(value) else float("inf"), result["name"])
 
 
 def score_models(results: list[dict], n_obs: int, th: dict, auto: AutoLog) -> dict:
@@ -71,13 +97,21 @@ def score_models(results: list[dict], n_obs: int, th: dict, auto: AutoLog) -> di
             return "interpretable", f"n={n_obs} < 200", "small samples: favour simple, auditable equations"
         return "balanced", f"n={n_obs}", "default balanced weighting of accuracy, robustness, physics and transparency"
     prof = auto.decide("weight_profile", _wp)
-    w = WEIGHTS[prof]
+    w = dict(WEIGHTS[prof])
+    policy = resolve_domain(auto.config)
+    if ok and all(r["diagnostics"].get("inference_status") for r in ok):
+        w["diagnostics"] = 0.0
+    if not policy.energy:
+        w["ashrae"] = w["plausibility"] = 0.0
+    if th.get("max_cvrmse") is None or th.get("max_nmbe") is None:
+        w["ashrae"] = 0.0
+    w = {key: value / sum(w.values()) for key, value in w.items()}
     if not ok:
-        return {"profile": prof, "weights": w}
+        return {"schema_version": 1, "profile": prof, "weights": w, "domain_policy": policy.to_dict(), "acceptance_evaluated": any(value is not None for value in th.values())}
     M = lambda k: np.array([r["metrics"][k] for r in ok], float)  # noqa: E731
     crit: dict[str, np.ndarray] = {
         "cvrmse": _ratio_to_best(M("cvrmse")), "r2": _ratio_to_best(M("r2"), True),
-        "nmbe": np.clip(1 - np.abs(M("nmbe")) / max(th["max_nmbe"], 1e-9), 0, 1), "mae": _ratio_to_best(M("mae")),
+        "nmbe": (np.clip(1 - np.abs(M("nmbe")) / max(th["max_nmbe"], 1e-9), 0, 1) if th["max_nmbe"] is not None else _ratio_to_best(np.abs(M("nmbe")))), "mae": _ratio_to_best(M("mae")),
         "smape": _ratio_to_best(M("smape")),
         "robustness": np.clip(1 - np.array([r["robustness"] for r in ok]), 0, 1),
     }
@@ -88,7 +122,7 @@ def score_models(results: list[dict], n_obs: int, th: dict, auto: AutoLog) -> di
     crit["diagnostics"] = np.array([r["diagnostics"]["tests_passed"] / 4 for r in ok])
     crit["plausibility"] = np.array([r["plausibility"] for r in ok])
     crit["interpretability"] = np.array([1.0 - 0.2 * (r["tier"] - 1) for r in ok])
-    crit["ashrae"] = np.array([0.5 * (r["metrics"]["cvrmse"] <= th["max_cvrmse"]) + 0.5 * (abs(r["metrics"]["nmbe"]) <= th["max_nmbe"]) for r in ok])
+    crit["ashrae"] = np.array([0.5 * (th["max_cvrmse"] is not None and r["metrics"]["cvrmse"] <= th["max_cvrmse"]) + 0.5 * (th["max_nmbe"] is not None and abs(r["metrics"]["nmbe"]) <= th["max_nmbe"]) for r in ok])
     ybar = np.array([abs(r["mean_y"]) or 1.0 for r in ok])
     hw = np.array([(r["resid_q"][1] - r["resid_q"][0]) / 2 for r in ok]) / ybar
     crit["uncertainty"] = _ratio_to_best(hw)
@@ -101,24 +135,34 @@ def score_models(results: list[dict], n_obs: int, th: dict, auto: AutoLog) -> di
             cap = min(1.0, n_obs / 50.0)
         ds.append(max(0.0, cap))
     crit["data_sufficiency"] = np.array(ds)
+    crit = {key: np.clip(np.nan_to_num(values, nan=0.0, posinf=0.0, neginf=0.0), 0, 1) for key, values in crit.items()}
     for i, r in enumerate(ok):
         r["criteria"] = {c: float(v[i]) for c, v in crit.items()}
+        r["criteria_weights"] = dict(w)
         r["score"] = float(100 * sum(w[c] * r["criteria"][c] for c in w))
         m = r["metrics"]
         fails = []
-        if m["cvrmse"] > th["max_cvrmse"]:
+        for metric in ("cvrmse", "nmbe", "mae", "smape"):
+            if not np.isfinite(m[metric]):
+                fails.append(f"Non-finite validation metric: {metric}")
+        if th["min_r2"] is not None and not np.isfinite(m["r2"]):
+            fails.append("R2 acceptance cannot be evaluated: validation metric is undefined.")
+        if th["max_cvrmse"] is not None and m["cvrmse"] > th["max_cvrmse"]:
             fails.append(f"CV(RMSE) {m['cvrmse']:.1f} % > {th['max_cvrmse']:.0f} %")
-        if abs(m["nmbe"]) > th["max_nmbe"]:
+        if th["max_nmbe"] is not None and abs(m["nmbe"]) > th["max_nmbe"]:
             fails.append(f"|NMBE| {abs(m['nmbe']):.1f} % > {th['max_nmbe']:.0f} %")
-        if m["r2"] == m["r2"] and m["r2"] < th["min_r2"]:
+        if th["min_r2"] is not None and m["r2"] == m["r2"] and m["r2"] < th["min_r2"]:
             fails.append(f"R² {m['r2']:.2f} < {th['min_r2']:.2f}")
-        if r["plausibility"] < 0.5:
+        if policy.energy and r["plausibility"] < 0.5:
             fails.append("physically implausible response (" + "; ".join(r["plaus_notes"]) + ")")
         r["threshold_failures"] = fails
         r["qualified"] = not fails
-    for i, r in enumerate(sorted(ok, key=lambda r: -r["score"]), 1):
+        r["acceptance_evaluated"] = any(value is not None for value in th.values())
+        r["acceptance_status"] = ("passed" if not fails else "failed") if r["acceptance_evaluated"] else "not_assessed"
+        r["domain_policy"] = policy.key
+    for i, r in enumerate(sorted(ok, key=ranking_key), 1):
         r["rank"] = i
-    return {"profile": prof, "weights": w}
+    return {"schema_version": 1, "profile": prof, "weights": w, "domain_policy": policy.to_dict(), "acceptance_evaluated": any(value is not None for value in th.values())}
 
 
 def nn_gate(results: list[dict], n_obs: int, auto: AutoLog) -> None:
@@ -154,7 +198,7 @@ def nn_gate(results: list[dict], n_obs: int, auto: AutoLog) -> None:
 
 
 def build_shortlist(results: list[dict], top_k: int = 5) -> dict:
-    ok = sorted([r for r in results if r.get("status") == "ok"], key=lambda r: -r["score"])
+    ok = sorted([r for r in results if r.get("status") == "ok"], key=ranking_key)
     qualified = [r for r in ok if r["qualified"]]
     notice = ""
     if len(qualified) >= top_k:
@@ -164,11 +208,13 @@ def build_shortlist(results: list[dict], top_k: int = 5) -> dict:
         notice = f"Only {len(qualified)} model(s) meet the minimum acceptance thresholds; the shortlist contains the available ones."
     elif ok:
         top = ok[:1]
-        notice = ("LIMITATIONS WARNING: no model meets the acceptance thresholds (ASHRAE 14 / IPMVP). The best available model is offered "
+        notice = ("LIMITATIONS WARNING: no model meets the configured acceptance thresholds. The best available model is offered "
                   "for information only - treat baseline deviations with caution.")
     else:
         top = []
         notice = "No model could be fitted for this target."
+    if top and all(r.get("acceptance_evaluated") is False for r in top):
+        notice = "No domain acceptance limits are configured. This shortlist ranks predictive candidates; standards compliance has not been assessed."
     names = {r["name"] for r in top}
     qual_not_shortlisted: list[dict] = []
     for r in ok:
@@ -180,7 +226,7 @@ def build_shortlist(results: list[dict], top_k: int = 5) -> dict:
             r["status_final"] = "qualified_not_shortlisted"
             cut = top[-1] if top else None
             r["reason"] = (
-                f"Qualified (meets ASHRAE 14 / IPMVP thresholds) at rank #{r['rank']} (score {r['score']:.1f}); "
+                f"Eligible under the selected acceptance policy at rank #{r['rank']} (score {r['score']:.1f}); "
                 f"outside Top-{top_k} shortlist cut-off score {cut['score']:.1f} ({cut['name']})."
                 if cut
                 else "Qualified."
@@ -206,7 +252,7 @@ def build_shortlist(results: list[dict], top_k: int = 5) -> dict:
 
 
 def rationale(r: dict, top: list[dict]) -> str:
-    c = r["criteria"]
+    c = {k: v for k, v in r["criteria"].items() if r.get("criteria_weights", {}).get(k, 1) > 0}
     best = sorted(c.items(), key=lambda kv: -kv[1])[:3]
     weak = sorted(c.items(), key=lambda kv: kv[1])[:1]
     m = r["metrics"]
@@ -222,9 +268,84 @@ def decision_rationale(top: list[dict]) -> list[dict]:
     b = top[1] if len(top) > 1 else None
     rows = []
     for k, txt in CRITERIA_TEXT.items():
+        if a.get("criteria_weights", {}).get(k, 1) == 0:
+            continue
         va = a["criteria"][k]
         vb = b["criteria"][k] if b else None
         rows.append({"criterion": k, "description": txt, "winner": a["name"], "winner_score": va,
                      "runner_up": b["name"] if b else "-", "runner_up_score": vb,
                      "advantage": "winner" if (vb is None or va > vb + 1e-9) else ("runner-up" if vb > va + 1e-9 else "tie")})
     return rows
+
+
+def analyze_ranking_sensitivity(results: list[dict], weights: dict[str, float], *, seed: int = 42,
+                                perturbation: float = 0.20, draws: int = 64) -> dict:
+    """Perturb the actual production criteria/weights, not a parallel rubric.
+
+    Qualification is held fixed, exactly as in shortlist construction. Zero-weight
+    (inapplicable) domain criteria remain zero throughout all scenarios.
+    """
+    if not np.isfinite(perturbation) or not 0 <= perturbation < 1:
+        raise ValueError("perturbation must be finite and in [0, 1).")
+    if isinstance(draws, bool) or not isinstance(draws, int) or draws < 0:
+        raise ValueError("draws must be a non-negative integer.")
+    candidates = [r for r in results if r.get("status") == "ok"]
+    if not candidates:
+        raise ValueError("Sensitivity requires evaluated candidates.")
+    keys = list(weights)
+    w0 = np.asarray([weights[k] for k in keys], dtype=float)
+    if not np.isfinite(w0).all() or (w0 < 0).any() or w0.sum() <= 0:
+        raise ValueError("Ranking weights must be finite, non-negative and non-zero.")
+    w0 /= w0.sum()
+    matrix = np.asarray([[r["criteria"][k] for k in keys] for r in candidates])
+
+    if not np.isfinite(matrix).all():
+        raise ValueError("Sensitivity criteria must be finite.")
+
+    def order(w):
+        scores = 100 * (matrix @ (w / w.sum()))
+        return sorted(range(len(candidates)), key=lambda i: ranking_key(candidates[i], score=float(scores[i])))
+
+    def shortlist(ranked):
+        qualified = [i for i in ranked if candidates[i]["qualified"]]
+        return qualified[:5] if qualified else ranked[:1]
+
+    base = order(w0)
+    top = shortlist(base)
+    lo = {i: rank for rank, i in enumerate(base, 1)}
+    hi = dict(lo)
+    scenarios = []
+    for j, key in enumerate(keys):
+        if w0[j] == 0:
+            continue
+        for factor in (1 - perturbation, 1 + perturbation):
+            w = w0.copy()
+            w[j] *= factor
+            scenarios.append((key, w))
+    rng = np.random.default_rng(seed)
+    scenarios.extend((None, w0 * rng.uniform(1 - perturbation, 1 + perturbation, len(w0))) for _ in range(draws))
+    flips = 0
+    min_jaccard = 1.0
+    coordinate_flips = {key: False for key in keys}
+    for key, w in scenarios:
+        ranked = order(w)
+        selected = shortlist(ranked)
+        changed = selected[0] != top[0]
+        flips += changed
+        if key is not None:
+            coordinate_flips[key] |= changed
+        other = set(selected)
+        min_jaccard = min(min_jaccard, len(set(top) & other) / len(set(top) | other))
+        for rank, i in enumerate(ranked, 1):
+            lo[i], hi[i] = min(lo[i], rank), max(hi[i], rank)
+    return {
+        "schema_version": 1, "rubric": "production-core-ranking-v1",
+        "base_weights": {key: float(w0[i]) for i, key in enumerate(keys)},
+        "baseline_top1": candidates[top[0]]["name"],
+        "baseline_top5": [candidates[i]["name"] for i in top],
+        "perturbation_fraction": perturbation, "n_scenarios": len(scenarios),
+        "top1_flip_rate": flips / max(1, len(scenarios)), "top5_min_jaccard": min_jaccard,
+        "rank_stable": flips == 0,
+        "rank_intervals": {candidates[i]["name"]: [lo[i], hi[i]] for i in base},
+        "criterion_coordinate_flips": coordinate_flips,
+    }

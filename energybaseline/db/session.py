@@ -19,6 +19,7 @@ from ..config.runtime_env import is_in_worker_process
 
 from ..config.settings import (
     DEFAULT_SQLITE_URL,
+    external_database_required,
     ensure_dirs,
     get_base_dir_info,
     get_engine_url,
@@ -27,6 +28,7 @@ from ..config.settings import (
     set_runtime_root_override,
 )
 from ..io.paths import PathGuardError, resolve_temp_dir
+from ..config.redaction import safe_database_error
 from .backup import backup_sqlite_online, restore_sqlite_online
 from .models import AuditLog, Base, Health
 
@@ -140,7 +142,7 @@ def _probe_external_engine(
             if eng is not None:
                 with contextlib.suppress(Exception):
                     eng.dispose()
-            holder["err"] = f"{type(exc).__name__}: {exc}"
+            holder["err"] = safe_database_error(exc)
 
     worker = threading.Thread(target=_attempt, name="eb-ext-db-probe", daemon=True)
     worker.start()
@@ -160,17 +162,28 @@ def _sqlite_file_from_url(eng_url: str) -> Path | None:
     return Path(raw)
 
 
-def get_engine() -> Engine:
-    """Return the process-wide engine following the Phase 1 fallback ladder. Never raises in the UI process."""
+class ExternalDatabaseRequired(RuntimeError):
+    """The required external store is unavailable; local writes are prohibited."""
+
+
+def get_engine(*, strict_external: bool | None = None) -> Engine:
+    """Return the engine; strict mode fails before any local fallback writes."""
     _assert_not_worker()
     global _engine
+    required = external_database_required() if strict_external is None else strict_external
+    if not isinstance(required, bool):
+        raise TypeError("strict_external must be a boolean or None.")
     with _lock:
         if _engine is not None:
+            if required and _state["rung"] != "external":
+                raise ExternalDatabaseRequired("External storage is required, but a local engine is active. Fix the database configuration and restart before writing.")
             return _engine
 
         set_runtime_root_override(None)
         primary_base, primary_mode = get_base_dir_info()
         raw_url, env_was_empty = resolve_database_url()
+        if required and (env_was_empty or raw_url.startswith("sqlite")):
+            raise ExternalDatabaseRequired("External storage is required. Configure a reachable external database or explicitly disable EB_DB_STRICT to permit local storage.")
 
         external_failed = False
         external_error = ""
@@ -195,6 +208,8 @@ def get_engine() -> Engine:
                 _engine = ext_eng
                 return ext_eng
 
+            if required:
+                raise ExternalDatabaseRequired("Required external database is unavailable. Check the endpoint, driver and credentials; no local fallback was opened.")
             external_failed = True
             external_error = ext_err
             log.warning(
@@ -351,7 +366,7 @@ def checkpoint_and_close() -> dict:
                         conn.exec_driver_sql("PRAGMA wal_checkpoint(TRUNCATE)")
                     info["wal_checkpointed"] = True
                 except Exception as exc:
-                    log.warning("db.wal_checkpoint_failed error=%s", exc)
+                    log.warning("db.wal_checkpoint_failed error=%s", safe_database_error(exc))
             with contextlib.suppress(Exception):
                 _engine.dispose()
             _engine = None
@@ -393,7 +408,7 @@ def _flush_pending_audits() -> None:
                     )
                 )
     except Exception as exc:
-        log.warning("db.pending_audit_flush_failed error=%s", exc)
+        log.warning("db.pending_audit_flush_failed error=%s", safe_database_error(exc))
 
 
 def self_test() -> dict:
@@ -401,7 +416,7 @@ def self_test() -> dict:
     _assert_not_worker()
     result = {
         "ok": False,
-        "url": _state["url"],
+        "url": _state["url"] if _state["rung"] in ("temp", "memory") else mask_database_url(_state["url"]),
         "masked_url": _state["masked_url"],
         "rung": _state["rung"],
         "fallback": _state["fallback"],
@@ -420,7 +435,7 @@ def self_test() -> dict:
             result["writable"] = got is not None
             result["ok"] = got is not None
     except Exception as exc:
-        result["error"] = str(exc)
+        result["error"] = safe_database_error(exc)
     log.info("db.selftest %s", json.dumps(result))
     return result
 
@@ -450,7 +465,7 @@ def init_database(*, migration_fn: Callable[[], None] | None = None) -> dict:
             backup_manifest = backup_sqlite_online(db_file, backup_dir, reason="pre_migration")
             _state["last_backup"] = backup_manifest
         except Exception as bkp_exc:
-            log.warning("db.pre_migration_backup_failed error=%s", bkp_exc)
+            log.warning("db.pre_migration_backup_failed error=%s", safe_database_error(bkp_exc))
 
     run_mig = migration_fn
     if run_mig is None:
@@ -462,8 +477,8 @@ def init_database(*, migration_fn: Callable[[], None] | None = None) -> dict:
     try:
         run_mig()
     except Exception as mig_exc:
-        _state["migration_error"] = f"{type(mig_exc).__name__}: {mig_exc}"
-        log.warning("db.migrate_failed error=%s", mig_exc)
+        _state["migration_error"] = safe_database_error(mig_exc)
+        log.warning("db.migrate_failed error=%s", safe_database_error(mig_exc))
         if backup_manifest is not None and db_file is not None:
             try:
                 saved_rung_root = db_file.parent.parent if _state["rung"] == "temp" else None
@@ -490,12 +505,12 @@ def init_database(*, migration_fn: Callable[[], None] | None = None) -> dict:
                     )
                 )
             except Exception as restore_exc:
-                log.error("db.backup_restore_failed error=%s", restore_exc)
+                log.error("db.backup_restore_failed error=%s", safe_database_error(restore_exc))
         else:
             try:
                 Base.metadata.create_all(eng)
             except Exception as exc2:  # pragma: no cover
-                log.error("db.create_all_failed error=%s", exc2)
+                log.error("db.create_all_failed error=%s", safe_database_error(exc2))
 
     _flush_pending_audits()
     return self_test()
@@ -504,6 +519,8 @@ def init_database(*, migration_fn: Callable[[], None] | None = None) -> dict:
 def db_status() -> dict:
     get_engine()
     snap = dict(_state)
+    if snap["rung"] not in ("temp", "memory"):
+        snap["url"] = mask_database_url(str(snap.get("url", "")))
     if str(snap.get("url", "")).startswith("sqlite"):
         with contextlib.suppress(Exception):
             snap["pragmas"] = query_sqlite_pragmas(_engine)

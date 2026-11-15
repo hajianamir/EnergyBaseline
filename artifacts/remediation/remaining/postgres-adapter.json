@@ -1,0 +1,16 @@
+{
+  "evidence_schema_version": 1,
+  "backend": "PostgreSQL 16.2 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 10.2.1 20210130 (Red Hat 10.2.1-11), 64-bit",
+  "adapter": "PostgreSQL/psycopg2/SQLAlchemy",
+  "scope": "Actual disposable Linux PostgreSQL server over TCP; not a mock, hosted-service/TLS or ODBC certification.",
+  "checks": {
+    "date_values_bound_in_real_driver": true,
+    "injection_shaped_value_remains_literal": true,
+    "table_survives_bound_value": true,
+    "real_row_fetch_limit": true,
+    "connector_transaction_is_read_only": true,
+    "ast_rejects_write": true,
+    "database_rejects_write_even_without_ast": true
+  },
+  "passed": true
+}
