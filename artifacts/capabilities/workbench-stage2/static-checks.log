@@ -1,0 +1,9 @@
+Python 3.12.12
+No broken requirements found.
+All checks passed!
+124 files already formatted
+OK [guard_tests_integrity] verified 4 baseline test files
+OK [guard_web_free] clean (/home/user/EnergyBaseline/.venv/source-stage2)
+OK [guard_env_readers] clean (/home/user/EnergyBaseline/.venv/source-stage2)
+OK [guard_no_qthread_compute] clean (/home/user/EnergyBaseline/.venv/source-stage2)
+OK [gen_matrix] verified 251 requirement IDs (188 done)

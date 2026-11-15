@@ -1,0 +1,60 @@
+{
+  "input_sha256": "33755a1e249515343920589f0673c88d4fe8a4f4cdfe27bccd1d4c3534c7e94e",
+  "library_versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  },
+  "operation": "novelty-holdout",
+  "reference_sha256": null,
+  "result": {
+    "automatic_refit": false,
+    "baseline_changed": false,
+    "confusion_matrix_true_rows_predicted_columns": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        40
+      ]
+    ],
+    "first_flagged_input_positions": [
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139
+    ],
+    "flagged_rows": 40,
+    "mean_anomaly_score": 0.14587556677041902,
+    "method": "isolation_forest",
+    "position_list_truncated": true,
+    "purged_rows": 1,
+    "roc_auc": null,
+    "test_rows": 40,
+    "threshold_interpretation": "Model-specific training threshold, not a distribution-free p-value.",
+    "train_rows": 119
+  },
+  "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+  "spec_sha256": "e96ad08e39f5880b03f379ffae770013d6395f0315df1741529a700f7952fc36",
+  "version": 1
+}

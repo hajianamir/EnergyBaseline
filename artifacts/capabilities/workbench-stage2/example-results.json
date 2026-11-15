@@ -1,0 +1,130 @@
+{
+  "source_commit": "5e571cc96404cd3e9b4a70a59fab66b11fa393ad",
+  "subprocess_runs": [
+    {
+      "request": "portfolio-risk.json",
+      "exit_code": 0,
+      "output_sha256": "15afe82b8e8ebfbfda2ab1cdf7eac66e4fb80d5da83df4e04bee87ee9fb4f78c"
+    },
+    {
+      "request": "group-fairness.json",
+      "exit_code": 0,
+      "output_sha256": "94d852ea10cebf4623f41e1135a6da72e2f9594fce9a58f57dc2c001de240b86"
+    },
+    {
+      "request": "categorical-divergence.json",
+      "exit_code": 0,
+      "output_sha256": "6f2540f10773045fb885d26f56b6d1200c8e356fbafd2125b83040a8f026e7c8"
+    },
+    {
+      "request": "kaplan-meier.json",
+      "exit_code": 0,
+      "output_sha256": "47c6fb0d6ea22b3e34069fbff0a96d0d9d1647080f3bd7022b96d8f96b6226e9"
+    },
+    {
+      "request": "graph-profile.json",
+      "exit_code": 0,
+      "output_sha256": "5a373f38d219289c5cf89f1818f483f5d6bf4d06648327b509915ad13d895eab"
+    },
+    {
+      "request": "text-retrieval.json",
+      "exit_code": 0,
+      "output_sha256": "144f97e157c23b5c267996e2696b0fa6ad3f587583ebb133dd9bd1bef67c7264"
+    },
+    {
+      "request": "entity-candidates.json",
+      "exit_code": 0,
+      "output_sha256": "15f94be2a273c456aaefdfadf5ee8548a135663470b9228b114ea7d44bfb2679"
+    },
+    {
+      "request": "rating-svd.json",
+      "exit_code": 0,
+      "output_sha256": "1fde74e87d7bcfea0e6c21dd47aac6090e60f8085d8c8665782fe78cdcb72314"
+    },
+    {
+      "request": "fcfs-queue.json",
+      "exit_code": 0,
+      "output_sha256": "15bbfa8b45fa8e4ba820fadef4fd79d2edab745a6eab1bb344ebcc9d1a8b000f"
+    },
+    {
+      "request": "pareto-front.json",
+      "exit_code": 0,
+      "output_sha256": "14a34e418b4292b2c7816e551533ee08a40c05b602810a7ab827d5ab340d24a7"
+    },
+    {
+      "request": "linear-optimize.json",
+      "exit_code": 0,
+      "output_sha256": "5fad04c521b95d2888e32bb0db51c3b0edb2e8c60a381ca2fc63308e1dba95cd"
+    },
+    {
+      "request": "tabular-transform.json",
+      "exit_code": 0,
+      "output_sha256": "5edc4020dccea9e2c1202a335bcfc25c9979e612a363d1c69ab8f6bc115fcace"
+    },
+    {
+      "request": "target-encoding.json",
+      "exit_code": 0,
+      "output_sha256": "9947c95867c39e66b14da6b478619d3af7bd4b38015e256b79a6269a60dff2c5"
+    },
+    {
+      "request": "multi-target-consensus.json",
+      "exit_code": 0,
+      "output_sha256": "c8b743d5c9e7dccf8fb62bda3effcc75cb83ce57f7f507821b3bd49ef44bcd77"
+    },
+    {
+      "request": "regression-holdout.json",
+      "exit_code": 0,
+      "output_sha256": "dec19114a4e6af4409a4335e852efb1fad023bb0c1b3bba1f54fc8c838510be3"
+    },
+    {
+      "request": "forecast-median.json",
+      "exit_code": 0,
+      "output_sha256": "3f7da8bc18f23c59b965f06b56024a410b3ffb2ba5afed0b1c0c4a73def160ef"
+    },
+    {
+      "request": "forecast-last.json",
+      "exit_code": 0,
+      "output_sha256": "b758c287ea89c6f538058e7cd608ccf3beb0015b222973b8599057e4c6339670"
+    },
+    {
+      "request": "forecast-seasonal_naive.json",
+      "exit_code": 0,
+      "output_sha256": "133e8f9b7d136e1e8778dd7335fc55cf05af8cde313d407e7425f9a911ea6ee6"
+    },
+    {
+      "request": "forecast-random_walk_drift.json",
+      "exit_code": 0,
+      "output_sha256": "58aadd01ed37f4d972bda743cb0427d8548fcc142d9cdcc3160aa0a216f16a22"
+    },
+    {
+      "request": "forecast-croston_sba.json",
+      "exit_code": 0,
+      "output_sha256": "e2b9c466db1c9fadf3074752ff3455c05dd1d462df0bcdd53a135317c50bbeb5"
+    },
+    {
+      "request": "forecast-var.json",
+      "exit_code": 0,
+      "output_sha256": "dd44b0e444a5a673c603f982b27c4a44958442d0152c8455119fa8696dbc7b00"
+    },
+    {
+      "request": "forecast-vecm.json",
+      "exit_code": 0,
+      "output_sha256": "520354a25ce3de496c995c94e1eab5e20c33a2e64ad1927181a3cbf74dfed079"
+    },
+    {
+      "request": "classification-holdout.json",
+      "exit_code": 0,
+      "output_sha256": "74d9183357f9da7e8f68c3308d0263f803b47c4a085e450cdce25fea9489e839"
+    },
+    {
+      "request": "novelty-holdout.json",
+      "exit_code": 0,
+      "output_sha256": "aff47851b686633b06410202ad90e53c3960fa57cba1e64dd70ec9180f39aa5d"
+    },
+    {
+      "request": "competing-risks.json",
+      "exit_code": 0,
+      "output_sha256": "d3dfd6968ec7253cb59d0b7df66cf9230a91ee0da7510025a5b4baa26e54bad4"
+    }
+  ]
+}

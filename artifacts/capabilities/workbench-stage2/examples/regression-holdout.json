@@ -1,0 +1,66 @@
+{
+  "input_sha256": "d6884b1b5c583141af7b13a4292a272f66680a8b1e520565ecc3039f1a3cde69",
+  "library_versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  },
+  "operation": "regression-holdout",
+  "reference_sha256": null,
+  "result": {
+    "adversarial_certification": false,
+    "ale": {
+      "causal_interpretation": false,
+      "centered_effects": [
+        -5.758561671805381,
+        -1.4495347308643307,
+        0.23090566371576138,
+        1.8829808606482388,
+        5.1038309476272
+      ],
+      "counts": [
+        24,
+        24,
+        23,
+        24,
+        24
+      ],
+      "edges": [
+        -3.2894668516022474,
+        -0.9985293991545504,
+        -0.4167805959677075,
+        0.12176483225470179,
+        0.684603492957527,
+        2.2689994407027814
+      ],
+      "fit_scope": "Training predictors only",
+      "method": "First-order quantile-binned ALE, midpoint accumulation and empirical centering"
+    },
+    "baseline_changed": false,
+    "capacity": 4,
+    "estimator": "huber",
+    "inference": "No p-values, intervals or significance/causal claims.",
+    "mae": 0.007013568273699667,
+    "model_scope": "Exploratory holdout fit, not an accepted/locked baseline candidate.",
+    "purged_rows": 1,
+    "rmse": 0.009110062584246568,
+    "selected_feature_positions": [
+      0
+    ],
+    "selection": "rfe",
+    "stress": [
+      {
+        "mean_prediction_shift": 2.999998299493546,
+        "rmse": 2.9975680944253527,
+        "scenario_position": 0
+      }
+    ],
+    "test_rows": 40,
+    "train_rows": 119
+  },
+  "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+  "spec_sha256": "397bd4a074d967433ea605a4757ca41b212e4035ec90957079a7b2d5c226a5b9",
+  "version": 1
+}

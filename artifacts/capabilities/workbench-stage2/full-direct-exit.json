@@ -1,0 +1,6 @@
+{
+  "source_commit": "5e571cc96404cd3e9b4a70a59fab66b11fa393ad",
+  "pytest_process_exit_code": 0,
+  "coverage_enabled": false,
+  "wrapper_note": "Direct subprocess returncode recorded after pytest interpreter teardown; no shell pipeline can mask it."
+}

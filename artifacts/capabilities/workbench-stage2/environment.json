@@ -1,0 +1,25 @@
+{
+  "source_commit": "5e571cc96404cd3e9b4a70a59fab66b11fa393ad",
+  "python": "3.12.12 (main, Nov 15 2026, 16:37:37) [GCC 12.2.0]",
+  "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+  "openssl": "OpenSSL 3.0.20 7 Apr 2026",
+  "sqlite": "3.40.1",
+  "qt_platform": "offscreen",
+  "odbc_drivers": [
+    "SQLite3"
+  ],
+  "packages": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1",
+    "statsmodels": "0.15.0",
+    "PySide6_Essentials": "6.12.0",
+    "PySide6_Addons": "6.12.0",
+    "pytest": "9.2.0",
+    "pytest-qt": "4.5.0",
+    "ruff": "0.17.5"
+  },
+  "dependency_changes": false,
+  "runtime_note": "Genuine source-built Python 3.12.12; complete hash-locked environment. Real Qt/ODBC libraries built using repository native bootstrap scripts for this sandbox. Test-only fallback, not deployment runtime certification."
+}

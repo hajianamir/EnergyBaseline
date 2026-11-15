@@ -78,7 +78,7 @@ Stage 1 verification on source `ef78c2b6bd0e2a8b81ef7220007950337b3d73cf`: **48 
 
 ## Stage 2 executable expansion
 
-See [EXPLORATORY_WORKBENCH.md](EXPLORATORY_WORKBENCH.md) for 19 bounded offline operations, four additional integrated TCP corrections, native process-pool desktop execution, CLI/API contracts, 25 executable synthetic examples and all limits. This is a substantial but explicitly partial expansion of 22 backlog rows. Status and final-source evidence are tracked separately from Stage 1; the whole program remains incomplete.
+See [EXPLORATORY_WORKBENCH.md](EXPLORATORY_WORKBENCH.md) for 19 bounded offline operations, four additional integrated TCP corrections, native process-pool desktop execution, CLI/API contracts, 25 executable synthetic examples and all limits. This is a substantial but explicitly partial expansion of 22 backlog rows. Stage 2 is verified on source `5e571cc` with 120 focused / 28 GUI / 672 full-suite local passes, 88.51% expanded coverage and successful Windows/Linux workflow `43737625559`. Actual receipts and limitations are recorded separately from Stage 1 in `artifacts/capabilities/workbench-stage2/README.md`; the whole program remains incomplete.
 
 ## Remaining broader implementation stages (partially addressed, not complete)
 

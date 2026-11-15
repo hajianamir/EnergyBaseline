@@ -1,0 +1,32 @@
+{
+  "input_sha256": "a81a7c5839a46b154ee27fc567721eb13c3b3f283164530f8d7379479b1863eb",
+  "library_versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  },
+  "operation": "forecast-holdout",
+  "reference_sha256": null,
+  "result": {
+    "baseline_changed": false,
+    "forecast_origin": "Last training row; all holdout predictions are multi-step with no holdout updates.",
+    "mae": [
+      7.888933284624407,
+      1.5693388287309848
+    ],
+    "method": "var",
+    "p_values_or_intervals_computed": false,
+    "rmse": [
+      8.495844497430111,
+      1.939091397230309
+    ],
+    "target_count": 2,
+    "test_rows": 20,
+    "train_rows": 80
+  },
+  "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+  "spec_sha256": "33a97f2d24ca7d52d97350bcefd7a8f7dc34d2a1f3246d0b63ee77df2bb372a1",
+  "version": 1
+}

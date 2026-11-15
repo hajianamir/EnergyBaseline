@@ -72,4 +72,10 @@ Important research-driven choices: do not use sklearn TargetEncoder's generic sh
 
 Tests: `tests/test_workbench.py`, `tests/gui/test_workbench_gui.py`, plus unchanged complete regression suites. Oracles include SciPy right-censored ECDF, LP solver comparison, statsmodels multiplicity, hand-computed event schedules and fractional-tail risk. Tests also exercise every shipped example, unseen categories/cold starts, own/future-label exclusion, real Qt + distinct worker PID + no leaked process after shutdown, stale-result cancellation, path guards, sanitized errors, input immutability and unchanged accepted gate hashes.
 
-Final-source local and actual Windows/Linux results belong in the Stage 2 evidence README after completion; Stage 1 CI does not certify this code. No completion/verification claim for the entire backlog follows from these narrower operations.
+### Verified bounded Stage 2 scope
+
+Tested source `5e571cc96404cd3e9b4a70a59fab66b11fa393ad`: **120 focused tests**, **28 complete GUI-directory tests**, **39 GUI/original Phase 3 gate tests**, and **672 full-suite tests** passed locally with no failures/errors/skips. Expanded full-suite coverage is **88.51%**; the unchanged 80% gate passes, and the new workbench package is included in the CI coverage scope. Complete GUI coverage is **71.68%**, above its unchanged 56% gate.
+
+Fresh [workflow 43737625559](https://github.com/hajianamir/EnergyBaseline/actions/runs/43737625559) completed **successfully on both Windows and Linux**, including full-suite/coverage, GUI/coverage and applicable packaging/native evidence steps. Actual completed run/job API receipts, local raw logs/JUnit, 25 actual CLI subprocess outputs, source binding and an explicit hosted-log download limitation are recorded in `artifacts/capabilities/workbench-stage2/README.md`. Hosted raw logs could not be retrieved through the sandbox's restricted artifact-storage network; API success receipts are not relabeled as raw log captures. Earlier-source workflows are not substituted.
+
+This verifies the documented **bounded Stage 2 scope**, not the entire backlog, complete algorithm families, production packaging/deployment certification or automatic baseline integration. The documentation/evidence follow-up does not change tested product, tests, examples, dependencies or workflows.

@@ -41,7 +41,7 @@
       "capability": "Mean/mode/general categorical imputation APIs",
       "baseline_finding": "Not found as a general catalog",
       "baseline_evidence": "The predictor-specific policies above are not a complete arbitrary tabular imputation framework.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Mean/median/mode numeric imputation and mode categorical imputation, train-only API and job.",
       "remaining_scope": "Arbitrary target imputation is deliberately forbidden."
     },
@@ -50,7 +50,7 @@
       "capability": "Learned string normalization, fuzzy deduplication, entity resolution",
       "baseline_finding": "Not found",
       "baseline_evidence": "File ingestion and column-name handling are not these capabilities.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Reference-fitted character TF-IDF fuzzy entity candidate retrieval with explicit normalization.",
       "remaining_scope": "Automatic merging, probabilistic entity identity and learned normalization are not implemented."
     },
@@ -94,7 +94,7 @@
       "capability": "Sidak, Holm-Sidak, Hochberg, Hommel, two-stage FDR",
       "baseline_finding": "Not found",
       "baseline_evidence": "Not implied by using statsmodels elsewhere.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Sidak, Holm-Sidak, Hochberg and Hommel are added to the actual TCP/CLI/GUI correction registry.",
       "remaining_scope": "Two-stage alpha-dependent FDR remains pending."
     },
@@ -117,7 +117,7 @@
       "capability": "Financial VaR, CVaR / expected shortfall, drawdown, portfolio risk",
       "baseline_finding": "Not found",
       "baseline_evidence": "Savings uncertainty and deviation alerts are not financial risk analytics.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Empirical portfolio VaR, fractional-tail expected shortfall, covariance, volatility and initial-wealth drawdown.",
       "remaining_scope": "No forward-loss guarantee, currency conversion or production financial certification."
     },
@@ -126,7 +126,7 @@
       "capability": "Jensen-Shannon/KL divergence, categorical chi-square drift, ADWIN, DDM, EDDM",
       "baseline_finding": "Not found",
       "baseline_evidence": "Not established by the numeric drift implementation.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Categorical KL and Jensen-Shannon divergence with explicit support/smoothing and infinite-KL semantics.",
       "remaining_scope": "Chi-square inferential drift, ADWIN, DDM and EDDM remain pending."
     },
@@ -135,7 +135,7 @@
       "capability": "Demographic parity, equalized odds, disparate impact, subgroup fairness mitigation",
       "baseline_finding": "Not found",
       "baseline_evidence": "Causal group covariate balance is not algorithmic fairness.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Descriptive demographic parity, disparate impact, equalized odds, small-group suppression; optional classification holdout audit.",
       "remaining_scope": "Fairness mitigation, uncertainty and causal/legal fairness conclusions remain pending."
     },
@@ -144,7 +144,7 @@
       "capability": "General adversarial robustness / stress-testing suite",
       "baseline_finding": "Not found",
       "baseline_evidence": "Leakage canaries, validity-domain checks, plausibility and sensitivity diagnostics are narrower safeguards.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Fixed additive predictor-shock scenarios against a frozen exploratory regression model.",
       "remaining_scope": "Worst-case adversarial search/certification and general stress scenario families remain pending."
     },
@@ -153,7 +153,7 @@
       "capability": "RFE / RFECV, Boruta, sequential forward/backward selection, genetic selection",
       "baseline_finding": "Not found",
       "baseline_evidence": "Ranking or an AUTO heuristic does not implement these algorithms.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Training-only RFE and sequential forward/backward selection with inner temporal fold-local preprocessing.",
       "remaining_scope": "RFECV, Boruta and genetic selection remain pending."
     },
@@ -162,7 +162,7 @@
       "capability": "Multi-target feature consensus",
       "baseline_finding": "Partial",
       "baseline_evidence": "`models/f8_regime.py` has Kendall-W feature consensus; this is not evidence of a general multi-output consensus selector.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Training-only multi-target absolute-association Borda consensus selection.",
       "remaining_scope": "Nonlinear consensus/model-family consensus remains out of scope."
     },
@@ -171,7 +171,7 @@
       "capability": "General RobustScaler / MinMax / power transforms / learned categorical encoding / target encoding",
       "baseline_finding": "Not found as a general feature pipeline",
       "baseline_evidence": "Not implied by sklearn being installed.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Train-only RobustScaler, MinMax, power/standard transforms, one-hot categoricals, strictly past-only target encoding API/jobs.",
       "remaining_scope": "Not silently inserted into accepted baseline preprocessing."
     },
@@ -180,7 +180,7 @@
       "capability": "Feature hashing / text TF-IDF / language embeddings / image embeddings",
       "baseline_finding": "Not found",
       "baseline_evidence": "Numeric dimensionality reduction is not NLP/CV embedding support.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Offline corpus/reference-trained TF-IDF retrieval and entity candidate representations.",
       "remaining_scope": "Feature hashing, learned language/image embeddings remain pending."
     },
@@ -189,7 +189,7 @@
       "capability": "Median / last-value / seasonal-naive / random-walk baseline catalog",
       "baseline_finding": "Not found as dedicated main candidates",
       "baseline_evidence": "ETS or seasonal decomposition does not establish these separate benchmark models.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Median, last/no-drift random walk, seasonal-naive and random-walk-with-drift holdout benchmarks.",
       "remaining_scope": "Exploratory workbench only, not added as dedicated main baseline candidates."
     },
@@ -198,7 +198,7 @@
       "capability": "Huber/RANSAC robust regression, kNN regression and arbitrary standalone decision-tree regression",
       "baseline_finding": "Not found as dedicated main candidates",
       "baseline_evidence": "kNN classification in mining and trees inside ensembles are different capabilities.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Huber, RANSAC, kNN and standalone decision-tree chronological holdout regression.",
       "remaining_scope": "Exploratory workbench only, not accepted/locked main candidate lifecycle."
     },
@@ -221,7 +221,7 @@
       "capability": "VAR / VECM, TBATS / BATS, Croston intermittent demand, hierarchical reconciliation",
       "baseline_finding": "Not found",
       "baseline_evidence": "Not implied by statsmodels or decomposition capabilities.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Fixed-order VAR, declared-rank VECM and Croston-SBA holdout forecasting.",
       "remaining_scope": "TBATS/BATS and hierarchical reconciliation remain pending."
     },
@@ -237,7 +237,7 @@
       "capability": "General supervised classification product",
       "baseline_finding": "Partial, descriptive mining only",
       "baseline_evidence": "`core/mining.py` has logistic/RF/ExtraTrees/GB/SVM/kNN/NB/MLP and optional boosting regime classifiers. This does not provide arbitrary classification targets, classification lifecycle, or a fairness workbench in the main regression product.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Chronological binary logistic/RF/kNN classification with probabilities, heldout metrics and optional subgroup audit.",
       "remaining_scope": "Multiclass, persistent model lifecycle and accepted baseline integration remain pending."
     },
@@ -246,7 +246,7 @@
       "capability": "General anomaly detection",
       "baseline_finding": "Partial / integrated numeric methods",
       "baseline_evidence": "See outlier methods above and descriptive `core/mining.py`; no comprehensive anomaly model zoo.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Explicit chronological IsolationForest, novelty LOF and OneClassSVM train/holdout operations.",
       "remaining_scope": "Not a comprehensive anomaly zoo or distribution-free sequential alarm guarantee."
     },
@@ -255,7 +255,7 @@
       "capability": "Survival / Cox / AFT / Kaplan-Meier / competing risks",
       "baseline_finding": "Not found",
       "baseline_evidence": "No production survival workflow identified.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Empirical right-censored Kaplan-Meier and Aalen-Johansen competing-risk incidence with explicit event schemas.",
       "remaining_scope": "Cox/AFT, delayed entry and survival inference remain pending."
     },
@@ -264,7 +264,7 @@
       "capability": "Graph analytics / GNN / node classification / link prediction",
       "baseline_finding": "Not found",
       "baseline_evidence": "A pipeline dependency DAG is not graph machine learning.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Directed weighted PageRank, weak components and explicit-source shortest paths.",
       "remaining_scope": "GNN, node classification and link prediction remain pending."
     },
@@ -287,7 +287,7 @@
       "capability": "Recommenders / collaborative filtering / matrix factorization / ranking",
       "baseline_finding": "Not found",
       "baseline_evidence": "Model leaderboard ranking is not recommendation-system learning-to-rank.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Explicit-rating, training-prefix truncated-SVD recommendations, seen-item exclusion and cold-start-aware holdout RMSE.",
       "remaining_scope": "Implicit feedback, ranking validation, collaborative model zoo and persistent lifecycle remain pending."
     },
@@ -303,7 +303,7 @@
       "capability": "General LP/MILP, scheduling, routing, multi-objective / Pareto / evolutionary optimization",
       "baseline_finding": "Not found",
       "baseline_evidence": "Task-specific numerical minimization is not a general operations-research platform.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Finite-bound LP/MILP through actual HiGHS, independent feasibility checks and exact supplied-alternative Pareto filtering.",
       "remaining_scope": "Scheduling/routing model generators, evolutionary search and general multi-objective optimization remain pending."
     },
@@ -312,7 +312,7 @@
       "capability": "General discrete-event, agent-based, system-dynamics simulation / digital twins",
       "baseline_finding": "Not found",
       "baseline_evidence": "Bootstrap and Monte Carlo test calibration are not these simulators.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Deterministic multi-server FCFS discrete-event queue with an event-release heap and drain/queue metrics.",
       "remaining_scope": "General simulation framework, agent/system dynamics and digital twins remain pending."
     },
@@ -321,7 +321,7 @@
       "capability": "LIME, ALE, counterfactual explanations, recourse, causal explanations",
       "baseline_finding": "Not found",
       "baseline_evidence": "PDP/ICE or a surrogate does not establish these distinct explanation techniques.",
-      "current_status": "stage2_bounded_implementation_verification_pending",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "First-order training-quantile ALE and fixed additive model-sensitivity scenarios.",
       "remaining_scope": "LIME, counterfactual search, recourse and causal explanations remain pending."
     }
@@ -338,7 +338,7 @@
     "scope": "Six-axis read-only quality audit only; all other pending/partial items remain explicitly tracked."
   },
   "stage2_verification": {
-    "status": "pending_final_source_verification",
+    "status": "verified_bounded_scope",
     "operations": 19,
     "example_jobs": 25,
     "documentation": "docs/EXPLORATORY_WORKBENCH.md",
@@ -346,6 +346,18 @@
       "tests/test_workbench.py",
       "tests/gui/test_workbench_gui.py"
     ],
-    "program_complete": false
+    "program_complete": false,
+    "tested_source_commit": "5e571cc96404cd3e9b4a70a59fab66b11fa393ad",
+    "workflow": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43737625559",
+    "conclusion": "success",
+    "operating_systems": [
+      "Windows",
+      "Linux"
+    ],
+    "local_focused_tests": 120,
+    "local_full_suite_tests": 672,
+    "local_complete_gui_tests": 28,
+    "expanded_coverage_percent": 88.51,
+    "remaining_scope": "Per-row remaining_scope fields are still pending; pending rows are not implemented. No full-program completion claim."
   }
 }
