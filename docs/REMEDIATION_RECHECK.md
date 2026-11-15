@@ -1,5 +1,9 @@
 # Second-pass remediation and raw-fold evaluation
 
+> Latest results and remaining deployment limits are recorded in
+> `docs/REMEDIATION_CLOSURE_EXECUTION.md`, including actual green two-OS CI.
+> Checkpoint counts below certify their historical source snapshots only.
+
 > Subsequent implementation: see `docs/REMEDIATION_REMAINING_IMPLEMENTATION.md`, `docs/REMEDIATION_NATIVE_EXECUTION.md` and `docs/SDK_AND_EXTENSION_CONTRACTS.md`. Earlier checkpoint results apply only to their recorded source snapshots.
 
 Status: staged implementation, not release completion. This document supersedes

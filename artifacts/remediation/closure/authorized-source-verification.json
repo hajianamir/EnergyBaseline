@@ -1,0 +1,8 @@
+{
+  "manifest": "ci-followup-source-manifest.json",
+  "source_commit": "e03742be4fa7ad27e155169ad01ce15d2cc91898",
+  "files_checked": 213,
+  "source_drift": [],
+  "product_source_delta_since_full_local_run": [],
+  "original_test_exception": "tests/gui/test_phase6_gui_top5_and_lock.py only; owner approved. All other original tests, LICENSE and review baseline verified unchanged."
+}

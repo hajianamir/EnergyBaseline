@@ -1,5 +1,9 @@
 # Remaining-work implementation checkpoint
 
+> Latest closure: see `docs/REMEDIATION_CLOSURE_EXECUTION.md` for the authorized
+> test update and successful actual Windows/Linux CI. The acceptance limitations
+> and counts below describe an earlier checkpoint, not the latest source.
+
 > Later native execution and boundary fixes: see `docs/REMEDIATION_NATIVE_EXECUTION.md`.
 > The Qt missing-library limitation below is historical; genuine Linux offscreen
 > Qt now runs. Two-OS, secure-store and other release gates remain open. Results

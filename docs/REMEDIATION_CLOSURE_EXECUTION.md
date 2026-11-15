@@ -92,9 +92,46 @@ New evidence is under `artifacts/remediation/closure/`:
   E1/E2 components, not Windows/two-OS E3 or complete release acceptance.
 - `source-manifest.json` identifies 210 source/configuration files. No source drift
   was found after the product evidence generators completed.
-- Final full-suite outcome is recorded after the remaining command completes.
+- `pytest-final.txt` and `.xml`: **438 passed in 664.18 seconds**, zero errors,
+  failures or skips, on pushed commit `b7e3caa313ac14981eb51d560645c89ce6b77cfb`.
+  The authorized GUI test now passes without fabricating fidelity or bypassing
+  artifact approval.
+- The first real Windows CI run exposed two portability errors in the newly
+  added failure-injection unit fixture, not in the native DPAPI probe: mocking
+  the public keyring facade did not disable the genuine Windows provider, and
+  POSIX permission bits are not Windows ACLs. The fixture now patches the actual
+  provider boundary and only applies the POSIX mode assertion on POSIX, without
+  skipping either test. All 53 related local tests passed in 4.37 seconds.
+- Follow-up pushed commit `e03742be4fa7ad27e155169ad01ce15d2cc91898` changes only
+  that added test fixture and CI configuration; **all product Python source bytes
+  match the 438-pass local snapshot**. `ci-followup-source-manifest.json` records
+  its exact source. `static-authorized-final.txt` records 11 successful checks,
+  including all original tests except the one explicitly authorized GUI update.
+- CI now publishes native evidence JSON/hash receipts in check notices as well
+  as artifacts, because this sandbox cannot download Azure-hosted artifacts.
+  Evidence/docs-only pushes do not repeat unchanged scientific tests; product,
+  test and workflow changes still trigger CI. No test is skipped or xfailed.
+- **Corrected two-OS CI is green:** run `43685905726` completed successfully for
+  both `windows-latest` and `ubuntu-latest` on source commit
+  `e03742be4fa7ad27e155169ad01ce15d2cc91898`:
+  <https://github.com/hajianamir/EnergyBaseline/actions/runs/43685905726>.
+  `ci-final.json` records actual job/step outcomes and timings, including the
+  complete tests/coverage gate, native GUI gate, renderer/audit gates, Windows
+  packaging/runtime evidence, signing smoke, dependency audit and SBOM steps.
+- `ci-native/windows-credentials.json`, `linux-credentials.json` and
+  `linux-odbc.json` are **actual CI-produced native evidence**, all passed. They
+  were retrieved through official check notices, reconstructed byte-for-byte
+  (including Windows CRLF) and matched to the SHA-256 computed by the CI runner.
+  `ci-native-receipt-provenance.json` and `ci-*-annotations.json` bind those
+  bytes to jobs and the tested commit. This is not mocked evidence and not an
+  assertion that an inaccessible Azure artifact ZIP was downloaded.
+- Whole-job Azure-hosted logs/ZIP downloads remain inaccessible from this
+  sandbox. The official raw GitHub job/step metadata and verified native JSON
+  receipts are retained; no nonexistent download or physical-machine execution
+  is claimed. The original failed Windows run is retained separately and is not
+  presented as the successful E3 run.
 
-## Gates that local implementation cannot silently close
+## Closure decisions and remaining deployment gates
 
 1. **Authorized GUI contract correction implemented:** the owner explicitly
    allowed updating `tests/gui/test_phase6_gui_top5_and_lock.py`. It now selects
@@ -104,21 +141,30 @@ New evidence is under `artifacts/remediation/closure/`:
    the correct producer-captured digest and completing the lock. No metric,
    ranking, skip or xfail workaround is used. This corrected test and the added
    native GUI regressions passed: **5 tests in 25.82 seconds**.
-2. This machine is Linux, not Windows. The owner explicitly authorized commit
-   and push on `arena/5b0e8eef-energybaseline` for CI, without PR, main changes or
-   merge. Repository push permission was confirmed. An Actions permissions API
-   request returned HTTP 403, while workflow listing succeeded; actual push/
-   dispatch and run retrieval must be attempted and their results recorded.
-   Older remote runs cannot certify this source. The pre-authorization local
-   full run was intentionally stopped before editing the authorized test and is
-   retained as `pytest-preapproval-stopped.txt`, not an acceptance run.
-3. There is no active native Secret Service/credential-store service here. Session
-   fallback evidence is not secure-store durability evidence. Windows DPAPI and
-   other OS-backed persistence require execution on those actual OS/services.
+2. **Actual two-OS CI execution completed:** the owner explicitly authorized
+   commit and push on `arena/5b0e8eef-energybaseline`, without PR, main changes
+   or merge. Push succeeded and triggered the two-OS run documented above. The
+   initially denied Actions permissions endpoint did not prevent execution or
+   job/check-result retrieval. The pre-authorization local run was intentionally
+   stopped before editing the authorized test and remains
+   `pytest-preapproval-stopped.txt`, not an acceptance run.
+3. The local sandbox has no active native credential-store service; its new
+   native probe correctly returns a failed secure-storage gate while confirming
+   session expiry and actual disconnected-service fallback. However, authorized
+   CI run `43684840347` on source commit
+   `b7e3caa313ac14981eb51d560645c89ce6b77cfb` has now actually executed and passed
+   both the Windows DPAPI fresh-process/tamper probe and Linux Secret Service
+   fresh-process/real-bus-outage probe. Linux's native SQLite ODBC step also
+   passed. The corrected run subsequently passed both complete jobs, and all
+   three native JSON receipts were retrieved and SHA-256 verified as documented
+   above. These probes cover application-process restart, not OS reboot or
+   physical desktop checks.
 4. Real SQLite ODBC evidence narrows the previous adapter gap, but is not evidence
    for SQL Server, MySQL/MariaDB, hosted services, TLS policies or other ODBC
    drivers. Server-native policies outside SQLite currently have unit coverage
    only in this checkpoint.
-5. Additional Linux raw logs do not replace the entire original E1/E2/E3 package,
-   physical reference-machine gates, release signing or a successful coverage
-   gate. Any missing category remains open until its actual evidence exists.
+5. Both CI coverage gates passed; no unobserved numeric coverage percentage is
+   invented. The successful CI/native proofs do not certify physical reference-
+   machine performance, OS reboot recovery, production Authenticode signing or
+   every deployment adapter/TLS policy. Those distinct release/deployment claims
+   remain open until their own actual evidence exists.

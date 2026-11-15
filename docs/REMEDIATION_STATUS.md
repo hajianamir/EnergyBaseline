@@ -1,5 +1,9 @@
 # Architecture review remediation — staged implementation
 
+> Latest closure: `docs/REMEDIATION_CLOSURE_EXECUTION.md` records the authorized
+> GUI contract correction, 438-pass local run, and successful actual Windows/Linux
+> CI on `e03742be4fa7ad27e155169ad01ce15d2cc91898`. This document is historical.
+
 > Subsequent implementation: see `docs/REMEDIATION_REMAINING_IMPLEMENTATION.md`, `docs/REMEDIATION_NATIVE_EXECUTION.md` and `docs/SDK_AND_EXTENSION_CONTRACTS.md`. Earlier checkpoint results apply only to their recorded source snapshots.
 
 > Historical first checkpoint: see `docs/REMEDIATION_RECHECK.md` for the subsequent re-review, fixes, raw-fold evaluator and current remaining gates.
