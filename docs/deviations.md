@@ -53,7 +53,7 @@ This register records every known gap between the baseline commit (`2c92f2a06f6f
 
 ---
 
-## 3. Verified Python 3.11 Library API Deviations (Input to Phase 4)
+## 3. Historical Python 3.11 Library API Deviations (Input to Phase 4)
 
 Verified directly in `.venv` against `statsmodels==0.15.0` and `scipy==1.17.1` (matching baseline audit `artifacts/review_baseline/library_verification.txt`):
 
@@ -98,3 +98,7 @@ Verified directly in `.venv` against `statsmodels==0.15.0` and `scipy==1.17.1` (
 - **DEV-15 — PDF verification parser and audit spelling:** Added BSD-3-Clause `pypdf==7.1.0` with PyPI SHA-256 hashes for actual PDF text/link/metadata verification. The supplied canonical command spells the auditor's module `pip-audit`; the installed distribution provides `pip_audit`. A transparent root `pip-audit.py` alias delegates unchanged arguments and exit status to the real pinned auditor. It performs no audit substitution or suppression.
 - **DEV-16 — Archive trust and missing evidence:** Verification hashes every member, binds provenance/model/tables, reproduces tables from persisted JSON, and reads actual PDF/Excel/HTML/CSV metric outputs. ZIP traversal, duplicate members, symlinks and excessive expansion are rejected without extraction. Hashes provide integrity, not an adversarial signature or a re-execution of statistical inference. Unavailable source metrics remain null and unavailable charts remain omitted/disclosed; no report-only statistical fitting is performed.
 - Phase 7 limitations remain: optional DoWhy dependency conflict, no normative physical Win11 D2/human screenshot acceptance, no universal conformal coverage after arbitrary shifts. Project packaging/installer/signing and multi-target rollup UX remain outside this phase.
+
+## Python 3.12 migration (authorized supersession)
+
+The original S1 3.11 policy and the runner-specific 3.11 pins described above are historical. The current runtime is Python 3.12.x via `.python-version` on Windows and Ubuntu 26.04. Workflow tests retain coverage and enforce that shared version file, project range, Ruff target, direct/exact/hashed manifest agreement and an active-interpreter preflight. Native Qt Essentials/Addons avoid the WebEngine dependencies newly included by the 6.12 PySide6 metapackage. Main's proposed no-timestamp fallback is not adopted: temporal validation, granularity and gate contracts must not be silently bypassed. See `docs/PYTHON312_MIGRATION.md` for execution evidence and limits.

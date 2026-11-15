@@ -7,7 +7,7 @@ name = "energybaseline"
 version = "6.0.0.dev0"
 description = "Offline single-user Windows desktop energy-baseline analytics (Python + PySide6)."
 readme = "README.md"
-requires-python = ">=3.11,<3.12"
+requires-python = ">=3.12,<3.13"
 license = { file = "LICENSE" }
 authors = [{ name = "Amir Hajian" }]
 
@@ -15,7 +15,7 @@ authors = [{ name = "Amir Hajian" }]
 include = ["energybaseline*"]
 
 [tool.ruff]
-target-version = "py311"
+target-version = "py312"
 line-length = 120
 
 [tool.ruff.lint]

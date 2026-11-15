@@ -106,7 +106,7 @@ This sandbox runs no Windows, no Job Object, no NSIS, no Authenticode, no Window
 
 Full options, costs, rejected alternatives and consequences: `docs/DECISIONS.md`.
 
-Secondary defaults (adopted, objection window open until G0): S1 Python 3.11.9 · S2 no history rewrite ·
+Secondary defaults (adopted, objection window open until G0): S1 Python 3.12.x (authorized migration supersedes 3.11.9) · S2 no history rewrite ·
 S3 `spawn` pool with file-backed payloads · S4 `ruff` + `pyflakes` · S5 coverage 60 % now, 75 % for
 statistics/UQ modules from Phase 4 · S6 generated sample artifacts.
 

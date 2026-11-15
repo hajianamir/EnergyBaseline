@@ -14,6 +14,7 @@ from PySide6.QtCore import Qt, QTimer
 
 from ..config.runtime_env import is_interactive_ui
 from PySide6.QtWidgets import (
+    QCheckBox,
     QComboBox,
     QDialog,
     QDialogButtonBox,
@@ -66,6 +67,7 @@ from ..core.tcp import (
     FamilyDefinition,
     MultipleTestingCorrection,
     PreregistrationLockedError,
+    TEST_CATALOG_SPECS,
     TCPValidationError,
     TestConfigPanel,
     compute_impact_preview,
@@ -335,6 +337,12 @@ class SetupPage(QWidget):
         self.tcp_alpha_combo = self._combo([str(a) for a in ALPHA_PRESETS], True)
         self.tcp_alpha_combo.setCurrentText("0.05")
         self.tcp_alpha_combo.currentTextChanged.connect(self._on_tcp_controls_edited)
+        self.tcp_alpha_combo.setToolTip(
+            "Significance level α: probability threshold below which a null hypothesis "
+            "is rejected. Lower α (e.g. 0.01) reduces false positives but lowers power; "
+            "higher α (e.g. 0.10) increases power but raises false-positive risk. "
+            "Used by T1–T14 pre/post-model tests to compute adjusted p-values."
+        )
         tf.addRow("Significance alpha (0.001–0.20)", self.tcp_alpha_combo)
         self.lbl_alpha_warning = QLabel("")
         self.lbl_alpha_warning.setStyleSheet("color: #B45309; font-weight: 600;")
@@ -343,6 +351,11 @@ class SetupPage(QWidget):
         self.tcp_conf_combo = self._combo(list(CONFIDENCE_PRESETS), True)
         self.tcp_conf_combo.setCurrentText("95")
         self.tcp_conf_combo.currentTextChanged.connect(self._on_tcp_controls_edited)
+        self.tcp_conf_combo.setToolTip(
+            "Confidence level (1 − α): coverage probability for confidence/prediction intervals. "
+            "95 % means the interval contains the true value in 95 of 100 repeated samples. "
+            "Used for uncertainty bands around the baseline and for MCS/test decisions."
+        )
         tf.addRow("Confidence level (%)", self.tcp_conf_combo)
         self.tcp_corr_combo = self._combo([c.value for c in MultipleTestingCorrection])
         self.tcp_corr_combo.currentTextChanged.connect(self._on_tcp_controls_edited)
@@ -366,6 +379,35 @@ class SetupPage(QWidget):
         tbar.addWidget(self.btn_what_if)
         tbar.addWidget(self.btn_amend_tcp)
         tl.addLayout(tbar)
+
+        # Test catalog panel: user can see every T1–T14 test, its stage, gate role,
+        # and whether it is disableable. Hard-gate tests are read-only.
+        g_tc = QGroupBox("Statistical test catalog (T1–T14) — tests applied to data and baseline")
+        f_tc = QFormLayout(g_tc)
+        self.tc_checks: dict[str, QCheckBox] = {}
+        for tid, spec in sorted(TEST_CATALOG_SPECS.items()):
+            row = QHBoxLayout()
+            cb = QCheckBox(f"{tid} · {spec.name}")
+            cb.setChecked(True)
+            is_hard = spec.default_gate_role == "hard_gate"
+            if is_hard:
+                cb.setEnabled(False)
+                cb.setToolTip("Non-disableable (hard gate — always runs).")
+            else:
+                cb.setToolTip(
+                    f"Stage: {spec.stage} · family: {spec.family} · gate: {spec.default_gate_role} · "
+                    f"per-variable: {spec.per_variable}"
+                )
+            row.addWidget(cb)
+            row.addStretch(1)
+            lbl = QLabel(spec.name or "")
+            lbl.setWordWrap(True)
+            lbl.setStyleSheet("color: #667085; font-size: 11px;")
+            row.addWidget(lbl, 1)
+            f_tc.addRow(row)
+            self.tc_checks[tid] = cb
+        tl.addWidget(g_tc)
+
         self.tcp_status = QLabel("TCP status: awaiting VSG acceptance.")
         self.tcp_status.setWordWrap(True)
         tl.addWidget(self.tcp_status)
@@ -535,13 +577,18 @@ class SetupPage(QWidget):
                     it.setFlags(it.flags() | Qt.ItemFlag.ItemIsUserCheckable)
                     it.setCheckState(Qt.CheckState.Unchecked)
                     self.target_list.addItem(it)
+            # Preserve explicit target choices on reload; energy-name suggestions
+            # remain opt-in through the selected domain policy.
+            selected = set(s.targets)
             for i in range(self.target_list.count()):
-                if resolve_domain(s.effective_config(), legacy_if_missing=False).energy and any(
-                    k in self.target_list.item(i).text().lower()
-                    for k in ("kwh", "energy", "elec", "gas", "consum", "m3")
-                ):
-                    self.target_list.item(i).setCheckState(Qt.CheckState.Checked)
-                    break
+                item = self.target_list.item(i)
+                if item.text() in selected:
+                    item.setCheckState(Qt.CheckState.Checked)
+            if not self.checked_targets() and resolve_domain(s.effective_config(), legacy_if_missing=False).energy:
+                for i in range(self.target_list.count()):
+                    if any(k in self.target_list.item(i).text().lower() for k in ("kwh", "energy", "elec", "gas", "consum", "m3")):
+                        self.target_list.item(i).setCheckState(Qt.CheckState.Checked)
+                        break
             self.target_list.blockSignals(False)
             self._update_overrides_table()
         finally:
@@ -1060,6 +1107,10 @@ class SetupPage(QWidget):
             av_txt = cb_av.currentText().strip() if isinstance(cb_av, QComboBox) else Availability.ALWAYS.value
             is_heur = (src_item.text().strip() == "heuristic") if src_item else False
 
+            if nm in self.checked_targets():
+                role_txt = ColumnRole.TARGET.value
+            elif role_txt == ColumnRole.TARGET.value:
+                role_txt = ColumnRole.PREDICTOR.value
             specs.append(
                 ColumnSpec(
                     name=nm,
@@ -1271,7 +1322,12 @@ class SetupPage(QWidget):
             schema = self.build_schema_from_ui()
             s.dataset_schema = schema
             s.time_col = schema.time_column
-            s.targets = schema.target_columns
+            # Keep the user's explicit target selection from the target list;
+            # do not override it with schema-derived columns (which may be stale
+            # auto-selected values from dataset load).
+            # build_schema_from_ui derives target roles from the explicit list.
+            if set(schema.target_columns) != set(s.targets):
+                raise SchemaValidationError("Schema target roles must match the selected targets.")
             merged_units = dict(schema.units_map())
             merged_units.update(units)
             units = merged_units

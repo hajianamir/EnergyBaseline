@@ -17,9 +17,11 @@ def test_nightly_python_has_a_build_for_the_pinned_ubuntu_runner():
     job = load_workflow()["jobs"]["r-reference-nightly"]
     assert job["runs-on"] == "ubuntu-26.04"
     setup = next(step for step in job["steps"] if step.get("uses", "").startswith("actions/setup-python@"))
-    # Verified against actions/python-versions/versions-manifest.json: the x64
-    # 3.11.18 build supports Ubuntu 26.04; the old 3.11.9 build does not.
-    assert setup["with"]["python-version"] == "3.11.18"
+    # Resolve the latest available 3.12 patch for this runner, not an unsupported
+    # cross-platform patch pin. The same version file controls all workflows.
+    assert setup["with"]["python-version-file"] == ".python-version"
+    assert "python-version" not in setup["with"]
+    assert (WORKFLOW.parents[2] / ".python-version").read_text().strip() == "3.12"
 
 
 def test_nightly_first_party_actions_use_node24_generations():

@@ -201,7 +201,7 @@ WeasyPrint needs GTK/Pango, which is not advisable on a clean Windows target.
 
 | # | Topic | Adopted | Rationale |
 |---|---|---|---|
-| **S1** | Python version | Pin **3.11.9** (not 3.12/3.13) | torch/mapie/PyInstaller compatibility and stable Windows `multiprocessing`; upgrade considered in Phase 9 |
+| **S1** | Python version | **3.12.x**, `>=3.12,<3.13` (supersedes the original 3.11.9 default) | Explicitly authorized complete migration while integrating main; shared `.python-version`, regenerated locks and native two-OS CI are mandatory |
 | **S2** | Git history | **Forward deletion only**, no rewrite/force-push | Next/React files are removed from HEAD; rewriting history adds risk with no benefit |
 | **S3** | Heavy compute | `spawn` process pool with **file-backed payloads** >1 MiB | Phase 1; matches the prompt |
 | **S4** | Code quality | `ruff` (lint + format) + `pyflakes` | Fast, cheap, opinion-free |

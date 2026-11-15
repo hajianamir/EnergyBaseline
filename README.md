@@ -2,7 +2,7 @@
 
 Python-only · PySide6 · offline · no web server · no browser.
 
-Python 3.11.9 · PySide6 (native Qt GUI) · SQLite · scikit-learn / statsmodels / arch / MAPIE / XGBoost / LightGBM / CatBoost / PyTorch · ReportLab · Windows 10 22H2 / Windows 11 x64.
+Python 3.12.x · PySide6 (native Qt GUI) · SQLite · scikit-learn / statsmodels / arch / MAPIE / XGBoost / LightGBM / CatBoost / PyTorch · ReportLab · Windows 10 22H2 / Windows 11 x64.
 
 ```
 install.bat            # once: venv + hashed lock requirements + migrations + EnergyBaseline.exe + .lnk (developer step)

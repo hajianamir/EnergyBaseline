@@ -1,4 +1,4 @@
-# Direct dependencies for EnergyBaseline v6 (Python 3.11.x, Windows 10 22H2 / Windows 11 x64 + Linux CI)
+# Direct dependencies for EnergyBaseline v6 (Python 3.12.x, Windows 10 22H2 / Windows 11 x64 + Linux CI)
 alembic==1.20.1
 arch==9.0.0
 catboost==1.2.10
@@ -13,20 +13,22 @@ lightgbm==4.7.0
 mapie==1.6.0
 matplotlib==3.11.2
 mlxtend==0.25.0
-numpy==2.4.6
+numpy==2.5.4
 openpyxl==3.1.5
 optuna==5.0.0
 pandas==3.1.1
 pillow==13.0.0
 pip-audit==2.10.1
 psycopg2-binary==2.9.13
-pyarrow==24.0.0
+pyarrow==26.0.1
 pydantic==2.14.3
 pyflakes==4.1.0
 pyinstaller==6.22.3
 pymysql==1.2.4
 pyodbc==5.5.0
-PySide6==6.9.3
+# Install the native Qt components directly: the 6.12 metapackage includes a web engine.
+PySide6-Essentials==6.12.0
+PySide6-Addons==6.12.0
 pytest==9.2.0
 pytest-cov==7.1.0
 pytest-qt==4.5.0
@@ -36,13 +38,13 @@ reportlab==5.1.0
 ruff==0.17.5
 ruptures==1.1.10
 scikit-learn==1.9.1
-scipy==1.17.1
-shap==0.51.0
+scipy==1.18.1
+shap==0.54.1
 sqlalchemy==2.1.8
 sqlglot==30.31.0
 statsmodels==0.15.0
 torch==2.15.0
 umap-learn==0.6.0
-xgboost==3.2.0
+xgboost==3.4.1
 econml==0.17.0
 pypdf==7.1.0

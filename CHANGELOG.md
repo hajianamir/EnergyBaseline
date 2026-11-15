@@ -5,6 +5,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased] — Phase 1: Lifecycle & Skeleton (2026-11-12)
 
+### Changed
+- Authorized Python 3.12 migration: shared runtime declaration, synchronized project/Ruff/workflow contracts, regenerated exact/hash manifests and native Qt component dependencies; existing temporal validation remains mandatory.
+
 ### Added
 - Process-pool execution adapter (`energybaseline/core/pool.py`) running `run_analysis` inside `ProcessPoolExecutor(max_workers=min(CPU//2, tasks), mp_context="spawn")` with `multiprocessing.Queue` return channel, `> 1 MiB` SHA-256-verified `{path, sha256, rows}` file-backed payload staging under `APP_HOME/cache/`, readiness/protocol-version handshake (`30 s` cold / `10 s` warm), stage/fold/test/epoch/trial cancellation tokens, `10 s` unresponsive-worker hard-kill, `_EB_IN_WORKER=1` SQLite worker isolation guard, and Windows Job Object (`JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE`) (`P1.1`, `P1.2`).
 - Deterministic shutdown chain (`energybaseline/gui/app.py::perform_clean_shutdown`) bound to `QApplication.aboutToQuit`: `cancel -> join (5 s) -> hard stop -> WAL checkpoint -> DB close` (`P1.2`).
