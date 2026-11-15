@@ -1,0 +1,63 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___ test_checklist_immediately_refreshes_vsg_and_clears_stale_authorization ____
+
+setup_page = <energybaseline.gui.pages_setup.SetupPage(0x55a42ddbe460) at 0x7f4c054c5880>
+
+    def test_checklist_immediately_refreshes_vsg_and_clears_stale_authorization(setup_page):
+        page = setup_page
+        old_vsg = page.state.vsg
+        page.accept_and_lock_tcp()
+        assert old_vsg.is_accepted() and page.state.tcp.is_locked
+        old_runner = page.state.compliance_runner
+        calls = old_runner.engine_call_count
+        check_target(page, "output_b", True)
+>       assert_current_targets(page, ["output_a", "output_b"])
+
+tests/gui/test_vsg_target_sync.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+page = <energybaseline.gui.pages_setup.SetupPage(0x55a42ddbe460) at 0x7f4c054c5880>
+expected = ['output_a', 'output_b']
+
+    def assert_current_targets(page, expected):
+>       assert page.state.targets == expected
+E       AssertionError: assert ['output_a'] == ['output_a', 'output_b']
+E         
+E         Right contains one more item: 'output_b'
+E         Use -v to get more diff
+
+tests/gui/test_vsg_target_sync.py:55: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+2026-11-15 12:15:24,918 INFO energybaseline.gui GUI started
+2026-11-15 12:15:24,994 INFO energybaseline.auto auto.resolved target=output_a setting=vsg_max_missing_pct value=25 signals=[n=48, p=2, median_missing_pct=0.00%] rule=[maximum predictor missingness adapts to sample length (25% n<60, 40% n<1000, 50% n>=1000)]
+2026-11-15 12:15:24,994 INFO energybaseline.auto auto.resolved target=output_a setting=vsg_min_rel_variance value=1e-06 signals=[n=48, candidate_count=2] rule=[near-constant relative-variance floor scaled by sample size]
+2026-11-15 12:15:24,995 INFO energybaseline.auto auto.resolved target=output_a setting=vsg_vif_limit value=5 signals=[n=48, candidate_count=2] rule=[iterative VIF multicollinearity ceiling (5.0 for n<100, 10.0 for n>=100)]
+2026-11-15 12:15:25,004 INFO energybaseline.auto auto.derived target=output_a setting=vsg.output_b value=collinear_grouped signals=[miss=0.00%, uniq=48, r=1.000, rho=1.000, mi=1.386, vif=3393.81]
+2026-11-15 12:15:25,005 INFO energybaseline.auto auto.derived target=output_a setting=vsg.driver value=include signals=[miss=0.00%, uniq=48, r=1.000, rho=1.000, mi=1.386, vif=3393.81]
+2026-11-15 12:15:25,006 INFO energybaseline.auto auto.resolved target= setting=tcp_alpha value=0.05 signals=[n=48, est_tests=10] rule=[alpha=0.01 for large n>=2000 (guards trivial rejection), 0.10 for very small n<30, 0.05 otherwise]
+2026-11-15 12:15:25,006 INFO energybaseline.auto auto.resolved target= setting=tcp_confidence value=0.95 signals=[alpha=0.05, n=48] rule=[nominal confidence level matched to 1 - alpha (bounded to [0.80, 0.999])]
+2026-11-15 12:15:25,006 INFO energybaseline.auto auto.resolved target= setting=tcp_correction value=benjamini_yekutieli signals=[est_family_m=10, mean_abs_r=1.000] rule=[Holm FWER for small families (m<=8), BY FDR under strong dependence (|r|>=0.65), BH FDR otherwise]
+2026-11-15 12:15:25,007 INFO energybaseline.auto auto.resolved target= setting=tcp_family_definition value=per_test_family signals=[n_targets=1, est_family_m=10] rule=[group hypotheses by statistical test family for single target, per-target when multiple EnPIs compete]
+2026-11-15 12:15:25,007 INFO energybaseline.auto auto.resolved target= setting=tcp_decision_rule value=p_only signals=[n=48] rule=[require practical effect-size floor alongside p_adj<=alpha when n>=500 to prevent trivial rejections]
+2026-11-15 12:15:25,008 INFO energybaseline.auto auto.resolved target= setting=tcp_min_effect_size value=0.1443 signals=[n=48, rule=p_only] rule=[minimum standardized effect size 1/sqrt(n) clamped to [0.02, 0.20]]
+2026-11-15 12:15:25,008 INFO energybaseline.auto auto.resolved target= setting=tcp_execution_mode value=full signals=[n=48] rule=[full bootstrap/exact mode for n<=10000, fast asymptotic subsampling mode for n>10000]
+2026-11-15 12:15:25,039 INFO energybaseline.gui Dataset loaded: synthetic
+------------------------------ Captured log setup ------------------------------
+INFO     energybaseline.gui:main_window.py:231 GUI started
+INFO     energybaseline.auto:auto.py:272 auto.resolved target=output_a setting=vsg_max_missing_pct value=25 signals=[n=48, p=2, median_missing_pct=0.00%] rule=[maximum predictor missingness adapts to sample length (25% n<60, 40% n<1000, 50% n>=1000)]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target=output_a setting=vsg_min_rel_variance value=1e-06 signals=[n=48, candidate_count=2] rule=[near-constant relative-variance floor scaled by sample size]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target=output_a setting=vsg_vif_limit value=5 signals=[n=48, candidate_count=2] rule=[iterative VIF multicollinearity ceiling (5.0 for n<100, 10.0 for n>=100)]
+INFO     energybaseline.auto:auto.py:321 auto.derived target=output_a setting=vsg.output_b value=collinear_grouped signals=[miss=0.00%, uniq=48, r=1.000, rho=1.000, mi=1.386, vif=3393.81]
+INFO     energybaseline.auto:auto.py:321 auto.derived target=output_a setting=vsg.driver value=include signals=[miss=0.00%, uniq=48, r=1.000, rho=1.000, mi=1.386, vif=3393.81]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_alpha value=0.05 signals=[n=48, est_tests=10] rule=[alpha=0.01 for large n>=2000 (guards trivial rejection), 0.10 for very small n<30, 0.05 otherwise]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_confidence value=0.95 signals=[alpha=0.05, n=48] rule=[nominal confidence level matched to 1 - alpha (bounded to [0.80, 0.999])]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_correction value=benjamini_yekutieli signals=[est_family_m=10, mean_abs_r=1.000] rule=[Holm FWER for small families (m<=8), BY FDR under strong dependence (|r|>=0.65), BH FDR otherwise]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_family_definition value=per_test_family signals=[n_targets=1, est_family_m=10] rule=[group hypotheses by statistical test family for single target, per-target when multiple EnPIs compete]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_decision_rule value=p_only signals=[n=48] rule=[require practical effect-size floor alongside p_adj<=alpha when n>=500 to prevent trivial rejections]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_min_effect_size value=0.1443 signals=[n=48, rule=p_only] rule=[minimum standardized effect size 1/sqrt(n) clamped to [0.02, 0.20]]
+INFO     energybaseline.auto:auto.py:272 auto.resolved target= setting=tcp_execution_mode value=full signals=[n=48] rule=[full bootstrap/exact mode for n<=10000, fast asymptotic subsampling mode for n>10000]
+INFO     energybaseline.gui:main_window.py:249 Dataset loaded: synthetic
+=========================== short test summary info ============================
+FAILED tests/gui/test_vsg_target_sync.py::test_checklist_immediately_refreshes_vsg_and_clears_stale_authorization
+1 failed in 6.37s

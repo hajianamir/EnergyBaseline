@@ -1,0 +1,34 @@
+{
+  "baseline-reproduction": {
+    "tests": 1,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0,
+    "duration_seconds": 6.252,
+    "process_exit_code": 1
+  },
+  "target-regression": {
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "duration_seconds": 9.496,
+    "process_exit_code": 0
+  },
+  "gui": {
+    "tests": 23,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "duration_seconds": 43.057,
+    "process_exit_code": 0
+  },
+  "full-suite": {
+    "tests": 504,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "duration_seconds": 675.198,
+    "process_exit_code": 0
+  }
+}
