@@ -6,7 +6,7 @@ import numpy as np
 from scipy import optimize, special, stats
 
 from ..workbench.common import binary
-from .common import fields, integer, interval, number, real_array, vector
+from .common import preregistered_primitive, fields, integer, interval, number, real_array, vector
 
 
 def _normal_posterior(y, sigma, prior_mean, prior_sd):
@@ -24,6 +24,7 @@ def _normal_posterior(y, sigma, prior_mean, prior_sd):
     return mean, variance, log_evidence
 
 
+@preregistered_primitive
 def conjugate(frame, names, parameters, level):
     method = parameters["_method"]
     p = {k: v for k, v in parameters.items() if k != "_method"}
@@ -67,6 +68,7 @@ def conjugate(frame, names, parameters, level):
     }
 
 
+@preregistered_primitive
 def model_average(frame, names, parameters, level):
     fields(parameters, ("sigma", "models"))
     if len(names) != 1:
@@ -159,6 +161,7 @@ def _diagnostics(samples):
     return rhat, ess
 
 
+@preregistered_primitive
 def metropolis(frame, names, parameters, level):
     fields(parameters, ("sigma", "prior_mean", "prior_sd", "proposal_sd", "seed"), ("draws", "warmup", "chains"))
     X, y, mu0, sd0, precision, center = _linear(frame, names, parameters)
@@ -213,6 +216,7 @@ def metropolis(frame, names, parameters, level):
     }
 
 
+@preregistered_primitive
 def variational(frame, names, parameters, level):
     fields(parameters, ("sigma", "prior_mean", "prior_sd"), ("max_iterations",))
     X, y, mu0, sd0, precision, center = _linear(frame, names, parameters)

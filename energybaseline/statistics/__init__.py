@@ -215,7 +215,9 @@ def run_statistical_plan(plan, frame, *, vsg=None, tcp=None):
             if method in TAGGED:
                 parameters["_method"] = method
             if method in FREQUENTIST:
-                outputs = FREQUENTIST[method](frame, test["columns"], parameters, tcp.confidence_level)
+                outputs = FREQUENTIST[method](
+                    frame, test["columns"], parameters, tcp.confidence_level, plan=plan, vsg=vsg, tcp=tcp
+                )
                 for output in outputs:
                     rows.append({"id": test["id"], "method": method, **output})
             elif method in BAYESIAN:
@@ -223,7 +225,9 @@ def run_statistical_plan(plan, frame, *, vsg=None, tcp=None):
                     {
                         "id": test["id"],
                         "method": method,
-                        **BAYESIAN[method](frame, test["columns"], parameters, tcp.confidence_level),
+                        **BAYESIAN[method](
+                            frame, test["columns"], parameters, tcp.confidence_level, plan=plan, vsg=vsg, tcp=tcp
+                        ),
                     }
                 )
             else:

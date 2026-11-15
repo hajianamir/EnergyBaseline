@@ -93,3 +93,29 @@ __all__ = [
     "result",
     "vector",
 ]
+
+
+def preregistered_primitive(function):
+    """Keep the primitive registry from becoming an alternate ungated execution API."""
+    from functools import wraps
+    from ..core.vsg import ComplianceGateError
+
+    @wraps(function)
+    def guarded(frame, names, parameters, level, *, plan=None, vsg=None, tcp=None):
+        from . import BAYESIAN, FREQUENTIST, TAGGED, assert_plan_authorized
+
+        if plan is None or vsg is None or tcp is None:
+            raise ComplianceGateError("Statistical primitives require the exact authorized plan and live gates.")
+        assert_plan_authorized(plan, frame, vsg, tcp)
+        if level != tcp.confidence_level:
+            raise ComplianceGateError("Primitive confidence must match the locked TCP.")
+        for test in plan["tests"]:
+            expected = dict(test["parameters"])
+            if test["method"] in TAGGED:
+                expected["_method"] = test["method"]
+            registered = FREQUENTIST.get(test["method"], BAYESIAN.get(test["method"]))
+            if registered is guarded and test["columns"] == names and expected == parameters:
+                return function(frame, names, parameters, level)
+        raise ComplianceGateError("Primitive method, columns and parameters must match a registered plan procedure.")
+
+    return guarded

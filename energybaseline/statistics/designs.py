@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-from .common import columns, fields, grouped, integer, interval, result, vector
+from .common import preregistered_primitive, columns, fields, grouped, integer, interval, result, vector
 
 
 def _factor(series):
@@ -20,6 +20,7 @@ def _factor(series):
     return codes
 
 
+@preregistered_primitive
 def repeated_anova(frame, names, parameters, level):
     fields(parameters)
     if len(names) != 3:
@@ -52,6 +53,7 @@ def repeated_anova(frame, names, parameters, level):
     ]
 
 
+@preregistered_primitive
 def factorial(frame, names, parameters, level):
     fields(parameters)
     if len(names) != 3:
@@ -74,6 +76,7 @@ def factorial(frame, names, parameters, level):
     )
 
 
+@preregistered_primitive
 def ancova(frame, names, parameters, level):
     fields(parameters)
     if not 3 <= len(names) <= 8:
@@ -120,6 +123,7 @@ def _anova(data, formula, level, assumption):
     return rows
 
 
+@preregistered_primitive
 def manova(frame, names, parameters, level):
     fields(parameters, ("dependent_count",))
     count = integer(parameters["dependent_count"], "dependent_count", 2, 5)
@@ -150,6 +154,7 @@ def manova(frame, names, parameters, level):
     ]
 
 
+@preregistered_primitive
 def posthoc(frame, names, parameters, level):
     method = parameters["_method"]
     fields({k: v for k, v in parameters.items() if k != "_method"})

@@ -7,9 +7,22 @@ import pandas as pd
 from scipy import stats
 
 from ..workbench.common import binary
-from .common import alternative, columns, fields, grouped, integer, interval, nonconstant, number, result, vector
+from .common import (
+    preregistered_primitive,
+    alternative,
+    columns,
+    fields,
+    grouped,
+    integer,
+    interval,
+    nonconstant,
+    number,
+    result,
+    vector,
+)
 
 
+@preregistered_primitive
 def normality(frame, names, parameters, level):
     method = parameters["_method"]
     p = {k: v for k, v in parameters.items() if k != "_method"}
@@ -39,6 +52,7 @@ def normality(frame, names, parameters, level):
     return [result(fitted.statistic, fitted.pvalue, n=len(x), calibration=note)]
 
 
+@preregistered_primitive
 def location_test(frame, names, parameters, level):
     method = parameters["_method"]
     p = {k: v for k, v in parameters.items() if k != "_method"}
@@ -140,6 +154,7 @@ def location_test(frame, names, parameters, level):
     ]
 
 
+@preregistered_primitive
 def association(frame, names, parameters, level):
     method = parameters["_method"]
     p = {k: v for k, v in parameters.items() if k != "_method"}
@@ -195,6 +210,7 @@ def association(frame, names, parameters, level):
     ]
 
 
+@preregistered_primitive
 def contingency(frame, names, parameters, level):
     method = parameters["_method"]
     p = {k: v for k, v in parameters.items() if k != "_method"}

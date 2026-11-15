@@ -561,3 +561,26 @@ def test_fisher_infinite_odds_are_explicit_null_not_zero(frame):
     assert row["odds_ratio_infinite"] and not row["statistic_defined"]
     assert row["statistic"] is None and row["effect"] is None
     assert row["p_input"] == pytest.approx(stats.fisher_exact([[60, 0], [0, 60]]).pvalue)
+
+
+def test_direct_primitive_registry_cannot_bypass_exact_plan_and_live_gates(frame):
+    from energybaseline.statistics import FREQUENTIST, BAYESIAN
+
+    plan = plan_for("one_sample_t", ["y"], null=0)
+    for function in set(FREQUENTIST.values()) | set(BAYESIAN.values()):
+        with pytest.raises(ComplianceGateError):
+            function(frame, ["y"], {"null": 0, "_method": "one_sample_t"}, 0.95)
+    vsg, tcp = authorize(frame, plan)
+    function = FREQUENTIST["one_sample_t"]
+    assert function(
+        frame, ["y"], {"null": 0, "_method": "one_sample_t"}, tcp.confidence_level, plan=plan, vsg=vsg, tcp=tcp
+    )
+    for parameters in [{"null": 1, "_method": "one_sample_t"}, {"_method": "lilliefors"}]:
+        with pytest.raises(ComplianceGateError):
+            function(frame, ["y"], parameters, tcp.confidence_level, plan=plan, vsg=vsg, tcp=tcp)
+    with pytest.raises(ComplianceGateError):
+        function(frame, ["y"], {"null": 0, "_method": "one_sample_t"}, 0.8, plan=plan, vsg=vsg, tcp=tcp)
+    with pytest.raises(ComplianceGateError):
+        function(
+            frame, ["x"], {"null": 0, "_method": "one_sample_t"}, tcp.confidence_level, plan=plan, vsg=vsg, tcp=tcp
+        )
