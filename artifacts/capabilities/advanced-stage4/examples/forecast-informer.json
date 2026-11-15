@@ -1,0 +1,38 @@
+{
+  "input_sha256": "4d507566b3a64b58448391d2df5d5d70fb3fcf9f616e89333dcd79731857aa0e",
+  "library_versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  },
+  "operation": "deep-forecast",
+  "reference_sha256": null,
+  "result": {
+    "architecture": "informer",
+    "backend": "torch",
+    "backend_version": "2.15.0",
+    "baseline_changed": false,
+    "fit": {
+      "first_training_loss": 1.9190150009442681,
+      "last_training_loss": 1.2296276631420606,
+      "parameter_count": 1473,
+      "training_windows": 73,
+      "weight_sha256": "e84f29043ded41b4f701760997d58f9570488d4e8fa4272397f6d1bd3041932e"
+    },
+    "forecast_origin": "Last training row, no observed holdout feedback or future covariates",
+    "mae": 0.40992999306018313,
+    "rmse": 0.5268879241139444,
+    "search": [],
+    "selection_scope": "Inner chronological training suffix only; outer holdout never selects models",
+    "test_rows": 8,
+    "train_rows": 88,
+    "training_values_sha256": "3828478f49e30e3fcff60067f9febb05927c8549fc12ce4499b6e4b51e67a1dd",
+    "uncertainty_intervals_computed": false,
+    "variant": "Small scratch-trained reference variant; not pretrained or full research-package feature parity"
+  },
+  "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+  "spec_sha256": "6d8f2e784a655a360f2361b0b5388b2f2041a9d200954bfca87b5bb5e60df1ca",
+  "version": 1
+}

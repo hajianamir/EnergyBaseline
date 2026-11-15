@@ -226,7 +226,7 @@
       "capability": "Auto-sklearn, TPOT, H2O, FLAML, AutoGluon, NAS",
       "baseline_finding": "Not found",
       "baseline_evidence": "Optuna-backed tuning does not mean these AutoML engines are integrated.",
-      "current_status": "stage4_bounded_implementation_verification_pending",
+      "current_status": "stage4_bounded_scope_verified_cli_gui",
       "stage4_implemented_scope": "Actual Optuna TPE model-family/hyperparameter search with nested temporal preprocessing and untouched holdout; genuine scratch-trained neural architecture/width search.",
       "remaining_scope": "Auto-sklearn, TPOT, H2O, FLAML and AutoGluon are not integrated; no full external-engine or main accepted-model lifecycle claim."
     },
@@ -235,7 +235,7 @@
       "capability": "TFT, PatchTST, Informer / general Transformer forecasting",
       "baseline_finding": "Not implemented in main candidate registry",
       "baseline_evidence": "`core/models.py` explicitly records TFT and PatchTST/Informer as unavailable architectures.",
-      "current_status": "stage4_bounded_implementation_verification_pending",
+      "current_status": "stage4_bounded_scope_verified_cli_gui",
       "stage4_implemented_scope": "Separate fixed-origin reference PatchTST-style patch transformer, Informer-style sparse-query/distilled encoder-decoder and historical-only TFT-style gated-fusion jobs with real gradient training and native worker/CLI routing.",
       "remaining_scope": "Reduced reference variants, not complete research-package feature parity or the main accepted candidate registry; static/known-future TFT features and full ProbSparse complexity remain unimplemented."
     },
@@ -253,7 +253,7 @@
       "capability": "DeepAR, N-HiTS, TiDE, foundation forecasting models",
       "baseline_finding": "Not found",
       "baseline_evidence": "N-BEATS is implemented; do not extrapolate that to every deep forecasting architecture.",
-      "current_status": "stage4_bounded_implementation_verification_pending",
+      "current_status": "stage4_bounded_scope_verified_cli_gui",
       "stage4_implemented_scope": "Scratch-trained Gaussian autoregressive DeepAR, hierarchical residual/interpolated N-HiTS and residual dense TiDE reference forecasting, plus genuine architecture selection.",
       "remaining_scope": "Pretrained foundation models, global panel training and full research-package features remain pending; no calibrated forecast intervals are claimed."
     },
@@ -305,7 +305,7 @@
       "capability": "Image classification / detection / segmentation / OCR / vision models",
       "baseline_finding": "Not found",
       "baseline_evidence": "Plotting and a 1D numeric CNN are not computer vision.",
-      "current_status": "stage4_bounded_implementation_verification_pending",
+      "current_status": "stage4_bounded_scope_verified_cli_gui",
       "stage4_implemented_scope": "Actual PNG/JPEG/BMP loading, Conv2d classification, binary U-Net segmentation, learned-mask component detection and explicitly supplied printed-template OCR; native worker/CLI and privacy-bound output.",
       "remaining_scope": "Not a pretrained semantic detector/segmenter/OCR system, arbitrary-resolution vision framework, handwriting or general vision model zoo."
     },
@@ -330,7 +330,7 @@
       "capability": "General LP/MILP, scheduling, routing, multi-objective / Pareto / evolutionary optimization",
       "baseline_finding": "Not found",
       "baseline_evidence": "Task-specific numerical minimization is not a general operations-research platform.",
-      "current_status": "stage4_bounded_implementation_verification_pending",
+      "current_status": "stage4_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Finite-bound LP/MILP through actual HiGHS, independent feasibility checks and exact supplied-alternative Pareto filtering.",
       "remaining_scope": "Time windows, pickup-delivery, calendars/preemption, general objective callbacks and global Pareto optimality certification are outside the bounded implementation.",
       "stage4_implemented_scope": "Actual CVRP and job-shop MILP generators with independently checked routes/schedules; constrained NSGA-II with generated offspring and cached parent fitness, in addition to existing LP/MILP/Pareto operations."
@@ -340,7 +340,7 @@
       "capability": "General discrete-event, agent-based, system-dynamics simulation / digital twins",
       "baseline_finding": "Not found",
       "baseline_evidence": "Bootstrap and Monte Carlo test calibration are not these simulators.",
-      "current_status": "stage4_bounded_implementation_verification_pending",
+      "current_status": "stage4_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Deterministic multi-server FCFS discrete-event queue with an event-release heap and drain/queue metrics.",
       "remaining_scope": "Not an unrestricted nonlinear or user-programmed simulation framework, Mesa/SimPy adapter, calibrated epidemiology or physically certified universal digital-twin platform.",
       "stage4_implemented_scope": "Linear stock-flow DOP853 integration with conservation checks, synchronous individual graph SIR with interventions and frozen affine state-space twin calibration/holdout rollout, in addition to FCFS simulation."
@@ -418,7 +418,7 @@
     "hosted_full_suite_expanded_coverage_gates": "Passed on Windows and Linux; unchanged 60/80 percent thresholds"
   },
   "stage4": {
-    "status": "implementation_final_verification_pending",
+    "status": "verified_bounded_scope_not_program_completion",
     "documentation": "docs/ADVANCED_WORKBENCH.md",
     "evidence": "artifacts/capabilities/advanced-stage4/README.md",
     "new_operations": 12,
@@ -429,6 +429,20 @@
       "tests/gui/test_advanced_workbench_gui.py"
     ],
     "program_complete": false,
-    "remaining_scope": "All per-row exclusions and untouched pending catalog families remain incomplete; no branded backend, pretrained model or full-program completion substitution."
+    "remaining_scope": "All per-row exclusions and untouched pending catalog families remain incomplete; no branded backend, pretrained model or full-program completion substitution.",
+    "tested_source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "workflow": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43757468182",
+    "conclusion": "success",
+    "operating_systems": [
+      "Windows",
+      "Linux"
+    ],
+    "local_focused_tests": 192,
+    "local_full_suite_tests": 825,
+    "local_complete_gui_tests": 41,
+    "capability_package_coverage_percent": 88.57,
+    "gui_coverage_percent": 72.1,
+    "local_full_suite_coverage_instrumentation": false,
+    "hosted_full_suite_expanded_coverage_gates": "Passed on Windows and Linux; unchanged 60/80 percent thresholds"
   }
 }

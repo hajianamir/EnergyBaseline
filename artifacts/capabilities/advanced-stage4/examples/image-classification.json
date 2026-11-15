@@ -1,0 +1,48 @@
+{
+  "input_sha256": null,
+  "library_versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  },
+  "operation": "image-classification",
+  "reference_sha256": null,
+  "result": {
+    "accuracy": 0.5,
+    "all_image_values_sha256": "86444c9ac3f75d36e31066b262300e63650ef9d8385330ace4f87d9712c5c8f2",
+    "architecture": "Conv2d classifier",
+    "backend": "torch",
+    "baseline_changed": false,
+    "confusion_matrix": [
+      [
+        2,
+        0
+      ],
+      [
+        2,
+        0
+      ]
+    ],
+    "f1_by_class_position": [
+      0.6666666666666666,
+      0.0
+    ],
+    "first_training_loss": 0.6984901428222656,
+    "last_training_loss": 0.694948673248291,
+    "parameters": 1086,
+    "preprocessing_scope": "Training images only; caller-ordered split, no holdout tuning",
+    "pretrained_weights_used": false,
+    "raw_pixels_or_text_exported": false,
+    "source_file_sha256": null,
+    "task": "classification",
+    "test_images": 4,
+    "train_image_sha256": "ad3cd0dcd1a563bcf412b9bd286a2e55ec85f35b297572a5b9378d4589551fca",
+    "train_images": 12,
+    "trained_weight_sha256": "ac9e6bc6318413e86096c0081967fb94dd55202613d534dd74e00f1c2b0003dd"
+  },
+  "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+  "spec_sha256": "4692e1db4aca4e96d04059bed5fe43ffa794ba70c28e292e12a4838c63302f6c",
+  "version": 1
+}

@@ -47,7 +47,7 @@ Training windows contain only training-prefix observations; each target window e
 
 | Identifier | Actual implemented network | Explicit boundaries |
 |---|---|---|
-| `patchtst` | Channel-independent nonoverlapping patch projection, learned positions, transformer encoder and direct horizon head | Small reference network; no RevIN or research-package feature parity. Recent complete patches are retained for nondivisible context length. |
+| `patchtst` | Channel-independent nonoverlapping patch projection, learned positions, transformer encoder and direct horizon head | Small reference network; no RevIN or research-package feature parity. Recent complete patches are retained for nondivisible context length. The target-channel-only readout/training objective means additional channels do not influence the target forecast in this reduced variant; use the covariate-mixing Informer/TFT/TiDE variants when that is required. |
 | `informer` | Top-query sparsity scoring/updates, mean initial value context, convolution/pooling encoder distillation, masked generative decoder | Deterministic full-key query scoring is quadratic in context; **no** claimed full ProbSparse O(L log L) implementation or benchmark equivalence. |
 | `tft` | Learned variable selection, LSTM processing, gated residual normalization, temporal multihead attention and direct horizon head | Historical-only gated-fusion reference. No static-variable encoder, known-future decoder inputs, full interpretable-attention decomposition or quantile TFT feature parity. |
 | `nhits` | Multi-rate max pooling, residual backcast subtraction and interpolated hierarchical forecast knots | Three small univariate blocks, not every N-HiTS research configuration. |

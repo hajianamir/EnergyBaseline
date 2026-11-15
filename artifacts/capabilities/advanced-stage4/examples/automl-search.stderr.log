@@ -1,0 +1,5 @@
+[I 2026-11-15 20:21:15,000] A new study created in memory with name: no-name-1d79a292-b5aa-4ea3-981a-2ce769351301
+[I 2026-11-15 20:21:15,031] Trial 0 finished with value: 0.7020493882761105 and parameters: {'family': 'ridge', 'alpha': 0.12164941464151847}. Best is trial 0 with value: 0.7020493882761105.
+[I 2026-11-15 20:21:15,182] Trial 1 finished with value: 0.7626588604483236 and parameters: {'family': 'random_forest', 'depth': 8, 'min_leaf': 1}. Best is trial 0 with value: 0.7020493882761105.
+[I 2026-11-15 20:21:15,294] Trial 2 finished with value: 0.689452852675319 and parameters: {'family': 'extra_trees', 'depth': 4, 'min_leaf': 2}. Best is trial 2 with value: 0.689452852675319.
+[I 2026-11-15 20:21:15,389] Trial 3 finished with value: 0.6877415566561419 and parameters: {'family': 'hist_gradient_boosting', 'leaves': 5, 'learning_rate': 0.030710734752830243}. Best is trial 3 with value: 0.6877415566561419.
