@@ -10,6 +10,7 @@ import logging
 from pathlib import Path
 import re
 import sqlite3
+import ssl
 from urllib.parse import quote_plus
 
 import pandas as pd
@@ -237,10 +238,28 @@ def build_query(
     return QuerySpec(validate_select(rendered, dialect=dialect), tuple(sorted(params.items())))
 
 
+def _positive_integer(value, name):
+    if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
+        raise SourceError(f"{name} must be a positive integer.")
+    return value
+
+
+def _odbc_value(value, *, brace=True):
+    """Escape generated attributes; permit plain safe paths for legacy drivers."""
+    value = str(value)
+    if any(ord(c) < 32 for c in value):
+        raise SourceError("ODBC attributes cannot contain control characters.")
+    # Some legacy SQLite ODBC drivers interpret braces around Database literally.
+    # Only delimiter-free, nonempty, unpadded paths may use that compatibility form.
+    if not brace and value and value == value.strip() and not any(c in value for c in ";{}"):
+        return value
+    return "{" + value.replace("}", "}}") + "}"
+
+
 def _engine(p: ConnectionProfile, *, timeout_seconds: int = DEFAULT_QUERY_TIMEOUT_SECONDS):
     """Create a read-only database engine with explicit connection/statement timeouts (AC-06, DAT-7)."""
     d = p.driver
-    t_sec = max(1, int(timeout_seconds))
+    t_sec = _positive_integer(timeout_seconds, "timeout_seconds")
     if d == "SQLite":
         if not p.database:
             raise SourceError("SQLite: please provide the database file path.")
@@ -267,7 +286,7 @@ def _engine(p: ConnectionProfile, *, timeout_seconds: int = DEFAULT_QUERY_TIMEOU
             "write_timeout": t_sec,
         }
         if p.ssl:
-            args["ssl"] = {"ca": p.ssl_ca} if p.ssl_ca else {"check_hostname": False}
+            args["ssl"] = ssl.create_default_context(cafile=p.ssl_ca or None)
         eng = create_engine(
             URL.create(
                 "mysql+pymysql",
@@ -283,6 +302,10 @@ def _engine(p: ConnectionProfile, *, timeout_seconds: int = DEFAULT_QUERY_TIMEOU
 
         @event.listens_for(eng, "connect")
         def _set_mysql_ro(dbapi_conn, _rec):
+            # The pinned PyMySQL driver requires TLS before authentication when
+            # an explicit context is supplied. Also verify the resulting socket.
+            if p.ssl and not isinstance(dbapi_conn._sock, ssl.SSLSocket):
+                raise SourceError("MySQL did not establish the required verified TLS connection.")
             cur = dbapi_conn.cursor()
             try:
                 cur.execute("SET SESSION TRANSACTION READ ONLY")
@@ -297,7 +320,7 @@ def _engine(p: ConnectionProfile, *, timeout_seconds: int = DEFAULT_QUERY_TIMEOU
         _ = psycopg2
         args = {
             "connect_timeout": t_sec,
-            "sslmode": "require" if p.ssl else "prefer",
+            "sslmode": "verify-full" if p.ssl else "prefer",
             "options": f"-c default_transaction_read_only=on -c statement_timeout={t_sec * 1000}",
         }
         if p.ssl_ca:
@@ -319,10 +342,12 @@ def _engine(p: ConnectionProfile, *, timeout_seconds: int = DEFAULT_QUERY_TIMEOU
         import pyodbc
 
         _ = pyodbc
+        if p.ssl_ca:
+            raise SourceError("SQL Server custom CA files are unsupported. Install the CA in the OS trust store.")
         cs = (
-            f"DRIVER={{{p.odbc_driver}}};SERVER={p.host},{p.port or 1433};DATABASE={p.database};"
-            f"UID={p.username};PWD={p.password};ApplicationIntent=ReadOnly;"
-            f"Encrypt={'yes' if p.ssl else 'no'};TrustServerCertificate={'no' if p.ssl_ca else 'yes'};"
+            f"DRIVER={_odbc_value(p.odbc_driver)};SERVER={_odbc_value(f'{p.host},{p.port or 1433}')};"
+            f"DATABASE={_odbc_value(p.database)};UID={_odbc_value(p.username)};PWD={_odbc_value(p.password)};"
+            f"ApplicationIntent=ReadOnly;Encrypt={'yes' if p.ssl else 'no'};TrustServerCertificate=no;"
         )
         eng = create_engine(
             "mssql+pyodbc:///?odbc_connect=" + quote_plus(cs),
@@ -382,10 +407,15 @@ def _enforce_odbc_read_only(conn) -> str:
 def _odbc_df(p: ConnectionProfile, sql: str, *, max_rows: int, timeout_seconds: int, params: Mapping | None = None) -> pd.DataFrame:
     import pyodbc
 
+    if p.ssl or p.ssl_ca:
+        raise SourceError(
+            "Generic ODBC cannot verify the profile TLS policy. Use a native adapter or configure TLS in the driver DSN with profile TLS fields unset."
+        )
     cs = p.odbc_string or (
-        f"DRIVER={{{p.odbc_driver}}};DATABASE={p.database};UID={p.username};PWD={p.password};ApplicationIntent=ReadOnly"
+        f"DRIVER={_odbc_value(p.odbc_driver)};DATABASE={_odbc_value(p.database, brace=False)};"
+        f"UID={_odbc_value(p.username)};PWD={_odbc_value(p.password)};ApplicationIntent=ReadOnly"
     )
-    t_sec = max(1, int(timeout_seconds))
+    t_sec = _positive_integer(timeout_seconds, "timeout_seconds")
     conn = pyodbc.connect(cs, timeout=t_sec, readonly=True)
     try:
         conn.timeout = t_sec
@@ -444,10 +474,8 @@ def run_query(
     params: Mapping | None = None,
 ) -> pd.DataFrame:
     """Validate ``sql`` via ``sqlglot`` AST and execute in read-only mode bounded by ``max_rows`` and ``timeout_seconds``."""
-    if max_rows <= 0:
-        raise SourceError("max_rows must be a positive integer.")
-    if timeout_seconds <= 0:
-        raise SourceError("timeout_seconds must be a positive integer.")
+    _positive_integer(max_rows, "max_rows")
+    _positive_integer(timeout_seconds, "timeout_seconds")
     dialect = _DRIVER_TO_DIALECT.get(p.driver)
     if isinstance(sql, QuerySpec):
         if params is not None:

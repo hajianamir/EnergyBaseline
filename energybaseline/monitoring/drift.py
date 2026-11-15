@@ -90,7 +90,9 @@ def run_drift_monitor(
     nominal=0.95,
 ):
     """Inference requires the real, accepted VSG/TCP configuration (PIPE-1)."""
-    tcp.assert_accepted()
+    from ..core.authorization import assert_locked_inference
+
+    assert_locked_inference(tcp)
     if set(reference_drivers) != set(current_drivers):
         raise ValueError("Driver columns must match")
     cov = {k: covariate_drift(reference_drivers[k], current_drivers[k]) for k in reference_drivers}

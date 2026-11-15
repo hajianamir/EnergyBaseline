@@ -17,7 +17,7 @@ def analyze(df, time_col, targets, config=None, *, domain_pack="neutral", **kwar
     """
     from .contracts import AnalysisRequest
 
-    request = AnalysisRequest(time_col, targets, domain_pack, config or {})
+    request = AnalysisRequest(time_col, targets, domain_pack, {} if config is None else config)
     missing = {request.time_col, *request.targets} - set(df.columns)
     if missing:
         raise ValueError("Requested columns are absent: " + ", ".join(sorted(missing)))

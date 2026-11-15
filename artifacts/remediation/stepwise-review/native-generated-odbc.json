@@ -1,0 +1,14 @@
+{
+  "adapter": "pyodbc/unixODBC/SQLite3",
+  "checks": {
+    "bound_value_is_literal": true,
+    "bounded_fetch": true,
+    "generated_profile_connects": true,
+    "source_table_preserved": true
+  },
+  "mocked": false,
+  "native_runtime": true,
+  "passed": true,
+  "pyodbc_version": "5.5.0",
+  "scope": "Generated local SQLite ODBC profiles only; not remote-backend or TLS certification"
+}

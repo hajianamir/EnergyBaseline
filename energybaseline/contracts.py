@@ -55,6 +55,8 @@ class AnalysisRequest:
         allowed = {"schema_version", "time_col", "targets", "domain_pack", "config"}
         if set(payload) - allowed:
             raise ValueError("Unknown analysis request fields.")
+        if not {"time_col", "targets"} <= set(payload):
+            raise ValueError("Both time_col and targets are required.")
         return cls(**payload)
 
     def to_dict(self):

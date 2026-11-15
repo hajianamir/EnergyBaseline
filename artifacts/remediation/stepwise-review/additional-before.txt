@@ -1,0 +1,17 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_________ test_excel_rejects_oversized_text_before_openpyxl_truncation _________
+tests/gates/test_stepwise_review_regressions.py:220: in test_excel_rejects_oversized_text_before_openpyxl_truncation
+    with pytest.raises(ValueError, match="storage limit"):
+E   Failed: DID NOT RAISE ValueError
+__________ test_html_agreement_supports_all_valid_metric_artifact_ids __________
+tests/gates/test_stepwise_review_regressions.py:233: in test_html_agreement_supports_all_valid_metric_artifact_ids
+    assert verify_metric_agreement(model, html_metrics(render_html(model, depth="executive")))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+energybaseline/report/agreement.py:31: in verify_metric_agreement
+    raise ValueError("Renderer metric membership mismatch")
+E   ValueError: Renderer metric membership mismatch
+=========================== short test summary info ============================
+FAILED tests/gates/test_stepwise_review_regressions.py::test_excel_rejects_oversized_text_before_openpyxl_truncation
+FAILED tests/gates/test_stepwise_review_regressions.py::test_html_agreement_supports_all_valid_metric_artifact_ids
+2 failed, 48 deselected in 8.27s

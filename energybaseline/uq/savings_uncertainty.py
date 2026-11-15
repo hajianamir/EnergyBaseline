@@ -15,8 +15,8 @@ def savings_uncertainty(
 ):
     s, r = vector(savings), vector(calibration_residuals, minimum=5)
     level = confidence(level)
-    if measurement_sd < 0 or static_factor_sd < 0:
-        raise ValueError("Standard uncertainties cannot be negative")
+    if not all(np.isfinite(v) and v >= 0 for v in (measurement_sd, static_factor_sd)):
+        raise ValueError("Standard uncertainties must be finite and nonnegative")
     n, m = len(s), len(r)
     lag = min(m - 1, n - 1, max(1, int(m ** (1 / 3))) if maxlags is None else int(maxlags))
     if lag < 0:

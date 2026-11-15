@@ -42,8 +42,17 @@ def html_metrics(source):
     from html import unescape
 
     text = source.decode("utf-8") if isinstance(source, bytes) else source
-    matches = re.findall(r"<tr><td>(metric\.[^<]+)</td><td>[^<]*</td><td>([^<]+)</td>", text)
-    return {unescape(aid): None if value == "Unavailable" else float(value) for aid, value in matches}
+    # Only the key-metric table is authoritative; section tables can repeat IDs.
+    table = re.search(r"<h2>Key Metrics</h2><table>(.*?)</table>", text, re.S)
+    if table is None:
+        raise ValueError("HTML key-metric table is missing")
+    matches = re.findall(
+        r"<tr><td>([A-Za-z][A-Za-z0-9_.-]*)</td><td>[^<]*</td><td>([^<]+)</td><td>[^<]*</td></tr>",
+        table.group(1),
+    )
+    if len({aid for aid, _ in matches}) != len(matches):
+        raise ValueError("Duplicate HTML metric ID")
+    return {aid: None if value == "Unavailable" else float(unescape(value)) for aid, value in matches}
 
 
 def csv_metrics(source):

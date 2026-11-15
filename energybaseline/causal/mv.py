@@ -60,7 +60,9 @@ def run_causal_mv(outcome, covariates, treatment, post, time, *, tcp, level=0.95
     Outcome contrasts are reported only if balance, pre-trends and overlap pass.
     Kernel weights are diagnostics rather than an undisclosed change of estimand.
     """
-    tcp.assert_accepted()
+    from ..core.authorization import assert_locked_inference
+
+    assert_locked_inference(tcp)
     level = confidence(level)
     y = vector(outcome, minimum=40)
     X = np.asarray(covariates, dtype=float)
@@ -139,7 +141,9 @@ def run_causal_mv(outcome, covariates, treatment, post, time, *, tcp, level=0.95
 
 def optional_backend_effect(data, *, treatment, outcome, common_causes, tcp, backend="dowhy", seed=42):
     """Real optional DoWhy/EconML adapters with refutation; absent dependencies skip."""
-    tcp.assert_accepted()
+    from ..core.authorization import assert_locked_inference
+
+    assert_locked_inference(tcp)
     if backend not in ("dowhy", "econml"):
         raise ValueError("Unknown causal backend")
     try:

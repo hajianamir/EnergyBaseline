@@ -230,7 +230,15 @@ def detect_csv_dialect(
     encoding: str | None = None,
 ) -> tuple[str, str]:
     """Detect ``(delimiter, decimal_char)`` from header and data lines without loading the entire file."""
-    if isinstance(sample_text, Path) or (isinstance(sample_text, str) and "\n" not in sample_text and Path(sample_text).is_file()):
+    is_path = isinstance(sample_text, Path)
+    if isinstance(sample_text, str) and "\n" not in sample_text:
+        try:
+            is_path = Path(sample_text).is_file()
+        except (OSError, ValueError):
+            # Single-line CSV contents may exceed filesystem filename limits or
+            # contain NUL characters. Only explicit Path inputs require a file.
+            is_path = False
+    if is_path:
         p = Path(sample_text)
         ext = p.suffix.lower() or ext
         enc = encoding or detect_text_encoding(p)
