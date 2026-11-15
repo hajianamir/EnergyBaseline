@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "time": "time",
+  "targets": [
+    "x",
+    "y",
+    "z",
+    "y2",
+    "a",
+    "b",
+    "c"
+  ],
+  "metadata": [
+    "group",
+    "factor",
+    "subject",
+    "condition"
+  ],
+  "sampling": "independent",
+  "assumption_justification": "Synthetic independent normal observations and independent subjects; explicit demonstration only, not a real-data assumption certificate.",
+  "correction": "tcp",
+  "tests": [
+    {
+      "id": "H1beta-binomial",
+      "method": "beta_binomial",
+      "columns": [
+        "a"
+      ],
+      "parameters": {
+        "prior_alpha": 2,
+        "prior_beta": 3,
+        "threshold": 0.5
+      }
+    },
+    {
+      "id": "H1normal-mean",
+      "method": "normal_mean",
+      "columns": [
+        "y"
+      ],
+      "parameters": {
+        "sigma": 2,
+        "prior_mean": 0,
+        "prior_sd": 3,
+        "threshold": 0
+      }
+    },
+    {
+      "id": "H1normal-model-average",
+      "method": "normal_model_average",
+      "columns": [
+        "y"
+      ],
+      "parameters": {
+        "sigma": 2,
+        "models": [
+          {
+            "prior_mean": 0,
+            "prior_sd": 1,
+            "weight": 0.3
+          },
+          {
+            "prior_mean": 2,
+            "prior_sd": 2,
+            "weight": 0.7
+          }
+        ]
+      }
+    },
+    {
+      "id": "H2linear-metropolis",
+      "method": "linear_metropolis",
+      "columns": [
+        "y",
+        "x"
+      ],
+      "parameters": {
+        "sigma": 1,
+        "prior_mean": [
+          0,
+          0
+        ],
+        "prior_sd": [
+          3,
+          3
+        ],
+        "proposal_sd": [
+          0.12,
+          0.12
+        ],
+        "draws": 2000,
+        "warmup": 1000,
+        "chains": 4,
+        "seed": 10
+      }
+    },
+    {
+      "id": "H2linear-variational",
+      "method": "linear_variational",
+      "columns": [
+        "y",
+        "x"
+      ],
+      "parameters": {
+        "sigma": 1,
+        "prior_mean": [
+          0,
+          0
+        ],
+        "prior_sd": [
+          3,
+          3
+        ]
+      }
+    }
+  ]
+}

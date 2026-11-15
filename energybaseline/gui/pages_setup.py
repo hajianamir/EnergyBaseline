@@ -456,6 +456,10 @@ class SetupPage(QWidget):
         self.workbench_panel = WorkbenchPanel(self.state)
         self.left_tabs.addTab(self.workbench_panel, "Exploratory Workbench")
 
+        from .statistics import StatisticalPlanPanel
+        self.statistics_panel = StatisticalPlanPanel(self.state)
+        self.left_tabs.addTab(self.statistics_panel, "Preregistered Statistics")
+
         split.addWidget(self.left_tabs)
 
         # Right column: roles + temporal + outlier policy

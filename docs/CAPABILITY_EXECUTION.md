@@ -89,3 +89,8 @@ See [EXPLORATORY_WORKBENCH.md](EXPLORATORY_WORKBENCH.md) for 19 bounded offline 
 5. **Operations research, simulation and larger AutoML engines:** explicit decision variables, constraints, objective/feasibility checks, deterministic simulation scenarios and backend/license/resource contracts. Availability of `scipy.optimize.milp` or Optuna is not integration of every scheduler/simulator/AutoML system.
 
 All stages remain subject to unchanged Python 3.12/hash-lock, privacy, web-free/native UI, VSG/TCP, input binding, no-target-imputation, in-fold leakage, immutable baseline, ReportModel-only renderer and real Windows/Linux evidence requirements. This roadmap does not assert that the remaining capabilities are already executable.
+
+
+## Stage 3 preregistered statistics and business policies
+
+See [PREREGISTERED_STATISTICS.md](PREREGISTERED_STATISTICS.md) for 27 gated statistical method identifiers, exact-plan TCP registration, native spawn-worker/CLI execution and composable business-validation assertions. Bounded additions address C003/C005 and C008–C015 without claiming every possible design/backend or completing other pending rows. Final-source execution and actual Windows/Linux status are recorded in `artifacts/capabilities/statistics-stage3/README.md`; earlier-stage CI is not substituted for Stage 3.

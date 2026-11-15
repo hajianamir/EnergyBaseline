@@ -400,6 +400,7 @@ class TestConfigPanel:
         self._accepted: bool = False
         self._locked: bool = False
         self._preregistration_sha256: str = ""
+        self._extension_plan_hashes: tuple[str, ...] = ()
         self.warnings: list[dict[str, str]] = []
 
         # Empirical signals from dataset & VSG for AUTO resolutions (never hidden constants)
@@ -1052,6 +1053,27 @@ class TestConfigPanel:
             reason=reason.strip(),
         )
 
+    @property
+    def extension_plan_hashes(self) -> tuple[str, ...]:
+        """Only digests are retained; plan literals and observations are not persisted here."""
+        return tuple(getattr(self, "_extension_plan_hashes", ()))
+
+    def register_extension_plan(self, plan: Mapping[str, Any]) -> str:
+        """Register an exact statistical plan before acceptance/lock; never execute it."""
+        self._ensure_mutable()
+        from ..statistics import validate_plan
+
+        fingerprint = validate_plan(plan)
+        self._extension_plan_hashes = tuple(sorted(set(self.extension_plan_hashes) | {fingerprint}))
+        self._accepted = False
+        self.provenance.record_stage(
+            stage_name="statistical_plan_registered",
+            payload={"plan_sha256": fingerprint},
+            upstream_stage_sha256=self.vsg.vsg_sha256,
+            phase=self._phase,
+        )
+        return fingerprint
+
     def canonical_spec_dict(self) -> dict[str, Any]:
         scope_serializable = {
             f"{t}:{v}:{f}": flag for (t, v, f), flag in sorted(self._scope_overrides.items())
@@ -1070,6 +1092,7 @@ class TestConfigPanel:
             "min_effect_size": self.min_effect_size,
             "phase": self._phase,
             "scope_overrides": scope_serializable,
+            **({"extension_plan_hashes": list(self.extension_plan_hashes)} if self.extension_plan_hashes else {}),
             "test_panels": {tid: self.test_panels[tid].to_dict() for tid in sorted(self.test_panels)},
             "vsg_sha256": self.vsg.vsg_sha256,
         }

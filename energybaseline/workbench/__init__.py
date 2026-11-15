@@ -15,6 +15,7 @@ import pandas as pd
 from numpy.linalg import LinAlgError
 
 from .analytics import categorical_divergence, group_fairness, portfolio_risk
+from .business import business_validation
 from .common import digest, fields, finite_json
 from .domains import competing_risks, graph_profile, rating_recommendations, survival_curve, text_retrieval
 from .entities import entity_candidates
@@ -45,7 +46,7 @@ OPERATIONS = MappingProxyType(
         "regression-holdout": regression_holdout,
     }
 )
-OPERATION_NAMES = tuple(OPERATIONS) + ("categorical-divergence", "entity-candidates", "linear-optimize")
+OPERATION_NAMES = tuple(OPERATIONS) + ("categorical-divergence", "entity-candidates", "business-validation", "linear-optimize")
 
 
 def _validate_frame(frame):
@@ -91,14 +92,17 @@ def run_workbench(request, frame=None, *, reference=None):
         _validate_frame(frame)
         data_hash = sha256_dataframe(frame)
         reference_hash = None
-        if operation in ("categorical-divergence", "entity-candidates"):
-            _validate_frame(reference)
-            reference_hash = sha256_dataframe(reference)
+        if operation in ("categorical-divergence", "entity-candidates", "business-validation"):
+            if reference is not None or operation != "business-validation":
+                _validate_frame(reference)
+                reference_hash = sha256_dataframe(reference)
         elif reference is not None:
-            raise ValueError("Reference data are supported only for categorical-divergence and entity-candidates.")
+            raise ValueError("Reference data are supported only for categorical-divergence, entity-candidates and business-validation.")
     try:
         if operation == "linear-optimize":
             result = optimize(request["parameters"])
+        elif operation == "business-validation":
+            result = business_validation(frame, reference, request["parameters"])
         elif operation in ("categorical-divergence", "entity-candidates"):
             handler = categorical_divergence if operation == "categorical-divergence" else entity_candidates
             result = handler(frame, reference, request["parameters"])

@@ -27,6 +27,7 @@ class WorkbenchPanel(QWidget):
             "Exploratory tools only. No hypothesis tests, baseline acceptance, refitting or model persistence. "
             "Load a version-1 job from examples/workbench; inputs use the current raw dataset."
         )
+        self.notice = notice
         notice.setWordWrap(True)
         layout.addWidget(notice)
         buttons = QHBoxLayout()

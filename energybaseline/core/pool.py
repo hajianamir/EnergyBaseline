@@ -542,12 +542,34 @@ def _cmd_worker_workbench(payload: dict[str, Any]) -> dict[str, Any]:
     return {"job_id": job_id, "status": "completed", "pid": os.getpid()}
 
 
+def _cmd_worker_statistical_plan(payload: dict[str, Any]) -> dict[str, Any]:
+    """Use actual accepted gate objects from trusted internal IPC, never boolean credentials."""
+    from ..statistics import run_statistical_plan
+
+    job_id = str(payload["job_id"])
+    cache_dir = Path(payload["cache_dir"]).resolve()
+    token = CancelToken(cancel_file=Path(payload["cancel_file"]), global_event=_WORKER_CANCEL_EVENT,
+                        queue=_WORKER_QUEUE, job_id=job_id)
+    if _WORKER_QUEUE is not None:
+        _WORKER_QUEUE.put({"type": "job_started", "job_id": job_id, "pid": os.getpid()})
+    token.check("statistical-plan:start")
+    frame, vsg, tcp = unpack_payload(payload["inputs_envelope"], cache_dir)
+    result = run_statistical_plan(payload["request"], frame, vsg=vsg, tcp=tcp)
+    token.check("statistical-plan:complete")
+    envelope = pack_payload(result, cache_dir, prefix=f"statistics_{job_id}")
+    if _WORKER_QUEUE is not None:
+        _WORKER_QUEUE.put({"type": "result", "job_id": job_id, "pid": os.getpid(),
+                          "cancelled": False, "envelope": envelope})
+    return {"job_id": job_id, "status": "completed", "pid": os.getpid()}
+
+
 # Compile-time static worker command allowlist (SCR-7: zero eval / getattr dispatch)
 WORKER_COMMAND_REGISTRY: MappingProxyType[str, Callable[[dict[str, Any]], dict[str, Any]]] = MappingProxyType(
     {
         "worker.ping": _cmd_worker_ping,
         "worker.run_analysis": _cmd_worker_run_analysis,
         "worker.workbench": _cmd_worker_workbench,
+        "worker.statistical_plan": _cmd_worker_statistical_plan,
         "worker.sleep_probe": _cmd_worker_sleep_probe,
     }
 )

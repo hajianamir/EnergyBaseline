@@ -135,7 +135,7 @@ jobs:
 
       - name: Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)
         run: |
-          python -m pytest -q --junitxml=pytest-core.xml --cov=energybaseline/core --cov=energybaseline/tests_catalog --cov=energybaseline/mining --cov=energybaseline/models --cov=energybaseline/scoring --cov=energybaseline/validation --cov=energybaseline/lock --cov=energybaseline/uq --cov=energybaseline/monitoring --cov=energybaseline/causal --cov=energybaseline/report --cov=energybaseline/workbench --cov-report=xml:coverage.xml --cov-report=term --cov-fail-under=60
+          python -m pytest -q --junitxml=pytest-core.xml --cov=energybaseline/core --cov=energybaseline/tests_catalog --cov=energybaseline/mining --cov=energybaseline/models --cov=energybaseline/scoring --cov=energybaseline/validation --cov=energybaseline/lock --cov=energybaseline/uq --cov=energybaseline/monitoring --cov=energybaseline/causal --cov=energybaseline/report --cov=energybaseline/workbench --cov=energybaseline/statistics --cov-report=xml:coverage.xml --cov-report=term --cov-fail-under=60
           python -m coverage report --fail-under=80
 
       - name: Emit pytest failure annotations on error

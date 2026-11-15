@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "time": "time",
+  "targets": [
+    "x",
+    "y",
+    "z",
+    "y2",
+    "a",
+    "b",
+    "c"
+  ],
+  "metadata": [
+    "group",
+    "factor",
+    "subject",
+    "condition"
+  ],
+  "sampling": "independent",
+  "assumption_justification": "Synthetic independent normal observations and independent subjects; explicit demonstration only, not a real-data assumption certificate.",
+  "correction": "fdr_tsbky",
+  "tests": [
+    {
+      "id": "H1ks-fixed-normal",
+      "method": "ks_fixed_normal",
+      "columns": [
+        "x"
+      ],
+      "parameters": {
+        "location": 0,
+        "scale": 1
+      }
+    },
+    {
+      "id": "H1lilliefors",
+      "method": "lilliefors",
+      "columns": [
+        "x"
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "H1one-sample-t",
+      "method": "one_sample_t",
+      "columns": [
+        "y"
+      ],
+      "parameters": {
+        "null": 0
+      }
+    }
+  ]
+}

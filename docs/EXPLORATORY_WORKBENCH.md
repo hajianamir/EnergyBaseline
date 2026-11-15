@@ -79,3 +79,8 @@ Tested source `5e571cc96404cd3e9b4a70a59fab66b11fa393ad`: **120 focused tests**,
 Fresh [workflow 43737625559](https://github.com/hajianamir/EnergyBaseline/actions/runs/43737625559) completed **successfully on both Windows and Linux**, including full-suite/coverage, GUI/coverage and applicable packaging/native evidence steps. Actual completed run/job API receipts, local raw logs/JUnit, 25 actual CLI subprocess outputs, source binding and an explicit hosted-log download limitation are recorded in `artifacts/capabilities/workbench-stage2/README.md`. Hosted raw logs could not be retrieved through the sandbox's restricted artifact-storage network; API success receipts are not relabeled as raw log captures. Earlier-source workflows are not substituted.
 
 This verifies the documented **bounded Stage 2 scope**, not the entire backlog, complete algorithm families, production packaging/deployment certification or automatic baseline integration. The documentation/evidence follow-up does not change tested product, tests, examples, dependencies or workflows.
+
+
+## Stage 3 extension
+
+A twentieth operation, `business-validation`, is now available through the same API/CLI/native worker routing, with a twenty-sixth manifest example. See [PREREGISTERED_STATISTICS.md](PREREGISTERED_STATISTICS.md) for its typed arithmetic/boolean/reference assertions, unknown-truth and privacy contracts. Statistical inference is **not** added to this exploratory registry: it has a separate exact-plan, accepted-VSG/locked-TCP API and native Setup tab. Historical Stage 2 verification above remains specific to its source, not proof of Stage 3.

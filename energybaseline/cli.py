@@ -964,11 +964,42 @@ def _cmd_workbench(args):
     return 0
 
 
+def _cmd_statistical_plan(args):
+    from .statistics import run_statistical_plan, validate_plan
+
+    try:
+        path = Path(args.request)
+        if path.stat().st_size > 200_000:
+            raise ValueError("Plan is too large.")
+        plan = json.loads(path.read_text(encoding="utf-8"))
+        validate_plan(plan)
+        frame = ingest.load_file(args.dataset)
+    except (OSError, UnicodeError, ValueError, TypeError, ingest.IngestError):
+        raise ValueError("Statistical plan/input could not be loaded or validated; no raw values are exported.") from None
+    if not args.accept_and_lock:
+        raise ComplianceGateError("Execution requires explicit --accept-and-lock for this exact input and preregistered plan.")
+    schema = suggest_dataset_schema(frame, time_col=plan["time"], targets=plan["targets"],
+                                    dataset_sha256=ingest.sha256_file(args.dataset))
+    for column in plan["metadata"]:
+        schema = schema.with_column(ColumnSpec(name=column, role=ColumnRole.GROUP,
+                                               inclusion=Inclusion.OBSERVED_ONLY, suggested_by_heuristic=False))
+    vsg = VariableSelectionGate(frame, targets=plan["targets"], time_col=plan["time"], schema=schema,
+                               dataset_sha256=ingest.sha256_file(args.dataset))
+    vsg.accept()
+    tcp = TestConfigPanel(vsg, config={"tcp_alpha": args.alpha, "tcp_correction": args.correction})
+    tcp.register_extension_plan(plan)
+    tcp.lock_preregistration()
+    result = run_statistical_plan(plan, frame, vsg=vsg, tcp=tcp)
+    _write_or_print(result, args.out)
+    return 0
+
+
 CLI_COMMAND_HANDLERS: Mapping[str, Callable[[argparse.Namespace], int]] = MappingProxyType(
     {
         "analyze": _cmd_analyze,
         "quality-audit": _cmd_quality_audit,
         "workbench": _cmd_workbench,
+        "statistical-plan": _cmd_statistical_plan,
         "schema-suggest": _cmd_schema_suggest,
         "schema-edit": _cmd_schema_edit,
         "schema-validate": _cmd_schema_validate,
@@ -1024,6 +1055,14 @@ def build_parser() -> argparse.ArgumentParser:
     p_workbench.add_argument("--dataset", help="Explicit input CSV/TSV/Excel/Parquet binding; omitted for linear-optimize.")
     p_workbench.add_argument("--reference", help="Explicit reference dataset for categorical-divergence only.")
     p_workbench.add_argument("--out")
+
+    p_stat = sub.add_parser("statistical-plan", help="Execute an exact preregistered inferential plan only with explicit gate acceptance.")
+    p_stat.add_argument("request", help="Version-1 statistical plan JSON; never executable formulas.")
+    p_stat.add_argument("dataset")
+    p_stat.add_argument("--accept-and-lock", action="store_true", help="Explicitly accept the input-bound VSG, register this plan and lock its TCP before execution.")
+    p_stat.add_argument("--alpha", type=float, default=0.05)
+    p_stat.add_argument("--correction", choices=[c.value for c in MultipleTestingCorrection], default="holm")
+    p_stat.add_argument("--out")
 
     p_sug = sub.add_parser("schema-suggest", help="Inspect a dataset and emit a suggested DatasetSchema JSON envelope.")
     p_sug.add_argument("dataset", help="Path to CSV / TSV / Excel / Parquet dataset.")
