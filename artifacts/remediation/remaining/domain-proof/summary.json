@@ -1,0 +1,271 @@
+{
+  "evidence_schema_version": 1,
+  "scope": "Actual synthetic energy/water/signed-manufacturing runs through SDK and CLI on Linux. Not native GUI or two-OS acceptance.",
+  "config": {
+    "seed": 42,
+    "parallel_targets": 1,
+    "model_families": [
+      "linear"
+    ],
+    "hpo_trials": 0,
+    "enable_nn": false,
+    "enable_mining": false,
+    "include_importance": false,
+    "include_eda_attachment": false,
+    "lags": [
+      1,
+      3
+    ],
+    "rolling_windows": [
+      3
+    ]
+  },
+  "cases": {
+    "energy": {
+      "input_sha256": "8b44c6231efdb421e7619dfcab7cd84c57f19b29eb1c1066f33f4612defc23c7",
+      "domain_policy": {
+        "key": "energy",
+        "version": 1,
+        "energy_features": true
+      },
+      "status": "ok",
+      "raw_oof_metrics_reproduced": {
+        "Degree-day regression": {
+          "n": 40,
+          "r2": 0.9315433546152309,
+          "rmse": 811.2974241533772,
+          "cvrmse": 4.842128526920376,
+          "nmbe": -1.0508539269846908,
+          "mae": 614.3974680939598,
+          "mape": 3.934614666359674,
+          "smape": 3.855429187295023,
+          "wape": 3.666955445137697
+        },
+        "Elastic Net": {
+          "n": 40,
+          "r2": 0.9334402775636931,
+          "rmse": 799.977995945151,
+          "cvrmse": 4.774569916965862,
+          "nmbe": -1.15972658496544,
+          "mae": 600.6614765673758,
+          "mape": 3.8467111146339876,
+          "smape": 3.760247388264641,
+          "wape": 3.5849738753258404
+        },
+        "Bayesian ridge": {
+          "n": 40,
+          "r2": 0.9315274552141775,
+          "rmse": 811.3916326422822,
+          "cvrmse": 4.842690798657009,
+          "nmbe": -1.1641944182181376,
+          "mae": 611.7285719142526,
+          "mape": 3.921372345774605,
+          "smape": 3.8362338891704018,
+          "wape": 3.6510264677461626
+        },
+        "Ridge regression": {
+          "n": 40,
+          "r2": 0.9313366886737934,
+          "rmse": 812.5211270637452,
+          "cvrmse": 4.8494320466831216,
+          "nmbe": -1.115000065149017,
+          "mae": 626.7630871456781,
+          "mape": 4.030289947141339,
+          "smape": 3.931537030963417,
+          "wape": 3.7407581159964614
+        },
+        "Lasso regression": {
+          "n": 40,
+          "r2": 0.9299598940171252,
+          "rmse": 820.6267842640284,
+          "cvrmse": 4.897809661094859,
+          "nmbe": -1.154142500717792,
+          "mae": 621.3272949012869,
+          "mape": 3.987155735400637,
+          "smape": 3.9014598449206668,
+          "wape": 3.7083152609973276
+        }
+      },
+      "thresholds": {
+        "max_cvrmse": 15.0,
+        "max_nmbe": 5.0,
+        "min_r2": 0.75
+      },
+      "purge_gap_spec": {
+        "governing_term": "max_lag",
+        "max_lag": 3,
+        "max_rolling_window": 3,
+        "min_step_floor": 1,
+        "one_day_steps": 1,
+        "purge_gap": 3
+      },
+      "cli_sdk_fold_feature_metric_score_agreement": true,
+      "report_id": "c3ca483b208ff689b89452fd712354ab5f83be874637cca9dd4490f84a48a445",
+      "inference_requested": false
+    },
+    "water": {
+      "input_sha256": "79d67732a532a5347e8f7b1e0b2f3ec196260b2395004ac3b6adff63352557c8",
+      "domain_policy": {
+        "key": "water",
+        "version": 1,
+        "energy_features": false
+      },
+      "status": "ok",
+      "raw_oof_metrics_reproduced": {
+        "Lasso regression": {
+          "n": 40,
+          "r2": 0.9893111926953644,
+          "rmse": 7.696808510499582,
+          "cvrmse": 0.7770999959871394,
+          "nmbe": -0.05556477846800466,
+          "mae": 6.096715639374847,
+          "mape": 0.6293820745022761,
+          "smape": 0.6285148613197853,
+          "wape": 0.6155483396046456
+        },
+        "Multiple linear regression (MLR)": {
+          "n": 40,
+          "r2": 0.9892864658077473,
+          "rmse": 7.705706050371902,
+          "cvrmse": 0.7779983265340984,
+          "nmbe": -0.05527053798893622,
+          "mae": 6.097103657214876,
+          "mape": 0.6294874166456077,
+          "smape": 0.6286191948676039,
+          "wape": 0.6155875154086842
+        },
+        "Bayesian ridge": {
+          "n": 40,
+          "r2": 0.9892723960159395,
+          "rmse": 7.710764236857109,
+          "cvrmse": 0.778509020894234,
+          "nmbe": -0.057305180505609,
+          "mae": 6.103157322764159,
+          "mape": 0.6302340477938578,
+          "smape": 0.6293350089599742,
+          "wape": 0.6161987172422283
+        },
+        "Elastic Net": {
+          "n": 40,
+          "r2": 0.9891767860044665,
+          "rmse": 7.745049194679267,
+          "cvrmse": 0.7819705647990451,
+          "nmbe": -0.06074674644476604,
+          "mae": 6.13485851889466,
+          "mape": 0.6335228552027306,
+          "smape": 0.6325764432673122,
+          "wape": 0.6193993944257901
+        },
+        "Ridge regression": {
+          "n": 40,
+          "r2": 0.9883506240638636,
+          "rmse": 8.035212899656923,
+          "cvrmse": 0.8112666313006547,
+          "nmbe": -0.07957375178641564,
+          "mae": 6.186344515930509,
+          "mape": 0.6401151832590904,
+          "smape": 0.6388059490090525,
+          "wape": 0.6245976227609984
+        }
+      },
+      "thresholds": {
+        "max_cvrmse": null,
+        "max_nmbe": null,
+        "min_r2": null
+      },
+      "purge_gap_spec": {
+        "governing_term": "max_lag",
+        "max_lag": 3,
+        "max_rolling_window": 3,
+        "min_step_floor": 1,
+        "one_day_steps": 1,
+        "purge_gap": 3
+      },
+      "cli_sdk_fold_feature_metric_score_agreement": true,
+      "report_id": "148112b099b81aac89f806fe1caa8e42ea70ccb01151609710fe7fe4db376fc4",
+      "inference_requested": false
+    },
+    "manufacturing": {
+      "input_sha256": "d231b01fbdd3536c06908b3c71f8cb921f8de79541790ce5b2e23a56d80490a1",
+      "domain_policy": {
+        "key": "manufacturing",
+        "version": 1,
+        "energy_features": false
+      },
+      "status": "ok",
+      "raw_oof_metrics_reproduced": {
+        "Lasso regression": {
+          "n": 40,
+          "r2": 0.9875528999880832,
+          "rmse": 0.21602691815022015,
+          "cvrmse": 2.623239168912272,
+          "nmbe": 0.10956289152701162,
+          "mae": 0.17719615643032655,
+          "mape": 2.2850094846384956,
+          "smape": 2.2735255191323187,
+          "wape": 2.1517128611051524
+        },
+        "Elastic Net": {
+          "n": 40,
+          "r2": 0.9872289657329247,
+          "rmse": 0.2188199001710657,
+          "cvrmse": 2.6571546637861796,
+          "nmbe": 0.12066208432169502,
+          "mae": 0.1796895480586992,
+          "mape": 2.320063723843404,
+          "smape": 2.3075093047045434,
+          "wape": 2.181990396141026
+        },
+        "Multiple linear regression (MLR)": {
+          "n": 40,
+          "r2": 0.9870380022776163,
+          "rmse": 0.22044982117601553,
+          "cvrmse": 2.6769469779062374,
+          "nmbe": 0.14222804678939552,
+          "mae": 0.18018106678688442,
+          "mape": 2.329235018597435,
+          "smape": 2.317095597950857,
+          "wape": 2.1879589633504732
+        },
+        "Bayesian ridge": {
+          "n": 40,
+          "r2": 0.9869886862749049,
+          "rmse": 0.22086879142467325,
+          "cvrmse": 2.6820345807674864,
+          "nmbe": 0.13706474209751182,
+          "mae": 0.18057174878710222,
+          "mape": 2.333456073690509,
+          "smape": 2.3211314024231147,
+          "wape": 2.1927030588286476
+        },
+        "Ridge regression": {
+          "n": 40,
+          "r2": 0.9855883783404021,
+          "rmse": 0.23245035117038154,
+          "cvrmse": 2.8226707636200015,
+          "nmbe": 0.07465392686866172,
+          "mae": 0.19051694936225047,
+          "mape": 2.4672614776631785,
+          "smape": 2.4516929174593844,
+          "wape": 2.313468748191842
+        }
+      },
+      "thresholds": {
+        "max_cvrmse": null,
+        "max_nmbe": null,
+        "min_r2": null
+      },
+      "purge_gap_spec": {
+        "governing_term": "max_lag",
+        "max_lag": 3,
+        "max_rolling_window": 3,
+        "min_step_floor": 1,
+        "one_day_steps": 1,
+        "purge_gap": 3
+      },
+      "cli_sdk_fold_feature_metric_score_agreement": true,
+      "report_id": "ed83b6490104251788408429cfaa9d804796ef4f78fa2646e4fff74b43f4b789",
+      "inference_requested": false
+    }
+  }
+}

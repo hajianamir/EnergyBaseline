@@ -952,6 +952,7 @@ class TestConfigPanel:
         if phase is not None:
             self._phase = normalize_phase(phase)
         self._accepted = True
+        self._accepted_spec_sha256 = self.tcp_sha256
         self.provenance.record_stage(
             stage_name="tcp_accepted",
             payload=self.canonical_spec_dict(),

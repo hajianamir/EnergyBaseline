@@ -196,6 +196,7 @@ def _check_time_order(
     all_targets: Sequence[str],
     candidate_predictors: Sequence[str],
     schema: DatasetSchema | None,
+    config: Mapping[str, Any] | None = None,
 ) -> list[IntegrityConflict]:
     """O(n) check verifying strictly non-decreasing timestamp order without sorting."""
     _ = (all_targets, candidate_predictors, schema)
@@ -246,6 +247,7 @@ def _check_dst_and_duplicates(
     all_targets: Sequence[str],
     candidate_predictors: Sequence[str],
     schema: DatasetSchema | None,
+    config: Mapping[str, Any] | None = None,
 ) -> list[IntegrityConflict]:
     """O(n) duplicate timestamp and unresolved DST ambiguity/nonexistent check."""
     _ = (all_targets, candidate_predictors)
@@ -313,6 +315,7 @@ def _check_target_never_predictor(
     all_targets: Sequence[str],
     candidate_predictors: Sequence[str],
     schema: DatasetSchema | None,
+    config: Mapping[str, Any] | None = None,
 ) -> list[IntegrityConflict]:
     """O(p) check verifying target (and sibling targets per MT-2) is never a predictor."""
     _ = (df, time_col)
@@ -388,6 +391,7 @@ def _check_leakage_mt2(
     all_targets: Sequence[str],
     candidate_predictors: Sequence[str],
     schema: DatasetSchema | None,
+    config: Mapping[str, Any] | None = None,
 ) -> list[IntegrityConflict]:
     """O(n * p) vectorized check catching target copies, affine transforms, and post-period leakage."""
     _ = all_targets
@@ -430,7 +434,8 @@ def _check_leakage_mt2(
             continue
 
         is_exact_affine = abs_r >= 0.999995 or rel_max_err <= 1e-6
-        is_meter_proxy = abs_r >= 0.99 and bool(_ENERGY_METER_PATTERN.search(col))
+        from .domain import resolve_domain
+        is_meter_proxy = resolve_domain(config or {}).energy and abs_r >= 0.99 and bool(_ENERGY_METER_PATTERN.search(col))
         if is_exact_affine or is_meter_proxy:
             kind = "exact_or_scaled_target_identity" if is_exact_affine else "energy_submeter_leakage"
             conflicts.append(
@@ -458,7 +463,7 @@ def _check_leakage_mt2(
 _RULE_DISPATCH: MappingProxyType[
     str,
     Callable[
-        [pd.DataFrame, str, str | None, Sequence[str], Sequence[str], DatasetSchema | None],
+        [pd.DataFrame, str, str | None, Sequence[str], Sequence[str], DatasetSchema | None, Mapping[str, Any] | None],
         list[IntegrityConflict],
     ],
 ] = MappingProxyType(
@@ -555,7 +560,7 @@ class IntegrityEngine:
         )
         for rule_id in ordered_rules:
             fn = _RULE_DISPATCH[rule_id]
-            conflicts.extend(fn(df, target, time_col, all_targets, preds, schema))
+            conflicts.extend(fn(df, target, time_col, all_targets, preds, schema, config))
 
         return IntegrityReport(
             target=target,

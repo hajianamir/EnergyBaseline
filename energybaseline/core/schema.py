@@ -34,6 +34,9 @@ class SettingDef:
 
 S = SettingDef
 SETTINGS: list[SettingDef] = [
+    S("domain_pack", "Domain policy", "Domain pack", "choice", "neutral",
+      "AUTO selects neutral analytics. Select energy explicitly to enable degree-day features and energy acceptance policy.",
+      ("neutral", "energy", "water", "manufacturing")),
     # ---- Data & Temporal
     S(
         "sampling_period",
@@ -910,10 +913,13 @@ def suggest_column_spec(
     is_time: bool = False,
     is_target: bool = False,
     unit: str = "",
+    domain_pack: str = "legacy_energy",
 ) -> ColumnSpec:
     """Build a heuristic ``ColumnSpec`` suggestion (`suggested_by_heuristic=True`, DAT-4)."""
     name = str(col_name).strip()
-    inferred_unit = str(unit).strip() or suggest_unit(name)
+    from .domain import resolve_domain
+    energy = resolve_domain({"domain_pack": domain_pack}).energy
+    inferred_unit = str(unit).strip() or (suggest_unit(name) if energy else "")
 
     if is_time:
         return ColumnSpec(
@@ -950,11 +956,11 @@ def suggest_column_spec(
     if role in (ColumnRole.IGNORE, ColumnRole.GROUP):
         qtype = None
     else:
-        qtype = suggest_quantity_type(name, unit=inferred_unit)
+        qtype = suggest_quantity_type(name if energy else "", unit=inferred_unit)
 
     inclusion = (
         Inclusion.KNOWN_IN_ADVANCE
-        if _HEURISTIC_KNOWN_ADVANCE_RE.search(name)
+        if energy and _HEURISTIC_KNOWN_ADVANCE_RE.search(name)
         else Inclusion.OBSERVED_ONLY
     )
     return ColumnSpec(
@@ -980,8 +986,11 @@ def suggest_dataset_schema(
     timezone: str = "",
     outlier_policy: OutlierActionPolicy | str = OutlierActionPolicy.FLAG_ONLY,
     auto: Any | None = None,
+    domain_pack: str = "legacy_energy",
 ) -> DatasetSchema:
     """Construct a heuristic ``DatasetSchema`` suggestion from ``df`` (logged to ``AutoLog``, DAT-4)."""
+    from .domain import resolve_domain
+    energy = resolve_domain({"domain_pack": domain_pack}).energy
     cols = [str(c).strip() for c in df.columns]
     if len(cols) < 2:
         raise SchemaValidationError("Cannot suggest a DatasetSchema for a DataFrame with fewer than 2 columns.")
@@ -1003,7 +1012,7 @@ def suggest_dataset_schema(
         numeric_candidates = [
             c for c in cols if c != resolved_time and pd.api.types.is_numeric_dtype(df[c])
         ]
-        flow_candidates = [c for c in numeric_candidates if suggest_quantity_type(c) == QuantityType.FLOW]
+        flow_candidates = [c for c in numeric_candidates if energy and suggest_quantity_type(c) == QuantityType.FLOW]
         if flow_candidates:
             explicit_targets = [flow_candidates[0]]
         elif numeric_candidates:
@@ -1020,6 +1029,7 @@ def suggest_dataset_schema(
             is_time=(c == resolved_time),
             is_target=(c in explicit_targets),
             unit=units_lookup.get(c, ""),
+            domain_pack=domain_pack,
         )
         for c in cols
     ]

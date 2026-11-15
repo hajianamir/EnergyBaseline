@@ -1,0 +1,8 @@
+{
+  "manifest": "source-manifest.json",
+  "checked_files": 207,
+  "source_drift": [],
+  "original_tracked_tests_license_and_review_baseline_unchanged": true,
+  "verification_reference": "static-checks.txt",
+  "full_regression_finished": true
+}

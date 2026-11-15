@@ -1,0 +1,1275 @@
+{
+  "cancelled": false,
+  "domain_policy": {
+    "energy_features": false,
+    "key": "water",
+    "version": 1
+  },
+  "format": "energybaseline.analysis.v1",
+  "schema_version": 1,
+  "targets": {
+    "volume_m3": {
+      "error": "",
+      "purge_gap_spec": {
+        "governing_term": "max_lag",
+        "max_lag": 3,
+        "max_rolling_window": 3,
+        "min_step_floor": 1,
+        "one_day_steps": 1,
+        "purge_gap": 3
+      },
+      "scoring": {
+        "acceptance_evaluated": false,
+        "domain_policy": {
+          "energy_features": false,
+          "key": "water",
+          "version": 1
+        },
+        "profile": "interpretable",
+        "schema_version": 1,
+        "weights": {
+          "ashrae": 0.0,
+          "cvrmse": 0.18666666666666668,
+          "data_sufficiency": 0.02666666666666667,
+          "diagnostics": 0.0,
+          "interpretability": 0.26666666666666666,
+          "mae": 0.05333333333333334,
+          "nmbe": 0.06666666666666667,
+          "parsimony": 0.16,
+          "plausibility": 0.0,
+          "r2": 0.08,
+          "robustness": 0.10666666666666667,
+          "smape": 0.02666666666666667,
+          "uncertainty": 0.02666666666666667
+        }
+      },
+      "shortlist": [
+        {
+          "artifact": "",
+          "criteria": {
+            "ashrae": 0.0,
+            "cvrmse": 1.0,
+            "data_sufficiency": 1.0,
+            "diagnostics": 0.0,
+            "interpretability": 1.0,
+            "mae": 0.9840005587617456,
+            "nmbe": 0.4279376419790266,
+            "parsimony": 0.8444605590873043,
+            "plausibility": 1.0,
+            "r2": 1.0,
+            "robustness": 0.7863716371137242,
+            "smape": 0.9860118875962921,
+            "uncertainty": 1.0
+          },
+          "diagnostics": {
+            "breusch_pagan_p": null,
+            "durbin_watson": null,
+            "inference_status": "not run: accepted VSG and locked TCP required",
+            "jarque_bera_p": null,
+            "jarque_bera_stat": null,
+            "ljung_box_p": null,
+            "residual_mean": -0.5503428928130376,
+            "residual_std": 7.677107785333548,
+            "tests_passed": 0
+          },
+          "failures": [],
+          "family": "Linear / statistical",
+          "fold_cvrmse": [
+            0.9379827726462898,
+            0.8164419806880305,
+            0.5460340162635877
+          ],
+          "formula": {
+            "intercept": -13953.981710498641,
+            "kind": "equation",
+            "terms": [
+              [
+                "pressure_kPa",
+                81.0720937667151
+              ],
+              [
+                "sin_year1",
+                -0.8828565201521238
+              ],
+              [
+                "cos_year1",
+                -1.9698928260965942
+              ],
+              [
+                "pressure_kPa_lag1",
+                0.14971664415078292
+              ],
+              [
+                "pressure_kPa_lag3",
+                -2.3697498378419537
+              ],
+              [
+                "pressure_kPa_roll3",
+                -4.0847070127705605
+              ]
+            ],
+            "text": "\u0177(volume_m3) = -13954 + 81.0721\u00b7[pressure_kPa] - 4.08471\u00b7[pressure_kPa_roll3] - 2.36975\u00b7[pressure_kPa_lag3] - 1.96989\u00b7[cos_year1] - 0.882857\u00b7[sin_year1] + 0.149717\u00b7[pressure_kPa_lag1]"
+          },
+          "history": null,
+          "hpo": "HPO skipped (n<80, trials=0, or parameter-free candidate)",
+          "importance": {},
+          "kind": "linear",
+          "metrics": {
+            "cvrmse": 0.7770999959871394,
+            "mae": 6.096715639374847,
+            "mape": 0.6293820745022761,
+            "n": 40,
+            "nmbe": -0.05556477846800466,
+            "r2": 0.9893111926953644,
+            "rmse": 7.696808510499582,
+            "smape": 0.6285148613197853,
+            "wape": 0.6155483396046456
+          },
+          "n_params": 7,
+          "name": "Lasso regression",
+          "params": {},
+          "plaus_notes": [
+            "Energy physical constraints not applicable: neutral domain policy."
+          ],
+          "qualified": true,
+          "rank": 1,
+          "reason": "Rank #1 with score 91.3/100; CV(RMSE)=0.8 %, R\u00b2=0.989, NMBE=-0.06 %. Strongest criteria: cvrmse (1.00), r2 (1.00), interpretability (1.00); weakest: nmbe (0.43).",
+          "robustness": 0.21362836288627585,
+          "score": 91.29628536812287,
+          "tier": 1,
+          "train_metrics": {
+            "cvrmse": 0.7004098505230355,
+            "mae": 5.425280828282944,
+            "mape": 0.5566268268021104,
+            "n": 72,
+            "nmbe": 5.422271836355225e-15,
+            "r2": 0.9920352109754335,
+            "rmse": 6.934698212756925,
+            "smape": 0.5562218929794941,
+            "wape": 0.5479575343297411
+          },
+          "uncertainty": {
+            "basis": "empirical 2.5/97.5 % quantiles of out-of-fold residuals",
+            "level": 0.95,
+            "lower": -17.630014399775426,
+            "upper": 10.691925394514755
+          }
+        },
+        {
+          "artifact": "",
+          "criteria": {
+            "ashrae": 0.0,
+            "cvrmse": 0.9988453310035242,
+            "data_sufficiency": 1.0,
+            "diagnostics": 0.0,
+            "interpretability": 1.0,
+            "mae": 0.9839379372626104,
+            "nmbe": 0.4302158281767534,
+            "parsimony": 0.7889050035317487,
+            "plausibility": 1.0,
+            "r2": 0.9999750059558613,
+            "robustness": 0.7848657663951948,
+            "smape": 0.9858482366622064,
+            "uncertainty": 0.9973841499717067
+          },
+          "diagnostics": {
+            "breusch_pagan_p": null,
+            "durbin_watson": null,
+            "inference_status": "not run: accepted VSG and locked TCP required",
+            "jarque_bera_p": null,
+            "jarque_bera_stat": null,
+            "ljung_box_p": null,
+            "residual_mean": -0.5474285798094058,
+            "residual_std": 7.6862362496052645,
+            "tests_passed": 0
+          },
+          "failures": [],
+          "family": "Linear / statistical",
+          "fold_cvrmse": [
+            0.9400889485610141,
+            0.817444640560446,
+            0.5449919904699378
+          ],
+          "formula": {
+            "intercept": -13945.108467660295,
+            "kind": "equation",
+            "terms": [
+              [
+                "pressure_kPa",
+                81.12504060921309
+              ],
+              [
+                "sin_year1",
+                -0.90504729445173
+              ],
+              [
+                "cos_year1",
+                -1.999679894579935
+              ],
+              [
+                "pressure_kPa_lag1",
+                0.20237503326666054
+              ],
+              [
+                "pressure_kPa_lag3",
+                -2.384607463960699
+              ],
+              [
+                "pressure_kPa_roll3",
+                -4.21984800761745
+              ]
+            ],
+            "text": "\u0177(volume_m3) = -13945.1 + 81.125\u00b7[pressure_kPa] - 4.21985\u00b7[pressure_kPa_roll3] - 2.38461\u00b7[pressure_kPa_lag3] - 1.99968\u00b7[cos_year1] - 0.905047\u00b7[sin_year1] + 0.202375\u00b7[pressure_kPa_lag1]"
+          },
+          "history": null,
+          "hpo": "HPO skipped (n<80, trials=0, or parameter-free candidate)",
+          "importance": {},
+          "kind": "linear",
+          "metrics": {
+            "cvrmse": 0.7779983265340984,
+            "mae": 6.097103657214876,
+            "mape": 0.6294874166456077,
+            "n": 40,
+            "nmbe": -0.05527053798893622,
+            "r2": 0.9892864658077473,
+            "rmse": 7.705706050371902,
+            "smape": 0.6286191948676039,
+            "wape": 0.6155875154086842
+          },
+          "n_params": 7,
+          "name": "Multiple linear regression (MLR)",
+          "params": {},
+          "plaus_notes": [
+            "Energy physical constraints not applicable: neutral domain policy."
+          ],
+          "qualified": true,
+          "rank": 2,
+          "reason": "Rank #2 with score 90.4/100; CV(RMSE)=0.8 %, R\u00b2=0.989, NMBE=-0.06 %. Strongest criteria: interpretability (1.00), data_sufficiency (1.00), r2 (1.00); weakest: nmbe (0.43).",
+          "robustness": 0.21513423360480516,
+          "score": 90.37702200870544,
+          "tier": 1,
+          "train_metrics": {
+            "cvrmse": 0.7003922273146974,
+            "mae": 5.422199713175066,
+            "mape": 0.5563207696459526,
+            "n": 72,
+            "nmbe": 4.46540033582195e-15,
+            "r2": 0.992035611778964,
+            "rmse": 6.934523726873733,
+            "smape": 0.5559192276932055,
+            "wape": 0.5476463393352446
+          },
+          "uncertainty": {
+            "basis": "empirical 2.5/97.5 % quantiles of out-of-fold residuals",
+            "level": 0.95,
+            "lower": -17.67114648106077,
+            "upper": 10.725073566243575
+          }
+        },
+        {
+          "artifact": "",
+          "criteria": {
+            "ashrae": 0.0,
+            "cvrmse": 0.9981900981629267,
+            "data_sufficiency": 1.0,
+            "diagnostics": 0.0,
+            "interpretability": 1.0,
+            "mae": 0.9829619782829487,
+            "nmbe": 0.41494084941164266,
+            "parsimony": 0.7333494479761933,
+            "plausibility": 1.0,
+            "r2": 0.9999607841499103,
+            "robustness": 0.7892705075300754,
+            "smape": 0.9847269196359895,
+            "uncertainty": 0.994433897154043
+          },
+          "diagnostics": {
+            "breusch_pagan_p": null,
+            "durbin_watson": null,
+            "inference_status": "not run: accepted VSG and locked TCP required",
+            "jarque_bera_p": null,
+            "jarque_bera_stat": null,
+            "ljung_box_p": null,
+            "residual_mean": -0.5675807531706454,
+            "residual_std": 7.689846370703698,
+            "tests_passed": 0
+          },
+          "failures": [],
+          "family": "Linear / statistical",
+          "fold_cvrmse": [
+            0.9391575813032195,
+            0.815585900867459,
+            0.5509037834933018
+          ],
+          "formula": {
+            "intercept": -13948.29829442134,
+            "kind": "equation",
+            "terms": [
+              [
+                "pressure_kPa",
+                81.01652161360684
+              ],
+              [
+                "sin_year1",
+                -0.8850934527778576
+              ],
+              [
+                "cos_year1",
+                -1.9869977954637073
+              ],
+              [
+                "pressure_kPa_lag1",
+                0.14979450856394572
+              ],
+              [
+                "pressure_kPa_lag3",
+                -2.3721819270065194
+              ],
+              [
+                "pressure_kPa_roll3",
+                -4.05521506694806
+              ]
+            ],
+            "text": "\u0177(volume_m3) = -13948.3 + 81.0165\u00b7[pressure_kPa] - 4.05522\u00b7[pressure_kPa_roll3] - 2.37218\u00b7[pressure_kPa_lag3] - 1.987\u00b7[cos_year1] - 0.885093\u00b7[sin_year1] + 0.149795\u00b7[pressure_kPa_lag1]"
+          },
+          "history": null,
+          "hpo": "HPO skipped (n<80, trials=0, or parameter-free candidate)",
+          "importance": {},
+          "kind": "linear",
+          "metrics": {
+            "cvrmse": 0.778509020894234,
+            "mae": 6.103157322764159,
+            "mape": 0.6302340477938578,
+            "n": 40,
+            "nmbe": -0.057305180505609,
+            "r2": 0.9892723960159395,
+            "rmse": 7.710764236857109,
+            "smape": 0.6293350089599742,
+            "wape": 0.6161987172422283
+          },
+          "n_params": 7,
+          "name": "Bayesian ridge",
+          "params": {},
+          "plaus_notes": [
+            "Energy physical constraints not applicable: neutral domain policy."
+          ],
+          "qualified": true,
+          "rank": 3,
+          "reason": "Rank #3 with score 89.4/100; CV(RMSE)=0.8 %, R\u00b2=0.989, NMBE=-0.06 %. Strongest criteria: interpretability (1.00), data_sufficiency (1.00), r2 (1.00); weakest: nmbe (0.41).",
+          "robustness": 0.21072949246992462,
+          "score": 89.4048764118739,
+          "tier": 1,
+          "train_metrics": {
+            "cvrmse": 0.7004360552663985,
+            "mae": 5.421345252750718,
+            "mape": 0.5562940690720022,
+            "n": 72,
+            "nmbe": 5.1033146695108e-15,
+            "r2": 0.9920346149839392,
+            "rmse": 6.934957663686733,
+            "smape": 0.5558850853195298,
+            "wape": 0.5475600381755209
+          },
+          "uncertainty": {
+            "basis": "empirical 2.5/97.5 % quantiles of out-of-fold residuals",
+            "level": 0.95,
+            "lower": -17.58762957637009,
+            "upper": 10.892835415163646
+          }
+        },
+        {
+          "artifact": "",
+          "criteria": {
+            "ashrae": 0.0,
+            "cvrmse": 0.9937714166860522,
+            "data_sufficiency": 1.0,
+            "diagnostics": 0.0,
+            "interpretability": 1.0,
+            "mae": 0.9778826320573756,
+            "nmbe": 0.39143265551358014,
+            "parsimony": 0.6777938924206377,
+            "plausibility": 1.0,
+            "r2": 0.9998641411399262,
+            "robustness": 0.8040989008941083,
+            "smape": 0.9796810035974776,
+            "uncertainty": 0.9841714304412501
+          },
+          "diagnostics": {
+            "breusch_pagan_p": null,
+            "durbin_watson": null,
+            "inference_status": "not run: accepted VSG and locked TCP required",
+            "jarque_bera_p": null,
+            "jarque_bera_stat": null,
+            "ljung_box_p": null,
+            "residual_mean": -0.6016678386766756,
+            "residual_std": 7.721643791311803,
+            "tests_passed": 0
+          },
+          "failures": [],
+          "family": "Linear / statistical",
+          "fold_cvrmse": [
+            0.9376709268089605,
+            0.8112110190330781,
+            0.5721517063132481
+          ],
+          "formula": {
+            "intercept": -13970.904856456233,
+            "kind": "equation",
+            "terms": [
+              [
+                "pressure_kPa",
+                80.34690756357386
+              ],
+              [
+                "sin_year1",
+                -0.7548762968626967
+              ],
+              [
+                "cos_year1",
+                -1.8976589034341915
+              ],
+              [
+                "pressure_kPa_lag1",
+                -0.16473666220562427
+              ],
+              [
+                "pressure_kPa_lag3",
+                -2.2868763820618776
+              ],
+              [
+                "pressure_kPa_roll3",
+                -3.043273378027339
+              ]
+            ],
+            "text": "\u0177(volume_m3) = -13970.9 + 80.3469\u00b7[pressure_kPa] - 3.04327\u00b7[pressure_kPa_roll3] - 2.28688\u00b7[pressure_kPa_lag3] - 1.89766\u00b7[cos_year1] - 0.754876\u00b7[sin_year1] - 0.164737\u00b7[pressure_kPa_lag1]"
+          },
+          "history": null,
+          "hpo": "HPO skipped (n<80, trials=0, or parameter-free candidate)",
+          "importance": {},
+          "kind": "linear",
+          "metrics": {
+            "cvrmse": 0.7819705647990451,
+            "mae": 6.13485851889466,
+            "mape": 0.6335228552027306,
+            "n": 40,
+            "nmbe": -0.06074674644476604,
+            "r2": 0.9891767860044665,
+            "rmse": 7.745049194679267,
+            "smape": 0.6325764432673122,
+            "wape": 0.6193993944257901
+          },
+          "n_params": 7,
+          "name": "Elastic Net",
+          "params": {},
+          "plaus_notes": [
+            "Energy physical constraints not applicable: neutral domain policy."
+          ],
+          "qualified": true,
+          "rank": 4,
+          "reason": "Rank #4 with score 88.4/100; CV(RMSE)=0.8 %, R\u00b2=0.989, NMBE=-0.06 %. Strongest criteria: interpretability (1.00), data_sufficiency (1.00), r2 (1.00); weakest: nmbe (0.39).",
+          "robustness": 0.1959010991058917,
+          "score": 88.36626836069289,
+          "tier": 1,
+          "train_metrics": {
+            "cvrmse": 0.702645129198006,
+            "mae": 5.416048050972132,
+            "mape": 0.5561429805356937,
+            "n": 72,
+            "nmbe": 6.857579087155138e-15,
+            "r2": 0.9919842924110894,
+            "rmse": 6.956829516336902,
+            "smape": 0.555684965160801,
+            "wape": 0.547025016723671
+          },
+          "uncertainty": {
+            "basis": "empirical 2.5/97.5 % quantiles of out-of-fold residuals",
+            "level": 0.95,
+            "lower": -17.366348690499283,
+            "upper": 11.4110969030922
+          }
+        },
+        {
+          "artifact": "",
+          "criteria": {
+            "ashrae": 0.0,
+            "cvrmse": 0.9578848260297136,
+            "data_sufficiency": 1.0,
+            "diagnostics": 0.0,
+            "interpretability": 1.0,
+            "mae": 0.9697441809630557,
+            "nmbe": 0.29882039920033265,
+            "parsimony": 0.5666827813095265,
+            "plausibility": 1.0,
+            "r2": 0.9990290531042273,
+            "robustness": 0.8428612176879344,
+            "smape": 0.9701273536252887,
+            "uncertainty": 0.9542568680354557
+          },
+          "diagnostics": {
+            "breusch_pagan_p": null,
+            "durbin_watson": null,
+            "inference_status": "not run: accepted VSG and locked TCP required",
+            "jarque_bera_p": null,
+            "jarque_bera_stat": null,
+            "ljung_box_p": null,
+            "residual_mean": -0.7881404363978419,
+            "residual_std": 7.9964667819811295,
+            "tests_passed": 0
+          },
+          "failures": [],
+          "family": "Linear / statistical",
+          "fold_cvrmse": [
+            0.9632930651874574,
+            0.8019002376207867,
+            0.6531029572062218
+          ],
+          "formula": {
+            "intercept": -13996.724373732437,
+            "kind": "equation",
+            "terms": [
+              [
+                "pressure_kPa",
+                79.07551373509774
+              ],
+              [
+                "sin_year1",
+                -0.5265328599336921
+              ],
+              [
+                "cos_year1",
+                -1.7733898843187441
+              ],
+              [
+                "pressure_kPa_lag1",
+                -0.7466166080732942
+              ],
+              [
+                "pressure_kPa_lag3",
+                -2.144166183708835
+              ],
+              [
+                "pressure_kPa_roll3",
+                -1.203533230286124
+              ]
+            ],
+            "text": "\u0177(volume_m3) = -13996.7 + 79.0755\u00b7[pressure_kPa] - 2.14417\u00b7[pressure_kPa_lag3] - 1.77339\u00b7[cos_year1] - 1.20353\u00b7[pressure_kPa_roll3] - 0.746617\u00b7[pressure_kPa_lag1] - 0.526533\u00b7[sin_year1]"
+          },
+          "history": null,
+          "hpo": "HPO skipped (n<80, trials=0, or parameter-free candidate)",
+          "importance": {},
+          "kind": "linear",
+          "metrics": {
+            "cvrmse": 0.8112666313006547,
+            "mae": 6.186344515930509,
+            "mape": 0.6401151832590904,
+            "n": 40,
+            "nmbe": -0.07957375178641564,
+            "r2": 0.9883506240638636,
+            "rmse": 8.035212899656923,
+            "smape": 0.6388059490090525,
+            "wape": 0.6245976227609984
+          },
+          "n_params": 7,
+          "name": "Ridge regression",
+          "params": {},
+          "plaus_notes": [
+            "Energy physical constraints not applicable: neutral domain policy."
+          ],
+          "qualified": true,
+          "rank": 5,
+          "reason": "Rank #5 with score 85.6/100; CV(RMSE)=0.8 %, R\u00b2=0.988, NMBE=-0.08 %. Strongest criteria: interpretability (1.00), data_sufficiency (1.00), r2 (1.00); weakest: nmbe (0.30).",
+          "robustness": 0.15713878231206552,
+          "score": 85.55932288457937,
+          "tier": 1,
+          "train_metrics": {
+            "cvrmse": 0.7158434340546224,
+            "mae": 5.449800152344058,
+            "mape": 0.5602538744792205,
+            "n": 72,
+            "nmbe": 1.1163500839554875e-14,
+            "r2": 0.9916803342699453,
+            "rmse": 7.087504807428612,
+            "smape": 0.5596943396827978,
+            "wape": 0.5504340049090922
+          },
+          "uncertainty": {
+            "basis": "empirical 2.5/97.5 % quantiles of out-of-fold residuals",
+            "level": 0.95,
+            "lower": -16.46191260927865,
+            "upper": 13.217663973279278
+          }
+        }
+      ],
+      "status": "ok",
+      "thresholds": {
+        "max_cvrmse": null,
+        "max_nmbe": null,
+        "min_r2": null
+      },
+      "validation_contract": {
+        "cache_matrix_budget_bytes": 134217728,
+        "estimator_selection_policy": "explicit-temporal-hpo-v2",
+        "evaluator": "raw-fold-training-v1",
+        "folds": [
+          {
+            "auto": [
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter 25% missingness cap for short series (n<60), 40% for medium series, 50% when n>=1000",
+                "setting": "max_missing_rate",
+                "signals": "n=29, p_num=1, median_missing=0.000",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "0.25"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "near-constant relative-variance floor scaled by sample size (1e-6 for n<50, 1e-8 for n>=50)",
+                "setting": "min_variance",
+                "signals": "n=29, target_rel_var=5.325e-03",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "1e-06"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "small-sample |r|>=0.985 (n<60) or |r|>=0.99 (n>=60) with target and energy-like name => leakage",
+                "setting": "leakage_threshold",
+                "signals": "n=29, candidate_predictors=1",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "0.985"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "too few observations for reliable outlier statistics",
+                "setting": "outlier_method",
+                "signals": "n=29 < 30",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "none"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "3.5 (Iglewicz-Hoaglin); 4.5 for skewed variables",
+                "setting": "outlier_threshold",
+                "signals": "|skew|=0.16",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "3.5"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "nothing to treat",
+                "setting": "outlier_treatment",
+                "signals": "no detection performed",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "flag"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "AUTO applies small-share outlier exclusion automatically and flags larger regime shares",
+                "setting": "outlier_action_policy",
+                "signals": "treatment='flag', flagged_share=0.00%",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "flag_only"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "irrelevant (kept as default)",
+                "setting": "missing_strategy",
+                "signals": "no missing predictor values",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "linear"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter |r|>=0.90 redundancy pruning for n<100, |r|>=0.95 for n>=100",
+                "setting": "corr_threshold",
+                "signals": "n=29, p_num=1",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "0.9"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter VIF for small samples",
+                "setting": "vif_threshold",
+                "signals": "n=29 < 100",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "5"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "calendar effects matter for sub-daily/daily data with >=48 points",
+                "setting": "calendar_features",
+                "signals": "granularity=monthly, n=29",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "include harmonics where autocorrelation at the period exceeds 0.2",
+                "setting": "fourier_terms",
+                "signals": "monthly data, >=24 points",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "year=1"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "HDD/CDD only when an outdoor-temperature column exists",
+                "setting": "degree_days",
+                "signals": "temperature-like column: None",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "USER_OVERRIDE",
+                "rule": "user override of AUTO",
+                "setting": "lags",
+                "signals": "value supplied by user",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "1,3"
+              },
+              {
+                "candidate_space": "",
+                "mode": "USER_OVERRIDE",
+                "rule": "user override of AUTO",
+                "setting": "rolling_windows",
+                "signals": "value supplied by user",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "3"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "interactions only when n > 20p and p<=6 (over-fit protection)",
+                "setting": "interactions",
+                "signals": "p=1, n=29",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "no holiday flags (country unknown)",
+                "setting": "holiday_country",
+                "signals": "no country declared",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "(none)"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "few candidates: keep all",
+                "setting": "selection_method",
+                "signals": "p=6 <= 8",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "none"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "exact k_max = min(p, n // 20) observations-per-feature rule",
+                "setting": "max_features",
+                "signals": "p=6, n=29",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "1"
+              }
+            ],
+            "category_levels": {},
+            "cooling_balance": null,
+            "heating_balance": null,
+            "medians": {
+              "cos_year1": 0.005375731557583884,
+              "pressure_kPa": 199.45481413312905,
+              "pressure_kPa_lag1": 199.6196299812553,
+              "pressure_kPa_lag3": 199.71488283928306,
+              "pressure_kPa_roll3": 199.68656293633975,
+              "sin_year1": 0.017201575418260506
+            },
+            "n_train_fit": 29,
+            "n_train_input": 29,
+            "n_valid": 13,
+            "selected_features": [
+              "pressure_kPa",
+              "sin_year1",
+              "cos_year1",
+              "pressure_kPa_lag1",
+              "pressure_kPa_lag3",
+              "pressure_kPa_roll3"
+            ],
+            "train_input_sha256": "be86462df28185dcf8a9d40e8cbdff19b29ebe60503963377b1092a2a8414f02"
+          },
+          {
+            "auto": [
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter 25% missingness cap for short series (n<60), 40% for medium series, 50% when n>=1000",
+                "setting": "max_missing_rate",
+                "signals": "n=42, p_num=1, median_missing=0.000",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "0.25"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "near-constant relative-variance floor scaled by sample size (1e-6 for n<50, 1e-8 for n>=50)",
+                "setting": "min_variance",
+                "signals": "n=42, target_rel_var=6.117e-03",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "1e-06"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "small-sample |r|>=0.985 (n<60) or |r|>=0.99 (n>=60) with target and energy-like name => leakage",
+                "setting": "leakage_threshold",
+                "signals": "n=42, candidate_predictors=1",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "0.985"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "approximately symmetric -> robust z-score on calendar-adjusted values",
+                "setting": "outlier_method",
+                "signals": "target |skew|=0.46 <= 2, n=42",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "robust_z"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "3.5 (Iglewicz-Hoaglin); 4.5 for skewed variables",
+                "setting": "outlier_threshold",
+                "signals": "|skew|=0.46",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "3.5"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "few extreme points: remove from training (target never altered)",
+                "setting": "outlier_treatment",
+                "signals": "target flagged share=0.00% <= 2 %",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "remove"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "AUTO applies small-share outlier exclusion automatically and flags larger regime shares",
+                "setting": "outlier_action_policy",
+                "signals": "treatment='remove', flagged_share=0.00%",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "auto_apply"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "irrelevant (kept as default)",
+                "setting": "missing_strategy",
+                "signals": "no missing predictor values",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "linear"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter |r|>=0.90 redundancy pruning for n<100, |r|>=0.95 for n>=100",
+                "setting": "corr_threshold",
+                "signals": "n=42, p_num=1",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "0.9"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter VIF for small samples",
+                "setting": "vif_threshold",
+                "signals": "n=42 < 100",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "5"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "calendar effects matter for sub-daily/daily data with >=48 points",
+                "setting": "calendar_features",
+                "signals": "granularity=monthly, n=42",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "include harmonics where autocorrelation at the period exceeds 0.2",
+                "setting": "fourier_terms",
+                "signals": "monthly data, >=24 points",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "year=1"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "HDD/CDD only when an outdoor-temperature column exists",
+                "setting": "degree_days",
+                "signals": "temperature-like column: None",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "USER_OVERRIDE",
+                "rule": "user override of AUTO",
+                "setting": "lags",
+                "signals": "value supplied by user",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "1,3"
+              },
+              {
+                "candidate_space": "",
+                "mode": "USER_OVERRIDE",
+                "rule": "user override of AUTO",
+                "setting": "rolling_windows",
+                "signals": "value supplied by user",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "3"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "interactions only when n > 20p and p<=6 (over-fit protection)",
+                "setting": "interactions",
+                "signals": "p=1, n=42",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "no holiday flags (country unknown)",
+                "setting": "holiday_country",
+                "signals": "no country declared",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "(none)"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "few candidates: keep all",
+                "setting": "selection_method",
+                "signals": "p=6 <= 8",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "none"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "exact k_max = min(p, n // 20) observations-per-feature rule",
+                "setting": "max_features",
+                "signals": "p=6, n=42",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "2"
+              }
+            ],
+            "category_levels": {},
+            "cooling_balance": null,
+            "heating_balance": null,
+            "medians": {
+              "cos_year1": 0.005375731557583884,
+              "pressure_kPa": 199.8796986874093,
+              "pressure_kPa_lag1": 199.7844458293815,
+              "pressure_kPa_lag3": 199.47732140099404,
+              "pressure_kPa_roll3": 199.7629870633436,
+              "sin_year1": 0.017201575418260506
+            },
+            "n_train_fit": 42,
+            "n_train_input": 42,
+            "n_valid": 13,
+            "selected_features": [
+              "pressure_kPa",
+              "sin_year1",
+              "cos_year1",
+              "pressure_kPa_lag1",
+              "pressure_kPa_lag3",
+              "pressure_kPa_roll3"
+            ],
+            "train_input_sha256": "9c78278f835a4381169d9870d3fdbcdd8cb0ba368ea95b8d47ca98cac372e52a"
+          },
+          {
+            "auto": [
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter 25% missingness cap for short series (n<60), 40% for medium series, 50% when n>=1000",
+                "setting": "max_missing_rate",
+                "signals": "n=55, p_num=1, median_missing=0.000",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "0.25"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "near-constant relative-variance floor scaled by sample size (1e-6 for n<50, 1e-8 for n>=50)",
+                "setting": "min_variance",
+                "signals": "n=55, target_rel_var=6.031e-03",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "1e-08"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "small-sample |r|>=0.985 (n<60) or |r|>=0.99 (n>=60) with target and energy-like name => leakage",
+                "setting": "leakage_threshold",
+                "signals": "n=55, candidate_predictors=1",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "0.985"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "approximately symmetric -> robust z-score on calendar-adjusted values",
+                "setting": "outlier_method",
+                "signals": "target |skew|=0.63 <= 2, n=55",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "robust_z"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "3.5 (Iglewicz-Hoaglin); 4.5 for skewed variables",
+                "setting": "outlier_threshold",
+                "signals": "|skew|=0.63",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "3.5"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "few extreme points: remove from training (target never altered)",
+                "setting": "outlier_treatment",
+                "signals": "target flagged share=0.00% <= 2 %",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "remove"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "AUTO applies small-share outlier exclusion automatically and flags larger regime shares",
+                "setting": "outlier_action_policy",
+                "signals": "treatment='remove', flagged_share=0.00%",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "auto_apply"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "irrelevant (kept as default)",
+                "setting": "missing_strategy",
+                "signals": "no missing predictor values",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "linear"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter |r|>=0.90 redundancy pruning for n<100, |r|>=0.95 for n>=100",
+                "setting": "corr_threshold",
+                "signals": "n=55, p_num=1",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "0.9"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter VIF for small samples",
+                "setting": "vif_threshold",
+                "signals": "n=55 < 100",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "5"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "calendar effects matter for sub-daily/daily data with >=48 points",
+                "setting": "calendar_features",
+                "signals": "granularity=monthly, n=55",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "include harmonics where autocorrelation at the period exceeds 0.2",
+                "setting": "fourier_terms",
+                "signals": "monthly data, >=24 points",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "year=1"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "HDD/CDD only when an outdoor-temperature column exists",
+                "setting": "degree_days",
+                "signals": "temperature-like column: None",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "USER_OVERRIDE",
+                "rule": "user override of AUTO",
+                "setting": "lags",
+                "signals": "value supplied by user",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "1,3"
+              },
+              {
+                "candidate_space": "",
+                "mode": "USER_OVERRIDE",
+                "rule": "user override of AUTO",
+                "setting": "rolling_windows",
+                "signals": "value supplied by user",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "3"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "interactions only when n > 20p and p<=6 (over-fit protection)",
+                "setting": "interactions",
+                "signals": "p=1, n=55",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "no holiday flags (country unknown)",
+                "setting": "holiday_country",
+                "signals": "no country declared",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "(none)"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "few candidates: keep all",
+                "setting": "selection_method",
+                "signals": "p=6 <= 8",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "none"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "exact k_max = min(p, n // 20) observations-per-feature rule",
+                "setting": "max_features",
+                "signals": "p=6, n=55",
+                "stage": "",
+                "target": "volume_m3",
+                "value": "2"
+              }
+            ],
+            "category_levels": {},
+            "cooling_balance": null,
+            "heating_balance": null,
+            "medians": {
+              "cos_year1": 0.005375731557583884,
+              "pressure_kPa": 199.45481413312905,
+              "pressure_kPa_lag1": 199.43103415504783,
+              "pressure_kPa_lag3": 199.43103415504783,
+              "pressure_kPa_roll3": 199.72517600373817,
+              "sin_year1": 0.017201575418260506
+            },
+            "n_train_fit": 55,
+            "n_train_input": 55,
+            "n_valid": 14,
+            "selected_features": [
+              "pressure_kPa",
+              "sin_year1",
+              "cos_year1",
+              "pressure_kPa_lag1",
+              "pressure_kPa_lag3",
+              "pressure_kPa_roll3"
+            ],
+            "train_input_sha256": "af056db94887ddf9be5eb20c35a3e594bc03e8da51c4260cdf967b3a3ee54abf"
+          }
+        ],
+        "inference_policy": "TCP-controlled catalog only; auxiliary EDA/residual inference disabled",
+        "n_evaluation_population": 72,
+        "n_final_training": 72,
+        "schema_version": 2,
+        "selection_scope": "training fold only",
+        "validation_target_filtering": "none"
+      }
+    }
+  }
+}

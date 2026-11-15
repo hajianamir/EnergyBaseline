@@ -426,6 +426,7 @@ def _cmd_worker_run_analysis(payload: dict[str, Any]) -> dict[str, Any]:
     dataset_sha = payload.get("dataset_sha")
     dataset_info = dict(payload.get("dataset_info") or {})
     artifact_templates: dict[str, str] = dict(payload.get("artifact_dir_by_target") or {})
+    vsg, tcp = (unpack_payload(payload["gates_envelope"], cache_dir) if payload.get("gates_envelope") else (None, None))
 
     def _artifact_fn(target: str, model_name: str) -> str:
         safe_model = "".join(ch if ch.isalnum() or ch in "-_" else "_" for ch in model_name)
@@ -443,6 +444,7 @@ def _cmd_worker_run_analysis(payload: dict[str, Any]) -> dict[str, Any]:
                 config,
                 dataset_sha=dataset_sha,
                 dataset_info=dataset_info,
+                vsg=vsg, tcp=tcp,
                 progress=token.stage_callback,
                 cancel=token.is_cancelled,
                 artifact_fn=_artifact_fn if artifact_templates else None,
@@ -869,11 +871,19 @@ class AnalysisPoolManager:
         on_progress: Callable[[str, float, str], None] | None = None,
         threshold_bytes: int = PAYLOAD_THRESHOLD_BYTES,
         cancel_grace_seconds: float | None = None,
+        vsg: Any = None,
+        tcp: Any = None,
     ) -> PoolJobHandle:
         cdir = self.cache_dir()
         df_env = pack_payload(df, cdir, prefix="dataset", rows=len(df), threshold_bytes=threshold_bytes)
         cleanup = [Path(df_env["path"])] if df_env.get("__eb_ref__") else []
+        gates_env = None
+        if vsg is not None or tcp is not None:
+            gates_env = pack_payload((vsg, tcp), cdir, prefix="gates", threshold_bytes=threshold_bytes)
+            if gates_env.get("__eb_ref__"):
+                cleanup.append(Path(gates_env["path"]))
         payload = {
+            "gates_envelope": gates_env,
             "df_envelope": df_env,
             "time_col": time_col,
             "targets": list(targets),
@@ -1088,6 +1098,7 @@ def run_in_pool(
             dataset_sha=payload.get("dataset_sha"),
             dataset_info=payload.get("dataset_info"),
             artifact_dir_by_target=payload.get("artifact_dir_by_target"),
+            vsg=payload.get("vsg"), tcp=payload.get("tcp"),
             on_progress=progress,
             threshold_bytes=threshold_bytes,
             cancel_grace_seconds=cancel_grace_seconds,

@@ -1,8 +1,9 @@
 """Neural-network regressors (PyTorch, CPU-first / GPU when present) + a sklearn MLP fallback.
 
 All regressors expose ``fit(A, y) / predict(A)`` on chronologically ordered 2-D arrays, use
-deterministic seeding, a time-ordered validation tail (last 15 %), early stopping, LR
-scheduling, dropout and weight decay, and keep ``history_`` (training curves).
+deterministic seeding, training-loss convergence, LR scheduling, dropout and weight
+decay. Temporal validation and parameter selection belong to the raw-fold evaluator;
+these estimators do not create hidden, unpurged holdouts.
 """
 from __future__ import annotations
 
@@ -68,7 +69,8 @@ class SkMLP:
         self.mu_, self.sd_ = A.mean(0), np.where(A.std(0) > 0, A.std(0), 1.0)
         self.ymu_, self.ysd_ = y.mean(), (y.std() or 1.0)
         Z, t = (A - self.mu_) / self.sd_, (y - self.ymu_) / self.ysd_
-        nval = int(0.15 * len(Z)) if len(Z) >= 60 else 0
+        # No hidden holdout after preprocessing has already been fitted.
+        nval = 0
         tr, va = slice(0, len(Z) - nval), slice(len(Z) - nval, len(Z))
         net = MLPRegressor(hidden_layer_sizes=self.hidden, alpha=self.alpha, learning_rate_init=self.lr,
                            batch_size=min(self.batch, max(8, len(Z[tr]))), random_state=self.seed, shuffle=True)
@@ -78,7 +80,7 @@ class SkMLP:
             tl = float(np.mean((net.predict(Z[tr]) - t[tr]) ** 2))
             vl = float(np.mean((net.predict(Z[va]) - t[va]) ** 2)) if nval else tl
             self.history_["train_loss"].append(tl)
-            self.history_["val_loss"].append(vl)
+            # Validation curves are supplied by the outer raw-fold evaluator.
             if vl < best - 1e-6:
                 best, bad = vl, 0
                 best_state = (copy.deepcopy(net.coefs_), copy.deepcopy(net.intercepts_))
@@ -103,7 +105,7 @@ class SkMLP:
     def describe(self, names: list[str]) -> str:
         sizes = [len(names)] + list(self.hidden) + [1]
         txt = [f"Feed-forward MLP, layers {' -> '.join(map(str, sizes))}, ReLU hidden activations, Adam, L2 alpha={self.alpha}, "
-               f"early stopping on a time-ordered validation tail (stopped after {self.epochs_} epochs), {self.n_params} parameters.",
+               f"training-loss convergence after {self.epochs_} epochs; validation is external, {self.n_params} parameters.",
                "ŷ = ysd · ( w_out · ReLU(W2 · ReLU(W1 · z + b1) + b2) + b_out ) + ymu,  z = (x − μ)/σ  (standardised inputs)"]
         if self.n_params <= 400:
             for i, (W, b) in enumerate(zip(self.net_.coefs_, self.net_.intercepts_), 1):
@@ -256,7 +258,7 @@ class TorchSeqRegressor:
         W = _windows((A - self.mu_) / self.sd_, self.seq_len).astype(np.float32)
         t = ((y - self.ymu_) / self.ysd_).astype(np.float32)
         n = len(W)
-        nval = int(0.15 * n) if n >= 60 else 0
+        nval = 0  # validation is performed by the purged raw-fold evaluator
         Xtr, ttr = torch.from_numpy(W[: n - nval]).to(dev), torch.from_numpy(t[: n - nval]).to(dev)
         Xva, tva = torch.from_numpy(W[n - nval:]).to(dev), torch.from_numpy(t[n - nval:]).to(dev)
         net = _make(self.arch, self.f_, self.seq_len, self.hidden, self.dropout).to(dev)
@@ -282,7 +284,7 @@ class TorchSeqRegressor:
             with torch.no_grad():
                 vl = float(torch.mean((net(Xva) - tva) ** 2)) if nval else tot / len(Xtr)
             self.history_["train_loss"].append(tot / len(Xtr))
-            self.history_["val_loss"].append(vl)
+            # Validation curves are supplied by the outer raw-fold evaluator.
             self.history_["lr"].append(opt.param_groups[0]["lr"])
             sched.step(vl)
             if vl < best - 1e-6:
@@ -331,7 +333,7 @@ class TorchSeqRegressor:
         self._ensure()
         return (f"{ARCH_LABEL.get(self.arch, self.arch)} network, input window T={self.seq_len} steps × {len(names)} standardised features "
                 f"({', '.join(names[:12])}{' …' if len(names) > 12 else ''}); hidden width {self.hidden}, dropout {self.dropout}, weight decay {self.weight_decay}, "
-                f"Adam + ReduceLROnPlateau, early stopping on a time-ordered validation tail (stopped after {self.epochs_} epochs, best val MSE={self.best_val_:.4f} in standardised units), "
+                f"Adam + ReduceLROnPlateau, training-loss convergence after {self.epochs_} epochs (best training MSE={self.best_val_:.4f} in standardised units); validation is external, "
                 f"{self.n_params} trained parameters, device={device_name()}.\n"
                 f"Mathematical form: {ARCH_MATH.get(self.arch, '')}\n"
                 f"Targets are standardised: ŷ_final = ysd·ŷ + ymu (ymu={self.ymu_:.6g}, ysd={self.ysd_:.6g}). "

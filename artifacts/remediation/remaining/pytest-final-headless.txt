@@ -1,0 +1,11 @@
+Frozen Python source: artifacts/remediation/remaining/final-source-manifest.json
+Command: PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 QT_QPA_PLATFORM=offscreen .venv/bin/python -m pytest -q tests --ignore=tests/gui --tb=short
+........................................................................ [ 18%]
+........................................................................ [ 36%]
+........................................................................ [ 54%]
+........................................................................ [ 72%]
+........................................................................ [ 91%]
+...................................                                      [100%]
+395 passed in 579.61s (0:09:39)
+
+Exit code: 0

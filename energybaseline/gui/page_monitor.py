@@ -11,6 +11,7 @@ from PySide6.QtWidgets import (QCheckBox, QComboBox, QDateTimeEdit, QDoubleSpinB
 
 from ..core import ingest, monitor, report, sqlsource as sq, store
 from .sql_dialog import SqlDialog
+from .artifact_approval import load_with_artifact_approval
 from .widgets import FuncWorker, KpiCard, MplCanvas, PasteTable, fill_table, make_table
 
 log = logging.getLogger("energybaseline.gui")
@@ -22,6 +23,7 @@ class MonitorPage(QWidget):
         super().__init__()
         self.state, self.main = state, main
         self.bundles: dict[str, dict] = {}
+        self._built_sql: sq.QuerySpec | None = None
         self.input_df: pd.DataFrame | None = None
         self.results: dict[str, pd.DataFrame] = {}
         self.kpi_by_target: dict[str, dict] = {}
@@ -217,7 +219,9 @@ class MonitorPage(QWidget):
         sel = self.state.locked[target]
         key = target
         if key not in self.bundles or self.bundles[key]["model_name"] != sel["model"]:
-            self.bundles[key] = store.load_bundle(self.state.run_id, target, sel["model"])
+            self.bundles[key] = load_with_artifact_approval(
+                self, lambda **approval: store.load_bundle(self.state.run_id, target, sel["model"], **approval)
+            )
         return self.bundles[key]
 
     def _target_changed(self, t):
@@ -329,7 +333,10 @@ class MonitorPage(QWidget):
         try:
             tc = self.q_time.text().strip() or None
             cols = ([tc] if tc else []) + list(b["required_columns"]) + [b["target"]]
-            self.query.setPlainText(sq.build_query(self.q_table.text().strip(), cols, tc, self.q_from.text().strip() or None, self.q_to.text().strip() or None))
+            profile = self._profiles().get(self.conn_combo.currentText())
+            dialect = sq._DRIVER_TO_DIALECT.get(profile.driver) if profile else None
+            self._built_sql = sq.build_query(self.q_table.text().strip(), list(dict.fromkeys(cols)), tc, self.q_from.text().strip() or None, self.q_to.text().strip() or None, dialect=dialect)
+            self.query.setPlainText(self._built_sql.sql)
         except Exception as exc:
             QMessageBox.warning(self, "Query builder", str(exc))
 
@@ -340,7 +347,9 @@ class MonitorPage(QWidget):
             return
         self.sql_btn.setEnabled(False)
         self.sql_msg.setText("Querying… (the app stays usable offline; unreachable servers time out after ~10 s)")
-        self.sw = FuncWorker(sq.run_query, prof, self.query.toPlainText())
+        sql_text = self.query.toPlainText()
+        query = self._built_sql if self._built_sql is not None and self._built_sql.sql == sql_text else sql_text
+        self.sw = FuncWorker(sq.run_query, prof, query)
         self.sw.ok.connect(self._sql_ok)
         self.sw.fail.connect(self._sql_fail)
         self.sw.start()

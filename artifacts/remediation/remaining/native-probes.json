@@ -1,0 +1,22 @@
+{
+  "scope": "Actual Linux sandbox probes; no mocked native-store or GUI acceptance.",
+  "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+  "python": "3.11.2 (main, Apr  8 2026, 01:58:00) [GCC 12.2.0]",
+  "credential_roundtrip_in_current_process": true,
+  "credential_backend": {
+    "name": "session-only (credentials expire when the application closes)",
+    "persistent": false,
+    "secure_store": false
+  },
+  "native_secure_store_acceptance": false,
+  "two_os_acceptance": false,
+  "session_credentials_unrecoverable_after_restart": true,
+  "qtwidgets_import_exit_code": 1,
+  "qtwidgets_probe": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nImportError: libGL.so.1: cannot open shared object file: No such file or directory\n",
+  "qt_missing_native_libraries": [
+    "libEGL.so.1 => not found",
+    "libxkbcommon.so.0 => not found",
+    "libGL.so.1 => not found",
+    "libdbus-1.so.3 => not found"
+  ]
+}

@@ -46,7 +46,7 @@ def change_points(x: np.ndarray, max_cp: int = 4, min_size: int = 10) -> tuple[l
     return sorted(cps), "binary segmentation (CUSUM + Welch t > 6)"
 
 
-def run_eda(df: pd.DataFrame, target: str, predictors: list[str], g: Granularity) -> dict:
+def run_eda(df: pd.DataFrame, target: str, predictors: list[str], g: Granularity, *, energy_policy: bool = True, allow_inference: bool = False) -> dict:
     y = df[target]
     out: dict = {}
     num = df[[target] + predictors]
@@ -57,9 +57,9 @@ def run_eda(df: pd.DataFrame, target: str, predictors: list[str], g: Granularity
     out["descriptive"] = desc.round(4).reset_index().rename(columns={"index": "variable"})
     yv = y.dropna()
     sample = yv.sample(min(len(yv), 5000), random_state=0) if len(yv) > 5000 else yv
-    sh = stats.shapiro(sample) if 3 <= len(sample) <= 5000 else None
+    sh = stats.shapiro(sample) if allow_inference and 3 <= len(sample) <= 5000 else None
     out["distribution"] = {"skew": float(stats.skew(yv)), "kurtosis": float(stats.kurtosis(yv)),
-                           "shapiro_p": float(sh.pvalue) if sh else None, "normal_at_5pct": bool(sh and sh.pvalue > 0.05),
+                           "shapiro_p": float(sh.pvalue) if sh else None, "normal_at_5pct": bool(sh.pvalue > 0.05) if sh is not None else None,
                            "load_factor": float(yv.mean() / yv.max()) if yv.max() > 0 else None,
                            "cv_percent": float(100 * yv.std() / abs(yv.mean())) if yv.mean() else None}
     rows = []
@@ -85,11 +85,14 @@ def run_eda(df: pd.DataFrame, target: str, predictors: list[str], g: Granularity
     # trend
     t = np.arange(len(yv))
     if len(yv) > 10:
-        sl = stats.linregress(t, yv.values)
-        tau = stats.kendalltau(t, yv.values)
-        per_year = sl.slope * (365.25 * g.steps_per_day)
-        out["trend"] = {"slope_per_step": float(sl.slope), "slope_per_year": float(per_year), "slope_pct_of_mean_per_year": float(100 * per_year / abs(yv.mean())) if yv.mean() else None,
-                        "kendall_tau": float(tau.statistic), "kendall_p": float(tau.pvalue), "significant_trend": bool(tau.pvalue < 0.05)}
+        slope = float(np.polyfit(t, yv.values, 1)[0])
+        per_year = slope * (365.25 * g.steps_per_day)
+        tau = stats.kendalltau(t, yv.values) if allow_inference else None
+        out["trend"] = {"slope_per_step": slope, "slope_per_year": float(per_year),
+                        "slope_pct_of_mean_per_year": float(100 * per_year / abs(yv.mean())) if yv.mean() else None,
+                        "kendall_tau": float(tau.statistic) if tau else None,
+                        "kendall_p": float(tau.pvalue) if tau else None,
+                        "significant_trend": bool(tau.pvalue < 0.05) if tau else None}
     # profiles
     prof = {}
     if g.tier == "subdaily":
@@ -103,7 +106,7 @@ def run_eda(df: pd.DataFrame, target: str, predictors: list[str], g: Granularity
         out["schedule"] = {"peak_hour": int(y.groupby(y.index.hour).mean().idxmax()), "base_load": float(y.quantile(0.05)),
                            "weekend_to_weekday_ratio": float(y[y.index.day_of_week >= 5].mean() / y[y.index.day_of_week < 5].mean()) if (y.index.day_of_week >= 5).any() else None}
     # degree days
-    tc = find_temperature_col(predictors)
+    tc = find_temperature_col(predictors) if energy_policy else None
     if tc:
         bh, bc, r2 = fit_balance_points(df[tc], y)
         out["degree_days"] = {"temperature_column": tc, "heating_balance": bh, "cooling_balance": bc, "r2": r2}
@@ -112,14 +115,14 @@ def run_eda(df: pd.DataFrame, target: str, predictors: list[str], g: Granularity
     out["change_points"] = {"method": how, "indices": cps, "timestamps": [str(y.index[min(i, len(y) - 1)]) for i in cps]}
     # engineering plausibility
     plaus = []
-    if (yv < 0).any():
+    if energy_policy and (yv < 0).any():
         plaus.append(f"{int((yv < 0).sum())} negative target values (generation/export or sensor error?)")
     zeros = float((yv == 0).mean())
-    if zeros > 0.05:
+    if energy_policy and zeros > 0.05:
         plaus.append(f"{zeros:.1%} zero readings - check for meter outages")
     if tc and tc in corr["variable"].values:
         r = float(corr.set_index("variable").loc[tc, "pearson"])
         plaus.append(f"Correlation of '{tc}' with the target is {r:+.2f}: " + ("positive -> cooling-dominated load." if r > 0.3 else "negative -> heating-dominated load." if r < -0.3 else "weak weather dependence."))
-    out["plausibility"] = plaus or ["No engineering-plausibility issues detected."]
+    out["plausibility"] = (plaus or ["No engineering-plausibility issues detected."]) if energy_policy else ["Energy engineering constraints are not applicable under the neutral domain policy."]
     out["variability"] = {"cv_percent": out["distribution"]["cv_percent"], "iqr": float(yv.quantile(.75) - yv.quantile(.25))}
     return out

@@ -77,9 +77,9 @@ def assemble_report(state, *, provenance=None):
         "glossary",
         "glossary",
         [
-            {"term": "EnPI", "meaning": "Energy performance indicator"},
+            *([{"term": "EnPI", "meaning": "Energy performance indicator"}] if state.get("domain_policy", {}).get("energy_features", False) else []),
             {"term": "UQ", "meaning": "Uncertainty quantification"},
-            {"term": "CV(RMSE)", "meaning": "Root mean squared error normalized by mean energy"},
+            {"term": "CV(RMSE)", "meaning": "Root mean squared error normalized by the target mean"},
             {"term": "NMBE", "meaning": "Normalized mean bias error"},
             {"term": "Artifact ID", "meaning": "Stable reference to persisted source evidence"},
         ],
@@ -148,6 +148,8 @@ def assemble_report(state, *, provenance=None):
             ("monitoring", "monitoring", f"Monitoring_{i}"),
             ("drift", "drift", f"Drift_{i}"),
             ("vsg_audit", "exclusions", f"Exclusions_{i}"),
+            ("vsg_audit", "validation_contract", f"Validation_{i}"),
+            ("vsg_audit", "validation_series", f"ValidationOOF_{i}"),
             ("vsg_audit", "temporal", f"Temporal_{i}"),
             ("eda_atlas", "eda", f"EDA_{i}"),
             ("correlation_atlas", "relationships", f"Relationships_{i}"),
@@ -235,7 +237,7 @@ def assemble_report(state, *, provenance=None):
     return ReportModel(
         {
             "schema_version": 1,
-            "title": state.get("title", "Energy Baseline Analytics Report"),
+            "title": state.get("title", "Baseline Analytics Report"),
             "artifacts": artifacts,
             "metrics": metrics,
             "sections": sections,
@@ -275,8 +277,11 @@ def model_from_analysis(run, selections, audit, data_dictionary=None):
         provenance = provenance_manifest(sha, config, target_seeds=seeds)
         provenance["capture_stage"] = "legacy export environment; original full runtime manifest unavailable"
         provenance["analysis_versions"] = json_value(run.versions)
+    from .domain import resolve_domain
     return assemble_report(
         {
+            "title": resolve_domain(run.config).report_title,
+            "domain_policy": resolve_domain(run.config).to_dict(),
             "targets": targets,
             "vsg": run.vsg_summary,
             "tcp": run.tcp_summary,

@@ -1,0 +1,115 @@
+CMake Warning (deprecated) at CMakeLists.txt:37 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+This warning is for project developers.  Use -Wno-author or -Wno-deprecated
+to suppress it.
+
+-- The C compiler identification is GNU 12.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Looking for dlfcn.h
+-- Looking for dlfcn.h - found
+-- Looking for fcntl.h
+-- Looking for fcntl.h - found
+-- Looking for inttypes.h
+-- Looking for inttypes.h - found
+-- Looking for memory.h
+-- Looking for memory.h - found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stdlib.h
+-- Looking for stdlib.h - found
+-- Looking for strings.h
+-- Looking for strings.h - found
+-- Looking for string.h
+-- Looking for string.h - found
+-- Looking for sys/stat.h
+-- Looking for sys/stat.h - found
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for unistd.h
+-- Looking for unistd.h - found
+-- Looking for getpagesize
+-- Looking for getpagesize - found
+-- Looking for mmap
+-- Looking for mmap - found
+-- Looking for getrandom
+-- Looking for getrandom - found
+-- Looking for arc4random_buf
+-- Looking for arc4random_buf - found
+-- Looking for 4 include files stdlib.h, ..., float.h
+-- Looking for 4 include files stdlib.h, ..., float.h - found
+-- Performing Test HAVE_OFF_T
+-- Performing Test HAVE_OFF_T - Success
+-- Performing Test HAVE_SYSCALL_GETRANDOM
+-- Performing Test HAVE_SYSCALL_GETRANDOM - Success
+-- Performing Test FLAG_NO_STRICT_ALIASING
+-- Performing Test FLAG_NO_STRICT_ALIASING - Success
+-- Performing Test FLAG_VISIBILITY
+-- Performing Test FLAG_VISIBILITY - Success
+-- Looking for cos in m
+-- Looking for cos in m - found
+-- ===========================================================================
+-- 
+-- Configuration
+--   Generator .................. Ninja
+--   Build type ................. NoConfig
+--   Prefix ..................... /home/user/EnergyBaseline/.cache/native-runtime/prefix
+--   Shared libraries ........... ON
+--   Character type ............. char (UTF-8)
+--   Library name postfix ....... 
+-- 
+--   Build documentation ........ OFF
+--   Build examples ............. OFF
+--   Build fuzzers .............. OFF
+--   Build tests ................ OFF
+--   Build tools (xmlwf) ........ OFF
+--   Build pkg-config file ...... ON
+--   Install files .............. ON
+-- 
+--   Features
+--     // Advanced options, changes not advised
+--     Attributes info .......... OFF
+--     Context bytes ............ 1024
+--     DTD support .............. ON
+--     General entities ......... ON
+--     Large size ............... OFF
+--     Minimum size ............. OFF
+--     Namespace support ........ ON
+-- 
+--   Entropy sources
+--     getrandom ................ 1
+--     syscall SYS_getrandom .... 1
+--     libbsd ................... OFF
+--     /dev/random .............. ON
+-- 
+-- ===========================================================================
+-- Configuring done (2.5s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/user/EnergyBaseline/.cache/native-runtime/expat-build
+[1/5] Building C object CMakeFiles/expat.dir/lib/xmlrole.c.o
+[2/5] Building C object CMakeFiles/expat.dir/lib/xmltok.c.o
+[3/5] Building C object CMakeFiles/expat.dir/lib/xmlparse.c.o
+[4/5] Linking C shared library libexpat.so.1.10.0
+[5/5] Creating library symlink libexpat.so.1 libexpat.so
+-- Install configuration: "NoConfig"
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/expat_config.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libexpat.so.1.10.0
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libexpat.so.1
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libexpat.so
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/expat.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/expat_external.h
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/pkgconfig/expat.pc
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/share/doc/expat/AUTHORS
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/share/doc/expat/changelog
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/cmake/expat-2.6.4/expat-config.cmake
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/cmake/expat-2.6.4/expat-config-version.cmake
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/cmake/expat-2.6.4/expat.cmake
+-- Installing: /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/cmake/expat-2.6.4/expat-noconfig.cmake

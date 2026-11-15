@@ -1,0 +1,1323 @@
+{
+  "cancelled": false,
+  "domain_policy": {
+    "energy_features": true,
+    "key": "energy",
+    "version": 1
+  },
+  "format": "energybaseline.analysis.v1",
+  "schema_version": 1,
+  "targets": {
+    "Energy_kWh": {
+      "error": "",
+      "purge_gap_spec": {
+        "governing_term": "max_lag",
+        "max_lag": 3,
+        "max_rolling_window": 3,
+        "min_step_floor": 1,
+        "one_day_steps": 1,
+        "purge_gap": 3
+      },
+      "scoring": {
+        "acceptance_evaluated": true,
+        "domain_policy": {
+          "energy_features": true,
+          "key": "energy",
+          "version": 1
+        },
+        "profile": "interpretable",
+        "schema_version": 1,
+        "weights": {
+          "ashrae": 0.05434782608695651,
+          "cvrmse": 0.15217391304347824,
+          "data_sufficiency": 0.021739130434782605,
+          "diagnostics": 0.0,
+          "interpretability": 0.21739130434782605,
+          "mae": 0.04347826086956521,
+          "nmbe": 0.05434782608695651,
+          "parsimony": 0.13043478260869562,
+          "plausibility": 0.13043478260869562,
+          "r2": 0.06521739130434781,
+          "robustness": 0.08695652173913042,
+          "smape": 0.021739130434782605,
+          "uncertainty": 0.021739130434782605
+        }
+      },
+      "shortlist": [
+        {
+          "artifact": "",
+          "criteria": {
+            "ashrae": 1.0,
+            "cvrmse": 0.9860477454121851,
+            "data_sufficiency": 1.0,
+            "diagnostics": 0.0,
+            "interpretability": 1.0,
+            "mae": 0.9776431508267814,
+            "nmbe": 0.7898292146030619,
+            "parsimony": 0.8843108934201204,
+            "plausibility": 1.0,
+            "r2": 0.9979678154092373,
+            "robustness": 0.7455752320829176,
+            "smape": 0.972742603473428,
+            "uncertainty": 1.0
+          },
+          "diagnostics": {
+            "breusch_pagan_p": null,
+            "durbin_watson": null,
+            "inference_status": "not run: accepted VSG and locked TCP required",
+            "jarque_bera_p": null,
+            "jarque_bera_stat": null,
+            "ljung_box_p": null,
+            "residual_mean": -176.0703127528032,
+            "residual_std": 791.9613345391522,
+            "tests_passed": 0
+          },
+          "failures": [],
+          "family": "Linear / statistical",
+          "fold_cvrmse": [
+            5.5822359746747745,
+            2.9937925031538333,
+            5.4444009671474864
+          ],
+          "formula": {
+            "intercept": 12745.352815636805,
+            "kind": "equation",
+            "terms": [
+              [
+                "HDD(Tb=14.4)",
+                627.7146035756934
+              ],
+              [
+                "CDD(Tb=18.9)",
+                1628.1733809207324
+              ]
+            ],
+            "text": "\u0177(Energy_kWh) = 12745.4 + 1628.17\u00b7[CDD(Tb=18.9)] + 627.715\u00b7[HDD(Tb=14.4)]"
+          },
+          "history": null,
+          "hpo": "HPO skipped (n<80, trials=0, or parameter-free candidate)",
+          "importance": {},
+          "kind": "linear",
+          "metrics": {
+            "cvrmse": 4.842128526920376,
+            "mae": 614.3974680939598,
+            "mape": 3.934614666359674,
+            "n": 40,
+            "nmbe": -1.0508539269846908,
+            "r2": 0.9315433546152309,
+            "rmse": 811.2974241533772,
+            "smape": 3.855429187295023,
+            "wape": 3.666955445137697
+          },
+          "n_params": 3,
+          "name": "Degree-day regression",
+          "params": {},
+          "plaus_notes": [],
+          "qualified": true,
+          "rank": 1,
+          "reason": "Rank #1 with score 94.8/100; CV(RMSE)=4.8 %, R\u00b2=0.932, NMBE=-1.05 %. Strongest criteria: plausibility (1.00), interpretability (1.00), ashrae (1.00); weakest: robustness (0.75).",
+          "robustness": 0.2544247679170824,
+          "score": 94.75436064043487,
+          "tier": 1,
+          "train_metrics": {
+            "cvrmse": 3.77052514848823,
+            "mae": 493.71832303148017,
+            "mape": 3.019532326928863,
+            "n": 72,
+            "nmbe": -2.8200166510441633e-15,
+            "r2": 0.9543460263774545,
+            "rmse": 641.8025565701661,
+            "smape": 2.9950162625783125,
+            "wape": 2.900545244331871
+          },
+          "uncertainty": {
+            "basis": "empirical 2.5/97.5 % quantiles of out-of-fold residuals",
+            "level": 0.95,
+            "lower": -1627.251837487629,
+            "upper": 994.2497313702271
+          }
+        },
+        {
+          "artifact": "",
+          "criteria": {
+            "ashrae": 1.0,
+            "cvrmse": 1.0,
+            "data_sufficiency": 1.0,
+            "diagnostics": 0.0,
+            "interpretability": 1.0,
+            "mae": 1.0,
+            "nmbe": 0.768054683006912,
+            "parsimony": 0.7833333333333333,
+            "plausibility": 1.0,
+            "r2": 1.0,
+            "robustness": 0.6926421776496685,
+            "smape": 0.997365289544843,
+            "uncertainty": 0.944973871933185
+          },
+          "diagnostics": {
+            "breusch_pagan_p": null,
+            "durbin_watson": null,
+            "inference_status": "not run: accepted VSG and locked TCP required",
+            "jarque_bera_p": null,
+            "jarque_bera_stat": null,
+            "ljung_box_p": null,
+            "residual_mean": -194.31189937931322,
+            "residual_std": 776.0204119454744,
+            "tests_passed": 0
+          },
+          "failures": [],
+          "family": "Linear / statistical",
+          "fold_cvrmse": [
+            5.799780858799624,
+            2.5996325046364466,
+            5.269582731766692
+          ],
+          "formula": {
+            "intercept": 11926.740322741223,
+            "kind": "equation",
+            "terms": [
+              [
+                "Avg_Temp_C",
+                -71.1356561648032
+              ],
+              [
+                "sin_year1",
+                689.624086981857
+              ],
+              [
+                "cos_year1",
+                -624.9057804671868
+              ],
+              [
+                "HDD(Tb=14.4)",
+                661.8332900044385
+              ],
+              [
+                "CDD(Tb=18.9)",
+                1551.8768800582402
+              ],
+              [
+                "Avg_Temp_C_lag1",
+                127.03257155056345
+              ],
+              [
+                "Avg_Temp_C_lag3",
+                48.40501928340657
+              ],
+              [
+                "Avg_Temp_C_roll3",
+                -47.02480168359924
+              ]
+            ],
+            "text": "\u0177(Energy_kWh) = 11926.7 + 1551.88\u00b7[CDD(Tb=18.9)] + 689.624\u00b7[sin_year1] + 661.833\u00b7[HDD(Tb=14.4)] - 624.906\u00b7[cos_year1] + 127.033\u00b7[Avg_Temp_C_lag1] - 71.1357\u00b7[Avg_Temp_C] + 48.405\u00b7[Avg_Temp_C_lag3] - 47.0248\u00b7[Avg_Temp_C_roll3]"
+          },
+          "history": null,
+          "hpo": "HPO skipped (n<80, trials=0, or parameter-free candidate)",
+          "importance": {},
+          "kind": "linear",
+          "metrics": {
+            "cvrmse": 4.774569916965862,
+            "mae": 600.6614765673758,
+            "mape": 3.8467111146339876,
+            "n": 40,
+            "nmbe": -1.15972658496544,
+            "r2": 0.9334402775636931,
+            "rmse": 799.977995945151,
+            "smape": 3.760247388264641,
+            "wape": 3.5849738753258404
+          },
+          "n_params": 9,
+          "name": "Elastic Net",
+          "params": {},
+          "plaus_notes": [],
+          "qualified": true,
+          "rank": 2,
+          "reason": "Rank #2 with score 93.1/100; CV(RMSE)=4.8 %, R\u00b2=0.933, NMBE=-1.16 %. Strongest criteria: cvrmse (1.00), r2 (1.00), mae (1.00); weakest: robustness (0.69).",
+          "robustness": 0.30735782235033154,
+          "score": 93.11531430346515,
+          "tier": 1,
+          "train_metrics": {
+            "cvrmse": 3.404581632737859,
+            "mae": 430.39555675670937,
+            "mape": 2.6375640104767935,
+            "n": 72,
+            "nmbe": -1.3357973610209193e-15,
+            "r2": 0.9627777686814973,
+            "rmse": 579.5132269092752,
+            "smape": 2.614270128995011,
+            "wape": 2.528530392931442
+          },
+          "uncertainty": {
+            "basis": "empirical 2.5/97.5 % quantiles of out-of-fold residuals",
+            "level": 0.95,
+            "lower": -1738.4213127630387,
+            "upper": 1035.7311233195658
+          }
+        },
+        {
+          "artifact": "",
+          "criteria": {
+            "ashrae": 1.0,
+            "cvrmse": 0.9859332580742015,
+            "data_sufficiency": 1.0,
+            "diagnostics": 0.0,
+            "interpretability": 1.0,
+            "mae": 0.9819084871052449,
+            "nmbe": 0.7671611163563725,
+            "parsimony": 0.7333333333333334,
+            "plausibility": 1.0,
+            "r2": 0.997950782288388,
+            "robustness": 0.6821427869978466,
+            "smape": 0.9776098990585339,
+            "uncertainty": 0.8744866594900582
+          },
+          "diagnostics": {
+            "breusch_pagan_p": null,
+            "durbin_watson": null,
+            "inference_status": "not run: accepted VSG and locked TCP required",
+            "jarque_bera_p": null,
+            "jarque_bera_stat": null,
+            "ljung_box_p": null,
+            "residual_mean": -195.06048372384438,
+            "residual_std": 787.5962094952768,
+            "tests_passed": 0
+          },
+          "failures": [],
+          "family": "Linear / statistical",
+          "fold_cvrmse": [
+            5.902550323468794,
+            2.5600985763469875,
+            5.358941756984379
+          ],
+          "formula": {
+            "intercept": 11489.880972675983,
+            "kind": "equation",
+            "terms": [
+              [
+                "Avg_Temp_C",
+                -92.11577721367198
+              ],
+              [
+                "sin_year1",
+                923.8352375431691
+              ],
+              [
+                "cos_year1",
+                -940.6707036682445
+              ],
+              [
+                "HDD(Tb=14.4)",
+                698.0796300981326
+              ],
+              [
+                "CDD(Tb=18.9)",
+                1517.9788973291256
+              ],
+              [
+                "Avg_Temp_C_lag1",
+                147.13400961854862
+              ],
+              [
+                "Avg_Temp_C_lag3",
+                60.34268198278615
+              ],
+              [
+                "Avg_Temp_C_roll3",
+                -34.22796659968187
+              ]
+            ],
+            "text": "\u0177(Energy_kWh) = 11489.9 + 1517.98\u00b7[CDD(Tb=18.9)] - 940.671\u00b7[cos_year1] + 923.835\u00b7[sin_year1] + 698.08\u00b7[HDD(Tb=14.4)] + 147.134\u00b7[Avg_Temp_C_lag1] - 92.1158\u00b7[Avg_Temp_C] + 60.3427\u00b7[Avg_Temp_C_lag3] - 34.228\u00b7[Avg_Temp_C_roll3]"
+          },
+          "history": null,
+          "hpo": "HPO skipped (n<80, trials=0, or parameter-free candidate)",
+          "importance": {},
+          "kind": "linear",
+          "metrics": {
+            "cvrmse": 4.842690798657009,
+            "mae": 611.7285719142526,
+            "mape": 3.921372345774605,
+            "n": 40,
+            "nmbe": -1.1641944182181376,
+            "r2": 0.9315274552141775,
+            "rmse": 811.3916326422822,
+            "smape": 3.8362338891704018,
+            "wape": 3.6510264677461626
+          },
+          "n_params": 9,
+          "name": "Bayesian ridge",
+          "params": {},
+          "plaus_notes": [],
+          "qualified": true,
+          "rank": 3,
+          "reason": "Rank #3 with score 91.9/100; CV(RMSE)=4.8 %, R\u00b2=0.932, NMBE=-1.16 %. Strongest criteria: plausibility (1.00), interpretability (1.00), ashrae (1.00); weakest: robustness (0.68).",
+          "robustness": 0.3178572130021534,
+          "score": 91.86472309788255,
+          "tier": 1,
+          "train_metrics": {
+            "cvrmse": 3.3695130439560494,
+            "mae": 420.51561661766937,
+            "mape": 2.5788670926873465,
+            "n": 72,
+            "nmbe": 0.0,
+            "r2": 0.9635406279931279,
+            "rmse": 573.5440027165929,
+            "smape": 2.558110145414396,
+            "wape": 2.470486743247513
+          },
+          "uncertainty": {
+            "basis": "empirical 2.5/97.5 % quantiles of out-of-fold residuals",
+            "level": 0.95,
+            "lower": -1907.0148730984804,
+            "upper": 1090.7456306312615
+          }
+        },
+        {
+          "artifact": "",
+          "criteria": {
+            "ashrae": 1.0,
+            "cvrmse": 0.9845627015706998,
+            "data_sufficiency": 1.0,
+            "diagnostics": 0.0,
+            "interpretability": 1.0,
+            "mae": 0.9583549013756204,
+            "nmbe": 0.7769999869701966,
+            "parsimony": 0.6333333333333333,
+            "plausibility": 1.0,
+            "r2": 0.997746412983817,
+            "robustness": 0.7208385211891267,
+            "smape": 0.9539119676656813,
+            "uncertainty": 0.9612197924811873
+          },
+          "diagnostics": {
+            "breusch_pagan_p": null,
+            "durbin_watson": null,
+            "inference_status": "not run: accepted VSG and locked TCP required",
+            "jarque_bera_p": null,
+            "jarque_bera_stat": null,
+            "ljung_box_p": null,
+            "residual_mean": -186.8179821657015,
+            "residual_std": 790.7525677887327,
+            "tests_passed": 0
+          },
+          "failures": [],
+          "family": "Linear / statistical",
+          "fold_cvrmse": [
+            5.924566962244755,
+            2.8729345808572413,
+            5.2155335253735915
+          ],
+          "formula": {
+            "intercept": 12777.841597304709,
+            "kind": "equation",
+            "terms": [
+              [
+                "Avg_Temp_C",
+                -60.11468912836461
+              ],
+              [
+                "sin_year1",
+                402.35895283867586
+              ],
+              [
+                "cos_year1",
+                -192.76906821373146
+              ],
+              [
+                "HDD(Tb=14.4)",
+                588.9113134673077
+              ],
+              [
+                "CDD(Tb=18.9)",
+                1615.2963622869702
+              ],
+              [
+                "Avg_Temp_C_lag1",
+                92.14063339758793
+              ],
+              [
+                "Avg_Temp_C_lag3",
+                34.299264117653465
+              ],
+              [
+                "Avg_Temp_C_roll3",
+                -54.57835953086036
+              ]
+            ],
+            "text": "\u0177(Energy_kWh) = 12777.8 + 1615.3\u00b7[CDD(Tb=18.9)] + 588.911\u00b7[HDD(Tb=14.4)] + 402.359\u00b7[sin_year1] - 192.769\u00b7[cos_year1] + 92.1406\u00b7[Avg_Temp_C_lag1] - 60.1147\u00b7[Avg_Temp_C] - 54.5784\u00b7[Avg_Temp_C_roll3] + 34.2993\u00b7[Avg_Temp_C_lag3]"
+          },
+          "history": null,
+          "hpo": "HPO skipped (n<80, trials=0, or parameter-free candidate)",
+          "importance": {},
+          "kind": "linear",
+          "metrics": {
+            "cvrmse": 4.8494320466831216,
+            "mae": 626.7630871456781,
+            "mape": 4.030289947141339,
+            "n": 40,
+            "nmbe": -1.115000065149017,
+            "r2": 0.9313366886737934,
+            "rmse": 812.5211270637452,
+            "smape": 3.931537030963417,
+            "wape": 3.7407581159964614
+          },
+          "n_params": 9,
+          "name": "Ridge regression",
+          "params": {},
+          "plaus_notes": [],
+          "qualified": true,
+          "rank": 4,
+          "reason": "Rank #4 with score 91.0/100; CV(RMSE)=4.8 %, R\u00b2=0.931, NMBE=-1.12 %. Strongest criteria: plausibility (1.00), interpretability (1.00), ashrae (1.00); weakest: parsimony (0.63).",
+          "robustness": 0.2791614788108733,
+          "score": 90.96276905440533,
+          "tier": 1,
+          "train_metrics": {
+            "cvrmse": 3.5382437996383453,
+            "mae": 456.04034037116185,
+            "mape": 2.7952362985713304,
+            "n": 72,
+            "nmbe": -2.37475086403719e-15,
+            "r2": 0.9597977454947819,
+            "rmse": 602.2646254691907,
+            "smape": 2.766800354874382,
+            "wape": 2.6791909045731725
+          },
+          "uncertainty": {
+            "basis": "empirical 2.5/97.5 % quantiles of out-of-fold residuals",
+            "level": 0.95,
+            "lower": -1734.6531384143611,
+            "upper": 992.6123521255283
+          }
+        },
+        {
+          "artifact": "",
+          "criteria": {
+            "ashrae": 1.0,
+            "cvrmse": 0.9748377841001179,
+            "data_sufficiency": 1.0,
+            "diagnostics": 0.0,
+            "interpretability": 1.0,
+            "mae": 0.966739239522393,
+            "nmbe": 0.7691714998564416,
+            "parsimony": 0.5833333333333333,
+            "plausibility": 1.0,
+            "r2": 0.9962714448580987,
+            "robustness": 0.6692010559812962,
+            "smape": 0.9612658784735137,
+            "uncertainty": 0.8287473013967175
+          },
+          "diagnostics": {
+            "breusch_pagan_p": null,
+            "durbin_watson": null,
+            "inference_status": "not run: accepted VSG and locked TCP required",
+            "jarque_bera_p": null,
+            "jarque_bera_stat": null,
+            "ljung_box_p": null,
+            "residual_mean": -193.37628745964085,
+            "residual_std": 797.5173543565346,
+            "tests_passed": 0
+          },
+          "failures": [],
+          "family": "Linear / statistical",
+          "fold_cvrmse": [
+            5.983010626475596,
+            2.491860134254765,
+            5.4474837872938995
+          ],
+          "formula": {
+            "intercept": 11249.107515681913,
+            "kind": "equation",
+            "terms": [
+              [
+                "Avg_Temp_C",
+                -121.27084531314989
+              ],
+              [
+                "sin_year1",
+                1143.8415957416792
+              ],
+              [
+                "cos_year1",
+                -1188.96314917553
+              ],
+              [
+                "HDD(Tb=14.4)",
+                716.712363054641
+              ],
+              [
+                "CDD(Tb=18.9)",
+                1502.9998778846486
+              ],
+              [
+                "Avg_Temp_C_lag1",
+                161.1481389939463
+              ],
+              [
+                "Avg_Temp_C_lag3",
+                69.6818617444858
+              ],
+              [
+                "Avg_Temp_C_roll3",
+                -15.03100236838032
+              ]
+            ],
+            "text": "\u0177(Energy_kWh) = 11249.1 + 1503\u00b7[CDD(Tb=18.9)] - 1188.96\u00b7[cos_year1] + 1143.84\u00b7[sin_year1] + 716.712\u00b7[HDD(Tb=14.4)] + 161.148\u00b7[Avg_Temp_C_lag1] - 121.271\u00b7[Avg_Temp_C] + 69.6819\u00b7[Avg_Temp_C_lag3] - 15.031\u00b7[Avg_Temp_C_roll3]"
+          },
+          "history": null,
+          "hpo": "HPO skipped (n<80, trials=0, or parameter-free candidate)",
+          "importance": {},
+          "kind": "linear",
+          "metrics": {
+            "cvrmse": 4.897809661094859,
+            "mae": 621.3272949012869,
+            "mape": 3.987155735400637,
+            "n": 40,
+            "nmbe": -1.154142500717792,
+            "r2": 0.9299598940171252,
+            "rmse": 820.6267842640284,
+            "smape": 3.9014598449206668,
+            "wape": 3.7083152609973276
+          },
+          "n_params": 9,
+          "name": "Lasso regression",
+          "params": {},
+          "plaus_notes": [],
+          "qualified": true,
+          "rank": 5,
+          "reason": "Rank #5 with score 89.4/100; CV(RMSE)=4.9 %, R\u00b2=0.930, NMBE=-1.15 %. Strongest criteria: plausibility (1.00), interpretability (1.00), ashrae (1.00); weakest: parsimony (0.58).",
+          "robustness": 0.33079894401870386,
+          "score": 89.42587707773134,
+          "tier": 1,
+          "train_metrics": {
+            "cvrmse": 3.362448844083904,
+            "mae": 416.6672408943008,
+            "mape": 2.559007276992871,
+            "n": 72,
+            "nmbe": -2.9684385800464877e-16,
+            "r2": 0.9636933422303059,
+            "rmse": 572.3415650296613,
+            "smape": 2.539830192836181,
+            "wape": 2.4478779248543034
+          },
+          "uncertainty": {
+            "basis": "empirical 2.5/97.5 % quantiles of out-of-fold residuals",
+            "level": 0.95,
+            "lower": -2037.2007671322922,
+            "upper": 1126.009012784633
+          }
+        }
+      ],
+      "status": "ok",
+      "thresholds": {
+        "max_cvrmse": 15.0,
+        "max_nmbe": 5.0,
+        "min_r2": 0.75
+      },
+      "validation_contract": {
+        "cache_matrix_budget_bytes": 134217728,
+        "estimator_selection_policy": "explicit-temporal-hpo-v2",
+        "evaluator": "raw-fold-training-v1",
+        "folds": [
+          {
+            "auto": [
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter 25% missingness cap for short series (n<60), 40% for medium series, 50% when n>=1000",
+                "setting": "max_missing_rate",
+                "signals": "n=29, p_num=1, median_missing=0.000",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "0.25"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "near-constant relative-variance floor scaled by sample size (1e-6 for n<50, 1e-8 for n>=50)",
+                "setting": "min_variance",
+                "signals": "n=29, target_rel_var=2.958e-02",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "1e-06"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "small-sample |r|>=0.985 (n<60) or |r|>=0.99 (n>=60) with target and energy-like name => leakage",
+                "setting": "leakage_threshold",
+                "signals": "n=29, candidate_predictors=1",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "0.985"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "too few observations for reliable outlier statistics",
+                "setting": "outlier_method",
+                "signals": "n=29 < 30",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "none"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "3.5 (Iglewicz-Hoaglin); 4.5 for skewed variables",
+                "setting": "outlier_threshold",
+                "signals": "|skew|=0.04",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "3.5"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "nothing to treat",
+                "setting": "outlier_treatment",
+                "signals": "no detection performed",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "flag"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "AUTO applies small-share outlier exclusion automatically and flags larger regime shares",
+                "setting": "outlier_action_policy",
+                "signals": "treatment='flag', flagged_share=0.00%",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "flag_only"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "irrelevant (kept as default)",
+                "setting": "missing_strategy",
+                "signals": "no missing predictor values",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "linear"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter |r|>=0.90 redundancy pruning for n<100, |r|>=0.95 for n>=100",
+                "setting": "corr_threshold",
+                "signals": "n=29, p_num=1",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "0.9"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter VIF for small samples",
+                "setting": "vif_threshold",
+                "signals": "n=29 < 100",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "5"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "calendar effects matter for sub-daily/daily data with >=48 points",
+                "setting": "calendar_features",
+                "signals": "granularity=monthly, n=29",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "include harmonics where autocorrelation at the period exceeds 0.2",
+                "setting": "fourier_terms",
+                "signals": "monthly data, >=24 points",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "year=1"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "HDD/CDD only when an outdoor-temperature column exists",
+                "setting": "degree_days",
+                "signals": "temperature-like column: Avg_Temp_C",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "True"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "fitted from data (percentile grid)",
+                "setting": "balance_points",
+                "signals": "grid search maximising R2 of y~HDD+CDD (R2=0.969)",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "heating=13.6, cooling=19.4"
+              },
+              {
+                "candidate_space": "",
+                "mode": "USER_OVERRIDE",
+                "rule": "user override of AUTO",
+                "setting": "lags",
+                "signals": "value supplied by user",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "1,3"
+              },
+              {
+                "candidate_space": "",
+                "mode": "USER_OVERRIDE",
+                "rule": "user override of AUTO",
+                "setting": "rolling_windows",
+                "signals": "value supplied by user",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "3"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "interactions only when n > 20p and p<=6 (over-fit protection)",
+                "setting": "interactions",
+                "signals": "p=1, n=29",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "no holiday flags (country unknown)",
+                "setting": "holiday_country",
+                "signals": "no country declared",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "(none)"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "few candidates: keep all",
+                "setting": "selection_method",
+                "signals": "p=8 <= 8",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "none"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "exact k_max = min(p, n // 20) observations-per-feature rule",
+                "setting": "max_features",
+                "signals": "p=8, n=29",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "1"
+              }
+            ],
+            "category_levels": {},
+            "cooling_balance": 19.43,
+            "heating_balance": 13.634,
+            "medians": {
+              "Avg_Temp_C": 9.51,
+              "Avg_Temp_C_lag1": 9.49,
+              "Avg_Temp_C_lag3": 9.649999999999999,
+              "Avg_Temp_C_roll3": 9.203333333333333,
+              "CDD(Tb=19.4)": 0.0,
+              "HDD(Tb=13.6)": 4.1240000000000006,
+              "cos_year1": 0.005375731557583884,
+              "sin_year1": 0.017201575418260506
+            },
+            "n_train_fit": 29,
+            "n_train_input": 29,
+            "n_valid": 13,
+            "selected_features": [
+              "Avg_Temp_C",
+              "sin_year1",
+              "cos_year1",
+              "HDD(Tb=13.6)",
+              "CDD(Tb=19.4)",
+              "Avg_Temp_C_lag1",
+              "Avg_Temp_C_lag3",
+              "Avg_Temp_C_roll3"
+            ],
+            "train_input_sha256": "cc17fafc6a13876cd236615d5cfc46e1ace69fcd5b06d334e71bd7fbad3c7511"
+          },
+          {
+            "auto": [
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter 25% missingness cap for short series (n<60), 40% for medium series, 50% when n>=1000",
+                "setting": "max_missing_rate",
+                "signals": "n=42, p_num=1, median_missing=0.000",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "0.25"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "near-constant relative-variance floor scaled by sample size (1e-6 for n<50, 1e-8 for n>=50)",
+                "setting": "min_variance",
+                "signals": "n=42, target_rel_var=3.220e-02",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "1e-06"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "small-sample |r|>=0.985 (n<60) or |r|>=0.99 (n>=60) with target and energy-like name => leakage",
+                "setting": "leakage_threshold",
+                "signals": "n=42, candidate_predictors=1",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "0.985"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "approximately symmetric -> robust z-score on calendar-adjusted values",
+                "setting": "outlier_method",
+                "signals": "target |skew|=0.07 <= 2, n=42",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "robust_z"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "3.5 (Iglewicz-Hoaglin); 4.5 for skewed variables",
+                "setting": "outlier_threshold",
+                "signals": "|skew|=0.07",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "3.5"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "few extreme points: remove from training (target never altered)",
+                "setting": "outlier_treatment",
+                "signals": "target flagged share=0.00% <= 2 %",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "remove"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "AUTO applies small-share outlier exclusion automatically and flags larger regime shares",
+                "setting": "outlier_action_policy",
+                "signals": "treatment='remove', flagged_share=0.00%",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "auto_apply"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "irrelevant (kept as default)",
+                "setting": "missing_strategy",
+                "signals": "no missing predictor values",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "linear"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter |r|>=0.90 redundancy pruning for n<100, |r|>=0.95 for n>=100",
+                "setting": "corr_threshold",
+                "signals": "n=42, p_num=1",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "0.9"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter VIF for small samples",
+                "setting": "vif_threshold",
+                "signals": "n=42 < 100",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "5"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "calendar effects matter for sub-daily/daily data with >=48 points",
+                "setting": "calendar_features",
+                "signals": "granularity=monthly, n=42",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "include harmonics where autocorrelation at the period exceeds 0.2",
+                "setting": "fourier_terms",
+                "signals": "monthly data, >=24 points",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "year=1"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "HDD/CDD only when an outdoor-temperature column exists",
+                "setting": "degree_days",
+                "signals": "temperature-like column: Avg_Temp_C",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "True"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "fitted from data (percentile grid)",
+                "setting": "balance_points",
+                "signals": "grid search maximising R2 of y~HDD+CDD (R2=0.965)",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "heating=15.1, cooling=18.0"
+              },
+              {
+                "candidate_space": "",
+                "mode": "USER_OVERRIDE",
+                "rule": "user override of AUTO",
+                "setting": "lags",
+                "signals": "value supplied by user",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "1,3"
+              },
+              {
+                "candidate_space": "",
+                "mode": "USER_OVERRIDE",
+                "rule": "user override of AUTO",
+                "setting": "rolling_windows",
+                "signals": "value supplied by user",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "3"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "interactions only when n > 20p and p<=6 (over-fit protection)",
+                "setting": "interactions",
+                "signals": "p=1, n=42",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "no holiday flags (country unknown)",
+                "setting": "holiday_country",
+                "signals": "no country declared",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "(none)"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "few candidates: keep all",
+                "setting": "selection_method",
+                "signals": "p=8 <= 8",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "none"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "exact k_max = min(p, n // 20) observations-per-feature rule",
+                "setting": "max_features",
+                "signals": "p=8, n=42",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "2"
+              }
+            ],
+            "category_levels": {},
+            "cooling_balance": 17.996,
+            "heating_balance": 15.127000000000002,
+            "medians": {
+              "Avg_Temp_C": 9.649999999999999,
+              "Avg_Temp_C_lag1": 9.51,
+              "Avg_Temp_C_lag3": 9.51,
+              "Avg_Temp_C_roll3": 9.553333333333335,
+              "CDD(Tb=18.0)": 0.0,
+              "HDD(Tb=15.1)": 5.477000000000003,
+              "cos_year1": 0.003225441420191055,
+              "sin_year1": 0.017201575418260506
+            },
+            "n_train_fit": 42,
+            "n_train_input": 42,
+            "n_valid": 13,
+            "selected_features": [
+              "Avg_Temp_C",
+              "sin_year1",
+              "cos_year1",
+              "HDD(Tb=15.1)",
+              "CDD(Tb=18.0)",
+              "Avg_Temp_C_lag1",
+              "Avg_Temp_C_lag3",
+              "Avg_Temp_C_roll3"
+            ],
+            "train_input_sha256": "ed73a9fd7d324b442e19d408377093c2e85b6a944b7d662aaa76978aea082d8c"
+          },
+          {
+            "auto": [
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter 25% missingness cap for short series (n<60), 40% for medium series, 50% when n>=1000",
+                "setting": "max_missing_rate",
+                "signals": "n=55, p_num=1, median_missing=0.000",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "0.25"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "near-constant relative-variance floor scaled by sample size (1e-6 for n<50, 1e-8 for n>=50)",
+                "setting": "min_variance",
+                "signals": "n=55, target_rel_var=3.251e-02",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "1e-08"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "small-sample |r|>=0.985 (n<60) or |r|>=0.99 (n>=60) with target and energy-like name => leakage",
+                "setting": "leakage_threshold",
+                "signals": "n=55, candidate_predictors=1",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "0.985"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "approximately symmetric -> robust z-score on calendar-adjusted values",
+                "setting": "outlier_method",
+                "signals": "target |skew|=0.07 <= 2, n=55",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "robust_z"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "3.5 (Iglewicz-Hoaglin); 4.5 for skewed variables",
+                "setting": "outlier_threshold",
+                "signals": "|skew|=0.07",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "3.5"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "few extreme points: remove from training (target never altered)",
+                "setting": "outlier_treatment",
+                "signals": "target flagged share=0.00% <= 2 %",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "remove"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "AUTO applies small-share outlier exclusion automatically and flags larger regime shares",
+                "setting": "outlier_action_policy",
+                "signals": "treatment='remove', flagged_share=0.00%",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "auto_apply"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "irrelevant (kept as default)",
+                "setting": "missing_strategy",
+                "signals": "no missing predictor values",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "linear"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter |r|>=0.90 redundancy pruning for n<100, |r|>=0.95 for n>=100",
+                "setting": "corr_threshold",
+                "signals": "n=55, p_num=1",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "0.9"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter VIF for small samples",
+                "setting": "vif_threshold",
+                "signals": "n=55 < 100",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "5"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "calendar effects matter for sub-daily/daily data with >=48 points",
+                "setting": "calendar_features",
+                "signals": "granularity=monthly, n=55",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "include harmonics where autocorrelation at the period exceeds 0.2",
+                "setting": "fourier_terms",
+                "signals": "monthly data, >=24 points",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "year=1"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "HDD/CDD only when an outdoor-temperature column exists",
+                "setting": "degree_days",
+                "signals": "temperature-like column: Avg_Temp_C",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "True"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "fitted from data (percentile grid)",
+                "setting": "balance_points",
+                "signals": "grid search maximising R2 of y~HDD+CDD (R2=0.967)",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "heating=14.7, cooling=18.8"
+              },
+              {
+                "candidate_space": "",
+                "mode": "USER_OVERRIDE",
+                "rule": "user override of AUTO",
+                "setting": "lags",
+                "signals": "value supplied by user",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "1,3"
+              },
+              {
+                "candidate_space": "",
+                "mode": "USER_OVERRIDE",
+                "rule": "user override of AUTO",
+                "setting": "rolling_windows",
+                "signals": "value supplied by user",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "3"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "interactions only when n > 20p and p<=6 (over-fit protection)",
+                "setting": "interactions",
+                "signals": "p=1, n=55",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "no holiday flags (country unknown)",
+                "setting": "holiday_country",
+                "signals": "no country declared",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "(none)"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "few candidates: keep all",
+                "setting": "selection_method",
+                "signals": "p=8 <= 8",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "none"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "exact k_max = min(p, n // 20) observations-per-feature rule",
+                "setting": "max_features",
+                "signals": "p=8, n=55",
+                "stage": "",
+                "target": "Energy_kWh",
+                "value": "2"
+              }
+            ],
+            "category_levels": {},
+            "cooling_balance": 18.762,
+            "heating_balance": 14.675999999999998,
+            "medians": {
+              "Avg_Temp_C": 10.3,
+              "Avg_Temp_C_lag1": 10.045,
+              "Avg_Temp_C_lag3": 9.649999999999999,
+              "Avg_Temp_C_roll3": 9.823333333333336,
+              "CDD(Tb=18.8)": 0.0,
+              "HDD(Tb=14.7)": 4.375999999999998,
+              "cos_year1": 0.005375731557583884,
+              "sin_year1": 0.017201575418260506
+            },
+            "n_train_fit": 55,
+            "n_train_input": 55,
+            "n_valid": 14,
+            "selected_features": [
+              "Avg_Temp_C",
+              "sin_year1",
+              "cos_year1",
+              "HDD(Tb=14.7)",
+              "CDD(Tb=18.8)",
+              "Avg_Temp_C_lag1",
+              "Avg_Temp_C_lag3",
+              "Avg_Temp_C_roll3"
+            ],
+            "train_input_sha256": "f7e56e26464468714c2392befb91da84abbdf149eafa7b109fbc34c787bbd1f3"
+          }
+        ],
+        "inference_policy": "TCP-controlled catalog only; auxiliary EDA/residual inference disabled",
+        "n_evaluation_population": 72,
+        "n_final_training": 72,
+        "schema_version": 2,
+        "selection_scope": "training fold only",
+        "validation_target_filtering": "none"
+      }
+    }
+  }
+}

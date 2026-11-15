@@ -300,6 +300,7 @@ def pre_test_profile(
     schema: DatasetSchema | Mapping[str, Any] | None = None,
     bins: int = 8,
     near_constant_rel_var: float = 1e-8,
+    config: Mapping[str, Any] | None = None,
 ) -> dict[str, VariableProfile]:
     """Compute pre-test screening profiles for all candidate columns against ``target`` (VSG-2)."""
     if target not in df.columns:
@@ -315,6 +316,7 @@ def pre_test_profile(
         all_targets=all_targets,
         candidate_predictors=candidate_cols,
         schema=resolved_schema,
+        config=config,
     )
     conflict_by_var: dict[str, list[str]] = {}
     for c in integrity_rep.conflicts:
@@ -464,6 +466,8 @@ class VariableSelectionGate:
             if t not in df.columns:
                 raise VSGValidationError(f"Target column {t!r} does not exist in DataFrame.")
         self._df = df
+        from .ingest import sha256_dataframe
+        self.input_frame_sha256 = sha256_dataframe(df)
         self.targets: tuple[str, ...] = tuple(str(t) for t in targets)
         self.schema: DatasetSchema | None = coerce_dataset_schema(schema)
         self.time_col: str | None = time_col or (self.schema.time_column if self.schema is not None else None)
@@ -490,7 +494,8 @@ class VariableSelectionGate:
 
     def _domain_relevance_score(self, prof: VariableProfile) -> float:
         rel = max(abs(prof.pearson_r), abs(prof.spearman_rho), prof.info_correlation)
-        bonus = 0.05 if _DOMAIN_PRIORITY_PAT.search(prof.variable) else 0.0
+        from .domain import resolve_domain
+        bonus = 0.05 if resolve_domain(self.config).energy and _DOMAIN_PRIORITY_PAT.search(prof.variable) else 0.0
         return rel + bonus
 
     def _resolve_target_auto(
@@ -508,6 +513,7 @@ class VariableSelectionGate:
             time_col=self.time_col,
             all_targets=self.targets,
             schema=self.schema,
+            config=self.config,
         )
         self.profiles_by_target[target] = profiles
 
@@ -1073,6 +1079,7 @@ class VariableSelectionGate:
         return {
             "accepted_by_target": {t: bool(self._accepted_by_target[t]) for t in sorted(self.targets)},
             "dataset_sha256": self.dataset_sha256,
+            "input_frame_sha256": self.input_frame_sha256,
             "decisions_by_target": {
                 t: {c: self.decisions_by_target[t][c].to_dict() for c in sorted(self.decisions_by_target[t])}
                 for t in sorted(self.targets)

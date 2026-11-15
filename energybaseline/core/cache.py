@@ -683,9 +683,10 @@ class CachedComplianceRunner:
     ) -> dict[str, Any]:
         """Execute typed pipeline DAG with stage-keyed caching so invalidation recomputes only dependents."""
         # PIPE-1 / Gate G3 #1: strictly block before any stage or engine call if VSG or TCP is unaccepted!
-        tcp.assert_accepted()
+        from .authorization import authorize_legacy_executor
+        authorize_legacy_executor(df, vsg, tcp)
 
-        raw_df_hash = vsg.dataset_sha256 or compute_dataframe_hash(df)
+        raw_df_hash = compute_dataframe_hash(df)
 
         def _do_ingest() -> dict[str, Any]:
             self.stage_call_counts["ingest"] += 1
@@ -742,11 +743,13 @@ class CachedComplianceRunner:
     ) -> list[EvaluatedTestResult]:
         """Run enabled inferential tests, enforcing VSG/TCP acceptance and 6-part result caching."""
         # Hard PIPE-1 / PIPE-3 guard BEFORE any test primitive can run!
-        tcp.assert_accepted()
+        from .authorization import authorize_legacy_executor
+        authorize_legacy_executor(df, vsg, tcp)
         if tcp.vsg is not vsg and tcp.vsg.vsg_sha256 != vsg.vsg_sha256:
             raise ComplianceGateError("TCP is bound to a stale VSG snapshot; re-accept TCP against active VSG.")
 
-        eff_data_hash = data_hash or vsg.dataset_sha256 or compute_dataframe_hash(df)
+        # A caller-supplied dataset label is not an observation fingerprint.
+        eff_data_hash = compute_dataframe_hash(df)
         allowed_stages = set(stages)
         raw_artifacts: list[RawTestArtifact] = []
 
@@ -953,7 +956,8 @@ class CachedComplianceRunner:
         """Execute Phase 4 ``T1..T14`` catalog per target after VSG & TCP acceptance, caching raw statistics."""
         from ..tests_catalog import ALL_CATALOG_TEST_IDS, apply_family_multiplicity, run_full_test_catalog
 
-        tcp.assert_accepted()
+        from .authorization import authorize_legacy_executor
+        authorize_legacy_executor(df, vsg, tcp)
         group_col: str | None = None
         if vsg.schema is not None:
             for col_spec in vsg.schema.columns:
@@ -967,7 +971,12 @@ class CachedComplianceRunner:
             oof_map = (oof_errors_by_target or {}).get(target)
             stage_payload = {
                 "allow_hac": allow_hac,
-                "dataset_sha256": vsg.dataset_sha256,
+                "dataset_sha256": compute_dataframe_hash(df),
+                "seed": self.seed,
+                "library_versions": self.library_versions,
+                "tcp_spec": tcp.canonical_spec_dict(),
+                "oof_values": {name: hashlib.sha256(np.asarray(values, dtype=float).tobytes()).hexdigest()
+                               for name, values in (oof_map or {}).items()},
                 "enabled": {tid: p.enabled for tid, p in tcp.test_panels.items()},
                 "group_col": group_col,
                 "mode": mode,

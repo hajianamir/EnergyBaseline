@@ -726,7 +726,9 @@ def preprocess_target(
         else:
             seen[key] = c
 
-    # ---- leakage (energy-like, almost perfect correlation with target)
+    from .domain import resolve_domain
+    energy_policy = resolve_domain(auto.config).energy
+    # Correlation is a review signal, not causal proof of target leakage.
     leak_thr = auto.decide(
         "leakage_threshold",
         lambda: (
@@ -744,7 +746,7 @@ def preprocess_target(
                 (spec_c is not None and not spec_c.suggested_by_heuristic and spec_c.quantity_type is not None and spec_c.quantity_type.value == "flow")
                 or ( (spec_c is None or spec_c.suggested_by_heuristic) and ENERGY_LIKE.search(c) )
             )
-            if r >= leak_thr and (is_energy_flow or r >= 0.9995):
+            if energy_policy and r >= leak_thr and (is_energy_flow or r >= 0.9995):
                 nums.remove(c)
                 _excl(
                     log,
@@ -755,7 +757,7 @@ def preprocess_target(
                 )
             elif r >= leak_thr:
                 notes.append(
-                    f"WARNING: '{c}' correlates |r|={r:.4f} with '{target}' (kept: not energy-like; verify it is a legitimate driver)."
+                    f"WARNING: '{c}' correlates |r|={r:.4f} with '{target}' (kept: correlation alone does not establish leakage; verify predictor availability at prediction time)."
                 )
 
     # ---- outliers & Outlier Action Policy (flag_only | ask_user | auto_apply)

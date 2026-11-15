@@ -32,6 +32,7 @@ from PySide6.QtWidgets import (
 
 from ..core import report, store
 from ..mining.downsample import lttb_downsample, m4_downsample
+from .artifact_approval import load_with_artifact_approval
 from .widgets import FuncWorker, MplCanvas, PagedTableView, fill_table, make_table
 
 log = logging.getLogger("energybaseline.gui")
@@ -777,7 +778,13 @@ class SelectionPage(QWidget):
                 != QMessageBox.StandardButton.Yes
             ):
                 return
-        sel = store.lock_baseline(self.state.run_id, target, model, note_txt)
+        try:
+            sel = load_with_artifact_approval(
+                self, lambda **approval: store.lock_baseline(self.state.run_id, target, model, note_txt, **approval)
+            )
+        except Exception:
+            QMessageBox.warning(self, "Baseline lock failed", "The artifact could not be verified or persisted. No active baseline selection was changed.")
+            return
         self.state.locked[target] = {"model": model, "run_id": self.state.run_id, "at": sel["at"], "target": target}
         self.status[target].setText(
             f"<b>Locked:</b> {model} (at {sel['at']}). Prediction & Monitoring is now unlocked for '{target}'."

@@ -1,0 +1,289 @@
+The Meson build system
+Version: 1.9.1
+Source dir: /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0
+Build dir: /home/user/EnergyBaseline/.cache/native-runtime/gl-build
+Build type: native build
+Project name: glvnd
+Project version: 1.7.0
+C compiler for the host machine: cc (gcc 12.2.0 "cc (Debian 12.2.0-14+deb12u1) 12.2.0")
+C linker for the host machine: cc ld.bfd 2.40
+Host machine cpu family: x86_64
+Host machine cpu: x86_64
+Program python3 found: YES (/home/user/EnergyBaseline/.cache/native-runtime/toolenv/bin/python)
+Program nm found: YES (/usr/bin/nm)
+Message: Host CPU family: x86_64
+Message: Host CPU: x86_64
+Library dl found: YES
+Library m found: YES
+Run-time dependency threads found: YES
+Found pkg-config: YES (/home/user/EnergyBaseline/.cache/native-runtime/toolenv/bin/pkg-config) 3.0.7
+Run-time dependency x11 found: YES 1.8.4
+Run-time dependency xext found: YES 1.3.4
+Run-time dependency glproto found: YES 1.4.17
+Checking if "typeof" compiles: YES 
+Checking if "__thread" compiles: YES 
+Message: Using TLS variable for dispatch table: true
+Header "features.h" has symbol "__GLIBC__" : YES 
+Message: Using dispatch stub type: x86_64_tls
+Compiler for C supports function attribute constructor: YES 
+Checking if "pthread rwlock" compiles: YES 
+Checking if "sync intrinsics" compiles: YES 
+Checking for function "mincore" : YES 
+Header "dlfcn.h" has symbol "RTLD_NOLOAD" : YES 
+Checking whether type "struct dirent" has member "d_type" : YES 
+Program cp found: YES (/usr/bin/cp)
+Build targets in project: 51
+NOTICE: Future-deprecated features used:
+ * 0.55.0: {'ExternalProgram.path'}
+
+glvnd 1.7.0
+
+  User defined options
+    glx   : enabled
+    libdir: lib
+    prefix: /home/user/EnergyBaseline/.cache/native-runtime/prefix
+    x11   : enabled
+
+Found ninja-1.13.2.git.kitware.jobserver-pipe-1 at /home/user/EnergyBaseline/.cache/native-runtime/toolenv/bin/ninja
+ninja: Entering directory `/home/user/EnergyBaseline/.cache/native-runtime/gl-build'
+[1/133] Compiling C object src/util/libapp_error_check.a.p/app_error_check.c.o
+[2/133] Compiling C object src/util/libutils_misc.a.p/utils_misc.c.o
+[3/133] Compiling C object src/util/libglvnd_pthread.a.p/glvnd_pthread.c.o
+[4/133] Compiling C object src/util/libtrace.a.p/trace.c.o
+[5/133] Linking static target src/util/libapp_error_check.a
+[6/133] Linking static target src/util/libglvnd_pthread.a
+[7/133] Linking static target src/util/libutils_misc.a
+[8/133] Linking static target src/util/libtrace.a
+[9/133] Compiling C object src/util/libwinsys_dispatch.a.p/winsys_dispatch.c.o
+[10/133] Generating src/GLX/g_glx_dispatch_stub_list.h with a custom command (wrapped by meson to capture output)
+[11/133] Linking static target src/util/libwinsys_dispatch.a
+[12/133] Compiling C object src/GLdispatch/libGLdispatch.so.0.0.0.p/GLdispatch.c.o
+[13/133] Generating src/generate/g_egldispatchstubs.h with a custom command (wrapped by meson to capture output)
+[14/133] Generating src/generate/g_egldispatchstubs.c with a custom command (wrapped by meson to capture output)
+[15/133] Compiling C object src/GLX/libGLX.so.0.0.0.p/libglx.c.o
+FAILED: [code=1] src/GLX/libGLX.so.0.0.0.p/libglx.c.o 
+cc -Isrc/GLX/libGLX.so.0.0.0.p -Isrc/GLX -I../libglvnd-1.7.0/src/GLX -Iinclude -I../libglvnd-1.7.0/include -Isrc/GLdispatch -I../libglvnd-1.7.0/src/GLdispatch -Isrc/util -I../libglvnd-1.7.0/src/util -I../libglvnd-1.7.0/src/util/uthash/src -I/home/user/EnergyBaseline/.cache/native-runtime/prefix/include -fvisibility=hidden -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -std=gnu99 -O0 -g -DUSE_X86_64_ASM -DENABLE_EGL_X11 -DHAVE_TYPEOF -DGLDISPATCH_USE_TLS -DUSE_DISPATCH_ASM -DUSE_ATTRIBUTE_CONSTRUCTOR -DHAVE_PTHREAD_RWLOCK -DHAVE_SYNC_INTRINSICS -DHAVE_MINCORE -DHAVE_RTLD_NOLOAD -DHAVE_DIRENT_DTYPE -DGLDISPATCH_ENABLE_PATCHING -DEGL_NO_X11 -fPIC -MD -MQ src/GLX/libGLX.so.0.0.0.p/libglx.c.o -MF src/GLX/libGLX.so.0.0.0.p/libglx.c.o.d -o src/GLX/libGLX.so.0.0.0.p/libglx.c.o -c ../libglvnd-1.7.0/src/GLX/libglx.c
+In file included from ../libglvnd-1.7.0/src/GLX/libglx.c:27:
+/home/user/EnergyBaseline/.cache/native-runtime/prefix/include/X11/Xlibint.h:44:10: fatal error: X11/XlibConf.h: No such file or directory
+   44 | #include <X11/XlibConf.h>       /* for configured options like XTHREADS */
+      |          ^~~~~~~~~~~~~~~~
+compilation terminated.
+[16/133] Generating src/generate/g_glapi_mapi_opengl_tmp.h with a custom command (wrapped by meson to capture output)
+[17/133] Generating src/generate/glapi_mapi_tmp.h with a custom command (wrapped by meson to capture output)
+[18/133] Generating src/generate/g_glapi_mapi_gl_tmp.h with a custom command (wrapped by meson to capture output)
+ninja: build stopped: subcommand failed.
+INFO: autodetecting backend as ninja
+INFO: calculating backend command to run: /home/user/EnergyBaseline/.cache/native-runtime/toolenv/bin/ninja -C /home/user/EnergyBaseline/.cache/native-runtime/gl-build -j 4
+ninja: Entering directory `/home/user/EnergyBaseline/.cache/native-runtime/gl-build'
+[1/116] Compiling C object src/GLdispatch/vnd-glapi/liblibglapi.a.p/mapi_glapi.c.o
+[2/116] Compiling C object src/GLdispatch/vnd-glapi/liblibglapi.a.p/u_current_tls.c.o
+[3/116] Compiling C object src/GLdispatch/vnd-glapi/liblibglapi.a.p/entry_simple_asm.c.o
+[4/116] Compiling C object src/GLdispatch/vnd-glapi/liblibglapi.a.p/entry_common.c.o
+[5/116] Compiling C object src/GLX/libGLX.so.0.0.0.p/libglx.c.o
+FAILED: [code=1] src/GLX/libGLX.so.0.0.0.p/libglx.c.o 
+cc -Isrc/GLX/libGLX.so.0.0.0.p -Isrc/GLX -I../libglvnd-1.7.0/src/GLX -Iinclude -I../libglvnd-1.7.0/include -Isrc/GLdispatch -I../libglvnd-1.7.0/src/GLdispatch -Isrc/util -I../libglvnd-1.7.0/src/util -I../libglvnd-1.7.0/src/util/uthash/src -I/home/user/EnergyBaseline/.cache/native-runtime/prefix/include -fvisibility=hidden -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -std=gnu99 -O0 -g -DUSE_X86_64_ASM -DENABLE_EGL_X11 -DHAVE_TYPEOF -DGLDISPATCH_USE_TLS -DUSE_DISPATCH_ASM -DUSE_ATTRIBUTE_CONSTRUCTOR -DHAVE_PTHREAD_RWLOCK -DHAVE_SYNC_INTRINSICS -DHAVE_MINCORE -DHAVE_RTLD_NOLOAD -DHAVE_DIRENT_DTYPE -DGLDISPATCH_ENABLE_PATCHING -DEGL_NO_X11 -fPIC -MD -MQ src/GLX/libGLX.so.0.0.0.p/libglx.c.o -MF src/GLX/libGLX.so.0.0.0.p/libglx.c.o.d -o src/GLX/libGLX.so.0.0.0.p/libglx.c.o -c ../libglvnd-1.7.0/src/GLX/libglx.c
+../libglvnd-1.7.0/src/GLX/libglx.c:40:10: fatal error: GL/glxproto.h: No such file or directory
+   40 | #include "GL/glxproto.h"
+      |          ^~~~~~~~~~~~~~~
+compilation terminated.
+[6/116] Compiling C object src/GLdispatch/vnd-glapi/liblibglapi.a.p/table.c.o
+In file included from ../libglvnd-1.7.0/src/GLdispatch/vnd-glapi/mapi_tmp.h:34,
+                 from ../libglvnd-1.7.0/src/GLdispatch/vnd-glapi/table.c:50:
+/home/user/EnergyBaseline/.cache/native-runtime/gl-build/src/generate/glapi_mapi_tmp.h:1558:60: warning: argument 1 of type ‘const GLdouble *’ {aka ‘const double *’} declared as a pointer [-Warray-parameter=]
+ 1558 | GLAPI void APIENTRY glLoadTransposeMatrixd(const GLdouble *m);
+      |                                            ~~~~~~~~~~~~~~~~^
+In file included from ../libglvnd-1.7.0/src/GLdispatch/vnd-glapi/glapi.h:48,
+                 from ../libglvnd-1.7.0/src/GLdispatch/vnd-glapi/table.h:33,
+                 from ../libglvnd-1.7.0/src/GLdispatch/vnd-glapi/table.c:31:
+../libglvnd-1.7.0/include/GL/gl.h:1901:62: note: previously declared as an array ‘const GLdouble[16]’ {aka ‘const double[16]’}
+ 1901 | GLAPI void GLAPIENTRY glLoadTransposeMatrixd( const GLdouble m[16] );
+      |                                               ~~~~~~~~~~~~~~~^~~~~
+/home/user/EnergyBaseline/.cache/native-runtime/gl-build/src/generate/glapi_mapi_tmp.h:1560:59: warning: argument 1 of type ‘const GLfloat *’ {aka ‘const float *’} declared as a pointer [-Warray-parameter=]
+ 1560 | GLAPI void APIENTRY glLoadTransposeMatrixf(const GLfloat *m);
+      |                                            ~~~~~~~~~~~~~~~^
+../libglvnd-1.7.0/include/GL/gl.h:1903:61: note: previously declared as an array ‘const GLfloat[16]’ {aka ‘const float[16]’}
+ 1903 | GLAPI void GLAPIENTRY glLoadTransposeMatrixf( const GLfloat m[16] );
+      |                                               ~~~~~~~~~~~~~~^~~~~
+/home/user/EnergyBaseline/.cache/native-runtime/gl-build/src/generate/glapi_mapi_tmp.h:1662:60: warning: argument 1 of type ‘const GLdouble *’ {aka ‘const double *’} declared as a pointer [-Warray-parameter=]
+ 1662 | GLAPI void APIENTRY glMultTransposeMatrixd(const GLdouble *m);
+      |                                            ~~~~~~~~~~~~~~~~^
+../libglvnd-1.7.0/include/GL/gl.h:1905:62: note: previously declared as an array ‘const GLdouble[16]’ {aka ‘const double[16]’}
+ 1905 | GLAPI void GLAPIENTRY glMultTransposeMatrixd( const GLdouble m[16] );
+      |                                               ~~~~~~~~~~~~~~~^~~~~
+/home/user/EnergyBaseline/.cache/native-runtime/gl-build/src/generate/glapi_mapi_tmp.h:1664:59: warning: argument 1 of type ‘const GLfloat *’ {aka ‘const float *’} declared as a pointer [-Warray-parameter=]
+ 1664 | GLAPI void APIENTRY glMultTransposeMatrixf(const GLfloat *m);
+      |                                            ~~~~~~~~~~~~~~~^
+../libglvnd-1.7.0/include/GL/gl.h:1907:61: note: previously declared as an array ‘const GLfloat[16]’ {aka ‘const float[16]’}
+ 1907 | GLAPI void GLAPIENTRY glMultTransposeMatrixf( const GLfloat m[16] );
+      |                                               ~~~~~~~~~~~~~~^~~~~
+[7/116] Compiling C object src/GLdispatch/vnd-glapi/liblibglapi.a.p/stub.c.o
+[8/116] Compiling C object src/GLdispatch/vnd-glapi/liblibglapi.a.p/entry_x86_64_tls.c.o
+ninja: build stopped: subcommand failed.
+INFO: autodetecting backend as ninja
+INFO: calculating backend command to run: /home/user/EnergyBaseline/.cache/native-runtime/toolenv/bin/ninja -C /home/user/EnergyBaseline/.cache/native-runtime/gl-build -j 4
+ninja: Entering directory `/home/user/EnergyBaseline/.cache/native-runtime/gl-build'
+[1/109] Linking static target src/GLdispatch/vnd-glapi/liblibglapi.a
+[2/109] Compiling C object src/GLX/libGLX.so.0.0.0.p/libglxproto.c.o
+[3/109] Linking target src/GLdispatch/libGLdispatch.so.0.0.0
+[4/109] Compiling C object src/GLX/libGLX.so.0.0.0.p/glvnd_genentry.c.o
+[5/109] Generating symbol file src/GLdispatch/libGLdispatch.so.0.0.0.p/libGLdispatch.so.0.0.0.symbols
+[6/109] Compiling C object src/GLX/libGLX.so.0.0.0.p/libglxmapping.c.o
+[7/109] Compiling C object src/GLX/libGLX.so.0.0.0.p/libglx.c.o
+[8/109] Generating src/generate/g_libglglxwrapper.c with a custom command (wrapped by meson to capture output)
+[9/109] Compiling C object src/util/libcJSON.a.p/cJSON.c.o
+[10/109] Compiling C object src/GLdispatch/vnd-glapi/libglapi_gl.a.p/entry_common.c.o
+[11/109] Compiling C object src/GLdispatch/vnd-glapi/libglapi_gl.a.p/entry_simple_asm.c.o
+[12/109] Compiling C object src/GLdispatch/vnd-glapi/libglapi_opengl.a.p/stub.c.o
+[13/109] Compiling C object src/GLdispatch/vnd-glapi/libglapi_opengl.a.p/entry_common.c.o
+[14/109] Compiling C object src/GLdispatch/vnd-glapi/libglapi_gl.a.p/entry_x86_64_tls.c.o
+[15/109] Compiling C object src/GLdispatch/vnd-glapi/libglapi_opengl.a.p/entry_simple_asm.c.o
+[16/109] Compiling C object src/GLdispatch/vnd-glapi/libglapi_gl.a.p/stub.c.o
+[17/109] Compiling C object src/GLdispatch/vnd-glapi/libglapi_opengl.a.p/entry_x86_64_tls.c.o
+[18/109] Compiling C object src/OpenGL/libopengl_main.a.p/libopengl.c.o
+[19/109] Linking static target src/util/libcJSON.a
+[20/109] Linking target src/GLX/libGLX.so.0.0.0
+[21/109] Compiling C object src/EGL/libegl_dispatch_stubs.a.p/egldispatchstubs.c.o
+[22/109] Compiling C object src/EGL/libegl_dispatch_stubs.a.p/meson-generated_.._.._generate_g_egldispatchstubs.c.o
+[23/109] Linking static target src/GLdispatch/vnd-glapi/libglapi_gl.a
+[24/109] Linking static target src/OpenGL/libopengl_main.a
+[25/109] Linking static target src/EGL/libegl_dispatch_stubs.a
+[26/109] Linking static target src/GLdispatch/vnd-glapi/libglapi_opengl.a
+[27/109] Compiling C object src/EGL/libEGL.so.1.1.0.p/libeglcurrent.c.o
+[28/109] Generating src/generate/g_glapi_mapi_glesv1_tmp.h with a custom command (wrapped by meson to capture output)
+[29/109] Compiling C object src/EGL/libEGL.so.1.1.0.p/libegl.c.o
+[30/109] Generating src/generate/g_glapi_mapi_glesv2_tmp.h with a custom command (wrapped by meson to capture output)
+[31/109] Compiling C object src/EGL/libEGL.so.1.1.0.p/libeglvendor.c.o
+[32/109] Compiling C object src/EGL/libEGL.so.1.1.0.p/libeglmapping.c.o
+[33/109] Compiling C object src/EGL/libEGL.so.1.1.0.p/libeglerror.c.o
+[34/109] Generating symbol file src/GLX/libGLX.so.0.0.0.p/libGLX.so.0.0.0.symbols
+[35/109] Compiling C object src/GL/libGL.so.1.7.0.p/libgl.c.o
+[36/109] Compiling C object src/GLdispatch/vnd-glapi/libglapi_glesv1.a.p/stub.c.o
+[37/109] Compiling C object src/GLdispatch/vnd-glapi/libglapi_glesv1.a.p/entry_common.c.o
+[38/109] Compiling C object src/GL/libGL.so.1.7.0.p/meson-generated_.._.._generate_g_libglglxwrapper.c.o
+[39/109] Compiling C object src/GLdispatch/vnd-glapi/libglapi_glesv1.a.p/entry_simple_asm.c.o
+[40/109] Compiling C object src/GLdispatch/vnd-glapi/libglapi_glesv1.a.p/entry_x86_64_tls.c.o
+[41/109] Compiling C object src/GLdispatch/vnd-glapi/libglapi_glesv2.a.p/stub.c.o
+[42/109] Compiling C object src/GLdispatch/vnd-glapi/libglapi_glesv2.a.p/entry_common.c.o
+[43/109] Linking target src/OpenGL/libOpenGL.so.0.0.0
+[44/109] Compiling C object src/GLdispatch/vnd-glapi/libglapi_glesv2.a.p/entry_x86_64_tls.c.o
+[45/109] Compiling C object src/GLdispatch/vnd-glapi/libglapi_glesv2.a.p/entry_simple_asm.c.o
+[46/109] Linking target src/EGL/libEGL.so.1.1.0
+[47/109] Linking static target src/GLdispatch/vnd-glapi/libglapi_glesv1.a
+[48/109] Linking static target src/GLdispatch/vnd-glapi/libglapi_glesv2.a
+[49/109] Linking target src/GL/libGL.so.1.7.0
+[50/109] Generating symbol file src/GL/libGL.so.1.7.0.p/libGL.so.1.7.0.symbols
+[51/109] Compiling C object tests/dummy/libpatchentrypoints.a.p/patchentrypoints.c.o
+[52/109] Generating symbol file src/EGL/libEGL.so.1.1.0.p/libEGL.so.1.1.0.symbols
+[53/109] Generating symbol file src/OpenGL/libOpenGL.so.0.0.0.p/libOpenGL.so.0.0.0.symbols
+[54/109] Linking static target tests/dummy/libpatchentrypoints.a
+[55/109] Compiling C object tests/dummy/libEGL_dummy0.so.0.p/EGL_dummy.c.o
+[56/109] Compiling C object tests/testgldispatch.p/testgldispatch.c.o
+[57/109] Compiling C object tests/dummy/libGLX_dummy.so.0.p/GLX_dummy.c.o
+[58/109] Compiling C object tests/dummy/libEGL_dummy1.so.0.p/EGL_dummy.c.o
+[59/109] Compiling C object tests/glxcreatecontext.p/testglxcreatecontext.c.o
+[60/109] Compiling C object tests/glxcreatecontext.p/test_utils.c.o
+[61/109] Compiling C object tests/testgldispatchthread.p/testgldispatchthread.c.o
+[62/109] Compiling C object tests/glxmakecurrent.p/testglxmakecurrent.c.o
+[63/109] Compiling C object tests/glxmakecurrent_mt.p/test_utils.c.o
+[64/109] Compiling C object tests/glxmakecurrent.p/test_utils.c.o
+[65/109] Compiling C object tests/glxmakecurrent_mt.p/testglxmakecurrent.c.o
+[66/109] Compiling C object tests/glxmakecurrent_oldlink.p/testglxmakecurrent.c.o
+[67/109] Compiling C object tests/testglxgetprocaddress_genentry.p/testglxgetprocaddress_genentry.c.o
+[68/109] Compiling C object tests/glxmakecurrent_oldlink.p/test_utils.c.o
+[69/109] Compiling C object tests/glxgetclientstr.p/testglxgetclientstr.c.o
+[70/109] Compiling C object tests/glxgetprocaddress.p/testglxgetprocaddress.c.o
+[71/109] Compiling C object tests/egldisplay.p/testegldisplay.c.o
+[72/109] Compiling C object tests/egldevice.p/testegldevice.c.o
+[73/109] Compiling C object tests/glxqueryversion.p/testglxqueryversion.c.o
+[74/109] Compiling C object tests/egldisplay.p/egl_test_utils.c.o
+[75/109] Compiling C object tests/egldevice.p/egl_test_utils.c.o
+[76/109] Compiling C object tests/eglgetprocaddress.p/egl_test_utils.c.o
+[77/109] Compiling C object tests/eglgetprocaddress.p/testeglgetprocaddress.c.o
+[78/109] Compiling C object tests/eglerror.p/testeglerror.c.o
+[79/109] Compiling C object tests/eglmakecurrent.p/egl_test_utils.c.o
+[80/109] Compiling C object tests/eglmakecurrent.p/testeglmakecurrent.c.o
+[81/109] Compiling C object tests/eglerror.p/egl_test_utils.c.o
+[82/109] Compiling C object tests/egldebug.p/egl_test_utils.c.o
+[83/109] Compiling C object tests/egldeviceadd.p/testegldeviceadd.c.o
+[84/109] Compiling C object tests/egldebug.p/testegldebug.c.o
+[85/109] Compiling C object tests/egldeviceadd.p/egl_test_utils.c.o
+[86/109] Compiling C object tests/eglcurrentcleanup.p/testeglcurrentcleanup.c.o
+[87/109] Linking target src/GLESv1/libGLESv1_CM.so.1.2.0
+[88/109] Linking target src/GLESv2/libGLESv2.so.2.1.0
+[89/109] Linking target tests/dummy/libEGL_dummy0.so.0
+[90/109] Linking target tests/dummy/libGLX_dummy.so.0
+[91/109] Linking target tests/dummy/libEGL_dummy1.so.0
+[92/109] Linking target tests/testgldispatchthread
+[93/109] Linking target tests/glxcreatecontext
+[94/109] Linking target tests/testgldispatch
+[95/109] Linking target tests/glxmakecurrent
+[96/109] Linking target tests/glxmakecurrent_mt
+[97/109] Linking target tests/glxmakecurrent_oldlink
+[98/109] Linking target tests/glxgetprocaddress
+[99/109] Linking target tests/testglxgetprocaddress_genentry
+[100/109] Linking target tests/glxgetclientstr
+[101/109] Linking target tests/egldisplay
+[102/109] Linking target tests/glxqueryversion
+[103/109] Linking target tests/eglgetprocaddress
+[104/109] Linking target tests/egldevice
+[105/109] Linking target tests/eglmakecurrent
+[106/109] Linking target tests/eglerror
+[107/109] Linking target tests/egldebug
+[108/109] Linking target tests/egldeviceadd
+[109/109] Linking target tests/eglcurrentcleanup
+INFO: autodetecting backend as ninja
+INFO: calculating backend command to run: /home/user/EnergyBaseline/.cache/native-runtime/toolenv/bin/ninja -C /home/user/EnergyBaseline/.cache/native-runtime/gl-build -j 4
+ninja: Entering directory `/home/user/EnergyBaseline/.cache/native-runtime/gl-build'
+ninja: no work to do.
+Installing src/GLdispatch/libGLdispatch.so.0.0.0 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib
+Installing src/OpenGL/libOpenGL.so.0.0.0 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib
+Installing src/EGL/libEGL.so.1.1.0 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib
+Installing src/GLX/libGLX.so.0.0.0 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib
+Installing src/GL/libGL.so.1.7.0 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib
+Installing src/GLESv1/libGLESv1_CM.so.1.2.0 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib
+Installing src/GLESv2/libGLESv2.so.2.1.0 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/glvnd/GLdispatchABI.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/glvnd
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/glvnd/libglxabi.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/glvnd
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/glvnd/libeglabi.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/glvnd
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/GL/gl.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/GL
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/GL/glcorearb.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/GL
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/GL/glext.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/GL
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/KHR/khrplatform.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/KHR
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/GL/glx.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/GL
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/GL/glxext.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/GL
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/GLES/egl.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/GLES
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/GLES/gl.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/GLES
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/GLES/glext.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/GLES
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/GLES/glplatform.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/GLES
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/GLES2/gl2ext.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/GLES2
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/GLES2/gl2.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/GLES2
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/GLES2/gl2platform.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/GLES2
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/GLES3/gl31.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/GLES3
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/GLES3/gl32.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/GLES3
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/GLES3/gl3.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/GLES3
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/GLES3/gl3ext.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/GLES3
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/GLES3/gl3platform.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/GLES3
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/EGL/egl.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/EGL
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/EGL/eglext.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/EGL
+Installing /home/user/EnergyBaseline/.cache/native-runtime/libglvnd-1.7.0/include/EGL/eglplatform.h to /home/user/EnergyBaseline/.cache/native-runtime/prefix/include/EGL
+Installing /home/user/EnergyBaseline/.cache/native-runtime/gl-build/meson-private/opengl.pc to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/pkgconfig
+Installing /home/user/EnergyBaseline/.cache/native-runtime/gl-build/meson-private/egl.pc to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/pkgconfig
+Installing /home/user/EnergyBaseline/.cache/native-runtime/gl-build/meson-private/glx.pc to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/pkgconfig
+Installing /home/user/EnergyBaseline/.cache/native-runtime/gl-build/meson-private/gl.pc to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/pkgconfig
+Installing /home/user/EnergyBaseline/.cache/native-runtime/gl-build/meson-private/glesv1_cm.pc to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/pkgconfig
+Installing /home/user/EnergyBaseline/.cache/native-runtime/gl-build/meson-private/glesv2.pc to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/pkgconfig
+Installing /home/user/EnergyBaseline/.cache/native-runtime/gl-build/meson-private/libglvnd.pc to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/pkgconfig
+Installing symlink pointing to libGLdispatch.so.0.0.0 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libGLdispatch.so.0
+Installing symlink pointing to libGLdispatch.so.0 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libGLdispatch.so
+Installing symlink pointing to libOpenGL.so.0.0.0 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libOpenGL.so.0
+Installing symlink pointing to libOpenGL.so.0 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libOpenGL.so
+Installing symlink pointing to libEGL.so.1.1.0 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libEGL.so.1
+Installing symlink pointing to libEGL.so.1 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libEGL.so
+Installing symlink pointing to libGLX.so.0.0.0 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libGLX.so.0
+Installing symlink pointing to libGLX.so.0 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libGLX.so
+Installing symlink pointing to libGL.so.1.7.0 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libGL.so.1
+Installing symlink pointing to libGL.so.1 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libGL.so
+Installing symlink pointing to libGLESv1_CM.so.1.2.0 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libGLESv1_CM.so.1
+Installing symlink pointing to libGLESv1_CM.so.1 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libGLESv1_CM.so
+Installing symlink pointing to libGLESv2.so.2.1.0 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libGLESv2.so.2
+Installing symlink pointing to libGLESv2.so.2 to /home/user/EnergyBaseline/.cache/native-runtime/prefix/lib/libGLESv2.so

@@ -134,7 +134,7 @@ def recommend_autocorr_embargo_gap(
     n = int(yv.size)
     base_gap = max(1, int(round(steps_per_day)), int(max_lag), int(max_rolling_window))
     if n < 24 or float(np.std(yv)) <= 1e-12:
-        return min(base_gap, max(1, n // 10))
+        return base_gap
     yc = yv - float(np.mean(yv))
     denom = float(np.dot(yc, yc))
     thresh = max(1.96 / np.sqrt(float(n)), 1.0 / np.e)
@@ -146,7 +146,7 @@ def recommend_autocorr_embargo_gap(
             ac_decay_lag = lag
         else:
             break
-    return min(max(base_gap, ac_decay_lag), max(1, n // 8))
+    return max(base_gap, ac_decay_lag)
 
 
 @dataclass(frozen=True)

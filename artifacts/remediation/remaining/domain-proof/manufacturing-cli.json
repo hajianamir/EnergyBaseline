@@ -1,0 +1,1275 @@
+{
+  "cancelled": false,
+  "domain_policy": {
+    "energy_features": false,
+    "key": "manufacturing",
+    "version": 1
+  },
+  "format": "energybaseline.analysis.v1",
+  "schema_version": 1,
+  "targets": {
+    "quality_offset": {
+      "error": "",
+      "purge_gap_spec": {
+        "governing_term": "max_lag",
+        "max_lag": 3,
+        "max_rolling_window": 3,
+        "min_step_floor": 1,
+        "one_day_steps": 1,
+        "purge_gap": 3
+      },
+      "scoring": {
+        "acceptance_evaluated": false,
+        "domain_policy": {
+          "energy_features": false,
+          "key": "manufacturing",
+          "version": 1
+        },
+        "profile": "interpretable",
+        "schema_version": 1,
+        "weights": {
+          "ashrae": 0.0,
+          "cvrmse": 0.18666666666666668,
+          "data_sufficiency": 0.02666666666666667,
+          "diagnostics": 0.0,
+          "interpretability": 0.26666666666666666,
+          "mae": 0.05333333333333334,
+          "nmbe": 0.06666666666666667,
+          "parsimony": 0.16,
+          "plausibility": 0.0,
+          "r2": 0.08,
+          "robustness": 0.10666666666666667,
+          "smape": 0.02666666666666667,
+          "uncertainty": 0.02666666666666667
+        }
+      },
+      "shortlist": [
+        {
+          "artifact": "",
+          "criteria": {
+            "ashrae": 0.0,
+            "cvrmse": 1.0,
+            "data_sufficiency": 1.0,
+            "diagnostics": 0.0,
+            "interpretability": 1.0,
+            "mae": 1.0,
+            "nmbe": 0.681379669961125,
+            "parsimony": 0.8514817366346324,
+            "plausibility": 1.0,
+            "r2": 1.0,
+            "robustness": 0.964824440240135,
+            "smape": 1.0,
+            "uncertainty": 0.9882298047268656
+          },
+          "diagnostics": {
+            "breusch_pagan_p": null,
+            "durbin_watson": null,
+            "inference_status": "not run: accepted VSG and locked TCP required",
+            "jarque_bera_p": null,
+            "jarque_bera_stat": null,
+            "ljung_box_p": null,
+            "residual_mean": 0.009022636624483372,
+            "residual_std": 0.21583841500952616,
+            "tests_passed": 0
+          },
+          "failures": [],
+          "family": "Linear / statistical",
+          "fold_cvrmse": [
+            2.6513190656899748,
+            2.707184468889428,
+            2.4901239313574455
+          ],
+          "formula": {
+            "intercept": -8.018788497249886,
+            "kind": "equation",
+            "terms": [
+              [
+                "process_setting",
+                2.007647316464567
+              ],
+              [
+                "sin_year1",
+                0.07455086678217336
+              ],
+              [
+                "cos_year1",
+                0.010098917666277997
+              ],
+              [
+                "process_setting_lag1",
+                -0.010417094290187313
+              ],
+              [
+                "process_setting_lag3",
+                0.0009489493610200777
+              ],
+              [
+                "process_setting_roll3",
+                -0.0
+              ]
+            ],
+            "text": "\u0177(quality_offset) = -8.01879 + 2.00765\u00b7[process_setting] + 0.0745509\u00b7[sin_year1] - 0.0104171\u00b7[process_setting_lag1] + 0.0100989\u00b7[cos_year1] + 0.000948949\u00b7[process_setting_lag3]"
+          },
+          "history": null,
+          "hpo": "HPO skipped (n<80, trials=0, or parameter-free candidate)",
+          "importance": {},
+          "kind": "linear",
+          "metrics": {
+            "cvrmse": 2.623239168912272,
+            "mae": 0.17719615643032655,
+            "mape": 2.2850094846384956,
+            "n": 40,
+            "nmbe": 0.10956289152701162,
+            "r2": 0.9875528999880832,
+            "rmse": 0.21602691815022015,
+            "smape": 2.2735255191323187,
+            "wape": 2.1517128611051524
+          },
+          "n_params": 6,
+          "name": "Lasso regression",
+          "params": {},
+          "plaus_notes": [
+            "Energy physical constraints not applicable: neutral domain policy."
+          ],
+          "qualified": true,
+          "rank": 1,
+          "reason": "Rank #1 with score 95.1/100; CV(RMSE)=2.6 %, R\u00b2=0.988, NMBE=+0.11 %. Strongest criteria: cvrmse (1.00), r2 (1.00), mae (1.00); weakest: nmbe (0.68).",
+          "robustness": 0.03517555975986501,
+          "score": 95.09297909439469,
+          "tier": 1,
+          "train_metrics": {
+            "cvrmse": 2.2614070279389518,
+            "mae": 0.15017081167093996,
+            "mape": 1.9022336152965773,
+            "n": 72,
+            "nmbe": 1.857289535417146e-14,
+            "r2": 0.9910893794145692,
+            "rmse": 0.1869976709922391,
+            "smape": 1.9009391712637376,
+            "wape": 1.8160511149791518
+          },
+          "uncertainty": {
+            "basis": "empirical 2.5/97.5 % quantiles of out-of-fold residuals",
+            "level": 0.95,
+            "lower": -0.2949379082567045,
+            "upper": 0.41793428603762284
+          }
+        },
+        {
+          "artifact": "",
+          "criteria": {
+            "ashrae": 0.0,
+            "cvrmse": 0.9872361607940497,
+            "data_sufficiency": 1.0,
+            "diagnostics": 0.0,
+            "interpretability": 1.0,
+            "mae": 0.9861238917048302,
+            "nmbe": 0.6187024473208024,
+            "parsimony": 0.7959261810790769,
+            "plausibility": 1.0,
+            "r2": 0.9996719828829804,
+            "robustness": 0.9647241746398587,
+            "smape": 0.9852725250108684,
+            "uncertainty": 1.0
+          },
+          "diagnostics": {
+            "breusch_pagan_p": null,
+            "durbin_watson": null,
+            "inference_status": "not run: accepted VSG and locked TCP required",
+            "jarque_bera_p": null,
+            "jarque_bera_stat": null,
+            "ljung_box_p": null,
+            "residual_mean": 0.009936668574679054,
+            "residual_std": 0.21859417039004525,
+            "tests_passed": 0
+          },
+          "failures": [],
+          "family": "Linear / statistical",
+          "fold_cvrmse": [
+            2.7508458024660993,
+            2.6801119280690098,
+            2.526674301358263
+          ],
+          "formula": {
+            "intercept": -8.019160098710387,
+            "kind": "equation",
+            "terms": [
+              [
+                "process_setting",
+                2.0007985478742722
+              ],
+              [
+                "sin_year1",
+                0.08496929336771802
+              ],
+              [
+                "cos_year1",
+                0.016636580051532845
+              ],
+              [
+                "process_setting_lag1",
+                -0.013731252754302618
+              ],
+              [
+                "process_setting_lag3",
+                0.008974335572737146
+              ],
+              [
+                "process_setting_roll3",
+                0.0
+              ]
+            ],
+            "text": "\u0177(quality_offset) = -8.01916 + 2.0008\u00b7[process_setting] + 0.0849693\u00b7[sin_year1] + 0.0166366\u00b7[cos_year1] - 0.0137313\u00b7[process_setting_lag1] + 0.00897434\u00b7[process_setting_lag3]"
+          },
+          "history": null,
+          "hpo": "HPO skipped (n<80, trials=0, or parameter-free candidate)",
+          "importance": {},
+          "kind": "linear",
+          "metrics": {
+            "cvrmse": 2.6571546637861796,
+            "mae": 0.1796895480586992,
+            "mape": 2.320063723843404,
+            "n": 40,
+            "nmbe": 0.12066208432169502,
+            "r2": 0.9872289657329247,
+            "rmse": 0.2188199001710657,
+            "smape": 2.3075093047045434,
+            "wape": 2.181990396141026
+          },
+          "n_params": 6,
+          "name": "Elastic Net",
+          "params": {},
+          "plaus_notes": [
+            "Energy physical constraints not applicable: neutral domain policy."
+          ],
+          "qualified": true,
+          "rank": 2,
+          "reason": "Rank #2 with score 93.5/100; CV(RMSE)=2.7 %, R\u00b2=0.987, NMBE=+0.12 %. Strongest criteria: interpretability (1.00), uncertainty (1.00), data_sufficiency (1.00); weakest: nmbe (0.62).",
+          "robustness": 0.03527582536014126,
+          "score": 93.46239809590324,
+          "tier": 1,
+          "train_metrics": {
+            "cvrmse": 2.255534900425477,
+            "mae": 0.1513273129195879,
+            "mape": 1.9232294032647552,
+            "n": 72,
+            "nmbe": 1.8871255118897104e-14,
+            "r2": 0.9911355952131309,
+            "rmse": 0.18651209977254143,
+            "smape": 1.9212592156963033,
+            "wape": 1.8300369578917148
+          },
+          "uncertainty": {
+            "basis": "empirical 2.5/97.5 % quantiles of out-of-fold residuals",
+            "level": 0.95,
+            "lower": -0.2927143186058971,
+            "upper": 0.4117672307567981
+          }
+        },
+        {
+          "artifact": "",
+          "criteria": {
+            "ashrae": 0.0,
+            "cvrmse": 0.9799369171532966,
+            "data_sufficiency": 1.0,
+            "diagnostics": 0.0,
+            "interpretability": 1.0,
+            "mae": 0.983433829037718,
+            "nmbe": 0.5248889270004929,
+            "parsimony": 0.7333494479761933,
+            "plausibility": 1.0,
+            "r2": 0.9994786125275182,
+            "robustness": 0.9793247064704814,
+            "smape": 0.9811962532503753,
+            "uncertainty": 0.9548648335589078
+          },
+          "diagnostics": {
+            "breusch_pagan_p": null,
+            "durbin_watson": null,
+            "inference_status": "not run: accepted VSG and locked TCP required",
+            "jarque_bera_p": null,
+            "jarque_bera_stat": null,
+            "ljung_box_p": null,
+            "residual_mean": 0.011712651666137863,
+            "residual_std": 0.22013845063387938,
+            "tests_passed": 0
+          },
+          "failures": [],
+          "family": "Linear / statistical",
+          "fold_cvrmse": [
+            2.7541522095453668,
+            2.6331438451533073,
+            2.6407996683092345
+          ],
+          "formula": {
+            "intercept": -8.018004499865791,
+            "kind": "equation",
+            "terms": [
+              [
+                "process_setting",
+                2.0198314438679827
+              ],
+              [
+                "sin_year1",
+                0.08968849831904754
+              ],
+              [
+                "cos_year1",
+                0.02510562701140961
+              ],
+              [
+                "process_setting_lag1",
+                -0.01276608227394776
+              ],
+              [
+                "process_setting_lag3",
+                0.01320077454047817
+              ],
+              [
+                "process_setting_roll3",
+                -0.014382988605948084
+              ]
+            ],
+            "text": "\u0177(quality_offset) = -8.018 + 2.01983\u00b7[process_setting] + 0.0896885\u00b7[sin_year1] + 0.0251056\u00b7[cos_year1] - 0.014383\u00b7[process_setting_roll3] + 0.0132008\u00b7[process_setting_lag3] - 0.0127661\u00b7[process_setting_lag1]"
+          },
+          "history": null,
+          "hpo": "HPO skipped (n<80, trials=0, or parameter-free candidate)",
+          "importance": {},
+          "kind": "linear",
+          "metrics": {
+            "cvrmse": 2.6769469779062374,
+            "mae": 0.18018106678688442,
+            "mape": 2.329235018597435,
+            "n": 40,
+            "nmbe": 0.14222804678939552,
+            "r2": 0.9870380022776163,
+            "rmse": 0.22044982117601553,
+            "smape": 2.317095597950857,
+            "wape": 2.1879589633504732
+          },
+          "n_params": 7,
+          "name": "Multiple linear regression (MLR)",
+          "params": {},
+          "plaus_notes": [
+            "Energy physical constraints not applicable: neutral domain policy."
+          ],
+          "qualified": true,
+          "rank": 3,
+          "reason": "Rank #3 with score 91.7/100; CV(RMSE)=2.7 %, R\u00b2=0.987, NMBE=+0.14 %. Strongest criteria: interpretability (1.00), data_sufficiency (1.00), r2 (1.00); weakest: nmbe (0.52).",
+          "robustness": 0.020675293529518593,
+          "score": 91.70810889008177,
+          "tier": 1,
+          "train_metrics": {
+            "cvrmse": 2.2448754626530705,
+            "mae": 0.149423716520322,
+            "mape": 1.862177071105928,
+            "n": 72,
+            "nmbe": 2.021387406016251e-14,
+            "r2": 0.9912191818576578,
+            "rmse": 0.18563066179481327,
+            "smape": 1.8621682980840142,
+            "wape": 1.8070163167638484
+          },
+          "uncertainty": {
+            "basis": "empirical 2.5/97.5 % quantiles of out-of-fold residuals",
+            "level": 0.95,
+            "lower": -0.28638351372071713,
+            "upper": 0.4513979236131924
+          }
+        },
+        {
+          "artifact": "",
+          "criteria": {
+            "ashrae": 0.0,
+            "cvrmse": 0.9780780560113473,
+            "data_sufficiency": 1.0,
+            "diagnostics": 0.0,
+            "interpretability": 1.0,
+            "mae": 0.9813060881369899,
+            "nmbe": 0.5446617833749744,
+            "parsimony": 0.6777938924206377,
+            "plausibility": 1.0,
+            "r2": 0.9994286749467446,
+            "robustness": 0.9745521250421908,
+            "smape": 0.9794902247924877,
+            "uncertainty": 0.9435151647709406
+          },
+          "diagnostics": {
+            "breusch_pagan_p": null,
+            "durbin_watson": null,
+            "inference_status": "not run: accepted VSG and locked TCP required",
+            "jarque_bera_p": null,
+            "jarque_bera_stat": null,
+            "ljung_box_p": null,
+            "residual_mean": 0.01128744728017228,
+            "residual_std": 0.22058018170110646,
+            "tests_passed": 0
+          },
+          "failures": [],
+          "family": "Linear / statistical",
+          "fold_cvrmse": [
+            2.777446145711585,
+            2.6342527593182252,
+            2.6312319579577608
+          ],
+          "formula": {
+            "intercept": -8.017970877036957,
+            "kind": "equation",
+            "terms": [
+              [
+                "process_setting",
+                2.016814864041532
+              ],
+              [
+                "sin_year1",
+                0.09015009689358439
+              ],
+              [
+                "cos_year1",
+                0.025351525580485056
+              ],
+              [
+                "process_setting_lag1",
+                -0.014181536652111172
+              ],
+              [
+                "process_setting_lag3",
+                0.013474521121691594
+              ],
+              [
+                "process_setting_roll3",
+                -0.009956060042306591
+              ]
+            ],
+            "text": "\u0177(quality_offset) = -8.01797 + 2.01681\u00b7[process_setting] + 0.0901501\u00b7[sin_year1] + 0.0253515\u00b7[cos_year1] - 0.0141815\u00b7[process_setting_lag1] + 0.0134745\u00b7[process_setting_lag3] - 0.00995606\u00b7[process_setting_roll3]"
+          },
+          "history": null,
+          "hpo": "HPO skipped (n<80, trials=0, or parameter-free candidate)",
+          "importance": {},
+          "kind": "linear",
+          "metrics": {
+            "cvrmse": 2.6820345807674864,
+            "mae": 0.18057174878710222,
+            "mape": 2.333456073690509,
+            "n": 40,
+            "nmbe": 0.13706474209751182,
+            "r2": 0.9869886862749049,
+            "rmse": 0.22086879142467325,
+            "smape": 2.3211314024231147,
+            "wape": 2.1927030588286476
+          },
+          "n_params": 7,
+          "name": "Bayesian ridge",
+          "params": {},
+          "plaus_notes": [
+            "Energy physical constraints not applicable: neutral domain policy."
+          ],
+          "qualified": true,
+          "rank": 4,
+          "reason": "Rank #4 with score 90.8/100; CV(RMSE)=2.7 %, R\u00b2=0.987, NMBE=+0.14 %. Strongest criteria: interpretability (1.00), data_sufficiency (1.00), r2 (1.00); weakest: nmbe (0.54).",
+          "robustness": 0.025447874957809254,
+          "score": 90.81887012236558,
+          "tier": 1,
+          "train_metrics": {
+            "cvrmse": 2.245026803692636,
+            "mae": 0.1496139494315836,
+            "mape": 1.8672762461023902,
+            "n": 72,
+            "nmbe": 1.8423715471808634e-14,
+            "r2": 0.9912179978784459,
+            "rmse": 0.18564317631412566,
+            "smape": 1.8671068218706077,
+            "wape": 1.80931684831694
+          },
+          "uncertainty": {
+            "basis": "empirical 2.5/97.5 % quantiles of out-of-fold residuals",
+            "level": 0.95,
+            "lower": -0.291912354473836,
+            "upper": 0.45474395341256024
+          }
+        },
+        {
+          "artifact": "",
+          "criteria": {
+            "ashrae": 0.0,
+            "cvrmse": 0.9293464908206427,
+            "data_sufficiency": 1.0,
+            "diagnostics": 0.0,
+            "interpretability": 1.0,
+            "mae": 0.9300807987083833,
+            "nmbe": 1.0,
+            "parsimony": 0.5666827813095265,
+            "plausibility": 1.0,
+            "r2": 0.9980107175547712,
+            "robustness": 0.9055140658067755,
+            "smape": 0.9273288277425481,
+            "uncertainty": 0.9679690351657599
+          },
+          "diagnostics": {
+            "breusch_pagan_p": null,
+            "durbin_watson": null,
+            "inference_status": "not run: accepted VSG and locked TCP required",
+            "jarque_bera_p": null,
+            "jarque_bera_stat": null,
+            "ljung_box_p": null,
+            "residual_mean": 0.006147841165369638,
+            "residual_std": 0.23236903797244393,
+            "tests_passed": 0
+          },
+          "failures": [],
+          "family": "Linear / statistical",
+          "fold_cvrmse": [
+            3.183950142703041,
+            2.6830129767371265,
+            2.573227383642924
+          ],
+          "formula": {
+            "intercept": -8.017594076415255,
+            "kind": "equation",
+            "terms": [
+              [
+                "process_setting",
+                1.970526678351525
+              ],
+              [
+                "sin_year1",
+                0.09722080396940548
+              ],
+              [
+                "cos_year1",
+                0.028769165068468484
+              ],
+              [
+                "process_setting_lag1",
+                -0.034845889125272325
+              ],
+              [
+                "process_setting_lag3",
+                0.01777477449050141
+              ],
+              [
+                "process_setting_roll3",
+                0.05572204798032097
+              ]
+            ],
+            "text": "\u0177(quality_offset) = -8.01759 + 1.97053\u00b7[process_setting] + 0.0972208\u00b7[sin_year1] + 0.055722\u00b7[process_setting_roll3] - 0.0348459\u00b7[process_setting_lag1] + 0.0287692\u00b7[cos_year1] + 0.0177748\u00b7[process_setting_lag3]"
+          },
+          "history": null,
+          "hpo": "HPO skipped (n<80, trials=0, or parameter-free candidate)",
+          "importance": {},
+          "kind": "linear",
+          "metrics": {
+            "cvrmse": 2.8226707636200015,
+            "mae": 0.19051694936225047,
+            "mape": 2.4672614776631785,
+            "n": 40,
+            "nmbe": 0.07465392686866172,
+            "r2": 0.9855883783404021,
+            "rmse": 0.23245035117038154,
+            "smape": 2.4516929174593844,
+            "wape": 2.313468748191842
+          },
+          "n_params": 7,
+          "name": "Ridge regression",
+          "params": {},
+          "plaus_notes": [
+            "Energy physical constraints not applicable: neutral domain policy."
+          ],
+          "qualified": true,
+          "rank": 5,
+          "reason": "Rank #5 with score 90.1/100; CV(RMSE)=2.8 %, R\u00b2=0.986, NMBE=+0.07 %. Strongest criteria: nmbe (1.00), interpretability (1.00), data_sufficiency (1.00); weakest: parsimony (0.57).",
+          "robustness": 0.09448593419322447,
+          "score": 90.07218666618171,
+          "tier": 1,
+          "train_metrics": {
+            "cvrmse": 2.2849882452459247,
+            "mae": 0.15462777253114934,
+            "mape": 1.9765339035159344,
+            "n": 72,
+            "nmbe": 1.857289535417146e-14,
+            "r2": 0.9909025763964624,
+            "rmse": 0.18894762191265557,
+            "smape": 1.97307665232155,
+            "wape": 1.869950195962597
+          },
+          "uncertainty": {
+            "basis": "empirical 2.5/97.5 % quantiles of out-of-fold residuals",
+            "level": 0.95,
+            "lower": -0.3642296553550157,
+            "upper": 0.3635638212638476
+          }
+        }
+      ],
+      "status": "ok",
+      "thresholds": {
+        "max_cvrmse": null,
+        "max_nmbe": null,
+        "min_r2": null
+      },
+      "validation_contract": {
+        "cache_matrix_budget_bytes": 134217728,
+        "estimator_selection_policy": "explicit-temporal-hpo-v2",
+        "evaluator": "raw-fold-training-v1",
+        "folds": [
+          {
+            "auto": [
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter 25% missingness cap for short series (n<60), 40% for medium series, 50% when n>=1000",
+                "setting": "max_missing_rate",
+                "signals": "n=29, p_num=1, median_missing=0.000",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "0.25"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "near-constant relative-variance floor scaled by sample size (1e-6 for n<50, 1e-8 for n>=50)",
+                "setting": "min_variance",
+                "signals": "n=29, target_rel_var=4.239e-02",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "1e-06"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "small-sample |r|>=0.985 (n<60) or |r|>=0.99 (n>=60) with target and energy-like name => leakage",
+                "setting": "leakage_threshold",
+                "signals": "n=29, candidate_predictors=1",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "0.985"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "too few observations for reliable outlier statistics",
+                "setting": "outlier_method",
+                "signals": "n=29 < 30",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "none"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "3.5 (Iglewicz-Hoaglin); 4.5 for skewed variables",
+                "setting": "outlier_threshold",
+                "signals": "|skew|=0.32",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "3.5"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "nothing to treat",
+                "setting": "outlier_treatment",
+                "signals": "no detection performed",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "flag"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "AUTO applies small-share outlier exclusion automatically and flags larger regime shares",
+                "setting": "outlier_action_policy",
+                "signals": "treatment='flag', flagged_share=0.00%",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "flag_only"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "irrelevant (kept as default)",
+                "setting": "missing_strategy",
+                "signals": "no missing predictor values",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "linear"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter |r|>=0.90 redundancy pruning for n<100, |r|>=0.95 for n>=100",
+                "setting": "corr_threshold",
+                "signals": "n=29, p_num=1",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "0.9"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter VIF for small samples",
+                "setting": "vif_threshold",
+                "signals": "n=29 < 100",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "5"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "calendar effects matter for sub-daily/daily data with >=48 points",
+                "setting": "calendar_features",
+                "signals": "granularity=monthly, n=29",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "include harmonics where autocorrelation at the period exceeds 0.2",
+                "setting": "fourier_terms",
+                "signals": "monthly data, >=24 points",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "year=1"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "HDD/CDD only when an outdoor-temperature column exists",
+                "setting": "degree_days",
+                "signals": "temperature-like column: None",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "USER_OVERRIDE",
+                "rule": "user override of AUTO",
+                "setting": "lags",
+                "signals": "value supplied by user",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "1,3"
+              },
+              {
+                "candidate_space": "",
+                "mode": "USER_OVERRIDE",
+                "rule": "user override of AUTO",
+                "setting": "rolling_windows",
+                "signals": "value supplied by user",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "3"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "interactions only when n > 20p and p<=6 (over-fit protection)",
+                "setting": "interactions",
+                "signals": "p=1, n=29",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "no holiday flags (country unknown)",
+                "setting": "holiday_country",
+                "signals": "no country declared",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "(none)"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "few candidates: keep all",
+                "setting": "selection_method",
+                "signals": "p=6 <= 8",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "none"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "exact k_max = min(p, n // 20) observations-per-feature rule",
+                "setting": "max_features",
+                "signals": "p=6, n=29",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "1"
+              }
+            ],
+            "category_levels": {},
+            "cooling_balance": null,
+            "heating_balance": null,
+            "medians": {
+              "cos_year1": 0.005375731557583884,
+              "process_setting": -0.545185866870942,
+              "process_setting_lag1": -0.3803700187447241,
+              "process_setting_lag3": -0.28511716071693655,
+              "process_setting_roll3": -0.313437063660254,
+              "sin_year1": 0.017201575418260506
+            },
+            "n_train_fit": 29,
+            "n_train_input": 29,
+            "n_valid": 13,
+            "selected_features": [
+              "process_setting",
+              "sin_year1",
+              "cos_year1",
+              "process_setting_lag1",
+              "process_setting_lag3",
+              "process_setting_roll3"
+            ],
+            "train_input_sha256": "ed5712eeda6d9a6cb36085760b9028933b07998676aee8d3f67d75b8be3c423e"
+          },
+          {
+            "auto": [
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter 25% missingness cap for short series (n<60), 40% for medium series, 50% when n>=1000",
+                "setting": "max_missing_rate",
+                "signals": "n=42, p_num=1, median_missing=0.000",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "0.25"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "near-constant relative-variance floor scaled by sample size (1e-6 for n<50, 1e-8 for n>=50)",
+                "setting": "min_variance",
+                "signals": "n=42, target_rel_var=5.672e-02",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "1e-06"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "small-sample |r|>=0.985 (n<60) or |r|>=0.99 (n>=60) with target and energy-like name => leakage",
+                "setting": "leakage_threshold",
+                "signals": "n=42, candidate_predictors=1",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "0.985"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "approximately symmetric -> robust z-score on calendar-adjusted values",
+                "setting": "outlier_method",
+                "signals": "target |skew|=0.55 <= 2, n=42",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "robust_z"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "3.5 (Iglewicz-Hoaglin); 4.5 for skewed variables",
+                "setting": "outlier_threshold",
+                "signals": "|skew|=0.55",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "3.5"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "few extreme points: remove from training (target never altered)",
+                "setting": "outlier_treatment",
+                "signals": "target flagged share=0.00% <= 2 %",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "remove"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "AUTO applies small-share outlier exclusion automatically and flags larger regime shares",
+                "setting": "outlier_action_policy",
+                "signals": "treatment='remove', flagged_share=0.00%",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "auto_apply"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "irrelevant (kept as default)",
+                "setting": "missing_strategy",
+                "signals": "no missing predictor values",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "linear"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter |r|>=0.90 redundancy pruning for n<100, |r|>=0.95 for n>=100",
+                "setting": "corr_threshold",
+                "signals": "n=42, p_num=1",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "0.9"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter VIF for small samples",
+                "setting": "vif_threshold",
+                "signals": "n=42 < 100",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "5"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "calendar effects matter for sub-daily/daily data with >=48 points",
+                "setting": "calendar_features",
+                "signals": "granularity=monthly, n=42",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "include harmonics where autocorrelation at the period exceeds 0.2",
+                "setting": "fourier_terms",
+                "signals": "monthly data, >=24 points",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "year=1"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "HDD/CDD only when an outdoor-temperature column exists",
+                "setting": "degree_days",
+                "signals": "temperature-like column: None",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "USER_OVERRIDE",
+                "rule": "user override of AUTO",
+                "setting": "lags",
+                "signals": "value supplied by user",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "1,3"
+              },
+              {
+                "candidate_space": "",
+                "mode": "USER_OVERRIDE",
+                "rule": "user override of AUTO",
+                "setting": "rolling_windows",
+                "signals": "value supplied by user",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "3"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "interactions only when n > 20p and p<=6 (over-fit protection)",
+                "setting": "interactions",
+                "signals": "p=1, n=42",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "no holiday flags (country unknown)",
+                "setting": "holiday_country",
+                "signals": "no country declared",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "(none)"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "few candidates: keep all",
+                "setting": "selection_method",
+                "signals": "p=6 <= 8",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "none"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "exact k_max = min(p, n // 20) observations-per-feature rule",
+                "setting": "max_features",
+                "signals": "p=6, n=42",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "2"
+              }
+            ],
+            "category_levels": {},
+            "cooling_balance": null,
+            "heating_balance": null,
+            "medians": {
+              "cos_year1": 0.005375731557583884,
+              "process_setting": -0.12030131259071869,
+              "process_setting_lag1": -0.21555417061850626,
+              "process_setting_lag3": -0.5226785990059587,
+              "process_setting_roll3": -0.23701293665643128,
+              "sin_year1": 0.017201575418260506
+            },
+            "n_train_fit": 42,
+            "n_train_input": 42,
+            "n_valid": 13,
+            "selected_features": [
+              "process_setting",
+              "sin_year1",
+              "cos_year1",
+              "process_setting_lag1",
+              "process_setting_lag3",
+              "process_setting_roll3"
+            ],
+            "train_input_sha256": "85817db5912197d0fd79843fb8238e096b60c26ea04d25451bb77f60e795c125"
+          },
+          {
+            "auto": [
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter 25% missingness cap for short series (n<60), 40% for medium series, 50% when n>=1000",
+                "setting": "max_missing_rate",
+                "signals": "n=55, p_num=1, median_missing=0.000",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "0.25"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "near-constant relative-variance floor scaled by sample size (1e-6 for n<50, 1e-8 for n>=50)",
+                "setting": "min_variance",
+                "signals": "n=55, target_rel_var=5.340e-02",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "1e-08"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "small-sample |r|>=0.985 (n<60) or |r|>=0.99 (n>=60) with target and energy-like name => leakage",
+                "setting": "leakage_threshold",
+                "signals": "n=55, candidate_predictors=1",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "0.985"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "approximately symmetric -> robust z-score on calendar-adjusted values",
+                "setting": "outlier_method",
+                "signals": "target |skew|=0.67 <= 2, n=55",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "robust_z"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "3.5 (Iglewicz-Hoaglin); 4.5 for skewed variables",
+                "setting": "outlier_threshold",
+                "signals": "|skew|=0.67",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "3.5"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "few extreme points: remove from training (target never altered)",
+                "setting": "outlier_treatment",
+                "signals": "target flagged share=0.00% <= 2 %",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "remove"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "AUTO applies small-share outlier exclusion automatically and flags larger regime shares",
+                "setting": "outlier_action_policy",
+                "signals": "treatment='remove', flagged_share=0.00%",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "auto_apply"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "irrelevant (kept as default)",
+                "setting": "missing_strategy",
+                "signals": "no missing predictor values",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "linear"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter |r|>=0.90 redundancy pruning for n<100, |r|>=0.95 for n>=100",
+                "setting": "corr_threshold",
+                "signals": "n=55, p_num=1",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "0.9"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "stricter VIF for small samples",
+                "setting": "vif_threshold",
+                "signals": "n=55 < 100",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "5"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "calendar effects matter for sub-daily/daily data with >=48 points",
+                "setting": "calendar_features",
+                "signals": "granularity=monthly, n=55",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "include harmonics where autocorrelation at the period exceeds 0.2",
+                "setting": "fourier_terms",
+                "signals": "monthly data, >=24 points",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "year=1"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "HDD/CDD only when an outdoor-temperature column exists",
+                "setting": "degree_days",
+                "signals": "temperature-like column: None",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "USER_OVERRIDE",
+                "rule": "user override of AUTO",
+                "setting": "lags",
+                "signals": "value supplied by user",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "1,3"
+              },
+              {
+                "candidate_space": "",
+                "mode": "USER_OVERRIDE",
+                "rule": "user override of AUTO",
+                "setting": "rolling_windows",
+                "signals": "value supplied by user",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "3"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "interactions only when n > 20p and p<=6 (over-fit protection)",
+                "setting": "interactions",
+                "signals": "p=1, n=55",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "False"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "no holiday flags (country unknown)",
+                "setting": "holiday_country",
+                "signals": "no country declared",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "(none)"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "few candidates: keep all",
+                "setting": "selection_method",
+                "signals": "p=6 <= 8",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "none"
+              },
+              {
+                "candidate_space": "",
+                "mode": "AUTO",
+                "rule": "exact k_max = min(p, n // 20) observations-per-feature rule",
+                "setting": "max_features",
+                "signals": "p=6, n=55",
+                "stage": "",
+                "target": "quality_offset",
+                "value": "2"
+              }
+            ],
+            "category_levels": {},
+            "cooling_balance": null,
+            "heating_balance": null,
+            "medians": {
+              "cos_year1": 0.005375731557583884,
+              "process_setting": -0.545185866870942,
+              "process_setting_lag1": -0.5689658449521664,
+              "process_setting_lag3": -0.5689658449521664,
+              "process_setting_roll3": -0.274823996261828,
+              "sin_year1": 0.017201575418260506
+            },
+            "n_train_fit": 55,
+            "n_train_input": 55,
+            "n_valid": 14,
+            "selected_features": [
+              "process_setting",
+              "sin_year1",
+              "cos_year1",
+              "process_setting_lag1",
+              "process_setting_lag3",
+              "process_setting_roll3"
+            ],
+            "train_input_sha256": "91a6fdda083f65e19444a2230dce9635834d5db2ba8633636ec35fc8ce3712d8"
+          }
+        ],
+        "inference_policy": "TCP-controlled catalog only; auxiliary EDA/residual inference disabled",
+        "n_evaluation_population": 72,
+        "n_final_training": 72,
+        "schema_version": 2,
+        "selection_scope": "training fold only",
+        "validation_target_filtering": "none"
+      }
+    }
+  }
+}

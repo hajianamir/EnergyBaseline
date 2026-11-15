@@ -83,6 +83,18 @@ _RAW_UNITS: tuple[tuple[str, UnitDef], ...] = (
     ("l_s", UnitDef("L/s", "m3/h", "flow_rate", 3.6, 0.0)),
     ("cfm", UnitDef("cfm", "m3/h", "flow_rate", 1.6990108, 0.0)),
     ("gpm", UnitDef("gpm", "m3/h", "flow_rate", 0.2271247, 0.0)),
+    # General process quantities, independent of the selected domain pack.
+    ("pa", UnitDef("Pa", "kPa", "pressure", 0.001)),
+    ("kpa", UnitDef("kPa", "kPa", "pressure", 1.0)),
+    ("mpa", UnitDef("MPa", "kPa", "pressure", 1000.0)),
+    ("bar", UnitDef("bar", "kPa", "pressure", 100.0)),
+    ("psi", UnitDef("psi", "kPa", "pressure", 6.894757293168)),
+    ("g", UnitDef("g", "kg", "mass", 0.001)),
+    ("kg", UnitDef("kg", "kg", "mass", 1.0)),
+    ("tonne", UnitDef("tonne", "kg", "mass", 1000.0)),
+    ("s", UnitDef("s", "s", "duration", 1.0)),
+    ("min", UnitDef("min", "s", "duration", 60.0)),
+    ("h", UnitDef("h", "s", "duration", 3600.0)),
     # Dimensionless / Ratio (canonical: ratio)
     ("ratio", UnitDef("ratio", "ratio", "dimensionless", 1.0, 0.0)),
     ("%", UnitDef("%", "ratio", "dimensionless", 0.01, 0.0)),

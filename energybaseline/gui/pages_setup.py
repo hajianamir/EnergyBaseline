@@ -40,6 +40,7 @@ from PySide6.QtWidgets import (
 )
 
 from ..core import ingest, store
+from ..core.domain import resolve_domain
 from ..core.auto import AutoLog
 from ..core.cache import CachedComplianceRunner
 from ..core.integrity import IntegrityViolationError
@@ -535,7 +536,7 @@ class SetupPage(QWidget):
                     it.setCheckState(Qt.CheckState.Unchecked)
                     self.target_list.addItem(it)
             for i in range(self.target_list.count()):
-                if any(
+                if resolve_domain(s.effective_config(), legacy_if_missing=False).energy and any(
                     k in self.target_list.item(i).text().lower()
                     for k in ("kwh", "energy", "elec", "gas", "consum", "m3")
                 ):
@@ -553,6 +554,7 @@ class SetupPage(QWidget):
             targets=self.checked_targets() or None,
             dataset_name=name,
             dataset_sha256=sha,
+            domain_pack=resolve_domain(s.effective_config(), legacy_if_missing=False).key,
         )
         self.populate_schema_table(suggested)
         summary = ingest.build_ingestion_summary(df, source_name=name, source_sha256=sha, time_col=s.time_col)
@@ -592,14 +594,14 @@ class SetupPage(QWidget):
             return
 
         vsg = VariableSelectionGate(
-            s.df,
+            self.apply_units(s.df),
             targets=s.targets,
             time_col=s.time_col,
             schema=s.dataset_schema,
             dataset_sha256=s.dataset_sha,
-            config=s.config,
+            config=s.effective_config(),
         )
-        tcp = TestConfigPanel(vsg, config=s.config)
+        tcp = TestConfigPanel(vsg, config=s.effective_config())
         s.vsg = vsg
         s.tcp = tcp
         s.compliance_runner = CachedComplianceRunner(seed=42)
@@ -822,8 +824,7 @@ class SetupPage(QWidget):
             res = s.compliance_runner.what_if(probe)
             fill_table(self.tcp_results_tbl, pd.DataFrame(res["evaluated_results"]))
             self.tcp_status.setText(
-                f"What-If evaluated: {res['flip_count']} flip(s), "
-                f"engine_calls_delta={res['engine_calls_delta']}"
+                f"What-If evaluated: {res['flip_count']} flip(s), engine_calls_delta={res['engine_calls_delta']}"
             )
             return res
         except (PreregistrationLockedError, TCPValidationError, RuntimeError, ValueError) as exc:
@@ -870,6 +871,9 @@ class SetupPage(QWidget):
                 it_src.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
                 self.schema_tbl.setItem(r, 6, it_src)
 
+            # The schema is the role authority. Keep the legacy checkboxes and
+            # state aligned even when neutral policy suggested the first target.
+            self._sync_schema_to_legacy_controls_unlocked()
             if schema.timezone:
                 self.tz.setText(schema.timezone)
             if schema.outlier_policy.value in OUTLIER_POLICY_OPTS:
@@ -890,7 +894,10 @@ class SetupPage(QWidget):
                     cb_qt.setCurrentText("(none)")
                 elif cb_qt.currentText() == "(none)":
                     cb_qt.setCurrentText(
-                        QuantityType.FLOW.value if role_txt == ColumnRole.TARGET.value else QuantityType.QUALITY.value
+                        QuantityType.FLOW.value
+                        if role_txt == ColumnRole.TARGET.value
+                        and resolve_domain(self.state.effective_config(), legacy_if_missing=False).energy
+                        else QuantityType.QUALITY.value
                     )
             src_it = self.schema_tbl.item(row, 6)
             if src_it is not None:
@@ -963,6 +970,9 @@ class SetupPage(QWidget):
             it = self.target_list.item(i)
             it.setCheckState(Qt.CheckState.Checked if it.text() in targets else Qt.CheckState.Unchecked)
         self.target_list.blockSignals(False)
+        self.state.targets = self.checked_targets()
+        if time_col:
+            self.state.time_col = time_col
         self._update_overrides_table()
         self.units.setText(", ".join(unit_pairs))
 
@@ -1198,7 +1208,11 @@ class SetupPage(QWidget):
                 if nm in checked and cur_role != ColumnRole.TARGET.value:
                     cb_role.setCurrentText(ColumnRole.TARGET.value)
                     if cb_qt.currentText() == "(none)":
-                        cb_qt.setCurrentText(QuantityType.FLOW.value)
+                        cb_qt.setCurrentText(
+                            QuantityType.FLOW.value
+                            if resolve_domain(self.state.effective_config(), legacy_if_missing=False).energy
+                            else QuantityType.QUALITY.value
+                        )
                 elif nm not in checked and cur_role == ColumnRole.TARGET.value:
                     cb_role.setCurrentText(ColumnRole.PREDICTOR.value)
                     if cb_qt.currentText() == "(none)":
@@ -1447,6 +1461,8 @@ class AnalysisPage(QWidget):
             config=cfg,
             dataset_sha=s.dataset_sha,
             dataset_info=info,
+            vsg=s.vsg,
+            tcp=s.tcp,
             artifact_dir_by_target=artifact_dirs,
             on_progress=lambda t, p, m: self._progress_events.append((t, p, m)),
         )

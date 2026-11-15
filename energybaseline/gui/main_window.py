@@ -28,6 +28,7 @@ from ..core.telemetry import build_system_health, build_system_sbom
 from ..db.session import db_status
 from .advanced import AdvancedDialog, AutoPanel
 from .commands import CommandRegistry
+from .artifact_approval import load_with_artifact_approval
 from .page_monitor import MonitorPage
 from .page_status import StatusPage
 from .pages_results import ResultsPage, SelectionPage
@@ -293,7 +294,7 @@ class MainWindow(QMainWindow):
             return
         r = runs[labels.index(pick)]
         try:
-            run = store.load_run(r["id"])
+            run = load_with_artifact_approval(self, lambda **approval: store.load_run(r["id"], **approval))
         except Exception as exc:
             QMessageBox.critical(self, "Load run", f"Could not load the run: {exc}")
             return

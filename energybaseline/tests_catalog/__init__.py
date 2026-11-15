@@ -133,6 +133,7 @@ def run_full_test_catalog(
     group_col: str | None = None,
     oof_errors_by_model: Mapping[str, Any] | None = None,
     panel: TestConfigPanel | None = None,
+    source_frame: pd.DataFrame | None = None,
     alpha: float = 0.05,
     confidence_level: float = 0.95,
     correction: str = MultipleTestingCorrection.HOLM.value,
@@ -152,16 +153,20 @@ def run_full_test_catalog(
       - Causal group (ONLY when ``group_col`` is present in ``df``): ``T14``
     """
     if panel is not None:
-        panel.assert_accepted()
+        from ..core.authorization import assert_bound_inference
+
+        assert_bound_inference(
+            source_frame if source_frame is not None else df,
+            panel.vsg.time_col, [target_col], panel.vsg, panel,
+        )
         eff_alpha = float(panel.alpha)
         eff_conf = float(panel.confidence_level)
         eff_corr = str(panel.correction)
         eff_rule = str(panel.decision_rule)
     else:
-        eff_alpha = float(alpha)
-        eff_conf = float(confidence_level)
-        eff_corr = str(correction)
-        eff_rule = str(decision_rule)
+        from ..core.vsg import ComplianceGateError
+
+        raise ComplianceGateError("The full test catalog requires accepted input-bound VSG and a preregistration-locked TCP.")
 
     lv = validate_ci_level(eff_conf)
     norm_mode = mode.strip().lower() if mode in ("fast", "full") else "full"

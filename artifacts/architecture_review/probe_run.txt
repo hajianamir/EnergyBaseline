@@ -1,0 +1,13 @@
+{
+  "source_commit": "fe345ded40aae652fe1fb99617ca314211d9e5cf",
+  "status": "review probes completed; not a full test-suite run",
+  "python_modules": 139,
+  "except_exception": 89,
+  "current_mask_secret_survives": {
+    "userinfo": false,
+    "query_password": true,
+    "odbc": true,
+    "encoded_odbc": true
+  },
+  "source_files_unchanged": true
+}

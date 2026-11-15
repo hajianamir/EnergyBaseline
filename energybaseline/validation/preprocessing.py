@@ -13,11 +13,10 @@ from typing import Any, Sequence
 import numpy as np
 import pandas as pd
 from sklearn.feature_selection import mutual_info_regression
-from sklearn.linear_model import LassoCV
-from sklearn.model_selection import TimeSeriesSplit
+from sklearn.linear_model import Lasso
 from sklearn.preprocessing import StandardScaler
 
-from ..core.features import find_temperature_col, fit_balance_points
+from ..core.features import find_temperature_col, fit_balance_points, validate_memory
 from ..mining.clustering import assert_no_cluster_labels_in_model_inputs
 
 
@@ -67,9 +66,9 @@ class InFoldPreprocessor:
         self.scale = bool(scale)
         self.fit_degree_day_knots = bool(fit_degree_day_knots)
         self.temp_col = temp_col
-        self.lags = tuple(sorted({int(L) for L in lags if int(L) > 0}))
+        self.lags = tuple(validate_memory(list(lags), setting="lags"))
         self.lag_cols = tuple(str(c) for c in lag_cols)
-        self.rolling_windows = tuple(sorted({int(w) for w in rolling_windows if int(w) > 1}))
+        self.rolling_windows = tuple(validate_memory(list(rolling_windows), setting="rolling_windows"))
         self.roll_cols = tuple(str(c) for c in roll_cols)
         self.selection_method = str(selection_method)
         self.enforce_k_max = bool(enforce_k_max)
@@ -113,7 +112,7 @@ class InFoldPreprocessor:
 
         return out.replace([np.inf, -np.inf], np.nan)
 
-    def fit(self, X_train: pd.DataFrame, y_train: Any) -> "InFoldPreprocessor":
+    def fit(self, X_train: pd.DataFrame, y_train: Any, *, history: pd.DataFrame | None = None) -> "InFoldPreprocessor":
         """Fit all imputation, knot, feature-selection, and scaling parameters strictly on ``(X_train, y_train)``."""
         assert_no_cluster_labels_in_model_inputs(X_train)
         if not isinstance(X_train, pd.DataFrame):
@@ -127,9 +126,22 @@ class InFoldPreprocessor:
 
         self.n_train_ = n
         self.raw_columns_ = [str(c) for c in X_train.columns]
+        from ..core.ingest import sha256_dataframe
+
         h = hashlib.sha256()
         h.update(np.ascontiguousarray(yv, dtype="<f8").tobytes())
-        h.update(str(list(X_train.index[:5]) + list(X_train.index[-5:])).encode("utf-8"))
+        h.update(sha256_dataframe(X_train).encode("ascii"))
+        if history is not None:
+            if not history.index.is_unique or not X_train.index.is_unique:
+                raise ValueError("Temporal history requires unique observation indices.")
+            if not set(X_train.index).issubset(history.index):
+                raise ValueError("Training observations must be present in temporal history.")
+            if sha256_dataframe(history.loc[X_train.index]) != sha256_dataframe(X_train):
+                raise ValueError("Temporal history must preserve the exact training observations.")
+            positions = history.index.get_indexer(X_train.index)
+            if np.any(np.diff(positions) <= 0):
+                raise ValueError("Temporal history must preserve training observation order.")
+            h.update(sha256_dataframe(history).encode("ascii"))
         self.train_fingerprint_sha256_ = h.hexdigest()
 
         self.balance_heat_, self.balance_cool_ = None, None
@@ -141,11 +153,10 @@ class InFoldPreprocessor:
             )
             self.balance_heat_, self.balance_cool_ = bh, bc
 
-        expanded = self._expand_deterministic_features(X_train)
+        expanded = self._expand_deterministic_features(history if history is not None else X_train).loc[X_train.index]
         self.expanded_columns_ = list(expanded.columns)
         self.medians_ = {
-            c: (float(expanded[c].median()) if expanded[c].notna().any() else 0.0)
-            for c in self.expanded_columns_
+            c: (float(expanded[c].median()) if expanded[c].notna().any() else 0.0) for c in self.expanded_columns_
         }
         imputed = expanded.fillna(self.medians_).fillna(0.0)
 
@@ -172,13 +183,16 @@ class InFoldPreprocessor:
                 method = "lasso" if n > max(30, 6 * p) else "correlation"
 
             if method == "lasso" and n >= 16:
-                n_splits = min(4, max(2, n // 15))
-                las = LassoCV(cv=TimeSeriesSplit(n_splits=n_splits), random_state=self.seed, max_iter=10000).fit(
+                # Selection is learned on this training fold only; no hidden,
+                # unpurged CV after scaling the complete fold.
+                las = Lasso(alpha=0.01 * max(float(np.std(yv)), 1e-12), random_state=self.seed, max_iter=10000).fit(
                     Z.to_numpy(dtype=float), yv
                 )
                 scores = pd.Series(np.abs(las.coef_), index=self.expanded_columns_)
                 if int((scores > 1e-12).sum()) == 0:
-                    scores = Z.apply(lambda col: abs(float(np.corrcoef(col.to_numpy(), yv)[0, 1])) if col.std() > 0 else 0.0).fillna(0.0)
+                    scores = Z.apply(
+                        lambda col: abs(float(np.corrcoef(col.to_numpy(), yv)[0, 1])) if col.std() > 0 else 0.0
+                    ).fillna(0.0)
             elif method == "mutual_info":
                 scores = pd.Series(
                     mutual_info_regression(Z.to_numpy(dtype=float), yv, random_state=self.seed),
@@ -238,8 +252,11 @@ class InFoldPreprocessor:
             return pd.DataFrame(scaled, index=X.index, columns=self.selected_features_)
         return sub.copy()
 
-    def fit_transform(self, X_train: pd.DataFrame, y_train: Any) -> pd.DataFrame:
-        return self.fit(X_train, y_train).transform(X_train)
+    def fit_transform(
+        self, X_train: pd.DataFrame, y_train: Any, *, history: pd.DataFrame | None = None
+    ) -> pd.DataFrame:
+        self.fit(X_train, y_train, history=history)
+        return self.transform(history if history is not None else X_train).loc[X_train.index]
 
     def summary(self) -> FoldPreprocessingSummary:
         if not self.is_fitted_:

@@ -78,6 +78,8 @@ class TargetResult:
     validity_envelope: dict = field(default_factory=dict)
     weight_sensitivity_20pct: dict = field(default_factory=dict)
     purge_gap_spec: dict = field(default_factory=dict)
+    validation_contract: dict = field(default_factory=dict)
+    validation_series: pd.DataFrame | None = None
     seconds: float = 0.0
 
 
@@ -201,15 +203,22 @@ def _importance(model, X: pd.DataFrame, y: np.ndarray, seed: int, with_shap: boo
 def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: list[str], config: dict, seed: int,
                    auto_root: AutoLog, n_jobs: int, progress: Progress, cancel: Callable[[], bool],
                    formulas_artifact: Callable[[str, str], str] | None = None,
-                   *, schema: DatasetSchema | dict | None = None) -> tuple[TargetResult, dict]:
+                   *, schema: DatasetSchema | dict | None = None, inferential_panel: TestConfigPanel | None = None) -> tuple[TargetResult, dict]:
+    if inferential_panel is not None:
+        from .authorization import assert_bound_inference
+        assert_bound_inference(df, time_col, [target], inferential_panel.vsg, inferential_panel)
     t0 = time.time()
     res = TargetResult(target)
     bundles: dict = {}
     cfg = {k: v for k, v in config.items() if k != "per_target"}
     cfg.update((config.get("per_target") or {}).get(target, {}))
     resolved_schema = coerce_dataset_schema(schema or cfg.get("dataset_schema"))
+    from .domain import resolve_domain
+    domain = resolve_domain(cfg)
     auto = AutoLog(cfg, target)
     auto.records = auto_root.records
+    auto.note("domain_policy", domain.to_dict(), f"target={target}, selected_pack={domain.key}",
+              "Neutral policy applies no energy standards; energy policy must be selected explicitly in new product configurations.")
 
     def emit(p, msg):
         if cancel():
@@ -223,6 +232,7 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
         emit(8, "Quality & preprocessing")
         prep = preprocess_target(tdf, target, all_targets, g, auto, seed, trep.n_duplicates, schema=resolved_schema)
         res.exclusions, res.quality, res.notes, res.outliers = prep.exclusions, prep.quality, prep.notes, prep.outliers
+
         res.characterization = compute_target_characterization_profile(
             prep.df,
             target=target,
@@ -230,7 +240,7 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
             dataset_sha256=(resolved_schema.dataset_sha256 if resolved_schema is not None else ""),
         )
         emit(14, "Exploratory analysis")
-        res.eda = run_eda(prep.df, target, prep.predictors, g)
+        res.eda = run_eda(prep.df, target, prep.predictors, g, energy_policy=domain.energy, allow_inference=False)
         if bool(config.get("include_eda_attachment", True)):
             from ..mining.eda_attach import build_optional_eda_attachment
 
@@ -280,24 +290,20 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
         fam = auto.decide(
             "model_families",
             lambda: (
-                (["linear", "tree", "kernel", "nn"] if len(sel) >= 1 else ["linear"]),
+                (["linear", "tree", "kernel", "nn"] if len(tdf.columns) > len(all_targets) else ["linear"]),
                 f"n={n}, p_selected={len(sel)}, tier={g.tier}",
                 "all four model families enter gated competition when predictors>=1 (mean-only linear when predictors==0)",
             ),
         )
         fam = tuple(fam)
-        from ..validation.purge import compute_purge_gap_spec
-
-        max_lag_used = max([0, *[int(lag_v) for _, lag_v in getattr(spec, "lags", [])]])
-        max_roll_used = max([0, *[int(roll_v) for _, roll_v in getattr(spec, "rolls", [])]])
-        p_spec = compute_purge_gap_spec(
-            steps_per_day=g.steps_per_day,
-            max_lag=max_lag_used,
-            max_rolling_window=max_roll_used,
-        )
-        gap = min(p_spec.purge_gap, max(1, n // 5))
+        from .evaluation import RawEvaluationPlan
+        evaluation = RawEvaluationPlan(tdf, target, all_targets, g, cfg, seed, schema=resolved_schema, cancel=cancel)
+        p_spec = evaluation.purge_spec()
+        max_lag_used, max_roll_used = p_spec.max_lag, p_spec.max_rolling_window
+        gap = p_spec.purge_gap
         res.purge_gap_spec = p_spec.to_dict()
-        folds = make_folds(n, k, scheme, gap)
+        folds = make_folds(len(evaluation.y), k, scheme, gap)
+        evaluation.folds = folds
         if not folds:
             raise ValueError("Not enough observations to build validation folds.")
         auto.note(
@@ -307,7 +313,18 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
             "purge gap = max(1 day, 1 step, max lag, max rolling window) between train and validation blocks",
         )
         ctx = Ctx(target=target, seed=seed, n_jobs=n_jobs, hpo_trials=trials, nn_max_epochs=epochs, seq_len=seq, cv_scheme=scheme, folds=k, gap=gap,
-                  steps_per_day=g.steps_per_day, tier=g.tier, enable_nn=nn_on, families=fam, raw_names=list(spec.raw_cols), temp_col=spec.temp_col, cancel=cancel)
+                  steps_per_day=g.steps_per_day, tier=g.tier, enable_nn=nn_on, families=fam, raw_names=list(spec.raw_cols), temp_col=spec.temp_col, energy_policy=domain.energy, allow_inference=False, evaluation_plan=evaluation, cancel=cancel)
+        for train_idx, valid_idx in folds:
+            evaluation.prepare(train_idx, valid_idx)
+        res.validation_contract = {
+            "schema_version": 2, "evaluator": "raw-fold-training-v1",
+            "n_evaluation_population": len(evaluation.y), "n_final_training": n,
+            "folds": [evaluation.prepare(tr, te).audit for tr, te in folds],
+            "selection_scope": "training fold only", "validation_target_filtering": "none",
+            "estimator_selection_policy": "explicit-temporal-hpo-v2",
+            "inference_policy": "TCP-controlled catalog only; auxiliary EDA/residual inference disabled",
+            "cache_matrix_budget_bytes": evaluation.cache_budget_bytes,
+        }
         cands, missing = build_portfolio(ctx, n)
         cand_by_name = {c.name: c for c in cands}
         register: list[dict] = [{"model": m["model"], "family": "-", "status": "not evaluated", "reason": m["reason"]} for m in missing]
@@ -342,57 +359,32 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
             a, b = min(nn_r, key=lambda r: r["metrics"]["cvrmse"]), min(tr_r, key=lambda r: r["metrics"]["cvrmse"])
             ca, cb = cand_by_name.get(a["name"]), cand_by_name.get(b["name"])
             if ca is not None and cb is not None:
-                from ..models.ensemble import fit_nnls_weights_on_inner_oof
-
-                bo = np.full(n, np.nan, dtype=float)
-                fold_ws: list[np.ndarray] = []
-                for otr, ote in folds:
-                    in_folds = make_folds(len(otr), 2, scheme, max(1, min(gap, len(otr) // 6)))
-                    if not in_folds:
-                        continue
-                    P_in = np.full((len(otr), 2), np.nan, dtype=float)
-                    X_otr = X.iloc[otr]
-                    y_otr = y[otr]
-                    for itr, ite in in_folds:
-                        med_i = X_otr.iloc[itr].median(numeric_only=True).fillna(0.0)
-                        X_itr = X_otr.iloc[itr].fillna(med_i).fillna(0.0)
-                        X_ite = X_otr.iloc[ite].fillna(med_i).fillna(0.0)
-                        fa_in = ca.fit(X_itr, y_otr[itr], ctx, tune=False)
-                        fb_in = cb.fit(X_itr, y_otr[itr], ctx, tune=False)
-                        P_in[ite, 0] = fa_in.predict(X_ite)
-                        P_in[ite, 1] = fb_in.predict(X_ite)
-                    w_fold, _ = fit_nnls_weights_on_inner_oof(P_in, y_otr, normalize_simplex=True, enforce_k_max=False)
-                    fold_ws.append(w_fold)
-                    med_o = X_otr.median(numeric_only=True).fillna(0.0)
-                    X_otr_c = X_otr.fillna(med_o).fillna(0.0)
-                    X_ote_c = X.iloc[ote].fillna(med_o).fillna(0.0)
-                    fa_o = ca.fit(X_otr_c, y_otr, ctx, tune=False)
-                    fb_o = cb.fit(X_otr_c, y_otr, ctx, tune=False)
-                    bo[ote] = float(w_fold[0]) * fa_o.predict(X_ote_c) + float(w_fold[1]) * fb_o.predict(X_ote_c)
-
+                bo, fold_ws = evaluation.ensemble_predictions(ca, cb, ctx)
+                evaluation_y = evaluation.y
                 both = ~np.isnan(bo)
                 if both.sum() > 10 and fold_ws:
-                    m = metrics(y[both], bo[both])
+                    m = metrics(evaluation_y[both], bo[both])
                     best_single = min(a["metrics"]["cvrmse"], b["metrics"]["cvrmse"])
                     if m["cvrmse"] < 0.97 * best_single:
                         mean_w = np.mean(np.vstack(fold_ws), axis=0)
                         bl = Blend(a["model"], b["model"], target, weights=(float(mean_w[0]), float(mean_w[1])))
                         k_ = bl.n_params()
-                        rss = float(np.sum((y[both] - bo[both]) ** 2))
+                        rss = float(np.sum((evaluation_y[both] - bo[both]) ** 2))
                         nc = int(both.sum())
-                        q = np.quantile(y[both] - bo[both], [0.025, 0.975])
-                        plz, pn = plausibility(bl, X, y)
+                        q = np.quantile(evaluation_y[both] - bo[both], [0.025, 0.975])
+                        plz, pn = plausibility(bl, X, y) if domain.energy else (1.0, [])
                         results.append(
                             {
                                 "name": bl.name,
                                 "family": bl.family,
                                 "tier": 5,
                                 "kind": "blend",
-                                "oof": bo,
+                                "oof": evaluation.aligned(bo, X.index),
+                                "evaluation_oof": bo,
                                 "metrics": m,
                                 "train_metrics": metrics(y, bl.predict(X)),
-                                "fold_cvrmse": [m["cvrmse"]],
-                                "robustness": 0.0,
+                                "fold_cvrmse": [metrics(evaluation_y[te], bo[te])["cvrmse"] for _, te in evaluation.folds],
+                                "robustness": float(np.std([metrics(evaluation_y[te], bo[te])["cvrmse"] for _, te in evaluation.folds]) / max(m["cvrmse"], 1e-9)),
                                 "n_params": k_,
                                 "aic": nc * math.log(max(rss, 1e-12) / nc) + 2 * k_,
                                 "bic": nc * math.log(max(rss, 1e-12) / nc) + k_ * math.log(nc),
@@ -400,7 +392,7 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
                                 "hpo": bl.hpo_note,
                                 "params": bl.params,
                                 "seconds": 0.0,
-                                "diagnostics": diagnostics(y[both], bo[both]),
+                                "diagnostics": diagnostics(evaluation_y[both], bo[both], allow_inference=False),
                                 "resid_q": (float(q[0]), float(q[1])),
                                 "plausibility": plz,
                                 "plaus_notes": pn,
@@ -430,6 +422,9 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
         sl = build_shortlist(results)
         res.notice = sl["notice"]
         top = sl["top"]
+        res.validation_series = pd.DataFrame({"actual": evaluation.y}, index=evaluation.index)
+        for result in top:
+            res.validation_series[result["name"]] = result["evaluation_oof"]
         res.rationale = decision_rationale(top)
         # ---- interpretability + bundles
         with_imp = bool(auto.decide("include_importance", lambda: (n <= 20000, f"n={n}", "interpretability extras on unless n>20000 (cost)")))
@@ -447,7 +442,8 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
                     r["importance"] = {"note": f"importance failed: {exc}"}
             alert = resolve_alert(config, r["metrics"]["cvrmse"], auto if rank == 1 else None)
             bundles[r["name"]] = {
-                "target": target, "model_name": r["name"], "model": r["model"], "spec": spec, "resid_q": r["resid_q"], "metrics": r["metrics"], "rmse": r["metrics"]["rmse"],
+                "domain_policy": domain.to_dict(), "artifact_schema_version": 2,
+                "target": target, "model_name": r["name"], "model": r["model"], "spec": spec, "validation_contract": res.validation_contract, "resid_q": r["resid_q"], "metrics": r["metrics"], "rmse": r["metrics"]["rmse"],
                 "formula": r["formula"], "required_columns": spec.required_columns(), "train_stats": stats, "granularity": g.label, "freq": g.freq,
                 "steps_per_day": g.steps_per_day, "aggregation": agg_map, "mean_y": float(np.mean(y)), "alert": alert, "thresholds": th, "versions": collect_versions(), "seed": seed,
                 "baseline_window": res.temporal.get("baseline_window"), "units_note": "", "oof_index": [str(i) for i in X.index[:3]],
@@ -487,8 +483,6 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
 
         # ---- Phase 6 Separated Registers, SC-9 Validity Envelope & ±20% Sensitivity
         from ..scoring import (
-            analyze_weight_sensitivity_20pct,
-            compute_13_subscores,
             fit_validity_domain_envelope,
             partition_model_registers,
         )
@@ -529,47 +523,8 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
         )
         res.separated_registers = sep_regs.to_dict()
 
-        cands_13 = []
-        for r in sorted(results, key=lambda r: -r["score"]):
-            if r.get("status") != "ok":
-                continue
-            d_diag = r["diagnostics"]
-            subs = compute_13_subscores(
-                cvrmse=float(r["metrics"]["cvrmse"]),
-                nmbe=float(r["metrics"]["nmbe"]),
-                r2=float(r["metrics"]["r2"]),
-                wape=float(r["metrics"].get("smape", r["metrics"]["cvrmse"])),
-                fold_cvrmse_std=float(np.std(r["fold_cvrmse"])) if r["fold_cvrmse"] else 0.0,
-                ljung_box_p=float(d_diag.get("ljung_box_p", 0.5)),
-                durbin_watson=float(d_diag.get("durbin_watson", 2.0)),
-                breusch_pagan_p=float(d_diag.get("breusch_pagan_p", 0.5)),
-                normality_p=float(d_diag.get("jarque_bera_p", 0.5)),
-                sign_plausibility=float(r.get("plausibility", 1.0)),
-                n_obs=n,
-                n_params=int(r["n_params"]),
-                family=str(r["family"]),
-                is_parametric=bool(r["kind"] == "linear"),
-                fit_seconds=float(r.get("seconds", 0.05)),
-                max_cvrmse=float(th.get("max_cvrmse", 15.0)),
-                max_nmbe=float(th.get("max_nmbe", 5.0)),
-                min_r2=float(th.get("min_r2", 0.75)),
-            )
-            cands_13.append(
-                {
-                    "model_name": r["name"],
-                    "family": r["family"],
-                    "is_parametric": bool(r["kind"] == "linear"),
-                    "qualified": bool(r["qualified"]),
-                    "in_mcs": True,
-                    "cvrmse": float(r["metrics"]["cvrmse"]),
-                    "nmbe": float(r["metrics"]["nmbe"]),
-                    "r2": float(r["metrics"]["r2"]),
-                    "n_params": int(r["n_params"]),
-                    "subscores_13": subs,
-                }
-            )
-        if cands_13:
-            res.weight_sensitivity_20pct = analyze_weight_sensitivity_20pct(cands_13, seed=seed).to_dict()
+        from .scoring import analyze_ranking_sensitivity
+        res.weight_sensitivity_20pct = analyze_ranking_sensitivity(results, res.scoring["weights"], seed=seed)
         for r in top[:3]:
             d = r["diagnostics"]
             res.comparative.append({"model": r["name"], **{k_: round(v, 4) for k_, v in r["metrics"].items() if k_ != "n"}, "durbin_watson": round(d["durbin_watson"], 3), "jarque_bera_p": round(d["jarque_bera_p"], 4),
@@ -591,27 +546,44 @@ def analyze_target(df: pd.DataFrame, time_col: str, target: str, all_targets: li
                     break
         oof_map: dict[str, np.ndarray] = {}
         for r_cand in sorted(results, key=lambda r: -r["score"])[:5]:
-            oof_vec = r_cand.get("oof")
-            if oof_vec is not None and len(oof_vec) == len(y):
-                oof_map[str(r_cand["name"])] = y - np.asarray(oof_vec, dtype=float)
+            if r_cand.get("evaluation_oof") is not None:
+                oof_map[str(r_cand["name"])] = evaluation.y - np.asarray(r_cand["evaluation_oof"], dtype=float)
         cat_mode = str(config.get("test_catalog_mode", "fast"))
         disabled_tids = tuple(config.get("disabled_tests", ()))
-        cat_out = run_full_test_catalog(
-            prep.df,
-            target_col=target,
-            predictor_cols=list(prep.predictors),
-            group_col=grp_col,
-            oof_errors_by_model=oof_map,
-            alpha=float(config.get("tcp_alpha", 0.05)) if not is_auto(config.get("tcp_alpha", "AUTO")) else 0.05,
-            disabled_tests=disabled_tids,
-            mode=cat_mode,
-            allow_hac=bool(config.get("allow_hac", True)),
-            seed=seed,
-        )
-        res.test_catalog = [item.to_dict() for item in cat_out]
+        if inferential_panel is None:
+            from ..tests_catalog.tc_assumptions import (
+                make_not_run_gates_result, make_not_run_user_result, make_not_applicable_group_result,
+            )
+            res.test_catalog = []
+            for i in range(1, 15):
+                tid = f"T{i}"
+                stage = "causal_group" if i == 14 else ("post_model" if i in (10, 11, 12) else "pre_model")
+                if tid in disabled_tids:
+                    item = make_not_run_user_result(test_id=tid, name=tid, target=target, stage=stage, mode=cat_mode)
+                elif i == 14 and grp_col is None:
+                    item = make_not_applicable_group_result(target=target, mode=cat_mode)
+                else:
+                    item = make_not_run_gates_result(test_id=tid, target=target, stage=stage, mode=cat_mode)
+                res.test_catalog.append(item.to_dict())
+        else:
+            cat_out = run_full_test_catalog(
+                evaluation.frame.iloc[evaluation.positions],
+                panel=inferential_panel,
+                source_frame=df,
+                target_col=target,
+                predictor_cols=list(prep.predictors),
+                group_col=grp_col,
+                oof_errors_by_model=oof_map,
+                alpha=float(config.get("tcp_alpha", 0.05)) if not is_auto(config.get("tcp_alpha", "AUTO")) else 0.05,
+                disabled_tests=disabled_tids,
+                mode=cat_mode,
+                allow_hac=bool(config.get("allow_hac", True)),
+                seed=seed,
+            )
+            res.test_catalog = [item.to_dict() for item in cat_out]
         emit(100, "Done")
-    except Cancelled:
-        raise
+    except (Cancelled, InterruptedError):
+        raise Cancelled()
     except Exception as exc:
         log.error("target %s failed: %s\n%s", target, exc, traceback.format_exc())
         res.status, res.error = "failed", f"{type(exc).__name__}: {exc}"
@@ -629,7 +601,8 @@ def run_gated_inferential_stage(
     seed: int = 42,
 ) -> dict:
     """Execute gated inferential pre-model testing + characterization after VSG & TCP acceptance (PIPE-1..3)."""
-    tcp.assert_accepted()
+    from .authorization import assert_bound_inference
+    assert_bound_inference(df, vsg.time_col, vsg.targets, vsg, tcp)
     runner = CachedComplianceRunner(cache=cache, seed=seed)
     dag_out = runner.run_compliance_stage_dag(df, vsg, tcp, stages_to_run=("pre_model",))
     char_by_target = {
@@ -661,16 +634,32 @@ def run_analysis(df: pd.DataFrame, time_col: str, targets: list[str], config: di
                  progress: Progress | None = None, cancel: Callable[[], bool] | None = None,
                  artifact_fn: Callable[[str, str], str] | None = None) -> tuple[RunResult, dict]:
     config = dict(config or {})
+    from .domain import resolve_domain
+    domain = resolve_domain(config)
+    if domain.key == "legacy_energy":
+        import warnings
+        warnings.warn("core.pipeline.run_analysis without domain_pack retains legacy energy policy. Use energybaseline.sdk.analyze (neutral default), or select domain_pack explicitly.", DeprecationWarning, stacklevel=2)
+    config["domain_pack"] = domain.key
+    config["domain_policy"] = domain.to_dict()
     if enforce_compliance_gates or bool(config.get("require_gate_acceptance", False)):
         if vsg is None or tcp is None:
             raise ComplianceGateError(
                 "PIPE-1 violation: both VariableSelectionGate and TestConfigPanel must be supplied and accepted."
             )
     if vsg is not None:
-        vsg.assert_accepted()
+        from .authorization import assert_bound_vsg
+        assert_bound_vsg(df, time_col, targets, vsg)
     if tcp is not None:
         tcp.assert_accepted()
+        if vsg is not None and tcp.vsg.vsg_sha256 != vsg.vsg_sha256:
+            raise ComplianceGateError("The TCP must be bound to the supplied accepted VSG.")
+    if (enforce_compliance_gates or bool(config.get("require_gate_acceptance", False))) and not tcp.preregistration_sha256:
+        raise ComplianceGateError("Inference requires a preregistration-locked TCP.")
 
+    inferential_panel = tcp if vsg is not None and tcp is not None and tcp.preregistration_sha256 else None
+    if inferential_panel is not None:
+        from .authorization import assert_bound_inference
+        assert_bound_inference(df, time_col, targets, vsg, tcp)
     resolved_schema = coerce_dataset_schema(schema or config.get("dataset_schema"))
     if resolved_schema is not None:
         config["dataset_schema"] = resolved_schema.to_dict()
@@ -692,7 +681,7 @@ def run_analysis(df: pd.DataFrame, time_col: str, targets: list[str], config: di
     target_seeds = {target: derive_seed(lineage_sha, target, seed) for target in targets}
 
     def work(t):
-        return analyze_target(df, time_col, t, targets, config, target_seeds[t], target_logs[t], n_jobs, progress, cancel, artifact_fn, schema=resolved_schema)
+        return analyze_target(df, time_col, t, targets, config, target_seeds[t], target_logs[t], n_jobs, progress, cancel, artifact_fn, schema=resolved_schema, inferential_panel=inferential_panel)
 
     cancelled = False
     try:

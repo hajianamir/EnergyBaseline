@@ -1,0 +1,27 @@
+{
+  "test_only": true,
+  "note": "Isolated test-only manager 2.3.1 and driver; use maintained distribution packages in deployment. SQLite header 3.38.2 with genuine system SQLite library. No product dependencies added.",
+  "sources": [
+    {
+      "file": "unixodbc-azure-pinned.tar.gz",
+      "url": "https://codeload.github.com/Azure/unixODBC-MSSQL/tar.gz/bc0349e83e45f6abd5c22b680f94d4b21ef581f3",
+      "sha256": "25c02248cbecef5bc95b8d0e2bd4376dee0b90bfc155f23f2e813461ef0cdc9f",
+      "commit": "bc0349e83e45f6abd5c22b680f94d4b21ef581f3",
+      "role": "unixodbc-azure"
+    },
+    {
+      "file": "sqlite-headers-pinned.tar.gz",
+      "url": "https://codeload.github.com/azadkuh/sqlite-amalgamation/tar.gz/15d0ff10ebc7e7225eced1de84bb52137000899b",
+      "sha256": "cc3f513986d58599120b6ca5410793ac7c5b8253e17d37a8fe1f14f6b3791477",
+      "commit": "15d0ff10ebc7e7225eced1de84bb52137000899b",
+      "role": "sqlite-headers"
+    },
+    {
+      "file": "sqliteodbc-pinned.tar.gz",
+      "url": "https://codeload.github.com/softace/sqliteodbc/tar.gz/539531394dcedf415de574daa95367a93f5eb41d",
+      "sha256": "57a0f6a4c8d95bb2ec2b22f35c2aa38792dc5fa58c5b5b9b2b4b9c7cddc02d50",
+      "commit": "539531394dcedf415de574daa95367a93f5eb41d",
+      "role": "sqliteodbc"
+    }
+  ]
+}

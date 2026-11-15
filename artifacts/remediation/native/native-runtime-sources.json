@@ -1,0 +1,41 @@
+{
+  "scope": "Isolated native Linux offscreen Qt test runtime only; not product dependencies or a secure dbus service. Use distribution packages on deployed machines.",
+  "sources": [
+    {
+      "file": "libglvnd-src.tar.gz",
+      "url": "https://codeload.github.com/NVIDIA/libglvnd/tar.gz/refs/tags/v1.7.0",
+      "sha256": "073e7292788d4d3eeb45ea6c7bdcce9bfdb3b3eef8d7dbd47f2f30dce046ef98",
+      "commit": "faa23f21fc677af5792825dc30cb1ccef4bf33a6"
+    },
+    {
+      "file": "expat-src.tar.gz",
+      "url": "https://codeload.github.com/libexpat/libexpat/tar.gz/refs/tags/R_2_6_4",
+      "sha256": "372b18f6527d162fa9658f1c74d22a37429b82d822f5a1e1fc7e00f6045a06a2",
+      "commit": "2691aff4304a6d7e053199c205620136481b9dd1"
+    },
+    {
+      "file": "dbus-src.tar.gz",
+      "url": "https://codeload.github.com/d-bus/dbus/tar.gz/da0db314a3c3fca7290ca0263e1ed0954ad9a90d",
+      "sha256": "00ab427041c51cdfa77b9a3022fb58826cf8916a5b3c712b997d0221f5dc78e5",
+      "commit": "da0db314a3c3fca7290ca0263e1ed0954ad9a90d"
+    },
+    {
+      "file": "x11-src.tar.gz",
+      "url": "https://codeload.github.com/mirror/libX11/tar.gz/refs/tags/libX11-1.8.4",
+      "sha256": "4fbc83600cbb2c0df4f4b76e2f01438101b70a7907f323f511541874be34ce90",
+      "commit": "fc5ec8edda1efdf5d66db4e76796e3c407527b3b"
+    },
+    {
+      "file": "xorgproto-pinned.tar.gz",
+      "url": "https://codeload.github.com/X11Libre/mirror.fdo.xorgproto/tar.gz/6d3907b6d5dc4aa7d7ee6ee5d7d8714e7466630b",
+      "sha256": "cce1d4063da0f5e70c1bcff2744337a8f1f060bcb5a3278b1a650bf79066a772",
+      "commit": "6d3907b6d5dc4aa7d7ee6ee5d7d8714e7466630b"
+    },
+    {
+      "file": "opencv_python-4.11.0.86-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "pypi": "opencv-python==4.11.0.86",
+      "sha256": "6b02611523803495003bd87362db3e1d2a0454a6a63025dc6658a9830570aa0d",
+      "member": "opencv_python.libs/libxkbcommon-71ae2972.so.0.0.0"
+    }
+  ]
+}
