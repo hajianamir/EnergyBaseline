@@ -26,6 +26,7 @@ def run():
         frame = pd.read_csv(examples / fixture["dataset"])
         try:
             result = OPERATIONS[request["operation"]](frame, request["parameters"])
+            json.dumps(result, allow_nan=False)
             records.append({"fixture": fixture["request"], "success": True, "result": result})
         except Exception as exc:
             detail = traceback.format_exc() + "\nInner diagnostic: " + repr(exc.__context__)

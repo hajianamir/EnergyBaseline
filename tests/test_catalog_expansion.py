@@ -439,3 +439,30 @@ def test_binary_helper_keeps_explicit_real_zero_one_inputs(dtype):
 
     frame = pd.DataFrame({"event": pd.Series([0, 1, 1, 0], dtype=dtype)})
     np.testing.assert_array_equal(binary(frame, "event"), [0, 1, 1, 0])
+
+
+@pytest.mark.parametrize("permutation_seed", [0, 1, 2, 3, 4])
+def test_near_exact_nmf_reconstruction_remains_finite_across_degenerate_svd_bases(permutation_seed):
+    frame = pd.read_csv(EXAMPLES / "text.csv")
+    order = np.random.default_rng(permutation_seed).permutation(87)
+    frame.loc[:86, "text"] = frame.text.iloc[order].to_numpy()
+    result = execute("text-topics", nlp_spec(False), frame)
+    assert np.isfinite(result["training_reconstruction_error"])
+    assert 0 <= result["training_reconstruction_error"] < 0.01
+    assert np.isfinite(result["test_reconstruction_frobenius"])
+    assert 0 <= result["test_reconstruction_frobenius"] < 0.01
+
+
+@pytest.mark.parametrize("rows", [1, 31, 32, 33, 65])
+def test_bounded_reconstruction_norm_matches_direct_residual_without_cancellation(rows):
+    from scipy.sparse import csr_matrix
+    from energybaseline.workbench.language import reconstruction_norm
+
+    rng = np.random.default_rng(rows)
+    weights, components = rng.uniform(size=(rows, 3)), rng.uniform(size=(3, 7))
+    exact = weights @ components
+    assert reconstruction_norm(csr_matrix(exact), weights, components) == pytest.approx(0, abs=1e-14)
+    noisy = exact + rng.normal(0, 1e-10, exact.shape)
+    measured = reconstruction_norm(csr_matrix(noisy), weights, components)
+    assert measured > 0
+    assert measured == pytest.approx(np.linalg.norm(noisy - weights @ components), rel=1e-5, abs=1e-14)

@@ -102,6 +102,21 @@ def text_classification(frame, spec):
     return audit
 
 
+def reconstruction_norm(matrix, weights, components):
+    """Stable ||X-WH||_F without cancellation or a full dense document matrix.
+
+    Perfect/near-perfect sparse fits can make the expanded norm-squared identity
+    negative by roundoff. Sum actual residual squares in bounded 32-row blocks.
+    """
+    squared = 0.0
+    for start in range(0, matrix.shape[0], 32):
+        residual = weights[start : start + 32] @ components
+        block = matrix[start : start + 32].tocoo()
+        residual[block.row, block.col] -= block.data
+        squared += float(np.sum(residual * residual))
+    return float(np.sqrt(squared))
+
+
 def text_topics(frame, spec):
     fields(spec, ("text", "time", "train_rows", "topics"), ("gap", "max_features"))
     train, test, end, split, audit = text_split(frame, spec)
@@ -112,20 +127,14 @@ def text_topics(frame, spec):
         model = NMF(n_components=count, init="nndsvda", random_state=42, max_iter=1000, tol=1e-4)
         train_weights = model.fit_transform(train)
         test_weights = model.transform(test)
-    # ||X-WH||^2 without materializing the sparse document-by-vocabulary matrix.
-    residual = float(
-        test.multiply(test).sum()
-        - 2 * np.sum((test @ model.components_.T) * test_weights)
-        + np.sum((test_weights @ (model.components_ @ model.components_.T)) * test_weights)
-    )
     total = test_weights.sum(axis=1, keepdims=True)
     normalized = np.divide(test_weights, total, out=np.zeros_like(test_weights), where=total > 0)
     audit.update(
         method="TF-IDF nonnegative matrix factorization",
         topic_count=count,
         iterations=int(model.n_iter_),
-        training_reconstruction_error=float(model.reconstruction_err_),
-        test_reconstruction_frobenius=float(np.sqrt(max(0.0, residual))),
+        training_reconstruction_error=reconstruction_norm(train, train_weights, model.components_),
+        test_reconstruction_frobenius=reconstruction_norm(test, test_weights, model.components_),
         mean_test_topic_weights=normalized.mean(axis=0).tolist(),
         test_documents_without_topic_weight=int(np.sum(total.ravel() == 0)),
         training_topic_mass=train_weights.sum(axis=0).tolist(),
