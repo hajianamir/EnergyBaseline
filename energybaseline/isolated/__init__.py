@@ -562,7 +562,12 @@ def run_engine(name, request, arrays=None, *, timeout, extra_paths=None):
             if not re.fullmatch(r"[a-z_]{1,32}", key):
                 raise ValueError("Invalid engine array name.")
             np.save(private / f"{key}.npy", np.ascontiguousarray(value, dtype=np.float64), allow_pickle=False)
-        payload = dict(request, engine=spec.name, paths={k: str(v) for k, v in (extra_paths or {}).items()})
+        payload = dict(
+            request,
+            engine=spec.name,
+            budget_seconds=int(timeout),
+            paths={k: str(v) for k, v in (extra_paths or {}).items()},
+        )
         (private / "request.json").write_text(json.dumps(payload, allow_nan=False), encoding="utf-8")
         try:
             code = _run(

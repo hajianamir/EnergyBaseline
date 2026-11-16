@@ -20,6 +20,13 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 
+def _annotate(title: str, text: str) -> None:
+    """Surface the finding as a workflow annotation; job logs are not always retrievable."""
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        escaped = text.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+        print(f"::warning title={title}::{escaped}", flush=True)
+
+
 def main() -> int:
     import pandas as pd
 
@@ -46,16 +53,19 @@ def main() -> int:
                     )
                 else:
                     result = isolated.run_engine(engine, {"seed": 7, "models": 4}, arrays, timeout=180)
-            except Exception:
+            except Exception as error:
                 traceback.print_exc(file=sys.stdout)
+                _annotate(f"{engine} failed", f"{type(error).__name__}: {error}")
             else:
                 summary = {k: v for k, v in result.items() if k != "predictions"}
                 print(f"{engine} succeeded: {summary}")
             print(f"{engine} elapsed {time.monotonic() - started:.1f} s", flush=True)
             log = Path(kept, f"{engine}-engine.log")
             if log.is_file():
+                text = log.read_text(encoding="utf-8", errors="replace")
                 print(f"----- retained {engine} log (last 30000 characters)")
-                print(log.read_text(encoding="utf-8", errors="replace")[-30000:], flush=True)
+                print(text[-30000:], flush=True)
+                _annotate(f"{engine} engine log", text[-6000:])
                 log.unlink()
     return 0
 

@@ -136,7 +136,52 @@ def foreign_modules():
 
 def read_request(root):
     with open(os.path.join(root, "request.json"), encoding="utf-8") as stream:
-        return json.load(stream)
+        request = json.load(stream)
+    record_stall_before(request.get("budget_seconds"))
+    return request
+
+
+def record_stall_before(seconds):
+    """Shortly before the wall-clock budget ends, describe where this engine is waiting.
+
+    Thread stacks of this process and, on Linux, the state and current system call of every
+    process in its session go to the private log. They hold file names, line numbers and
+    command lines, never data values, and the log leaves the private directory only when the
+    operator designated a diagnostics directory.
+    """
+    if not isinstance(seconds, int) or seconds < 12:
+        return
+    import faulthandler
+    import threading
+
+    faulthandler.dump_traceback_later(seconds - 5, exit=False, file=sys.stderr)
+
+    def processes():
+        session = os.getsid(0)
+        for name in sorted(os.listdir("/proc"), key=lambda value: (len(value), value)):
+            if not name.isdigit():
+                continue
+            try:
+                with open("/proc/%s/stat" % name) as stream:
+                    fields = stream.read().rsplit(")", 1)[1].split()
+                if int(fields[3]) != session:
+                    continue
+                with open("/proc/%s/cmdline" % name, "rb") as stream:
+                    command = stream.read().replace(b"\0", b" ").decode("utf-8", "replace")[:240]
+                try:
+                    with open("/proc/%s/syscall" % name) as stream:
+                        call = stream.read().split()[:2]
+                except OSError:
+                    call = ["unreadable"]
+                sys.stderr.write("stall: pid=%s ppid=%s state=%s syscall=%s %s\n" % (name, fields[1], fields[0], call, command))
+            except (OSError, ValueError, IndexError):
+                continue
+        sys.stderr.flush()
+
+    if sys.platform.startswith("linux"):
+        timer = threading.Timer(seconds - 6, processes)
+        timer.daemon = True
+        timer.start()
 
 
 def load(root, name):
