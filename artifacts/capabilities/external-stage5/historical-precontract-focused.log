@@ -1,0 +1,50 @@
+........................................................................ [ 30%]
+........................................................................ [ 60%]
+...............F........................................................ [ 90%]
+.......................                                                  [100%]
+=================================== FAILURES ===================================
+____ test_specification_only_operations_never_consume_implicit_raw_dataset _____
+
+series =                   time         x         y
+0  2025-01-01 00:00:00 -0.651791 -1.938850
+1  2025-01-01 01:00:00 -0.174717... -2.084879
+94 2025-01-04 22:00:00  1.250697  3.623652
+95 2025-01-04 23:00:00  0.153020  0.489700
+
+[96 rows x 3 columns]
+
+    def test_specification_only_operations_never_consume_implicit_raw_dataset(series):
+>       assert len(OPERATION_NAMES) == 32 and len(SPEC_OPERATIONS) == 10
+E       AssertionError: assert (35 == 32)
+E        +  where 35 = len(('automl-search', 'flaml-search', 'pandera-validation', 'deep-forecast', 'digital-twin', 'portfolio-risk', ...))
+
+tests/test_advanced_workbench.py:377: AssertionError
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.16-final-0 _______________
+
+Name                                      Stmts   Miss  Cover
+-------------------------------------------------------------
+energybaseline/workbench/__init__.py         74      5    93%
+energybaseline/workbench/analytics.py        68      6    91%
+energybaseline/workbench/automl.py           74      4    95%
+energybaseline/workbench/business.py        153     64    58%
+energybaseline/workbench/common.py           64      3    95%
+energybaseline/workbench/deep.py            217      9    96%
+energybaseline/workbench/domains.py         126     10    92%
+energybaseline/workbench/entities.py         34      4    88%
+energybaseline/workbench/external.py        175     13    93%
+energybaseline/workbench/forecasting.py      74     12    84%
+energybaseline/workbench/operations.py       70      8    89%
+energybaseline/workbench/planning.py        271     20    93%
+energybaseline/workbench/prediction.py       79     10    87%
+energybaseline/workbench/preparation.py     133     13    90%
+energybaseline/workbench/regression.py      124     17    86%
+energybaseline/workbench/simulation.py      123     15    88%
+energybaseline/workbench/vision.py          241     20    92%
+-------------------------------------------------------------
+TOTAL                                      2100    233    89%
+Coverage XML written to file artifacts/capabilities/external-stage5/capability-coverage.xml
+Required test coverage of 80% reached. Total coverage: 88.90%
+=========================== short test summary info ============================
+FAILED tests/test_advanced_workbench.py::test_specification_only_operations_never_consume_implicit_raw_dataset
+1 failed, 238 passed in 97.54s (0:01:37)

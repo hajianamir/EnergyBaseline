@@ -6,6 +6,8 @@ Three additional executable operations call **FLAML**, **Pandera**, and **RapidO
 
 No prior runtime, gate, privacy, baseline, report renderer, test-integrity or coverage requirement is relaxed. The Python 3.12 runtime and existing dependency versions remain unchanged. New dependencies are exact-pinned, with release hashes in `requirements.lock`. No incompatible dependency overrides or `--no-deps` production install is used.
 
+For the normal windowed Windows executable, invoke `EnergyBaseline.exe cli workbench ... --out result.json`: standard Python streams are absent, so an explicit output destination is required. The output file remains the authoritative evidence; console Python also emits the same JSON on stdout. Windowless execution without a destination returns a failure status instead of silently discarding evidence. The real no-stream subprocess regressions verify all three engines and output/spec/metric/privacy contracts.
+
 ## FLAML: actual external AutoML
 
 Operation: `flaml-search`. Required parameters:
@@ -64,7 +66,9 @@ python -m energybaseline.cli workbench examples/external/pretrained-ocr.json --o
 
 The example is a synthetic printed raster, not a model/template used to train or match the recognizer. The semantic oracle actually checks that the pretrained engine recognizes `HELLO WORLD 123` above 0.85 confidence; the public result is separately checked to suppress this plaintext. Another test executes the real operation in a fresh process with socket connection/name-resolution events denied. A blank-image oracle checks that no template text is fabricated.
 
-See [THIRD_PARTY_MODELS.md](THIRD_PARTY_MODELS.md) for model rights/provenance and redistribution notices. The pretrained models remain inside the hash-locked dependency wheel, not Git evidence fixtures. PyInstaller configuration collects their data/configuration, external distribution metadata and Pandera dispatch modules. CI adds actual independent CLI receipts on both OSes and an additional frozen Windows engine execution after packaging; success is not assumed until those steps actually finish.
+See [THIRD_PARTY_MODELS.md](THIRD_PARTY_MODELS.md) for model rights/provenance and redistribution notices. The pretrained models remain inside the hash-locked dependency wheel, not Git evidence fixtures. PyInstaller configuration collects their data/configuration, external distribution metadata and Pandera dispatch modules, plus native XGBoost/LightGBM/ONNX libraries and VERSION resources. FLAML imports its native estimator module even when the selected learners are forests; a real console-bundle traceback exposed the previously omitted XGBoost DLL. The dependency is bundled correctly rather than disabling its import or substituting another engine.
+
+CI adds actual independent CLI receipts on both OSes and an additional frozen Windows engine execution after packaging; success is not assumed until those steps actually finish. An additional `Native external backend diagnostics` workflow builds a real console-bootloader bundle and exposes bounded failure diagnostics for repository synthetic fixtures only. Its success cannot replace the mandatory windowed Windows check, the complete GUI/full-suite coverage gates, or actual two-OS verification.
 
 ## Outstanding integrations, not silently declared complete
 

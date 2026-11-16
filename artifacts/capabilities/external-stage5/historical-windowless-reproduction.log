@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "<string>", line 8, in <module>
+  File "/home/user/EnergyBaseline/energybaseline/cli.py", line 1251, in main
+    return handler(args)
+           ^^^^^^^^^^^^^
+  File "/home/user/EnergyBaseline/energybaseline/cli.py", line 963, in _cmd_workbench
+    _write_or_print(result, args.out)
+  File "/home/user/EnergyBaseline/energybaseline/cli.py", line 99, in _write_or_print
+    sys.stdout.write(rendered)
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'write'

@@ -1,0 +1,7 @@
+{
+  "accepted_as_packaging_evidence": false,
+  "attempted": true,
+  "exit_code": 1,
+  "limitation": "The sandbox source-built Python lacks a shared libpython, which PyInstaller requires. No frozen Linux execution is claimed. This does not substitute for actual hosted frozen Windows verification.",
+  "generated_icon_changes_restored": true
+}

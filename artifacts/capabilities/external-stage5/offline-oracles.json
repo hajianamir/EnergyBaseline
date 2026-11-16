@@ -1,0 +1,32 @@
+{
+  "tested_source_commit": "cc6be9991d88b999325f921bd9e6b4a799fd6178",
+  "actual_engine_execution": true,
+  "mocked": false,
+  "process_audit_hook": "socket.connect and socket.getaddrinfo raise on any attempt",
+  "results": [
+    {
+      "operation": "flaml-search",
+      "executed": true,
+      "engine": "flaml",
+      "spec_sha256": "a595b08fd76aa0a9b60be6b1ca7091f93c1914c2f73728d8bbb81b510a851731",
+      "runtime_socket_connections_permitted": false,
+      "runtime_dns_lookups_permitted": false
+    },
+    {
+      "operation": "pandera-validation",
+      "executed": true,
+      "engine": "pandera",
+      "spec_sha256": "a436d49791a858a9c2d2a8a0edd49cf5aebe332dbf25a53ee3f7b1fe86ffb74e",
+      "runtime_socket_connections_permitted": false,
+      "runtime_dns_lookups_permitted": false
+    },
+    {
+      "operation": "pretrained-ocr",
+      "executed": true,
+      "engine": "rapidocr-onnxruntime",
+      "spec_sha256": "2ab083faeaab99191e44c6a8bf294a97f14689d60b82a119cf7d4196d0d6601c",
+      "runtime_socket_connections_permitted": false,
+      "runtime_dns_lookups_permitted": false
+    }
+  ]
+}

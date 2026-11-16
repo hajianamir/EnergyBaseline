@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "platform": "linux",
+  "runtime_kind": "python_cli",
+  "executable_sha256": null,
+  "models_are_repository_fixtures": false,
+  "input_data_scope": "Repository synthetic fixtures only; real third-party pretrained OCR weights from locked wheel",
+  "mocked": false,
+  "jobs": [
+    {
+      "operation": "flaml-search",
+      "subprocess_exit_code": 0,
+      "elapsed_seconds": 7.160492686001817,
+      "stdout_emitted": true,
+      "stdout_equals_output_when_emitted": true,
+      "output": {
+        "input_sha256": "4d507566b3a64b58448391d2df5d5d70fb3fcf9f616e89333dcd79731857aa0e",
+        "library_versions": {
+          "numpy": "2.5.4",
+          "pandas": "3.1.1",
+          "scikit-learn": "1.9.1",
+          "scipy": "1.18.1",
+          "statsmodels": "0.15.0"
+        },
+        "operation": "flaml-search",
+        "reference_sha256": null,
+        "result": {
+          "baseline_changed": false,
+          "engine": "flaml",
+          "engine_version": "2.8.0",
+          "fit_scope": "FLAML sees only inner fit/validation partitions. Selected estimator is refit on the outer training prefix once.",
+          "iterations_executed": 4,
+          "iterations_requested": 4,
+          "model_persisted": false,
+          "purge_gap": 2,
+          "search_fit_rows": 54,
+          "search_method": "CFO",
+          "selected_family": "rf",
+          "selected_parameters": {
+            "max_features": 1.0,
+            "max_leaves": 6,
+            "n_estimators": 11
+          },
+          "test_mae": 1.0319618186178017,
+          "test_rmse": 1.215385895065112,
+          "test_rows": 24,
+          "train_rows": 72,
+          "training_sha256": "92b033723d4591b765094fc9d396672137407943b283186ebc4a2dccf630f213",
+          "validation_rmse": 0.8819165605124877,
+          "validation_rows": 16
+        },
+        "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+        "spec_sha256": "a595b08fd76aa0a9b60be6b1ca7091f93c1914c2f73728d8bbb81b510a851731",
+        "version": 1
+      }
+    },
+    {
+      "operation": "pandera-validation",
+      "subprocess_exit_code": 0,
+      "elapsed_seconds": 7.491640305001056,
+      "stdout_emitted": true,
+      "stdout_equals_output_when_emitted": true,
+      "output": {
+        "input_sha256": "4d507566b3a64b58448391d2df5d5d70fb3fcf9f616e89333dcd79731857aa0e",
+        "library_versions": {
+          "numpy": "2.5.4",
+          "pandas": "3.1.1",
+          "scikit-learn": "1.9.1",
+          "scipy": "1.18.1",
+          "statsmodels": "0.15.0"
+        },
+        "operation": "pandera-validation",
+        "reference_sha256": null,
+        "result": {
+          "baseline_changed": false,
+          "coercion_performed": false,
+          "columns_checked": 2,
+          "engine": "pandera",
+          "engine_version": "0.36.0",
+          "failed_row_positions": [],
+          "failure_case_count": 0,
+          "passed": true,
+          "raw_values_exported": false,
+          "row_positions_truncated": false,
+          "rows_checked": 96,
+          "schema_level_failure_cases": 0
+        },
+        "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+        "spec_sha256": "a436d49791a858a9c2d2a8a0edd49cf5aebe332dbf25a53ee3f7b1fe86ffb74e",
+        "version": 1
+      }
+    },
+    {
+      "operation": "pretrained-ocr",
+      "subprocess_exit_code": 0,
+      "elapsed_seconds": 6.717689891000191,
+      "stdout_emitted": true,
+      "stdout_equals_output_when_emitted": true,
+      "output": {
+        "input_sha256": null,
+        "library_versions": {
+          "numpy": "2.5.4",
+          "pandas": "3.1.1",
+          "scikit-learn": "1.9.1",
+          "scipy": "1.18.1",
+          "statsmodels": "0.15.0"
+        },
+        "operation": "pretrained-ocr",
+        "reference_sha256": null,
+        "result": {
+          "baseline_changed": false,
+          "engine": "rapidocr-onnxruntime",
+          "engine_version": "1.4.4",
+          "images": [
+            {
+              "decoded_bgr_sha256": "d148c2c15438a2d167db5464d3fb66903e3e101674a31a01f702c8ce88fa288b",
+              "height": 120,
+              "line_count": 1,
+              "lines": [
+                {
+                  "character_count": 15,
+                  "confidence": 0.9442642450332641,
+                  "quadrilateral": [
+                    [
+                      26.0,
+                      37.0
+                    ],
+                    [
+                      371.0,
+                      39.0
+                    ],
+                    [
+                      371.0,
+                      73.0
+                    ],
+                    [
+                      26.0,
+                      71.0
+                    ]
+                  ]
+                }
+              ],
+              "source_sha256": "af022349e11cad2cd41190f69fdb354e03b17da829302f713e1ffeaf7ceff8ed",
+              "width": 600
+            }
+          ],
+          "model_sha256": {
+            "ch_PP-OCRv4_det_infer.onnx": "d2a7720d45a54257208b1e13e36a8479894cb74155a5efe29462512d42f49da9",
+            "ch_PP-OCRv4_rec_infer.onnx": "48fc40f24f6d2a207a2b1091d3437eb3cc3eb6b676dc3ef9c37384005483683b",
+            "ch_ppocr_mobile_v2.0_cls_infer.onnx": "e47acedf663230f8863ff1ab0e64dd2d82b838fceb5957146dab185a89d6215c"
+          },
+          "models": "PP-OCRv4 detector and recognizer; PP-OCR mobile v2 orientation classifier",
+          "pretrained_weights_used": true,
+          "provider": "CPUExecutionProvider",
+          "recognized_plaintext_exported": false,
+          "runtime_downloads": false,
+          "runtime_version": "1.32.0",
+          "scope": "Pretrained printed Chinese/English OCR audit. Confidence is not a calibrated accuracy guarantee; no plaintext extraction/export.",
+          "training_performed": false
+        },
+        "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+        "spec_sha256": "2ab083faeaab99191e44c6a8bf294a97f14689d60b82a119cf7d4196d0d6601c",
+        "version": 1
+      }
+    }
+  ],
+  "passed": true
+}

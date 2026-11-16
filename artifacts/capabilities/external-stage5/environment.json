@@ -1,0 +1,25 @@
+{
+  "tested_source_commit": "cc6be9991d88b999325f921bd9e6b4a799fd6178",
+  "python": "3.12.16 (main, Nov 15 2026, 18:28:21) [GCC 12.2.0]",
+  "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+  "versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1",
+    "torch": "2.15.0",
+    "PySide6-Essentials": "6.12.0",
+    "pyodbc": "5.5.0",
+    "flaml": "2.8.0",
+    "pandera": "0.36.0",
+    "rapidocr-onnxruntime": "1.4.4",
+    "onnxruntime": "1.32.0",
+    "opencv-python": "5.0.0.93",
+    "pyclipper": "1.4.0",
+    "shapely": "2.2.0"
+  },
+  "native_libraries": "Genuine source-built Qt/native GL and unixODBC prefixes; QT_QPA_PLATFORM=offscreen",
+  "synthetic_input_only": true,
+  "dependencies_installed_with_satisfied_metadata": true,
+  "production_lock_policy": "Exact versions and PyPI artifact hashes; no existing pins downgraded"
+}
