@@ -22,7 +22,7 @@ Limits: 5000 documents, 10000 characters per document, two million total charact
 
 Required parameters: `text`, `time`, `train_rows`, `topics`. Optional gap/vocabulary settings and temporal/text limits match classification. Fits actual nonnegative matrix factorization with deterministic NNDSVDa initialization on the training TF-IDF matrix, then transforms only the outer holdout. Topic count is 2..20, strictly below both training matrix dimensions; factorization capacity is bounded. No topic is claimed to be a pretrained semantic class or a human interpretation.
 
-Returns nonnegative aggregate topic mass, mean normalized holdout weights, training/holdout reconstruction errors and component/vocabulary/training hashes. No token lists, document text or individual document assignments are exported. A zero-vocabulary document has zero topic mass and is counted; it is not silently assigned a topic. Sparse residual computation does not densify the document-by-vocabulary matrix.
+Returns nonnegative aggregate topic mass, mean normalized holdout weights, training/holdout reconstruction errors and component/vocabulary/training hashes. No token lists, document text or individual document assignments are exported. A zero-vocabulary document has zero topic mass and is counted; it is not silently assigned a topic. Reconstruction errors use actual residual squares in bounded 32-row blocks, never a full dense document-by-vocabulary matrix. This avoids the cancellation in the expanded sparse norm identity that can make an almost exact fit report NaN on some BLAS/SVD bases. No learned component, convergence check, threshold or iteration budget is changed.
 
 ## `survival-regression`
 
@@ -47,7 +47,11 @@ This is explicitly **static transductive** evaluation: full declared graph topol
 
 ## Earlier defect corrected
 
-The shared binary-input helper previously used equality membership followed by `astype(int)`. This silently accepted booleans and complex zero/one values (the latter discarded their complex dtype), contrary to the workbench's explicit-real numeric policy. It now rejects boolean, complex and object/string binary inputs before conversion, while preserving actual integer/float and nullable real zero/one inputs. Fresh regressions cover both rejection and preservation. Callers that previously supplied booleans must explicitly encode numeric 0/1 before submission; no automatic coercion hides this change. Mandatory historical baseline tests are untouched.
+The shared binary-input helper previously used equality membership followed by `astype(int)`. This accepted booleans without a warning and complex zero/one values with a `ComplexWarning` but no rejection, contrary to the workbench's explicit-real numeric policy. `binary-coercion-reproduction.json` reproduces both behaviors using the actual earlier Git blob and verifies the corrected rejection. It now rejects boolean, complex and object/string binary inputs before conversion, while preserving actual integer/float and nullable real zero/one inputs. Fresh regressions cover both rejection and preservation. Callers that previously supplied booleans must explicitly encode numeric 0/1 before submission; no automatic coercion hides this change. Mandatory historical baseline tests are untouched.
+
+## Native build profiles
+
+GCN and the earlier Torch-based forecasting/vision models require the existing **full** build profile (the build script default). The intentionally Torch-free **lite** profile cannot execute them. CI retains its mandatory lite installer/runtime/external-engine gates unchanged and adds a separate full **windowed** bundle for all five new jobs. The separate diagnostic workflow also executes the new jobs through a full console bundle; console success never replaces windowed acceptance. No optional-backend omission is relabeled as engine success.
 
 ## Actual verification
 

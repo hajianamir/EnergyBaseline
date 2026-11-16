@@ -1,0 +1,75 @@
+{
+  "tested_source_commit": "76159f41e93fd7cec299b1a6f65cbc75a3dba4ee",
+  "mocked": false,
+  "synthetic_input_only": true,
+  "only_change": "Replace declared homophilic topology with complete topology; identical input features, labels, seed and optimizer budget. All normalized messages become identical.",
+  "homophilic_graph": {
+    "method": "Two-layer symmetric-normalized graph convolutional network",
+    "protocol": "Static transductive: all declared topology/features visible during training; holdout labels excluded from loss. Not a temporal or unseen-node evaluation.",
+    "nodes": 80,
+    "undirected_edges": 300,
+    "train_nodes": 60,
+    "test_nodes": 20,
+    "classes": 2,
+    "epochs": 60,
+    "initial_train_cross_entropy": 0.5416246652603149,
+    "final_train_cross_entropy": 0.004044778179377317,
+    "test_accuracy": 1.0,
+    "test_macro_f1": 1.0,
+    "confusion_matrix_true_rows_predicted_columns": [
+      [
+        10,
+        0
+      ],
+      [
+        0,
+        10
+      ]
+    ],
+    "weights_sha256": "0074ef716efc5524dc6c2cc094e6b65f74bc1748415fc7a64a1486f252b60d19",
+    "graph_sha256": "4a93114237d3309f160348e6c30b9f9501f0688c3aa7d73015cb4954c30d8cc6",
+    "training_labels_sha256": "adcb5536e8090af8c07b24a3a515a647951661e0b1b51ee8a9fefb46c85dbc30",
+    "predictions_sha256": "68db00fdfbf981852aaa655855bfc972568ffb97d60c2a9790c345fd4e1a18be",
+    "node_labels_exported": false,
+    "pretrained_weights_used": false,
+    "paper_benchmark_parity_claimed": false,
+    "p_values_or_confidence_intervals_computed": false,
+    "baseline_changed": false,
+    "model_persisted": false
+  },
+  "complete_graph": {
+    "method": "Two-layer symmetric-normalized graph convolutional network",
+    "protocol": "Static transductive: all declared topology/features visible during training; holdout labels excluded from loss. Not a temporal or unseen-node evaluation.",
+    "nodes": 80,
+    "undirected_edges": 3160,
+    "train_nodes": 60,
+    "test_nodes": 20,
+    "classes": 2,
+    "epochs": 60,
+    "initial_train_cross_entropy": 0.6931472420692444,
+    "final_train_cross_entropy": 0.6931471228599548,
+    "test_accuracy": 0.5,
+    "test_macro_f1": 0.3333333333333333,
+    "confusion_matrix_true_rows_predicted_columns": [
+      [
+        10,
+        0
+      ],
+      [
+        10,
+        0
+      ]
+    ],
+    "weights_sha256": "b4337a32f7188ae514d7dc76dc3396501b77615740888f9ccb4c1d1605a4e833",
+    "graph_sha256": "ead0958c3c28dd96f26d46c4fe7bdd37d7cc3ddc8c18e4e3d5e8f17e14f4edd0",
+    "training_labels_sha256": "adcb5536e8090af8c07b24a3a515a647951661e0b1b51ee8a9fefb46c85dbc30",
+    "predictions_sha256": "9fc54962e010012a80205097b534bc5d9611d319d8e3d4e7bf810feed71209fa",
+    "node_labels_exported": false,
+    "pretrained_weights_used": false,
+    "paper_benchmark_parity_claimed": false,
+    "p_values_or_confidence_intervals_computed": false,
+    "baseline_changed": false,
+    "model_persisted": false
+  },
+  "topology_affects_actual_predictions": true
+}

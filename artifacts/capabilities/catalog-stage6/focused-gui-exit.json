@@ -1,0 +1,41 @@
+[
+  {
+    "source_commit": "76159f41e93fd7cec299b1a6f65cbc75a3dba4ee",
+    "execution": "focused",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_workbench.py",
+      "tests/test_advanced_workbench.py",
+      "tests/test_external_workbench.py",
+      "tests/test_catalog_expansion.py",
+      "--cov=energybaseline/workbench",
+      "--cov-report=xml:artifacts/capabilities/catalog-stage6/capability-coverage.xml",
+      "--cov-report=term",
+      "--cov-fail-under=80",
+      "--junitxml=artifacts/capabilities/catalog-stage6/focused.xml"
+    ],
+    "returncode_after_teardown": 0,
+    "elapsed_seconds": 120.89832830199884
+  },
+  {
+    "source_commit": "76159f41e93fd7cec299b1a6f65cbc75a3dba4ee",
+    "execution": "gui",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/gui",
+      "--cov=energybaseline/gui",
+      "--cov-report=xml:artifacts/capabilities/catalog-stage6/gui-coverage.xml",
+      "--cov-report=term",
+      "--cov-fail-under=56",
+      "--junitxml=artifacts/capabilities/catalog-stage6/gui.xml"
+    ],
+    "returncode_after_teardown": 0,
+    "elapsed_seconds": 187.31085696899754
+  }
+]

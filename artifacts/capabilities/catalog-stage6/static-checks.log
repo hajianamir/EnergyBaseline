@@ -1,0 +1,31 @@
+$ /home/user/EnergyBaseline/.venv/test/bin/python scripts/verify_runtime.py
+Runtime contract verified: Python 3.12.16, linux
+RETURN CODE: 0
+$ /home/user/EnergyBaseline/.venv/test/bin/python -m pip check
+No broken requirements found.
+RETURN CODE: 0
+$ /home/user/EnergyBaseline/.venv/test/bin/python -m ruff check .
+All checks passed!
+RETURN CODE: 0
+$ /home/user/EnergyBaseline/.venv/test/bin/python -m ruff format --check .
+148 files already formatted
+RETURN CODE: 0
+$ /home/user/EnergyBaseline/.venv/test/bin/python -m pyflakes energybaseline
+RETURN CODE: 0
+$ /home/user/EnergyBaseline/.venv/test/bin/python scripts/gates/guard_web_free.py
+OK [guard_web_free] clean (/home/user/EnergyBaseline)
+RETURN CODE: 0
+$ /home/user/EnergyBaseline/.venv/test/bin/python scripts/gates/guard_env_readers.py
+OK [guard_env_readers] clean (/home/user/EnergyBaseline)
+RETURN CODE: 0
+$ /home/user/EnergyBaseline/.venv/test/bin/python scripts/gates/guard_tests_integrity.py
+OK [guard_tests_integrity] verified 4 baseline test files
+RETURN CODE: 0
+$ /home/user/EnergyBaseline/.venv/test/bin/python scripts/gates/guard_no_qthread_compute.py
+OK [guard_no_qthread_compute] clean (/home/user/EnergyBaseline)
+RETURN CODE: 0
+$ /home/user/EnergyBaseline/.venv/test/bin/python scripts/gen_matrix.py --check
+OK [gen_matrix] verified 251 requirement IDs (188 done)
+RETURN CODE: 0
+$ git diff --check
+RETURN CODE: 0

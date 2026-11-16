@@ -282,32 +282,32 @@
       "capability": "Survival / Cox / AFT / Kaplan-Meier / competing risks",
       "baseline_finding": "Not found",
       "baseline_evidence": "No production survival workflow identified.",
-      "current_status": "stage2_bounded_scope_verified_cli_gui",
+      "current_status": "stage6_bounded_scope_verified_cli_gui_frozen_full_windows",
       "stage2_implemented_scope": "Empirical right-censored Kaplan-Meier and Aalen-Johansen competing-risk incidence with explicit event schemas.",
       "remaining_scope": "Survival inferential tests/intervals, stratified/time-varying Cox, flexible hazard families, causal survival and persistent accepted-model lifecycle remain unimplemented.",
       "stage6_implemented_scope": "Predictive Cox/Breslow and Weibull AFT with right censoring, delayed entry, train-only chronological fitting and holdout concordance/conditional survival; no inferential output.",
-      "stage6_status": "implementation_final_verification_pending"
+      "stage6_status": "verified_bounded_scope_not_program_completion"
     },
     {
       "id": "C033",
       "capability": "Graph analytics / GNN / node classification / link prediction",
       "baseline_finding": "Not found",
       "baseline_evidence": "A pipeline dependency DAG is not graph machine learning.",
-      "current_status": "stage2_bounded_scope_verified_cli_gui",
+      "current_status": "stage6_bounded_scope_verified_cli_gui_frozen_full_windows",
       "stage2_implemented_scope": "Directed weighted PageRank, weak components and explicit-source shortest paths.",
       "remaining_scope": "Link prediction, inductive/temporal graph learning, heterogeneous graph models and paper benchmark parity remain unimplemented.",
       "stage6_implemented_scope": "Actual two-layer CPU GCN for static transductive node classification, symmetric normalization, train-label-only loss and privacy-bound evaluation.",
-      "stage6_status": "implementation_final_verification_pending"
+      "stage6_status": "verified_bounded_scope_not_program_completion"
     },
     {
       "id": "C034",
       "capability": "NLP classification / NER / sentiment / translation / summarization / topic modeling / LLM or RAG",
       "baseline_finding": "Not found",
       "baseline_evidence": "Numeric report narratives are not a general NLP subsystem.",
-      "current_status": "pending",
+      "current_status": "stage6_bounded_scope_verified_cli_gui_frozen_full_windows",
       "stage6_implemented_scope": "Actual TF-IDF logistic multiclass/binary text classification and train-only NMF topic modeling through API/CLI/native worker contracts.",
       "remaining_scope": "NER, translation, summarization, task-specific pretrained sentiment/language models, LLM/RAG and full-paper pretrained model parity remain unimplemented.",
-      "stage6_status": "implementation_final_verification_pending"
+      "stage6_status": "verified_bounded_scope_not_program_completion"
     },
     {
       "id": "C035",
@@ -494,7 +494,7 @@
     "source_binding_files": 422
   },
   "stage6": {
-    "status": "implementation_final_verification_pending",
+    "status": "verified_bounded_scope_not_program_completion",
     "documentation": "docs/CATALOG_EXPANSION.md",
     "evidence": "artifacts/capabilities/catalog-stage6/README.md",
     "new_operations": 4,
@@ -505,6 +505,26 @@
       "tests/gui/test_catalog_expansion_gui.py"
     ],
     "program_complete": false,
-    "remaining_scope": "All per-row remaining_scope fields and untouched catalog families remain open. This stage does not replace the full user request with a bounded subset."
+    "remaining_scope": "All per-row remaining_scope fields and untouched catalog families remain open. This stage does not replace the full user request with a bounded subset.",
+    "tested_source_commit": "742ab337f30681054f2ec102fe16e08c3d9b3df8",
+    "workflow": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43834852648",
+    "local_focused_tests": 322,
+    "local_full_suite_tests": 975,
+    "local_complete_gui_tests": 49,
+    "capability_package_coverage_percent": 89.25,
+    "gui_coverage_percent": 72.1,
+    "local_full_suite_coverage_instrumentation": false,
+    "source_binding_files": 438,
+    "local_tested_source_commit": "76159f41e93fd7cec299b1a6f65cbc75a3dba4ee",
+    "conclusion": "success",
+    "operating_systems": [
+      "Windows",
+      "Linux"
+    ],
+    "actual_frozen_full_windows": "All five semantic jobs passed through the full windowed executable; previous lite installer/runtime/external-engine checks preserved and passed",
+    "console_workflow": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43834852664",
+    "console_conclusion": "success",
+    "source_equivalence": "436 identical product/test/fixture/dependency/script Git blobs between local and hosted sources; only two CI workflows changed",
+    "hosted_full_suite_expanded_coverage_gates": "Passed on Windows and Linux; unchanged 60/80 percent thresholds"
   }
 }

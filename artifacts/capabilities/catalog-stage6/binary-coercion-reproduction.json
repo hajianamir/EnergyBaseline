@@ -1,0 +1,30 @@
+{
+  "prior_source": "c7400d8",
+  "prior_helper_loaded_from_actual_git_blob": true,
+  "mocked": false,
+  "current_tested_source": "ea814cc3c34b6bba7523c6e721838cd81e711699",
+  "reproductions": [
+    {
+      "dtype": "boolean",
+      "prior_result": [
+        1,
+        0
+      ],
+      "prior_warning_categories": [],
+      "corrected_result": "Rejected before casting",
+      "correction_verified": true
+    },
+    {
+      "dtype": "complex",
+      "prior_result": [
+        1,
+        0
+      ],
+      "prior_warning_categories": [
+        "ComplexWarning"
+      ],
+      "corrected_result": "Rejected before casting",
+      "correction_verified": true
+    }
+  ]
+}

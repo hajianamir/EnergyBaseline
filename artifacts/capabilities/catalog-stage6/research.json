@@ -23,5 +23,44 @@
     "sha256": "c69ae03ae24aa6524eab61f2b2fec61c5938822fd225bdd4594406f1d24ec066",
     "bytes": 5886,
     "scope": "Normalized adjacency message passing reference; no claim of reproduced citation-dataset paper benchmarks."
+  },
+  {
+    "kind": "actual_installed_source_review",
+    "package": "statsmodels",
+    "version": "0.15.0",
+    "relative_module": "hazard_regression.py",
+    "sha256": "ffa069108dda1ad7551fc2adf08b1048b449e39ffd2da532d6e414dbaec190dd",
+    "takeaway": "Breslow loglike and score accept entry/right-censoring; fit performs covariance work, so prediction-only operation directly optimizes loglike/score without invoking fit or inferential results."
+  },
+  {
+    "kind": "actual_installed_source_review",
+    "package": "scikit-learn",
+    "version": "1.9.1",
+    "relative_module": "_nmf.py",
+    "sha256": "786d1f17240cdec5dd2ecc1ceef52b6da3f5456ba3006dd73ac912094a5a5603",
+    "takeaway": "Training fit_transform learns nonnegative components; holdout transform keeps components fixed. NNDSVDa initialization requires count not exceeding min matrix dimensions; convergence warnings fail closed."
+  },
+  {
+    "kind": "actual_installed_source_review",
+    "package": "scikit-learn",
+    "version": "1.9.1",
+    "relative_module": "text.py",
+    "sha256": "72f4e2036ba93c466f979f3721cc260c7236dab680471fa722616d6019b89adc",
+    "takeaway": "Vocabulary and IDF are fitted only by fit_transform on training; transform excludes unseen holdout tokens."
+  },
+  {
+    "kind": "actual_installed_source_review",
+    "package": "scikit-learn",
+    "version": "1.9.1",
+    "relative_module": "_logistic.py",
+    "sha256": "1f4a019bfad745184ddf29f0ada8719e3f0a24c6659901683480ab6052f9915f",
+    "takeaway": "L2-regularized binary/multiclass probability classification; actual classes are encoded from training only."
+  },
+  {
+    "kind": "numeric_diagnostic_review",
+    "upstream_source": "https://github.com/scikit-learn/scikit-learn/blob/main/sklearn/decomposition/_nmf.py",
+    "finding": "The sparse beta=2 divergence expands ||X-WH||^2 from several large dot products, then sqrt can receive a small negative roundoff value for almost exact factorizations. Real prior-blob seed-0 corpus permutation reproduces NaN despite finite valid learned components. Recompute direct residual squares in bounded blocks; no fitted model/true convergence condition change.",
+    "reproduction": "nmf-roundoff-reproduction.json",
+    "warnings_suppressed_by_correction": false
   }
 ]

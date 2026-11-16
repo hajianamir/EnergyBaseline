@@ -1,0 +1,19 @@
+{
+  "prior_source": "b30e292e36dbe1acc626cac8f4d61896fbb8d7fa",
+  "actual_prior_git_blob_loaded": true,
+  "mocked": false,
+  "public_fixture": "examples/catalog/text.csv",
+  "training_text_permutation_rng_seed": 0,
+  "training_rows": 87,
+  "prior_training_reconstruction_error": "NaN",
+  "prior_result_failed_finite_json": true,
+  "prior_warning_categories": [
+    "RuntimeWarning"
+  ],
+  "corrected_actual_training_residual": 4.669540497562317e-15,
+  "corrected_actual_test_residual": 0.0,
+  "same_components_sha256": true,
+  "true_convergence_warning_still_fails_closed": true,
+  "corrected_language_module_sha256": "a8ad44a2af423219cf5eaef508bc2fd80d55b2dbcbe9581eb5167a243bc7a21b",
+  "corrected_source_commit": "76159f41e93fd7cec299b1a6f65cbc75a3dba4ee"
+}
