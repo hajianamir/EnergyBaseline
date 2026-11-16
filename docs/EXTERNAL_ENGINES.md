@@ -2,7 +2,7 @@
 
 ## Status and honest scope
 
-Three additional executable operations call **FLAML**, **Pandera**, and **RapidOCR with actual pretrained ONNX weights**. The operation registry now contains 35 operations, including 11 specification-only operations. API, CLI and the native spawn-worker panel use the same contracts. This is not integration of every external engine or full paper parity. Final-source local and two-OS verification status belongs to `artifacts/capabilities/external-stage5/README.md`; development passes are not acceptance.
+Three additional executable operations call **FLAML**, **Pandera**, and **RapidOCR with actual pretrained ONNX weights**. At the verified Stage 5 source the operation registry contains 35 operations, including 11 specification-only operations. API, CLI and the native spawn-worker panel use the same contracts. This is not integration of every external engine or full paper parity. Final-source local and two-OS verification status belongs to `artifacts/capabilities/external-stage5/README.md`; development passes are not acceptance.
 
 No prior runtime, gate, privacy, baseline, report renderer, test-integrity or coverage requirement is relaxed. The Python 3.12 runtime and existing dependency versions remain unchanged. New dependencies are exact-pinned, with release hashes in `requirements.lock`. No incompatible dependency overrides or `--no-deps` production install is used.
 

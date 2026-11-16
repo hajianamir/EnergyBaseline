@@ -284,7 +284,9 @@
       "baseline_evidence": "No production survival workflow identified.",
       "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Empirical right-censored Kaplan-Meier and Aalen-Johansen competing-risk incidence with explicit event schemas.",
-      "remaining_scope": "Cox/AFT, delayed entry and survival inference remain pending."
+      "remaining_scope": "Survival inferential tests/intervals, stratified/time-varying Cox, flexible hazard families, causal survival and persistent accepted-model lifecycle remain unimplemented.",
+      "stage6_implemented_scope": "Predictive Cox/Breslow and Weibull AFT with right censoring, delayed entry, train-only chronological fitting and holdout concordance/conditional survival; no inferential output.",
+      "stage6_status": "implementation_final_verification_pending"
     },
     {
       "id": "C033",
@@ -293,14 +295,19 @@
       "baseline_evidence": "A pipeline dependency DAG is not graph machine learning.",
       "current_status": "stage2_bounded_scope_verified_cli_gui",
       "stage2_implemented_scope": "Directed weighted PageRank, weak components and explicit-source shortest paths.",
-      "remaining_scope": "GNN, node classification and link prediction remain pending."
+      "remaining_scope": "Link prediction, inductive/temporal graph learning, heterogeneous graph models and paper benchmark parity remain unimplemented.",
+      "stage6_implemented_scope": "Actual two-layer CPU GCN for static transductive node classification, symmetric normalization, train-label-only loss and privacy-bound evaluation.",
+      "stage6_status": "implementation_final_verification_pending"
     },
     {
       "id": "C034",
       "capability": "NLP classification / NER / sentiment / translation / summarization / topic modeling / LLM or RAG",
       "baseline_finding": "Not found",
       "baseline_evidence": "Numeric report narratives are not a general NLP subsystem.",
-      "current_status": "pending"
+      "current_status": "pending",
+      "stage6_implemented_scope": "Actual TF-IDF logistic multiclass/binary text classification and train-only NMF topic modeling through API/CLI/native worker contracts.",
+      "remaining_scope": "NER, translation, summarization, task-specific pretrained sentiment/language models, LLM/RAG and full-paper pretrained model parity remain unimplemented.",
+      "stage6_status": "implementation_final_verification_pending"
     },
     {
       "id": "C035",
@@ -485,5 +492,19 @@
     "console_diagnostic_workflow": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43779750245",
     "console_diagnostic_conclusion": "success",
     "source_binding_files": 422
+  },
+  "stage6": {
+    "status": "implementation_final_verification_pending",
+    "documentation": "docs/CATALOG_EXPANSION.md",
+    "evidence": "artifacts/capabilities/catalog-stage6/README.md",
+    "new_operations": 4,
+    "total_workbench_operations": 39,
+    "example_jobs": 5,
+    "tests": [
+      "tests/test_catalog_expansion.py",
+      "tests/gui/test_catalog_expansion_gui.py"
+    ],
+    "program_complete": false,
+    "remaining_scope": "All per-row remaining_scope fields and untouched catalog families remain open. This stage does not replace the full user request with a bounded subset."
   }
 }

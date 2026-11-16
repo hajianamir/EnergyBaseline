@@ -1,0 +1,27 @@
+[
+  {
+    "url": "https://github.com/statsmodels/statsmodels/blob/main/statsmodels/duration/hazard_regression.py",
+    "retrieved_via": "GitHub contents API raw response",
+    "sha256": "6799c729d3d48542cb782326a5f8bfd5757492797a9f4fa0f9b413e7161aeaf7",
+    "bytes": 71558
+  },
+  {
+    "url": "https://github.com/scikit-learn/scikit-learn/blob/main/sklearn/decomposition/_nmf.py",
+    "retrieved_via": "GitHub contents API raw response",
+    "sha256": "6ec47b2566dd9b72c8078afb0f38395819efd30a8d1202d3d6fe4b9792f0e2ce",
+    "bytes": 80877
+  },
+  {
+    "url": "https://github.com/scikit-learn/scikit-learn/blob/main/sklearn/feature_extraction/text.py",
+    "retrieved_via": "GitHub contents API raw response",
+    "sha256": "06ef6f57791947c7c695a6b851e711d10c0045cdababef115ade4e3539766399",
+    "bytes": 76922
+  },
+  {
+    "url": "https://github.com/tkipf/gcn/blob/master/gcn/layers.py",
+    "retrieved_via": "GitHub contents API raw response",
+    "sha256": "c69ae03ae24aa6524eab61f2b2fec61c5938822fd225bdd4594406f1d24ec066",
+    "bytes": 5886,
+    "scope": "Normalized adjacency message passing reference; no claim of reproduced citation-dataset paper benchmarks."
+  }
+]

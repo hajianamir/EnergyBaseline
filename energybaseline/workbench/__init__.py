@@ -25,6 +25,9 @@ from .common import digest, fields, finite_json
 from .domains import competing_risks, graph_profile, rating_recommendations, survival_curve, text_retrieval
 from .entities import entity_candidates
 from .external import flaml_holdout, pandera_validation, pretrained_ocr
+from .graph_learning import graph_node_classification
+from .language import text_classification, text_topics
+from .survival import survival_regression
 from .forecasting import forecast_holdout
 from .operations import optimize, pareto, queue_simulation
 from .preparation import multi_target_consensus, target_encoding_preview, transform_preview
@@ -34,6 +37,10 @@ from .prediction import classification_holdout, novelty_holdout
 
 OPERATIONS = MappingProxyType(
     {
+        "graph-node-classification": graph_node_classification,
+        "text-classification": text_classification,
+        "text-topics": text_topics,
+        "survival-regression": survival_regression,
         "automl-search": automl_search,
         "flaml-search": flaml_holdout,
         "pandera-validation": pandera_validation,

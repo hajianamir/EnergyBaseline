@@ -81,8 +81,14 @@ def numeric(frame, names, *, missing=False):
 
 def binary(frame, name):
     selected = columns(frame, [name]).iloc[:, 0]
-    if selected.isna().any() or not selected.isin([0, 1]).all():
-        raise ValueError("Binary inputs must contain only explicit 0/1 values and no missing values.")
+    if (
+        not pd.api.types.is_numeric_dtype(selected)
+        or pd.api.types.is_bool_dtype(selected)
+        or pd.api.types.is_complex_dtype(selected)
+        or selected.isna().any()
+        or not selected.isin([0, 1]).all()
+    ):
+        raise ValueError("Binary inputs require real numeric 0/1 values, without boolean/complex coercion or missing values.")
     return selected.to_numpy(dtype=int)
 
 

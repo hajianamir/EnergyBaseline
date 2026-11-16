@@ -1,0 +1,22 @@
+[
+  {
+    "request": "text-classification.json",
+    "dataset": "text.csv"
+  },
+  {
+    "request": "text-topics.json",
+    "dataset": "text.csv"
+  },
+  {
+    "request": "cox-breslow.json",
+    "dataset": "survival.csv"
+  },
+  {
+    "request": "weibull-aft.json",
+    "dataset": "survival.csv"
+  },
+  {
+    "request": "graph-node-classification.json",
+    "dataset": "nodes.csv"
+  }
+]
