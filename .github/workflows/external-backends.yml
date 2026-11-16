@@ -7,6 +7,7 @@ on:
       - 'requirements*'
       - 'scripts/build_exe.py'
       - 'scripts/evidence/external_engines.py'
+      - 'scripts/evidence/catalog_diagnostics.py'
       - '.github/workflows/external-backends.yml'
   workflow_dispatch:
 
@@ -29,6 +30,9 @@ jobs:
           python -m pip install --require-hashes -r requirements.lock
           python scripts/verify_runtime.py
           python -m pip check
+      - name: Diagnose actual catalog operations on fixed public synthetic fixtures
+        run: |
+          python scripts/evidence/catalog_diagnostics.py
       - name: Build the actual lite bundle with a diagnostic console bootloader
         run: |
           python scripts/build_exe.py --profile lite --console --dist-dir dist/diagnostic
@@ -42,5 +46,6 @@ jobs:
           name: external-backend-console-diagnostics
           path: |
             artifacts/capabilities/external-stage5/ci-console-engines.json
+            artifacts/capabilities/catalog-stage6/ci-direct-diagnostics.json
             build/pyinstaller/EnergyBaseline/warn-EnergyBaseline.txt
           if-no-files-found: warn
