@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        sample: [1, 2, 3, 4, 5, 6, 7, 8]
+        sample: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
     env:
       QT_QPA_PLATFORM: offscreen
     steps:
@@ -38,12 +38,10 @@ jobs:
           cache: pip
           cache-dependency-path: requirements.lock
       - run: python -m pip install --require-hashes -r requirements.lock
-      - name: Machine facts
+      - name: Machine facts (as an annotation, because job logs are not always retrievable)
         run: |
-          lscpu | grep -E "Model name|^CPU\(s\)|Flags" | cut -c1-400
-          uname -r
-          cat /etc/hosts
-          free -m | head -2
+          cpu="$(lscpu | sed -n 's/^Model name: *//p' | head -1)"
+          echo "::notice title=machine ${{ matrix.sample }}::cpu=${cpu}; cores=$(nproc); kernel=$(uname -r); image=${ImageVersion:-unknown}; avx512=$(grep -c -m1 avx512f /proc/cpuinfo)"
       - name: Provision auto-sklearn
         run: |
           home="$RUNNER_TEMP/eb-provisioned"
@@ -53,9 +51,11 @@ jobs:
           EB_HOME="$home" python -m energybaseline.cli engines install autosklearn --python "${{ steps.py39.outputs.python-path }}"
       - name: Six real auto-sklearn searches
         run: |
+          started=$SECONDS
           for round in 1 2 3; do
             python -m pytest -q provisioned_tests -p no:cacheprovider -k autosklearn --durations=5
           done
+          echo "::notice title=duration ${{ matrix.sample }}::three rounds took $((SECONDS - started)) s"
       - name: Diagnostics (on failure)
         if: failure()
         run: python scripts/evidence/isolated_diagnose.py autosklearn
