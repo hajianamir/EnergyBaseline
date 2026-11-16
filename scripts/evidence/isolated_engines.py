@@ -147,6 +147,38 @@ def run(executable=None):
     }
 
 
+def _summary(receipt):
+    """One compact line per job: the facts a reviewer compares across operating systems."""
+    lines = [f"{receipt['runtime_kind']} on {receipt['platform']}; executable {receipt['executable_sha256']}"]
+    for job in receipt["jobs"]:
+        if job["exit"] != 0:
+            lines.append(f"{job['request']}: {job['outcome']}")
+            continue
+        result = job["output"]["result"]
+        if "prediction_sha256" in result:
+            facts = (
+                f"{result['selected_model']}; evaluated {result['candidates_evaluated']}, "
+                f"failed {result['candidates_failed']}; validation RMSE {result['engine_reported_validation_rmse']:.4f}; "
+                f"test RMSE {result['test_rmse']:.4f}; final fit rows {result['final_fit_rows']}; "
+                f"python {result['runtime_python']}; predictions {result['prediction_sha256'][:16]}"
+            )
+        elif "forecast_sha256" in result:
+            facts = (
+                f"median MAE {result['median_mae']:.4f}; last-value MAE {result['last_value_mae']:.4f}; "
+                f"inside 10-90 {result['observations_inside_10_90']}; python {result['runtime_python']}; "
+                f"forecast {result['forecast_sha256'][:16]}"
+            )
+        else:
+            facts = (
+                "; ".join(
+                    f"{image['top'][0]['label']} {image['top'][0]['probability']:.3f}" for image in result["images"]
+                )
+                + f"; torch {result['engine_version']}"
+            )
+        lines.append(f"{job['request']}: {facts}")
+    return lines
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--executable", type=Path)
@@ -157,6 +189,14 @@ def main():
     args.out.write_text(json.dumps(receipt, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     executed = sum(job["exit"] == 0 for job in receipt["jobs"])
     print(f"Isolated engine evidence passed: {executed} jobs executed, {len(receipt['jobs']) - executed} refused.")
+    summary = _summary(receipt)
+    print("\n".join(summary))
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        # The receipt artifact is authoritative; the annotation keeps its key facts readable through the API.
+        print(
+            f"::notice title=isolated engine receipt ({receipt['runtime_kind']}, {receipt['platform']})::"
+            + "%0A".join(summary)
+        )
 
 
 if __name__ == "__main__":
