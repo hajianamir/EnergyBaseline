@@ -177,4 +177,13 @@ class WorkbenchPanel(QWidget):
                 return
         self.result = None
         self.output.clear()
+        error = str(handle.error_message or "")
+        for prefix in ("EngineUnavailable: ", "ProvisioningRequired: "):
+            if handle.status == "failed" and error.startswith(prefix):
+                # Fixed operator guidance about a runtime or model asset; it never contains data.
+                self.status.setText(
+                    "Separate provisioning is required. " + error[len(prefix) :][:300]
+                    + " No evidence retained; baseline unchanged."
+                )
+                return
         self.status.setText("Job failed, was cancelled or became stale. No evidence retained; baseline unchanged.")

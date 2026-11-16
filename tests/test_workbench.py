@@ -468,7 +468,7 @@ def test_cli_success_errors_and_private_errors(tmp_path, capsys):
 
 
 def test_registry_has_explicit_tested_operations():
-    assert len(OPERATION_NAMES) == 39 and len(set(OPERATION_NAMES)) == 39
+    assert len(OPERATION_NAMES) == 42 and len(set(OPERATION_NAMES)) == 42
 
 
 @pytest.mark.parametrize(

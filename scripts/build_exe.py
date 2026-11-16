@@ -249,6 +249,9 @@ def main(argv: list[str] | None = None) -> int:
         ("alembic.ini", "."),
         ("docs", "docs"),
         ("samples", "samples"),
+        # Hash locks and stand-alone worker scripts that separately provisioned engine runtimes execute.
+        ("energybaseline/isolated/locks", "energybaseline/isolated/locks"),
+        ("energybaseline/isolated/workers", "energybaseline/isolated/workers"),
     ]
     ico = ROOT / "assets" / "energybaseline.ico"
     layout_flag = "--onefile" if args.onefile else "--onedir"
@@ -301,6 +304,7 @@ def main(argv: list[str] | None = None) -> int:
         "cryptography",
         "PySide6.QtNetwork",
         "joblib",
+        "packaging.markers",
     ]
     if sys.platform == "win32":
         hidden_imports += ["win32api", "win32con", "win32job", "pywintypes"]

@@ -2,7 +2,8 @@
 
 Use run_workbench with a versioned declarative JSON request. The fixed operation
 registry never evaluates expressions, imports user modules, loads pickles or downloads
-models. These descriptive/decision-support operations do not execute hypothesis tests.
+models. Engines and pretrained weights that need separate provisioning are installed only
+by the explicit ``engines`` and ``assets`` commands, never while an operation runs. These descriptive/decision-support operations do not execute hypothesis tests.
 """
 
 from __future__ import annotations
@@ -21,12 +22,14 @@ from .deep import deep_forecast
 from .planning import routing, scheduling, evolutionary
 from .simulation import stock_flow, agent_sir, digital_twin
 from .vision import image_classification, image_segmentation, image_detection, template_ocr
+from ..isolated import ProvisioningRequired
 from .common import digest, fields, finite_json
 from .domains import competing_risks, graph_profile, rating_recommendations, survival_curve, text_retrieval
 from .entities import entity_candidates
 from .external import flaml_holdout, pandera_validation, pretrained_ocr
 from .graph_learning import graph_node_classification
 from .language import text_classification, text_topics
+from .pretrained import external_automl, foundation_forecast, pretrained_image_classification
 from .survival import survival_regression
 from .forecasting import forecast_holdout
 from .operations import optimize, pareto, queue_simulation
@@ -37,6 +40,8 @@ from .prediction import classification_holdout, novelty_holdout
 
 OPERATIONS = MappingProxyType(
     {
+        "external-automl": external_automl,
+        "foundation-forecast": foundation_forecast,
         "graph-node-classification": graph_node_classification,
         "text-classification": text_classification,
         "text-topics": text_topics,
@@ -65,6 +70,7 @@ OPERATIONS = MappingProxyType(
     }
 )
 SPEC_OPERATIONS = MappingProxyType({
+    "pretrained-image-classification": pretrained_image_classification,
     "pretrained-ocr": pretrained_ocr,
     "linear-optimize": optimize,
     "route-optimize": routing,
@@ -140,6 +146,9 @@ def run_workbench(request, frame=None, *, reference=None):
         else:
             result = OPERATIONS[operation](frame, request["parameters"])
         finite_json(result)
+    except ProvisioningRequired:
+        # Fixed operator guidance about an absent runtime or model asset; it carries no data.
+        raise
     except (ValueError, TypeError, KeyError, IndexError, OverflowError, LinAlgError, RuntimeError, OSError):
         # Third-party exception text can echo cell values, category labels or caller literals.
         raise ValueError(

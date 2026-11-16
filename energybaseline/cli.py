@@ -951,7 +951,44 @@ def _cmd_quality_audit(args):
     return 0
 
 
+def _cmd_engines(args):
+    """Inspect, provision or remove an isolated engine runtime. Provisioning needs package-index access."""
+    from . import isolated
+
+    names = [args.engine] if args.engine else list(isolated.ENGINES)
+    if args.action == "status":
+        payload = {"engines": [isolated.engine_status(name) for name in names]}
+    elif not args.engine:
+        raise ValueError("Name exactly one engine to install or remove.")
+    elif args.action == "install":
+        manifest = isolated.install_engine(args.engine, args.python)
+        payload = {"installed": {k: manifest[k] for k in ("engine", "version", "lock_sha256", "python", "platform")},
+                   "distribution_count": len(manifest["distributions"])}
+    else:
+        payload = {"removed": isolated.remove_engine(args.engine)}
+    _write_or_print(payload, args.out)
+    return 0
+
+
+def _cmd_assets(args):
+    """Inspect, provision or remove hash-pinned pretrained model files."""
+    from . import assets
+
+    names = [args.asset] if args.asset else list(assets.ASSETS)
+    if args.action == "status":
+        payload = {"assets": [assets.asset_status(name) for name in names]}
+    elif not args.asset:
+        raise ValueError("Name exactly one asset to install or remove.")
+    elif args.action == "install":
+        payload = {"installed": assets.install_asset(args.asset, args.source)}
+    else:
+        payload = {"removed": assets.remove_asset(args.asset)}
+    _write_or_print(payload, args.out)
+    return 0
+
+
 def _cmd_workbench(args):
+    from .isolated import ProvisioningRequired
     from .workbench import run_workbench
 
     try:
@@ -962,6 +999,8 @@ def _cmd_workbench(args):
         frame = ingest.load_file(args.dataset) if args.dataset else None
         reference = ingest.load_file(args.reference) if args.reference else None
         result = run_workbench(request, frame, reference=reference)
+    except ProvisioningRequired:
+        raise
     except (OSError, UnicodeError, ValueError, TypeError, ingest.IngestError) as exc:
         raise ValueError("Workbench request failed. Check the versioned schema, permitted input files, "
                          "numeric types and operation-specific sample/resource limits; no raw values are exported.") from exc
@@ -1004,6 +1043,8 @@ CLI_COMMAND_HANDLERS: Mapping[str, Callable[[argparse.Namespace], int]] = Mappin
         "analyze": _cmd_analyze,
         "quality-audit": _cmd_quality_audit,
         "workbench": _cmd_workbench,
+        "engines": _cmd_engines,
+        "assets": _cmd_assets,
         "statistical-plan": _cmd_statistical_plan,
         "schema-suggest": _cmd_schema_suggest,
         "schema-edit": _cmd_schema_edit,
@@ -1060,6 +1101,18 @@ def build_parser() -> argparse.ArgumentParser:
     p_workbench.add_argument("--dataset", help="Explicit input CSV/TSV/Excel/Parquet binding; omitted for linear-optimize.")
     p_workbench.add_argument("--reference", help="Explicit reference dataset for categorical-divergence only.")
     p_workbench.add_argument("--out")
+
+    p_engines = sub.add_parser("engines", help="Inspect or provision isolated AutoML/forecasting engine runtimes from their hash locks.")
+    p_engines.add_argument("action", choices=("status", "install", "remove"))
+    p_engines.add_argument("engine", nargs="?", choices=("tpot", "h2o", "autogluon", "autosklearn", "chronos"))
+    p_engines.add_argument("--python", help="Base CPython interpreter of the version the engine lock requires.")
+    p_engines.add_argument("--out")
+
+    p_assets = sub.add_parser("assets", help="Inspect or provision hash-pinned pretrained model files.")
+    p_assets.add_argument("action", choices=("status", "install", "remove"))
+    p_assets.add_argument("asset", nargs="?", choices=("chronos-bolt-tiny", "ghostnet-imagenet"))
+    p_assets.add_argument("--source", help="Local directory holding the asset files; omit to fetch the fixed HTTPS origins.")
+    p_assets.add_argument("--out")
 
     p_stat = sub.add_parser("statistical-plan", help="Execute an exact preregistered inferential plan only with explicit gate acceptance.")
     p_stat.add_argument("request", help="Version-1 statistical plan JSON; never executable formulas.")

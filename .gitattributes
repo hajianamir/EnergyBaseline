@@ -5,3 +5,5 @@
 *.ps1 text eol=crlf
 # Preserve byte-exact raw evidence and its recorded SHA-256 digests.
 artifacts/remediation/** -text
+# Vendored upstream source is kept byte-exact below its change notice; tests assert its SHA-256.
+energybaseline/workbench/vendor/ghostnet.py -whitespace

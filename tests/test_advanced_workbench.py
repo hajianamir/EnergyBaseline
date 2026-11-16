@@ -374,7 +374,7 @@ def test_component_coordinates_iou_and_template_ocr_without_plaintext_export():
 
 
 def test_specification_only_operations_never_consume_implicit_raw_dataset(series):
-    assert len(OPERATION_NAMES) == 39 and len(SPEC_OPERATIONS) == 11
+    assert len(OPERATION_NAMES) == 42 and len(SPEC_OPERATIONS) == 12
     assert {"text-classification", "text-topics", "survival-regression", "graph-node-classification"} <= set(
         OPERATION_NAMES
     )
