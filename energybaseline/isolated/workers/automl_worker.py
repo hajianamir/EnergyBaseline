@@ -286,6 +286,50 @@ def run_autogluon(root, request, data):
     }
 
 
+def patch_autosklearn_log_server():
+    """Work around a lock-starvation defect in auto-sklearn 0.15.0's start-up.
+
+    ``AutoML._get_logger`` waits for its log-server process to publish a port with
+    ``while True: with port.get_lock(): if port.value == -1: time.sleep(0.01)``. It sleeps
+    while holding the shared lock and releases it only for an instant, and the server needs
+    the same lock to publish the port. The lock is not fair, so on some machines the server
+    never obtains it and the search waits until the wall-clock budget. Observed on hosted
+    Linux machines; the thread stacks are in the stage evidence.
+
+    The server therefore publishes the port without taking that lock. An aligned machine word
+    is stored atomically, and the waiting side still reads it under its own lock.
+    """
+    import contextlib
+
+    import autosklearn.automl as module
+
+    upstream = module.start_log_server
+    if getattr(upstream, "publishes_without_lock", False):
+        return
+
+    class UnlockedPort:
+        def __init__(self, shared):
+            self._raw = shared.get_obj()
+
+        def get_lock(self):
+            return contextlib.nullcontext()
+
+        @property
+        def value(self):
+            return self._raw.value
+
+        @value.setter
+        def value(self, number):
+            self._raw.value = number
+
+    def start_log_server(**kwargs):
+        kwargs["port"] = UnlockedPort(kwargs["port"])
+        return upstream(**kwargs)
+
+    start_log_server.publishes_without_lock = True
+    module.start_log_server = start_log_server
+
+
 def run_autosklearn(root, request, data):
     import numpy as np
     from sklearn.model_selection import PredefinedSplit
@@ -311,7 +355,11 @@ def run_autosklearn(root, request, data):
         delete_tmp_folder_after_terminate=True,
         smac_scenario_args={"runcount_limit": request["models"]},
     )
+    patch_autosklearn_log_server()
     search.fit(x_all, y_all)
+    if search.automl_._multiprocessing_context != "fork":
+        # The replacement server function reaches the child only through a forked process.
+        raise RuntimeError("auto-sklearn did not use the expected process start method.")
     status = list(search.cv_results_["status"])
     # With an ensemble of size one the single member is auto-sklearn's own selection.
     members = search.get_models_with_weights()

@@ -293,3 +293,60 @@ def test_autosklearn_reports_its_mean_predictor_when_no_configuration_beats_it()
     # Fitting and validation targets contradict each other, so every searched model loses to the mean.
     assert result["selected_model"] == "dummy_mean" and result["candidates_failed"] == 0
     assert result["engine_reported_validation_rmse"] > 2 and result["final_fit_rows"] == 238
+
+
+_LOG_SERVER_PROBE = """
+import multiprocessing, sys, tempfile, time
+sys.path.insert(0, sys.argv[1])
+import automl_worker
+import autosklearn.automl as module
+
+
+def published(patched):
+    if patched:
+        automl_worker.patch_autosklearn_log_server()
+    context = multiprocessing.get_context("fork")
+    port = context.Value("l")
+    port.value = -1
+    stop = context.Event()
+    port.get_lock().acquire()  # auto-sklearn's waiting loop holds this lock while it sleeps
+    server = context.Process(
+        target=module.start_log_server,
+        kwargs=dict(host="localhost", logname="probe", event=stop, port=port, filename="probe.log",
+                    logging_config=None, output_dir=tempfile.mkdtemp(dir=sys.argv[2])),
+    )
+    server.start()
+    deadline = time.monotonic() + (40 if patched else 4)
+    while port.get_obj().value == -1 and time.monotonic() < deadline:
+        time.sleep(0.05)
+    value = port.get_obj().value
+    stop.set()
+    server.join(10)
+    if server.is_alive():
+        server.kill()
+        server.join(10)
+    return value
+
+
+print(published(False), published(True))
+"""
+
+
+def test_autosklearn_log_server_publishes_its_port_while_the_waiting_side_holds_the_lock(tmp_path):
+    """auto-sklearn 0.15.0 sleeps while holding the lock its log server needs: the server can starve.
+
+    Hosted Linux machines stalled there until the wall-clock budget. The probe holds the lock
+    for the whole wait, the worst case of that loop: upstream's server never publishes its port
+    and the worker's replacement does.
+    """
+    if "autosklearn" not in AUTOML:
+        assert isolated.engine_status("autosklearn")["state"] == "unsupported-platform"
+        return
+    completed = subprocess.run(
+        [str(isolated.runtime_python("autosklearn")), "-s", "-B", "-c", _LOG_SERVER_PROBE,
+         str(isolated.WORKERS), str(tmp_path)],
+        cwd=tmp_path, env=isolated._base_environment(tmp_path), capture_output=True, text=True, timeout=180,
+    )  # fmt: skip
+    assert completed.returncode == 0, completed.stderr[-2000:]
+    upstream, patched = (int(value) for value in completed.stdout.split()[-2:])
+    assert upstream == -1 and 10000 <= patched <= 65535

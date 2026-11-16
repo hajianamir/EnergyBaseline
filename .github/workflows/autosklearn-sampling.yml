@@ -1,5 +1,6 @@
 name: auto-sklearn stall sampling (temporary investigation)
 
+# Round 3: with the worker's log-server workaround in place.
 # One hosted Linux machine stalled in auto-sklearn until the wall-clock budget on the first
 # run of the isolated-engine workflow and later machines did not. This samples several fresh
 # machines; a stall is reported with the worker's thread stacks and process states.

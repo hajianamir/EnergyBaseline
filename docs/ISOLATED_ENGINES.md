@@ -79,7 +79,7 @@ Inside the worker an interpreter audit hook refuses name resolution and any conn
 
 **What this boundary is not.** It isolates dependencies, bounds time and stops processes. It is not an operating-system sandbox, container or kernel firewall against hostile third-party code. The audit hook covers Python code in the worker; it does not cover the H2O JVM, which is constrained by its own loopback bind and authentication (below). Hash locks bind what is installed; they are not a privilege boundary around the installed directory.
 
-Third-party logs are never exported, because they can echo data values. For support work only, an operator may set `EB_ENGINE_DIAGNOSTICS` to an existing directory; the log of a failed engine run is then copied there.
+Third-party logs are never exported, because they can echo data values. For support work only, an operator may set `EB_ENGINE_DIAGNOSTICS` to an existing directory; the log of an engine run that failed or exceeded its budget is then copied there. Five seconds before a budget of at least twelve seconds ends, the worker writes its thread stacks and, on Linux, the state of the processes in its session to that log, so a stalled engine shows where it waits. These lines hold file names, line numbers and command lines, not data values.
 
 ### H2O and the web-free policy
 
@@ -103,6 +103,8 @@ With `b = train_rows - validation_rows`, the engine process receives fitting row
 | auto-sklearn | SMAC Bayesian optimisation without meta-learning warm start, holdout on the validation rows, ensemble of size one | `m` configurations within a 45 s task limit | selected configuration refit on fitting plus validation rows |
 
 The result states `search_fit_rows`, `purge_gap`, `validation_rows`, `final_fit_rows` and a `fit_scope` sentence, so the H2O difference is visible in every result. `candidates_evaluated` and `candidates_failed` are read from each engine's own records (TPOT evaluation errors, the H2O event log against its leaderboard, AutoGluon's leaderboard against the requested families, auto-sklearn run statuses). `engine_reported_validation_rmse` carries a note where it is optimistic: H2O also uses the validation frame for early stopping, and AutoGluon fits ensemble weights on it. `fit_mean_reference_test_rmse` is the holdout error of predicting the fitting-row mean.
+
+auto-sklearn 0.15.0 has a start-up defect that the worker works around. It waits for its log-server process to publish a port in a loop that sleeps while holding the shared lock the server needs, so on some machines the server never obtains the lock and the search waits until the wall-clock budget. This was observed on hosted Linux machines (three stalled jobs; thread stacks and the sampled machines are in the stage evidence). The worker replaces only the server's publishing step so that it stores the port without that lock; auto-sklearn's code is otherwise unchanged and the installed distribution is not modified. An execution test holds the lock for the whole wait and requires that upstream's server stays unpublished while the replacement publishes.
 
 When no auto-sklearn configuration beats its built-in mean predictor on the validation rows, auto-sklearn selects that predictor; the result then reports `selected_model: dummy_mean` instead of failing.
 
