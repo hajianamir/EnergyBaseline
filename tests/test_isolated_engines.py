@@ -56,7 +56,10 @@ def _alive(pid):
     except ProcessLookupError:
         return False
     # A killed child that nobody reaped yet is a zombie, not a running process.
-    state = Path(f"/proc/{pid}/stat").read_text().rsplit(")", 1)[1].split()[0]
+    try:
+        state = Path(f"/proc/{pid}/stat").read_text().rsplit(")", 1)[1].split()[0]
+    except (FileNotFoundError, ProcessLookupError):
+        return False  # reaped between the signal probe and the read
     return state != "Z"
 
 
