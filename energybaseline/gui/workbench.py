@@ -25,7 +25,9 @@ class WorkbenchPanel(QWidget):
         layout = QVBoxLayout(self)
         notice = QLabel(
             "Exploratory tools only. No hypothesis tests, baseline acceptance, refitting or model persistence. "
-            "Load a version-1 job from examples/workbench or examples/advanced; tabular jobs use the current raw dataset."
+            "Load a version-1 job from an examples folder (workbench, advanced, external, catalog or isolated); "
+            "tabular jobs use the current raw dataset. Jobs in examples/isolated need a separately provisioned "
+            "engine or model asset."
         )
         self.notice = notice
         notice.setWordWrap(True)

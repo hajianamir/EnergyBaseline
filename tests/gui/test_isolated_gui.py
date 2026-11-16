@@ -31,6 +31,8 @@ def test_panel_reports_a_missing_runtime_without_evidence(request_name, guidance
     widget = WorkbenchPanel(state)
     qtbot.addWidget(widget)
     try:
+        notice = widget.notice.text()
+        assert "examples/isolated" in notice and "separately provisioned" in notice
         assert widget.load_request(EXAMPLES / request_name, allowed_roots=[EXAMPLES])
         widget.run_button.click()
         qtbot.waitUntil(lambda: widget.handle is None, timeout=120000)
