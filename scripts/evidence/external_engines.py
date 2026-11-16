@@ -18,7 +18,16 @@ import time
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def run(executable=None):
+def _failure(operation, reason, detail=""):
+    # This script executes only fixed, public synthetic repository fixtures. Detailed
+    # diagnostics are opt-in and never enabled by the application workbench handler.
+    message = f"{operation}: {reason}" + ("\n" + detail[-6000:] if detail else "")
+    annotation = message.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+    print("::error title=ExternalEngineExecutionFailure::" + annotation, flush=True)
+    raise RuntimeError(f"Actual external engine {operation} failed; no successful receipt produced.")
+
+
+def run(executable=None, *, diagnostics=False):
     prefix = [str(Path(executable).resolve()), "cli"] if executable else [sys.executable, "-m", "energybaseline.cli"]
     examples = ROOT / "examples/external"
     records = []
@@ -31,9 +40,16 @@ def run(executable=None):
             if example["dataset"]:
                 command += ["--dataset", str(examples / example["dataset"])]
             started = time.monotonic()
-            completed = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, timeout=120)
+            try:
+                completed = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, timeout=120)
+            except subprocess.TimeoutExpired:
+                _failure(operation, "Native process did not complete within the unchanged 120-second limit.")
             if completed.returncode != 0 or not out.is_file():
-                raise RuntimeError("Actual external engine subprocess failed; no successful receipt produced.")
+                _failure(
+                    operation,
+                    f"Subprocess exit {completed.returncode}; output file present: {out.is_file()}.",
+                    completed.stderr if diagnostics else "",
+                )
             output = json.loads(out.read_text(encoding="utf-8"))
             result = output["result"]
             if completed.stdout.strip() and json.loads(completed.stdout) != output:
@@ -77,8 +93,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--executable", type=Path)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument(
+        "--diagnostics", action="store_true", help="Publish native stderr for fixed synthetic fixtures only"
+    )
     args = parser.parse_args()
-    receipt = run(args.executable)
+    receipt = run(args.executable, diagnostics=args.diagnostics)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(receipt, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     print("Actual external and pretrained engine executions passed; receipt written.")

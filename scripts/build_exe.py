@@ -223,6 +223,7 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="Build EnergyBaseline PyInstaller onedir bundle, SBOM, and installer.")
     ap.add_argument("--profile", choices=["full", "lite"], default="full")
     ap.add_argument("--onefile", action="store_true", help="Build single-file executable instead of default onedir")
+    ap.add_argument("--console", action="store_true", help="Use a console bootloader for native CLI diagnostics")
     ap.add_argument("--installer", action="store_true", help="Compile per-user Windows installer (Inno Setup / NSIS)")
     ap.add_argument("--sbom-only", action="store_true", help="Only emit CycloneDX SBOM and exit")
     ap.add_argument("--dist-dir", default=str(ROOT / "dist"), help="Output directory (default: ./dist)")
@@ -258,7 +259,7 @@ def main(argv: list[str] | None = None) -> int:
         "--noconfirm",
         "--clean",
         layout_flag,
-        "--windowed",
+        "--console" if args.console else "--windowed",
         "--name",
         "EnergyBaseline",
         "--distpath",
