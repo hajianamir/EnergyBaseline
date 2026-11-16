@@ -196,10 +196,15 @@ jobs:
         run: |
           python scripts/evidence/external_engines.py --executable dist/EnergyBaseline/EnergyBaseline.exe --out artifacts/capabilities/external-stage5/ci-frozen-engines.json
 
+      - name: Build the full windowed Windows profile required by graph learning
+        if: matrix.os == 'windows-latest'
+        run: |
+          python scripts/build_exe.py --profile full --dist-dir dist/catalog-full
+
       - name: Actual frozen Windows NLP, survival and graph-learning oracles
         if: matrix.os == 'windows-latest'
         run: |
-          python scripts/evidence/catalog_expansion.py --executable dist/EnergyBaseline/EnergyBaseline.exe --out artifacts/capabilities/catalog-stage6/ci-frozen-catalog.json
+          python scripts/evidence/catalog_expansion.py --executable dist/catalog-full/EnergyBaseline/EnergyBaseline.exe --out artifacts/capabilities/catalog-stage6/ci-frozen-catalog.json
 
       - name: Vulnerability audit (pip-audit)
         run: |

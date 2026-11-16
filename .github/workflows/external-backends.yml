@@ -33,9 +33,12 @@ jobs:
       - name: Diagnose actual catalog operations on fixed public synthetic fixtures
         run: |
           python scripts/evidence/catalog_diagnostics.py
-      - name: Build the actual lite bundle with a diagnostic console bootloader
+      - name: Build the actual full bundle with a diagnostic console bootloader
         run: |
-          python scripts/build_exe.py --profile lite --console --dist-dir dist/diagnostic
+          python scripts/build_exe.py --profile full --console --dist-dir dist/diagnostic
+      - name: Execute actual frozen NLP, survival and graph-learning diagnostics
+        run: |
+          python scripts/evidence/catalog_expansion.py --executable dist/diagnostic/EnergyBaseline/EnergyBaseline.exe --out artifacts/capabilities/catalog-stage6/ci-console-catalog.json
       - name: Execute actual external and pretrained backends on synthetic fixtures
         run: |
           python scripts/evidence/external_engines.py --executable dist/diagnostic/EnergyBaseline/EnergyBaseline.exe --diagnostics --out artifacts/capabilities/external-stage5/ci-console-engines.json
@@ -47,5 +50,6 @@ jobs:
           path: |
             artifacts/capabilities/external-stage5/ci-console-engines.json
             artifacts/capabilities/catalog-stage6/ci-direct-diagnostics.json
+            artifacts/capabilities/catalog-stage6/ci-console-catalog.json
             build/pyinstaller/EnergyBaseline/warn-EnergyBaseline.txt
           if-no-files-found: warn
