@@ -309,8 +309,14 @@ def main(argv: list[str] | None = None) -> int:
 
     for pkg in ("sklearn", "statsmodels"):
         cmd += ["--collect-submodules", pkg]
-    for data_pkg in ("matplotlib", "sklearn", "rapidocr_onnxruntime"):
+    for data_pkg in ("matplotlib", "sklearn", "rapidocr_onnxruntime", "xgboost", "lightgbm", "onnxruntime"):
         cmd += ["--collect-data", data_pkg]
+    # FLAML imports the native estimator module even when the selected learners are
+    # forests. ctypes-loaded XGBoost DLLs are not discovered by static analysis;
+    # the real frozen CLI oracle caught their absence. Preserve package-relative
+    # library locations and VERSION resources rather than disabling the backend.
+    for binary_pkg in ("xgboost", "lightgbm", "onnxruntime"):
+        cmd += ["--collect-binaries", binary_pkg]
     # Real external backends use runtime metadata and Pandera dispatch registrations.
     # OCR ONNX/config data must be shipped; no model download is permitted in the app.
     for pkg in ("flaml.automl", "pandera.backends.pandas"):
@@ -325,6 +331,8 @@ def main(argv: list[str] | None = None) -> int:
         "scipy",
         "scikit-learn",
         "statsmodels",
+        "xgboost",
+        "lightgbm",
     ):
         cmd += ["--copy-metadata", distribution]
 
