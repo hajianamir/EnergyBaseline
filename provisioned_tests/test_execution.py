@@ -40,7 +40,15 @@ def _engine_processes():
             ["powershell", "-NoProfile", "-Command", command], capture_output=True, text=True, timeout=120
         ).stdout
     else:
-        listing = subprocess.run(["ps", "-eo", "args"], capture_output=True, text=True, timeout=60).stdout
+        # Complete command lines straight from the kernel: ``ps`` may truncate them to a column width.
+        lines = []
+        for entry in Path("/proc").iterdir():
+            if entry.name.isdigit():
+                try:
+                    lines.append((entry / "cmdline").read_bytes().replace(b"\0", b" ").decode("utf-8", "replace"))
+                except OSError:
+                    continue  # the process ended while it was being listed
+        listing = "\n".join(lines)
     marker = "EnergyBaselineEngines"
     return [line for line in listing.splitlines() if marker in line and "Get-CimInstance" not in line]
 

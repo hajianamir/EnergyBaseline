@@ -227,10 +227,11 @@
       "capability": "Auto-sklearn, TPOT, H2O, FLAML, AutoGluon, NAS",
       "baseline_finding": "Not found",
       "baseline_evidence": "Optuna-backed tuning does not mean these AutoML engines are integrated.",
-      "current_status": "stage5_bounded_scope_verified_cli_gui_frozen_windows",
+      "current_status": "stage7_bounded_scope_implemented_verification_in_progress",
       "stage4_implemented_scope": "Actual Optuna TPE model-family/hyperparameter search with nested temporal preprocessing and untouched holdout; genuine scratch-trained neural architecture/width search.",
-      "remaining_scope": "Auto-sklearn, TPOT, H2O and AutoGluon remain unintegrated. FLAML scope is bounded regression, not its full task/estimator catalog or accepted-model lifecycle. Runtime conflicts and unimplemented boundaries are recorded in docs/EXTERNAL_ENGINES.md.",
-      "stage5_implemented_scope": "Actual FLAML CFO regression search with inner chronological validation/purge, bounded real forest estimators and fresh outer training refit; verified on final source through API/CLI/native workers and the actual frozen Windows executable."
+      "remaining_scope": "Regression search only: classification, time-series AutoML modes, GPU/distributed search, H2O stacked ensembles and deep learning, AutoGluon bagging/stacking and auto-sklearn meta-learning are not exposed. auto-sklearn has no Windows release (POSIX, CPython 3.9). H2O AutoML has no refit. No selected model is persisted or promoted to a baseline. FLAML scope stays bounded regression. The process boundary is dependency isolation with a time budget and tree termination, not an operating-system sandbox.",
+      "stage5_implemented_scope": "Actual FLAML CFO regression search with inner chronological validation/purge, bounded real forest estimators and fresh outer training refit; verified on final source through API/CLI/native workers and the actual frozen Windows executable.",
+      "stage7_implemented_scope": "Actual TPOT 1.1.0, H2O AutoML 3.46.0.12, AutoGluon Tabular 1.6.3 and auto-sklearn 0.15.0 regression search in separately provisioned hash-locked runtimes and processes, with chronological validation, purge gap, holdout targets kept in the application and metrics computed there. See docs/ISOLATED_ENGINES.md."
     },
     {
       "id": "C027",
@@ -255,9 +256,10 @@
       "capability": "DeepAR, N-HiTS, TiDE, foundation forecasting models",
       "baseline_finding": "Not found",
       "baseline_evidence": "N-BEATS is implemented; do not extrapolate that to every deep forecasting architecture.",
-      "current_status": "stage4_bounded_scope_verified_cli_gui",
+      "current_status": "stage7_bounded_scope_implemented_verification_in_progress",
       "stage4_implemented_scope": "Scratch-trained Gaussian autoregressive DeepAR, hierarchical residual/interpolated N-HiTS and residual dense TiDE reference forecasting, plus genuine architecture selection.",
-      "remaining_scope": "Pretrained foundation models, global panel training and full research-package features remain pending; no calibrated forecast intervals are claimed."
+      "remaining_scope": "One foundation model (Chronos-Bolt tiny), univariate, horizon at most 64, no covariates, fine-tuning or panel input; other foundation models are not integrated. Quantiles are uncalibrated model outputs: no calibrated forecast intervals are claimed. Global panel training and full research-package features of the scratch-trained models remain pending.",
+      "stage7_implemented_scope": "Zero-shot quantile forecasting with the actual pretrained Chronos-Bolt tiny weights through chronos-forecasting 2.3.2 in a separately provisioned runtime; weights provisioned explicitly and verified by SHA-256 before and after use; holdout scored in the application against a last-value reference."
     },
     {
       "id": "C030",
@@ -314,10 +316,11 @@
       "capability": "Image classification / detection / segmentation / OCR / vision models",
       "baseline_finding": "Not found",
       "baseline_evidence": "Plotting and a 1D numeric CNN are not computer vision.",
-      "current_status": "stage5_bounded_scope_verified_cli_gui_frozen_windows",
+      "current_status": "stage7_bounded_scope_implemented_verification_in_progress",
       "stage4_implemented_scope": "Actual PNG/JPEG/BMP loading, Conv2d classification, binary U-Net segmentation, learned-mask component detection and explicitly supplied printed-template OCR; native worker/CLI and privacy-bound output.",
-      "remaining_scope": "Pretrained semantic object classification/detection/segmentation, plaintext OCR export, arbitrary-resolution/language/handwriting coverage and general model zoo remain unimplemented. YOLO release metadata is not executed weights.",
-      "stage5_implemented_scope": "Actual pretrained PP-OCRv4 detection/recognition and mobile orientation via RapidOCR/ONNX Runtime; fixed approved weight hashes, offline CPU inference and privacy-preserving OCR audit; verified on final source through API/CLI/native workers and the actual frozen Windows executable."
+      "remaining_scope": "Pretrained detection and segmentation, image embeddings, plaintext OCR export, arbitrary-resolution/language/handwriting coverage and a general model zoo remain unimplemented. YOLO is not integrated (weights never obtained; AGPL/commercial licensing undecided). The lite profile excludes PyTorch, so classification needs the full profile.",
+      "stage5_implemented_scope": "Actual pretrained PP-OCRv4 detection/recognition and mobile orientation via RapidOCR/ONNX Runtime; fixed approved weight hashes, offline CPU inference and privacy-preserving OCR audit; verified on final source through API/CLI/native workers and the actual frozen Windows executable.",
+      "stage7_implemented_scope": "Pretrained ImageNet-1k classification with the published GhostNet 1.0x weights (Apache-2.0) on the application's PyTorch, authors' preprocessing, weights loaded without pickle code and verified before and after use; real photographs classified correctly through API, command line and native worker."
     },
     {
       "id": "C036",
@@ -526,5 +529,21 @@
     "console_conclusion": "success",
     "source_equivalence": "436 identical product/test/fixture/dependency/script Git blobs between local and hosted sources; only two CI workflows changed",
     "hosted_full_suite_expanded_coverage_gates": "Passed on Windows and Linux; unchanged 60/80 percent thresholds"
+  },
+  "stage7": {
+    "status": "implemented_verification_in_progress",
+    "documentation": "docs/ISOLATED_ENGINES.md",
+    "evidence": "artifacts/capabilities/isolated-stage7/README.md",
+    "new_operations": 3,
+    "total_workbench_operations": 42,
+    "specification_only_operations": 12,
+    "example_jobs": 6,
+    "tests": [
+      "tests/test_isolated_engines.py",
+      "tests/gui/test_isolated_gui.py",
+      "provisioned_tests/"
+    ],
+    "program_complete": false,
+    "remaining_scope": "All per-row remaining_scope fields and untouched catalog families remain open."
   }
 }

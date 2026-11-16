@@ -65,24 +65,54 @@ class EngineSpec:
 ENGINES = MappingProxyType(
     {
         "tpot": EngineSpec(
-            "tpot", "tpot", "1.1.0", (3, 12), ("linux", "win32"), "automl_worker.py", "LGPL-3.0",
+            "tpot",
+            "tpot",
+            "1.1.0",
+            (3, 12),
+            ("linux", "win32"),
+            "automl_worker.py",
+            "LGPL-3.0",
             "Genetic-programming pipeline search on a Dask local cluster.",
         ),
         "h2o": EngineSpec(
-            "h2o", "h2o", "3.46.0.12", (3, 12), ("linux", "win32"), "automl_worker.py", "Apache-2.0",
+            "h2o",
+            "h2o",
+            "3.46.0.12",
+            (3, 12),
+            ("linux", "win32"),
+            "automl_worker.py",
+            "Apache-2.0",
             "H2O AutoML in a loopback-only authenticated JVM from the locked jdk4py Java 17 runtime.",
         ),
         "autogluon": EngineSpec(
-            "autogluon", "autogluon.tabular", "1.6.3", (3, 12), ("linux", "win32"), "automl_worker.py",
-            "Apache-2.0", "AutoGluon Tabular with gradient-boosting and forest models.",
+            "autogluon",
+            "autogluon.tabular",
+            "1.6.3",
+            (3, 12),
+            ("linux", "win32"),
+            "automl_worker.py",
+            "Apache-2.0",
+            "AutoGluon Tabular with gradient-boosting and forest models.",
         ),
         "autosklearn": EngineSpec(
-            "autosklearn", "auto-sklearn", "0.15.0", (3, 9), ("linux",), "automl_worker.py", "BSD-3-Clause",
+            "autosklearn",
+            "auto-sklearn",
+            "0.15.0",
+            (3, 9),
+            ("linux",),
+            "automl_worker.py",
+            "BSD-3-Clause",
             "Final upstream release: POSIX only, Python 3.9, scikit-learn 0.24. No Windows support exists upstream.",
         ),
         "chronos": EngineSpec(
-            "chronos", "chronos-forecasting", "2.3.2", (3, 12), ("linux", "win32"), "chronos_worker.py",
-            "Apache-2.0", "Chronos-Bolt zero-shot forecasting from separately provisioned pretrained weights.",
+            "chronos",
+            "chronos-forecasting",
+            "2.3.2",
+            (3, 12),
+            ("linux", "win32"),
+            "chronos_worker.py",
+            "Apache-2.0",
+            "Chronos-Bolt zero-shot forecasting from separately provisioned pretrained weights.",
         ),
     }
 )
@@ -246,16 +276,36 @@ def _kill_tree(process, job):
         pass
 
 
+def _resume(process):
+    """Let a process created with CREATE_SUSPENDED run (Windows only)."""
+    import ctypes
+
+    ntdll = ctypes.WinDLL("ntdll")
+    ntdll.NtResumeProcess.restype = ctypes.c_long
+    ntdll.NtResumeProcess.argtypes = [ctypes.c_void_p]
+    if ntdll.NtResumeProcess(int(process._handle)) != 0:
+        raise EngineFailure("Isolated engine process could not be started.")
+
+
 def _run(command, *, cwd, env, timeout, log, lifeline=False):
     """Run one child in its own process group/job and always terminate everything it started.
 
-    With ``lifeline`` the child's standard input is a pipe that is never written: the worker
-    treats its end-of-file as the death of this process and terminates its own tree.
+    With ``lifeline`` the worker also learns when this process dies and terminates its own
+    tree. On POSIX its standard input is a pipe that is never written, so end-of-file is the
+    signal. On Windows the job object does this in the kernel and the worker additionally
+    waits on this process's handle; a pipe is not used there because a blocked read on a
+    Windows pipe stalls every grandchild that inherits the handle.
     """
     options = {}
     job = None
+    pipe = lifeline and sys.platform != "win32"
+    if lifeline:
+        env = dict(env, EB_ENGINE_PARENT_PID=str(os.getpid()))
     if sys.platform == "win32":
-        options["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.CREATE_NO_WINDOW
+        # CREATE_SUSPENDED: the job must own the process before it can start any child. A
+        # virtual-environment interpreter on Windows is a launcher that immediately starts
+        # the real interpreter, which would otherwise escape a job assigned afterwards.
+        options["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.CREATE_NO_WINDOW | 0x00000004
     else:
         options["start_new_session"] = True
     with open(log, "ab") as stream:
@@ -263,18 +313,20 @@ def _run(command, *, cwd, env, timeout, log, lifeline=False):
             [str(part) for part in command],
             cwd=str(cwd),
             env=env,
-            stdin=subprocess.PIPE if lifeline else subprocess.DEVNULL,
+            stdin=subprocess.PIPE if pipe else subprocess.DEVNULL,
             stdout=stream,
             stderr=subprocess.STDOUT,
             **options,
         )
-        if sys.platform == "win32":
-            from ..core.pool import WindowsJobObject
-
-            job = WindowsJobObject()
-            if not job.assign_pid(process.pid):
-                job = None
         try:
+            if sys.platform == "win32":
+                from ..core.pool import WindowsJobObject
+
+                job = WindowsJobObject()
+                if not job.assign_pid(process.pid):
+                    job.close()
+                    job = None
+                _resume(process)
             return process.wait(timeout=timeout)
         except subprocess.TimeoutExpired:
             raise EngineFailure("Isolated engine exceeded its wall-clock budget and was terminated.") from None
@@ -512,14 +564,18 @@ def run_engine(name, request, arrays=None, *, timeout, extra_paths=None):
             np.save(private / f"{key}.npy", np.ascontiguousarray(value, dtype=np.float64), allow_pickle=False)
         payload = dict(request, engine=spec.name, paths={k: str(v) for k, v in (extra_paths or {}).items()})
         (private / "request.json").write_text(json.dumps(payload, allow_nan=False), encoding="utf-8")
-        code = _run(
-            [runtime_python(name), "-s", "-B", worker, private],
-            cwd=private,
-            env=_base_environment(private),
-            timeout=timeout,
-            log=private / "engine.log",
-            lifeline=True,
-        )
+        try:
+            code = _run(
+                [runtime_python(name), "-s", "-B", worker, private],
+                cwd=private,
+                env=_base_environment(private),
+                timeout=timeout,
+                log=private / "engine.log",
+                lifeline=True,
+            )
+        except EngineFailure:
+            _keep_diagnostics(spec.name, private / "engine.log")
+            raise
         result_path = private / "result.json"
         if code != 0 or not result_path.is_file() or result_path.stat().st_size > 20_000_000:
             _keep_diagnostics(spec.name, private / "engine.log")

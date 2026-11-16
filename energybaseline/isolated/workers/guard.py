@@ -42,20 +42,42 @@ def deny_external_network():
 def watch_parent(root):
     """Stop this engine and everything it started as soon as the application process is gone.
 
-    The parent holds the write end of this process's standard input and never writes to it,
-    so end-of-file means the parent exited or was killed. On POSIX a detached helper then
-    removes the private workspace after the whole process group has been killed. On Windows
-    the parent's job object normally terminates the tree first; this is the fallback.
+    POSIX: the parent holds the write end of this process's standard input and never writes
+    to it, so end-of-file means the parent exited or was killed. A detached helper then
+    removes the private workspace after the whole process group has been killed.
+
+    Windows: the parent's job object terminates the tree when the parent dies. As a fallback
+    for a parent that could not create the job, this waits on the parent's process handle,
+    named by ``EB_ENGINE_PARENT_PID``. Standard input is deliberately not used there: a
+    blocked read on a Windows pipe stalls every child process that inherits the handle.
     """
     import threading
 
+    parent_pid = os.environ.get("EB_ENGINE_PARENT_PID", "")
+    if os.name == "nt" and not parent_pid.isdigit():
+        return
+
     def wait():
-        # Read the raw descriptor: a daemon thread blocked inside the buffered stdin object
-        # would make interpreter shutdown abort while it tries to take that object's lock.
-        try:
-            os.read(0, 1)
-        except OSError:
-            pass
+        if os.name == "nt":
+            import ctypes
+
+            kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+            kernel.OpenProcess.restype = ctypes.c_void_p
+            kernel.OpenProcess.argtypes = [ctypes.c_uint32, ctypes.c_int, ctypes.c_uint32]
+            kernel.WaitForSingleObject.restype = ctypes.c_uint32
+            kernel.WaitForSingleObject.argtypes = [ctypes.c_void_p, ctypes.c_uint32]
+            handle = kernel.OpenProcess(0x00100000, 0, int(parent_pid))  # SYNCHRONIZE
+            if handle:
+                kernel.WaitForSingleObject(handle, 0xFFFFFFFF)  # INFINITE
+            elif ctypes.get_last_error() != 87:  # ERROR_INVALID_PARAMETER: no such process
+                return  # The parent exists but cannot be observed; its job object remains in charge.
+        else:
+            # Read the raw descriptor: a daemon thread blocked inside the buffered stdin object
+            # would make interpreter shutdown abort while it tries to take that object's lock.
+            try:
+                os.read(0, 1)
+            except OSError:
+                pass
         import subprocess
 
         try:

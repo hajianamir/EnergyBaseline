@@ -1,0 +1,251 @@
+{
+ "purpose": "Research and provenance behind the Stage 7 isolated engines and pretrained weights. Research is not execution; execution receipts are separate files in this directory.",
+ "recorded": "2026-11-16",
+ "engines": {
+  "tpot": {
+   "distribution": "tpot",
+   "version": "1.1.0",
+   "runtime_python": "3.12",
+   "platforms": [
+    "linux",
+    "win32"
+   ],
+   "lock": "energybaseline/isolated/locks/tpot.lock",
+   "lock_sha256": "33d7dc5e74fe70dfd11bd33c9310ccd1166da9d86027bebcaca3faccd70fb9ba",
+   "locked_distributions_linux": 57,
+   "locked_distributions_win32": 57
+  },
+  "h2o": {
+   "distribution": "h2o",
+   "version": "3.46.0.12",
+   "runtime_python": "3.12",
+   "platforms": [
+    "linux",
+    "win32"
+   ],
+   "lock": "energybaseline/isolated/locks/h2o.lock",
+   "lock_sha256": "ccc7d08ab65d6c2b4837236c44fb77a710a21374c9bc3d9c7cbdc8cbbd2de135",
+   "locked_distributions_linux": 9,
+   "locked_distributions_win32": 9
+  },
+  "autogluon": {
+   "distribution": "autogluon.tabular",
+   "version": "1.6.3",
+   "runtime_python": "3.12",
+   "platforms": [
+    "linux",
+    "win32"
+   ],
+   "lock": "energybaseline/isolated/locks/autogluon.lock",
+   "lock_sha256": "ecaa4c54720a774dad473b545c8d63a901ccf54c3935f1812a8f1c589c67d00e",
+   "locked_distributions_linux": 44,
+   "locked_distributions_win32": 45
+  },
+  "autosklearn": {
+   "distribution": "auto-sklearn",
+   "version": "0.15.0",
+   "runtime_python": "3.9",
+   "platforms": [
+    "linux"
+   ],
+   "lock": "energybaseline/isolated/locks/autosklearn.lock",
+   "lock_sha256": "114acb87542a7d67047b9068c6b18707f270218cdc9623df332a1e605952b026",
+   "locked_distributions_linux": 41,
+   "locked_distributions_win32": null
+  },
+  "chronos": {
+   "distribution": "chronos-forecasting",
+   "version": "2.3.2",
+   "runtime_python": "3.12",
+   "platforms": [
+    "linux",
+    "win32"
+   ],
+   "lock": "energybaseline/isolated/locks/chronos.lock",
+   "lock_sha256": "275d25dee0de63a36426fe1f62cba5970ecf3c7fe565b6e8b3746b9b741eafa3",
+   "locked_distributions_linux": 64,
+   "locked_distributions_win32": 46
+  }
+ },
+ "installed_licence_metadata": {
+  "tpot 1.1.0": "GNU/LGPLv3 (classifier: LGPLv3)",
+  "h2o 3.46.0.12": "Apache v2",
+  "jdk4py 17.0.9.2": "classifier GPLv2; bundles OpenJDK 17.0.9 (GPL-2.0 with Classpath Exception)",
+  "autogluon.tabular 1.6.3": "Apache-2.0",
+  "auto-sklearn 0.15.0": "BSD3",
+  "smac 1.2": "3-clause BSD",
+  "chronos-forecasting 2.3.2": "Apache License 2.0",
+  "distributed 2026.8.0": "BSD-3-Clause"
+ },
+ "interpreter_availability": {
+  "source": "actions/python-versions manifest read on 2026-11-16",
+  "finding": "CPython 3.12.11 to 3.12.16 are published for Linux only; 3.12.10 is the last 3.12 with Windows builds. CPython 3.9.25 has no Windows build. Tests therefore assert only the major.minor of a runtime."
+ },
+ "sandbox_network": {
+  "reachable": [
+   "pypi.org",
+   "files.pythonhosted.org",
+   "codeload.github.com",
+   "api.github.com"
+  ],
+  "unreachable": [
+   "huggingface.co",
+   "raw.githubusercontent.com",
+   "download.pytorch.org",
+   "repo1.maven.org",
+   "h2o-release.s3.amazonaws.com",
+   "GitHub release assets"
+  ],
+  "consequence": "The HTTPS path of 'assets install' cannot run in the development sandbox; it is exercised by the hosted workflow. Local runs used 'assets install --source <directory>'."
+ },
+ "assets": {
+  "chronos-bolt-tiny": {
+   "files": [
+    {
+     "name": "config.json",
+     "bytes": 1120,
+     "sha256": "278f0086733031635fb1c861cb01c1bad6477420c7fcb19381a2993e335785e0",
+     "origin": "https://huggingface.co/amazon/chronos-bolt-tiny/resolve/a0e552de83495b5c28c14c71c374f3e33280b340/config.json"
+    },
+    {
+     "name": "model.safetensors",
+     "bytes": 34622352,
+     "sha256": "75068728d376d2bec670379eeef4bfb4d24c0cfe24d957451f8d19b447030a32",
+     "origin": "https://huggingface.co/amazon/chronos-bolt-tiny/resolve/a0e552de83495b5c28c14c71c374f3e33280b340/model.safetensors"
+    }
+   ]
+  },
+  "ghostnet-imagenet": {
+   "files": [
+    {
+     "name": "state_dict_73.98.pth",
+     "bytes": 20923722,
+     "sha256": "965143b0cfbb704283890f95f0037be632d8fa095047e3a2c9e63ed0a9a1df14",
+     "origin": "https://raw.githubusercontent.com/huawei-noah/Efficient-AI-Backbones/f90e129b645c3b1684fe07cd361cd557d0ad71f7/ghostnet_pytorch/models/state_dict_73.98.pth"
+    },
+    {
+     "name": "imagenet_classes.txt",
+     "bytes": 10472,
+     "sha256": "1f386e0d1cb6e28b9c2dac651c3dea6801e98ad1b41a14ce6bb1a093d72069f5",
+     "origin": "https://raw.githubusercontent.com/pytorch/hub/c3beaae7d32fca2a23fec30aa7938ef5c9b6e5d5/imagenet_classes.txt"
+    }
+   ]
+  }
+ },
+ "chronos_bolt_tiny": {
+  "publisher": "amazon/chronos-bolt-tiny on Hugging Face",
+  "revision": "a0e552de83495b5c28c14c71c374f3e33280b340",
+  "model_card": {
+   "license": "apache-2.0",
+   "library_name": "chronos-forecasting",
+   "new_version": "amazon/chronos-2"
+  },
+  "config": {
+   "architecture": "ChronosBoltModelForForecasting",
+   "pipeline": "ChronosBoltPipeline",
+   "context_length": 2048,
+   "input_patch_size": 16,
+   "prediction_length": 64,
+   "quantiles": "0.1..0.9",
+   "d_model": 256,
+   "encoder_layers": 4,
+   "decoder_layers": 4
+  },
+  "independent_hash_publications": [
+   {
+    "repository": "akkio-inc/Igloo",
+    "pins": [
+     "revision",
+     "model.safetensors SHA-256",
+     "config.json SHA-256"
+    ]
+   },
+   {
+    "repository": "B4L1/daily-notes",
+    "pins": [
+     "revision",
+     "model.safetensors SHA-256"
+    ]
+   },
+   {
+    "note": "GitHub code search for the model.safetensors SHA-256 returned 77 hits in independent repositories."
+   }
+  ],
+  "development_download_mirrors": [
+   {
+    "repository": "ommahajan0208/VoltIQ",
+    "path": "backend/data/models/chronos-bolt-tiny/"
+   },
+   {
+    "repository": "trush23/Time-Series-Forecasting-Research",
+    "path": "inputs/foundation_models/chronos-bolt-tiny/"
+   }
+  ],
+  "git_blob_ids": {
+   "config.json": "d57acc2ef40d0a0d71be5ecdeeec067256b59cc8",
+   "model.safetensors": "f468dbeaf0cf74c3cf3b595b9f1d4759d1b923f2",
+   "README.md": "cdf6aaaa011d46b0fd612b43ec5b42e0f4c405b6"
+  },
+  "authenticity_basis": "Bytes fetched from mirrors were accepted because their SHA-256 values equal independently published values for the Hugging Face revision. The hosted workflow downloads from Hugging Face directly and verifies the same hashes."
+ },
+ "ghostnet": {
+  "repository": "huawei-noah/Efficient-AI-Backbones",
+  "commit": "f90e129b645c3b1684fe07cd361cd557d0ad71f7",
+  "directory": "ghostnet_pytorch",
+  "git_blob_ids": {
+   "ghostnet.py": "eeac5e31e3b6f4fc1a102e2f0fc0e34d54131eda",
+   "License.txt": "8c8c55525ff49c6e29c6365a5d30be9967f6227b",
+   "readme.md": "5083f69f2a61efa9fd22b47f37f3ccedfc8c2cce",
+   "validate.py": "e0ec20fe10541c5b370481a201a30d30caeb05f0",
+   "models/state_dict_73.98.pth": "26da9f2807cd5ba95c607cec01ceb9700d94e0ae"
+  },
+  "licence": "Apache-2.0, Copyright 2020 Huawei Technologies Co., Ltd.",
+  "published_accuracy": {
+   "top1": 0.7398,
+   "top5": 0.9146,
+   "source": "upstream readme; not re-measured"
+  },
+  "upstream_preprocessing": "Resize(256), CenterCrop(224), Normalize(mean=[0.485,0.456,0.406], std=[0.229,0.224,0.225])",
+  "upstream_defect": "ghostnet.py declares __all__ = ['ghost_net'], a name it does not define.",
+  "upstream_sha256": "cfd6fe7e4705406b68111680dc5ab6904512f9f4a314c6f29052d94b0a74be5b",
+  "vendored_sha256": "31568e1265af1fa92f40b4fd4a415afdab81b3c80f6186c3ef393b9394808cec"
+ },
+ "imagenet_class_list": {
+  "repository": "pytorch/hub",
+  "commit": "c3beaae7d32fca2a23fec30aa7938ef5c9b6e5d5",
+  "git_blob_id": "888d6f51dd77bbf10b76dba58b5d2f1afa8ad5bd",
+  "licence": "none declared (licence API 404, no top-level licence file); not committed, not bundled"
+ },
+ "example_photographs": {
+  "repository": "scikit-image/scikit-image",
+  "commit": "6a1a73f5b64cb7a0ba83367f30ee612b1d70d98c",
+  "directory": "src/_skimage2/data",
+  "sources": {
+   "chelsea.png": {
+    "bytes": 240512,
+    "git_blob_id": "fae212d2befa8926f05d7cf06c799f06b81545ab",
+    "statement": "No copyright restrictions. CC0 by the photographer (Stefan van der Walt)"
+   },
+   "coffee.png": {
+    "bytes": 466706,
+    "git_blob_id": "f8350bf7e6e22734667f8c86fd230a741370fbcb",
+    "statement": "No copyright restrictions. CC0 by the photographer (Rachel Michetti)"
+   }
+  },
+  "statement_source": "_fetchers.py blob 79b9362e5b1e76e231363262c5a5595ff9517cd0",
+  "committed": {
+   "cat.jpg": "4d0169c5aee1e7aa69698d7465766522f455c85a521f484bb29876453e8b3b1a",
+   "espresso.jpg": "52daa39473f2bb8817f03f5ccafa7bb874cf2b200ef74dc1cdf513fd1c06d594"
+  },
+  "transformation": "JPEG quality 85 re-encoding"
+ },
+ "engine_findings": [
+  "TPOT's default Dask cluster binds a dashboard on every interface; an in-process LocalCluster with HTTP routes removed is supplied instead.",
+  "TPOT evaluated_individuals stores negated RMSE; failed pipelines carry Eval Error == 'INVALID'.",
+  "H2O AutoML cannot be refit from leader.params (unexpected keyword argument 'lambda'); no refit is performed and the result says so.",
+  "H2O models that fail never reach the leaderboard; failures are counted from the AutoML event log.",
+  "auto-sklearn 0.15.0 cv_results_['mean_test_score'] is positive RMSE, so argmax would pick the worst configuration.",
+  "auto-sklearn selects its dummy mean predictor when no configuration beats it; leaderboard(detailed=True) then raises KeyError 'data_preprocessors'. The selection is read from get_models_with_weights() and reported as dummy_mean.",
+  "AutoGluon rejects learner_kwargs=None."
+ ]
+}

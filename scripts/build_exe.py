@@ -358,6 +358,7 @@ def main(argv: list[str] | None = None) -> int:
         "LICENSE",
         "docs/USER_GUIDE.md",
         "docs/EXTERNAL_ENGINES.md",
+        "docs/ISOLATED_ENGINES.md",
         "docs/THIRD_PARTY_MODELS.md",
     ):
         src = ROOT / doc_rel

@@ -61,3 +61,12 @@ Per ratified decision `D5 = A` and standing assumption `S7`:
 Phase 8 verification/runtime audit parser: `pypdf==7.1.0` (BSD-3-Clause,
 https://github.com/py-pdf/pypdf), used to read actual exported PDF values and links.
 Report generation remains exclusively ReportLab Platypus.
+
+## Stage 7: vendored source and separately provisioned components
+
+- **Vendored, distributed in the runtime bundle:** `energybaseline/workbench/vendor/ghostnet.py`, GhostNet model definition, Copyright 2020 Huawei Technologies Co., Ltd., Apache-2.0, modified as stated in the file header and in `docs/THIRD_PARTY_MODELS.md`. Licence text: `docs/licenses/GhostNet-Apache-2.0.txt`.
+- **Not distributed; installed by the operator into separate runtimes** from the hash locks in `energybaseline/isolated/locks/`: `tpot==1.1.0` (LGPL-3.0), `h2o==3.46.0.12` (Apache-2.0), `jdk4py==17.0.9.2` (OpenJDK 17, GPL-2.0 with Classpath Exception), `autogluon.tabular==1.6.3` (Apache-2.0), `auto-sklearn==0.15.0` (BSD-3-Clause), `chronos-forecasting==2.3.2` (Apache-2.0), with the transitive closures listed in those locks.
+- **Not distributed; downloaded by the operator with hash verification:** Chronos-Bolt tiny weights (Apache-2.0), GhostNet ImageNet-1k weights (Apache-2.0) and the ImageNet class list from `pytorch/hub` (no licence declared upstream).
+- **Example photographs:** two CC0 images from scikit-image's data directory, re-encoded as JPEG.
+
+Details, hashes and provenance are in `docs/THIRD_PARTY_MODELS.md` and `docs/ISOLATED_ENGINES.md`.

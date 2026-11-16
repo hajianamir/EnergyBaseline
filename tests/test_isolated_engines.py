@@ -339,6 +339,33 @@ def test_death_of_the_application_stops_the_engine_tree(tmp_path):
         assert not work.exists()
 
 
+def test_parent_watch_does_not_stall_children_that_inherit_standard_input(tmp_path):
+    """A worker's own subprocesses (JVM, CPU probes) inherit its standard input by default."""
+    work = tmp_path / "work"
+    work.mkdir()
+    script = tmp_path / "spawn.py"
+    script.write_text(
+        "import os, subprocess, sys\n"
+        f"sys.path.insert(0, {str(isolated.WORKERS)!r})\n"
+        "import guard\n"
+        "guard.watch_parent(sys.argv[1])\n"
+        "code = subprocess.call([sys.executable, '-c', 'import sys; sys.exit(7)'], timeout=60)\n"
+        "open(os.path.join(sys.argv[1], 'code'), 'w').write(str(code))\n",
+        encoding="utf-8",
+    )
+    started = time.monotonic()
+    code = isolated._run(
+        [sys.executable, "-s", "-B", script, work],
+        cwd=work,
+        env=isolated._base_environment(work),
+        timeout=90,
+        log=work / "log.txt",
+        lifeline=True,
+    )
+    assert code == 0, (work / "log.txt").read_text(errors="replace")
+    assert (work / "code").read_text() == "7" and time.monotonic() - started < 60
+
+
 def test_child_environment_is_rebuilt_without_inherited_secrets(tmp_path, monkeypatch):
     for key in ("HTTPS_PROXY", "PYTHONPATH", "AWS_SECRET_ACCESS_KEY", "HF_TOKEN", "DATABASE_URL"):
         monkeypatch.setenv(key, "sentinel-value")
