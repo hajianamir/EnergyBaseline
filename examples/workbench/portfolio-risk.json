@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "operation": "portfolio-risk",
+  "parameters": {
+    "returns": [
+      "asset_a",
+      "asset_b"
+    ],
+    "weights": [
+      0.4,
+      0.6
+    ],
+    "confidence": 0.95
+  }
+}

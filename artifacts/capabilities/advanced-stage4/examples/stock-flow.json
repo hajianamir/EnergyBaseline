@@ -1,0 +1,37 @@
+{
+  "input_sha256": null,
+  "library_versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  },
+  "operation": "stock-flow-simulate",
+  "reference_sha256": null,
+  "result": {
+    "baseline_changed": false,
+    "calibrated_to_reality": false,
+    "final_stocks": [
+      3.678794412084759,
+      6.321205587915241
+    ],
+    "function_evaluations": 74,
+    "maximum_stocks": [
+      10.0,
+      6.321205587915241
+    ],
+    "maximum_total_stock_deviation": 1.7763568394002505e-15,
+    "method": "DOP853 integration of declared linear stock-flow rates",
+    "minimum_stocks": [
+      3.678794412084759,
+      0.0
+    ],
+    "steps": 20,
+    "time_unit": "Caller-declared consistent model time unit",
+    "total_stock_conserved_by_structure": true
+  },
+  "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+  "spec_sha256": "41bfc570c7c8308ee7ddc2c1d8624afd018d083645aa0c6d47ea1918a3738676",
+  "version": 1
+}

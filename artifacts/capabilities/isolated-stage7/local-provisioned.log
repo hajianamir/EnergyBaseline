@@ -1,0 +1,32 @@
+.................                                                        [100%]
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.16-final-0 _______________
+
+Name                                  Stmts   Miss  Cover
+---------------------------------------------------------
+energybaseline/isolated/__init__.py     295     96    67%
+---------------------------------------------------------
+TOTAL                                   295     96    67%
+============================= slowest 20 durations =============================
+62.57s call     provisioned_tests/test_execution.py::test_automl_engine_searches_refits_and_predicts_without_seeing_holdout_targets[autosklearn]
+44.52s call     provisioned_tests/test_execution.py::test_automl_engine_searches_refits_and_predicts_without_seeing_holdout_targets[tpot]
+41.01s call     provisioned_tests/test_execution.py::test_automl_engine_searches_refits_and_predicts_without_seeing_holdout_targets[h2o]
+24.78s call     provisioned_tests/test_execution.py::test_foundation_forecast_is_zero_shot_deterministic_and_blind_to_the_holdout
+16.53s call     provisioned_tests/test_execution.py::test_autosklearn_log_server_publishes_its_port_while_the_waiting_side_holds_the_lock
+14.84s call     provisioned_tests/test_execution.py::test_automl_engine_searches_refits_and_predicts_without_seeing_holdout_targets[autogluon]
+14.57s call     provisioned_tests/test_execution.py::test_autosklearn_reports_its_mean_predictor_when_no_configuration_beats_it
+14.24s call     provisioned_tests/test_execution.py::test_command_line_writes_the_same_privacy_preserving_contract
+10.37s call     provisioned_tests/test_execution.py::test_h2o_reports_the_model_it_could_not_train_and_runs_no_refit
+7.27s call     provisioned_tests/test_gui_worker.py::test_panel_runs_provisioned_engines_in_a_worker_and_clears_stale_evidence[chronos-bolt.json]
+5.18s call     provisioned_tests/test_execution.py::test_pretrained_classifier_recognises_public_domain_photographs
+4.54s call     provisioned_tests/test_gui_worker.py::test_panel_runs_provisioned_engines_in_a_worker_and_clears_stale_evidence[automl-autogluon.json]
+4.13s call     provisioned_tests/test_execution.py::test_budget_expiry_kills_the_engine_tree_and_removes_the_workspace
+3.89s call     provisioned_tests/test_gui_worker.py::test_panel_runs_provisioned_engines_in_a_worker_and_clears_stale_evidence[ghostnet.json]
+2.55s call     provisioned_tests/test_execution.py::test_killing_the_application_mid_run_leaves_no_engine_process
+1.14s call     provisioned_tests/test_execution.py::test_altered_or_extended_model_assets_are_refused
+0.23s call     provisioned_tests/test_execution.py::test_every_supported_runtime_is_installed_from_its_current_lock
+0.01s setup    provisioned_tests/test_gui_worker.py::test_panel_runs_provisioned_engines_in_a_worker_and_clears_stale_evidence[automl-autogluon.json]
+
+(2 durations < 0.005s hidden.  Use -vv to show these durations.)
+17 passed in 276.40s (0:04:36)
+EXIT=0

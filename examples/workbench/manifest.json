@@ -1,0 +1,107 @@
+[
+  {
+    "request": "portfolio-risk.json",
+    "dataset": "returns.csv"
+  },
+  {
+    "request": "group-fairness.json",
+    "dataset": "fairness.csv"
+  },
+  {
+    "request": "categorical-divergence.json",
+    "dataset": "categories.csv",
+    "reference": "category-reference.csv"
+  },
+  {
+    "request": "kaplan-meier.json",
+    "dataset": "survival.csv"
+  },
+  {
+    "request": "graph-profile.json",
+    "dataset": "graph.csv"
+  },
+  {
+    "request": "text-retrieval.json",
+    "dataset": "documents.csv"
+  },
+  {
+    "request": "entity-candidates.json",
+    "dataset": "entities.csv",
+    "reference": "entity-reference.csv"
+  },
+  {
+    "request": "rating-svd.json",
+    "dataset": "ratings.csv"
+  },
+  {
+    "request": "fcfs-queue.json",
+    "dataset": "queue.csv"
+  },
+  {
+    "request": "pareto-front.json",
+    "dataset": "objectives.csv"
+  },
+  {
+    "request": "linear-optimize.json"
+  },
+  {
+    "request": "tabular-transform.json",
+    "dataset": "regression.csv"
+  },
+  {
+    "request": "target-encoding.json",
+    "dataset": "regression.csv"
+  },
+  {
+    "request": "multi-target-consensus.json",
+    "dataset": "regression.csv"
+  },
+  {
+    "request": "regression-holdout.json",
+    "dataset": "regression.csv"
+  },
+  {
+    "request": "forecast-median.json",
+    "dataset": "forecast.csv"
+  },
+  {
+    "request": "forecast-last.json",
+    "dataset": "forecast.csv"
+  },
+  {
+    "request": "forecast-seasonal_naive.json",
+    "dataset": "forecast.csv"
+  },
+  {
+    "request": "forecast-random_walk_drift.json",
+    "dataset": "forecast.csv"
+  },
+  {
+    "request": "forecast-croston_sba.json",
+    "dataset": "forecast.csv"
+  },
+  {
+    "request": "forecast-var.json",
+    "dataset": "forecast.csv"
+  },
+  {
+    "request": "forecast-vecm.json",
+    "dataset": "forecast.csv"
+  },
+  {
+    "request": "classification-holdout.json",
+    "dataset": "prediction.csv"
+  },
+  {
+    "request": "novelty-holdout.json",
+    "dataset": "prediction.csv"
+  },
+  {
+    "request": "competing-risks.json",
+    "dataset": "survival.csv"
+  },
+  {
+    "request": "business-validation.json",
+    "dataset": "prediction.csv"
+  }
+]

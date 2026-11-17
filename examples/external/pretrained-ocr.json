@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "operation": "pretrained-ocr",
+  "parameters": {
+    "image_root": "examples/external",
+    "image_files": [
+      "printed.png"
+    ],
+    "confidence": 0.5
+  }
+}

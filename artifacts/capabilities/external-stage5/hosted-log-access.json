@@ -1,0 +1,7 @@
+{
+  "job_id": 133014017014,
+  "returncode": 1,
+  "raw_hosted_log_retrieved": false,
+  "signed_redirect_credentials_retained": false,
+  "limitation": "Current hosted raw log retrieval failed through the sandbox/integration. Actual completed API job/step receipts and raw local execution evidence are retained; no raw hosted-log archive is claimed."
+}

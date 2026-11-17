@@ -1,0 +1,324 @@
+[
+  {
+    "source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "workbench",
+      "examples/advanced/automl-search.json",
+      "--dataset",
+      "examples/advanced/series.csv",
+      "--out",
+      "artifacts/capabilities/advanced-stage4/examples/automl-search.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 10.079230385999836,
+    "output_sha256": "9840451c630384e978cb6dcf2c9602d668bbcb84ab9764a53d4c81eb0128e107"
+  },
+  {
+    "source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "workbench",
+      "examples/advanced/forecast-patchtst.json",
+      "--dataset",
+      "examples/advanced/series.csv",
+      "--out",
+      "artifacts/capabilities/advanced-stage4/examples/forecast-patchtst.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 11.094597854000313,
+    "output_sha256": "c9f07c8c4b5d1eaf948b7f0b5ce6958f666c332d4c1ed309e3e42a577a7a10ce"
+  },
+  {
+    "source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "workbench",
+      "examples/advanced/forecast-informer.json",
+      "--dataset",
+      "examples/advanced/series.csv",
+      "--out",
+      "artifacts/capabilities/advanced-stage4/examples/forecast-informer.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 11.577593666999746,
+    "output_sha256": "c24a7181727f08727eea0b2cfc93e1975651d5889ea619fba95afc45d3648cf0"
+  },
+  {
+    "source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "workbench",
+      "examples/advanced/forecast-tft.json",
+      "--dataset",
+      "examples/advanced/series.csv",
+      "--out",
+      "artifacts/capabilities/advanced-stage4/examples/forecast-tft.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 10.703032702999735,
+    "output_sha256": "69f03438bb8724fc9d148fc6ed519d7a02116a039c38416fb621e8b2f1cceeca"
+  },
+  {
+    "source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "workbench",
+      "examples/advanced/forecast-nhits.json",
+      "--dataset",
+      "examples/advanced/series.csv",
+      "--out",
+      "artifacts/capabilities/advanced-stage4/examples/forecast-nhits.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 10.699979351000366,
+    "output_sha256": "09281ae8cacad5d74ee5813a583c1394f12b6938166b8e8d9608644a79f9b9fd"
+  },
+  {
+    "source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "workbench",
+      "examples/advanced/forecast-tide.json",
+      "--dataset",
+      "examples/advanced/series.csv",
+      "--out",
+      "artifacts/capabilities/advanced-stage4/examples/forecast-tide.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 10.979430923999644,
+    "output_sha256": "43403235bd48316a0e861bd5ae59ec1e5823d7fad23b894b37ec354406cd83dd"
+  },
+  {
+    "source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "workbench",
+      "examples/advanced/forecast-deepar.json",
+      "--dataset",
+      "examples/advanced/series.csv",
+      "--out",
+      "artifacts/capabilities/advanced-stage4/examples/forecast-deepar.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 11.251011755000036,
+    "output_sha256": "50d7a09050a2c6da66dc00bb7b9d9b0dcaad36fe3bec7fc578686df646049175"
+  },
+  {
+    "source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "workbench",
+      "examples/advanced/neural-architecture-search.json",
+      "--dataset",
+      "examples/advanced/series.csv",
+      "--out",
+      "artifacts/capabilities/advanced-stage4/examples/neural-architecture-search.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 10.583598897000229,
+    "output_sha256": "888fda545ed1fd53206e30968f3aa0c77bbf710dc4dc8218bcd53fa7b4bc9142"
+  },
+  {
+    "source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "workbench",
+      "examples/advanced/digital-twin.json",
+      "--dataset",
+      "examples/advanced/series.csv",
+      "--out",
+      "artifacts/capabilities/advanced-stage4/examples/digital-twin.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 9.917996823999601,
+    "output_sha256": "859aef2d8ecb87123d1f836c33884fdfb6b7d498399eaeb21bac9230a933ad16"
+  },
+  {
+    "source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "workbench",
+      "examples/advanced/route-optimize.json",
+      "--out",
+      "artifacts/capabilities/advanced-stage4/examples/route-optimize.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 9.636321257999953,
+    "output_sha256": "a0847511e74f24b0d8536b46ff1bb26f9367c11ccef52f2d3d5e1e008ab14ff0"
+  },
+  {
+    "source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "workbench",
+      "examples/advanced/schedule-optimize.json",
+      "--out",
+      "artifacts/capabilities/advanced-stage4/examples/schedule-optimize.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 10.265658727999835,
+    "output_sha256": "d65fb45a1ae5f79a04d927892efa91a3a9cb89449b55379f58ef853b066e8f53"
+  },
+  {
+    "source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "workbench",
+      "examples/advanced/evolutionary-optimize.json",
+      "--out",
+      "artifacts/capabilities/advanced-stage4/examples/evolutionary-optimize.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 9.617718881000656,
+    "output_sha256": "ca56a70496d8a71bd8a4b6dcdd94f44aea58c02ac89467e2c89cf41c455cc975"
+  },
+  {
+    "source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "workbench",
+      "examples/advanced/stock-flow.json",
+      "--out",
+      "artifacts/capabilities/advanced-stage4/examples/stock-flow.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 10.388379401000748,
+    "output_sha256": "b24e4c2a5a5ca716e74250522a59c458c4cf2dd94eec98a70b179ea229dafe00"
+  },
+  {
+    "source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "workbench",
+      "examples/advanced/agent-sir.json",
+      "--out",
+      "artifacts/capabilities/advanced-stage4/examples/agent-sir.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 8.877154780000637,
+    "output_sha256": "a7d4109c3a7e3daedef358fa2846cddae15d53a1273ff8ef4957e00f710ebfb9"
+  },
+  {
+    "source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "workbench",
+      "examples/advanced/image-classification.json",
+      "--out",
+      "artifacts/capabilities/advanced-stage4/examples/image-classification.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 12.594538403000115,
+    "output_sha256": "617138fcbf62597ef7c19bee9661c2014e1c0c58548980a74ba646072328b6be"
+  },
+  {
+    "source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "workbench",
+      "examples/advanced/image-segmentation.json",
+      "--out",
+      "artifacts/capabilities/advanced-stage4/examples/image-segmentation.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 11.236681765999492,
+    "output_sha256": "9d1bd6ad9b91a9339ae078174c1ad8cae8e29fdf8927e5df5d7d15e9591a15f1"
+  },
+  {
+    "source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "workbench",
+      "examples/advanced/image-detection.json",
+      "--out",
+      "artifacts/capabilities/advanced-stage4/examples/image-detection.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 10.309428522999951,
+    "output_sha256": "06608bcb33f261f250d471330833c3126ea680be5a06cd9e5cb73dd476755bac"
+  },
+  {
+    "source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "workbench",
+      "examples/advanced/template-ocr.json",
+      "--out",
+      "artifacts/capabilities/advanced-stage4/examples/template-ocr.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 7.661599887999728,
+    "output_sha256": "ab099848d5b7540e44662100ecf9e6cef935f9ef8755ddb984f26af667635701"
+  },
+  {
+    "source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "workbench",
+      "examples/advanced/image-classification-files.json",
+      "--out",
+      "artifacts/capabilities/advanced-stage4/examples/image-classification-files.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 10.729914453000674,
+    "output_sha256": "ce634360a5d1f0d0ea5071ec0bb463fb03716886bc1fccef74d89aeaf6660d1d"
+  }
+]

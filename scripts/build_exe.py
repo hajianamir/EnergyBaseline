@@ -223,6 +223,7 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="Build EnergyBaseline PyInstaller onedir bundle, SBOM, and installer.")
     ap.add_argument("--profile", choices=["full", "lite"], default="full")
     ap.add_argument("--onefile", action="store_true", help="Build single-file executable instead of default onedir")
+    ap.add_argument("--console", action="store_true", help="Use a console bootloader for native CLI diagnostics")
     ap.add_argument("--installer", action="store_true", help="Compile per-user Windows installer (Inno Setup / NSIS)")
     ap.add_argument("--sbom-only", action="store_true", help="Only emit CycloneDX SBOM and exit")
     ap.add_argument("--dist-dir", default=str(ROOT / "dist"), help="Output directory (default: ./dist)")
@@ -248,6 +249,9 @@ def main(argv: list[str] | None = None) -> int:
         ("alembic.ini", "."),
         ("docs", "docs"),
         ("samples", "samples"),
+        # Hash locks and stand-alone worker scripts that separately provisioned engine runtimes execute.
+        ("energybaseline/isolated/locks", "energybaseline/isolated/locks"),
+        ("energybaseline/isolated/workers", "energybaseline/isolated/workers"),
     ]
     ico = ROOT / "assets" / "energybaseline.ico"
     layout_flag = "--onefile" if args.onefile else "--onedir"
@@ -258,7 +262,7 @@ def main(argv: list[str] | None = None) -> int:
         "--noconfirm",
         "--clean",
         layout_flag,
-        "--windowed",
+        "--console" if args.console else "--windowed",
         "--name",
         "EnergyBaseline",
         "--distpath",
@@ -300,6 +304,7 @@ def main(argv: list[str] | None = None) -> int:
         "cryptography",
         "PySide6.QtNetwork",
         "joblib",
+        "packaging.markers",
     ]
     if sys.platform == "win32":
         hidden_imports += ["win32api", "win32con", "win32job", "pywintypes"]
@@ -308,8 +313,32 @@ def main(argv: list[str] | None = None) -> int:
 
     for pkg in ("sklearn", "statsmodels"):
         cmd += ["--collect-submodules", pkg]
-    for data_pkg in ("matplotlib", "sklearn"):
+    for data_pkg in ("matplotlib", "sklearn", "rapidocr_onnxruntime", "xgboost", "lightgbm", "onnxruntime"):
         cmd += ["--collect-data", data_pkg]
+    # FLAML imports the native estimator module even when the selected learners are
+    # forests. ctypes-loaded XGBoost DLLs are not discovered by static analysis;
+    # the real frozen CLI oracle caught their absence. Preserve package-relative
+    # library locations and VERSION resources rather than disabling the backend.
+    for binary_pkg in ("xgboost", "lightgbm", "onnxruntime"):
+        cmd += ["--collect-binaries", binary_pkg]
+    # Real external backends use runtime metadata and Pandera dispatch registrations.
+    # OCR ONNX/config data must be shipped; no model download is permitted in the app.
+    for pkg in ("flaml.automl", "pandera.backends.pandas"):
+        cmd += ["--collect-submodules", pkg]
+    for distribution in (
+        "flaml",
+        "pandera",
+        "rapidocr-onnxruntime",
+        "onnxruntime",
+        "numpy",
+        "pandas",
+        "scipy",
+        "scikit-learn",
+        "statsmodels",
+        "xgboost",
+        "lightgbm",
+    ):
+        cmd += ["--copy-metadata", distribution]
 
     if args.profile == "lite":
         cmd += ["--exclude-module", "torch", "--exclude-module", "torchvision", "--exclude-module", "torchaudio"]
@@ -324,10 +353,20 @@ def main(argv: list[str] | None = None) -> int:
     bundle_dir.mkdir(parents=True, exist_ok=True)
 
     # Copy documentation and icon assets next to executable for user inspection and shortcut icons.
-    for doc_rel in ("README.md", "LICENSE", "docs/USER_GUIDE.md"):
+    for doc_rel in (
+        "README.md",
+        "LICENSE",
+        "docs/USER_GUIDE.md",
+        "docs/EXTERNAL_ENGINES.md",
+        "docs/ISOLATED_ENGINES.md",
+        "docs/THIRD_PARTY_MODELS.md",
+    ):
         src = ROOT / doc_rel
         if src.exists():
             shutil.copy2(src, bundle_dir / src.name)
+    license_dir = ROOT / "docs" / "licenses"
+    if license_dir.is_dir():
+        shutil.copytree(license_dir, bundle_dir / "third_party_licenses", dirs_exist_ok=True)
     if ico.exists():
         (bundle_dir / "assets").mkdir(exist_ok=True)
         shutil.copy2(ico, bundle_dir / "assets" / ico.name)

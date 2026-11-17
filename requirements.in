@@ -48,3 +48,7 @@ umap-learn==0.6.0
 xgboost==3.4.1
 econml==0.17.0
 pypdf==7.1.0
+flaml==2.8.0
+rapidocr-onnxruntime==1.4.4
+onnxruntime==1.32.0
+pandera==0.36.0

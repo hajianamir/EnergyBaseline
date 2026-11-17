@@ -1,0 +1,621 @@
+{
+  "total_count": 2,
+  "jobs": [
+    {
+      "id": 133178464791,
+      "run_id": 43831742426,
+      "workflow_name": "CI",
+      "head_branch": "arena/bcc82031-energybaseline",
+      "run_url": "https://api.github.com/repos/hajianamir/EnergyBaseline/actions/runs/43831742426",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVsPsvs8AAAAfAg4aFw",
+      "head_sha": "76159f41e93fd7cec299b1a6f65cbc75a3dba4ee",
+      "url": "https://api.github.com/repos/hajianamir/EnergyBaseline/actions/jobs/133178464791",
+      "html_url": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43831742426/job/133178464791",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-16T08:30:18Z",
+      "started_at": "2026-11-16T08:30:21Z",
+      "completed_at": "2026-11-16T09:45:17Z",
+      "name": "Phase 8 Gate G8 (windows-latest)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-16T08:30:22Z",
+          "completed_at": "2026-11-16T08:30:23Z"
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-16T08:30:23Z",
+          "completed_at": "2026-11-16T08:30:29Z"
+        },
+        {
+          "name": "Install Linux headless Qt runtime libraries",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 3,
+          "started_at": "2026-11-16T08:30:29Z",
+          "completed_at": "2026-11-16T08:30:29Z"
+        },
+        {
+          "name": "Set up Python 3.12 (latest supported patch for each runner)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-16T08:30:29Z",
+          "completed_at": "2026-11-16T08:30:40Z"
+        },
+        {
+          "name": "Install hashed lockfile dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-16T08:30:40Z",
+          "completed_at": "2026-11-16T08:33:34Z"
+        },
+        {
+          "name": "Verify active Python and installed dependency contracts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-16T08:33:34Z",
+          "completed_at": "2026-11-16T08:33:35Z"
+        },
+        {
+          "name": "Actual Windows DPAPI process-restart and tamper evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-16T08:33:35Z",
+          "completed_at": "2026-11-16T08:33:36Z"
+        },
+        {
+          "name": "Actual Linux Secret Service and outage evidence",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 8,
+          "started_at": "2026-11-16T08:33:36Z",
+          "completed_at": "2026-11-16T08:33:36Z"
+        },
+        {
+          "name": "Actual Linux SQLite ODBC adapter evidence",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 9,
+          "started_at": "2026-11-16T08:33:36Z",
+          "completed_at": "2026-11-16T08:33:36Z"
+        },
+        {
+          "name": "Ruff lint and format check",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-16T08:33:36Z",
+          "completed_at": "2026-11-16T08:33:37Z"
+        },
+        {
+          "name": "Pyflakes check",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-16T08:33:37Z",
+          "completed_at": "2026-11-16T08:33:39Z"
+        },
+        {
+          "name": "Gate G1 architecture, integrity, and traceability checks",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-16T08:33:39Z",
+          "completed_at": "2026-11-16T08:33:45Z"
+        },
+        {
+          "name": "Gate G1 Alembic reversible migration cycle",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-16T08:33:45Z",
+          "completed_at": "2026-11-16T08:33:50Z"
+        },
+        {
+          "name": "Gate G1 unit tests (gates + DB config)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-11-16T08:33:50Z",
+          "completed_at": "2026-11-16T08:41:43Z"
+        },
+        {
+          "name": "Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-11-16T08:41:43Z",
+          "completed_at": "2026-11-16T08:44:58Z"
+        },
+        {
+          "name": "Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-11-16T08:44:58Z",
+          "completed_at": "2026-11-16T08:45:21Z"
+        },
+        {
+          "name": "Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-11-16T08:45:21Z",
+          "completed_at": "2026-11-16T08:45:45Z"
+        },
+        {
+          "name": "Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-11-16T08:45:45Z",
+          "completed_at": "2026-11-16T08:54:51Z"
+        },
+        {
+          "name": "Gate G8 shared reports, renderer agreement and audit verification",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-11-16T08:54:51Z",
+          "completed_at": "2026-11-16T08:58:19Z"
+        },
+        {
+          "name": "Actual external engines and offline pretrained OCR (no mocked backends)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20,
+          "started_at": "2026-11-16T08:58:19Z",
+          "completed_at": "2026-11-16T08:58:34Z"
+        },
+        {
+          "name": "Actual NLP, survival and graph-learning semantic oracles",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21,
+          "started_at": "2026-11-16T08:58:34Z",
+          "completed_at": "2026-11-16T08:58:59Z"
+        },
+        {
+          "name": "Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 22,
+          "started_at": "2026-11-16T08:58:59Z",
+          "completed_at": "2026-11-16T09:31:35Z"
+        },
+        {
+          "name": "Emit pytest failure annotations on error",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 23,
+          "started_at": "2026-11-16T09:31:35Z",
+          "completed_at": "2026-11-16T09:31:35Z"
+        },
+        {
+          "name": "GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24,
+          "started_at": "2026-11-16T09:31:35Z",
+          "completed_at": "2026-11-16T09:34:16Z"
+        },
+        {
+          "name": "Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 25,
+          "started_at": "2026-11-16T09:34:16Z",
+          "completed_at": "2026-11-16T09:42:46Z"
+        },
+        {
+          "name": "Self-signed Authenticode signing smoke test (D1=B, Windows)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 26,
+          "started_at": "2026-11-16T09:42:46Z",
+          "completed_at": "2026-11-16T09:42:49Z"
+        },
+        {
+          "name": "Actual frozen Windows external engines and pretrained OCR",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27,
+          "started_at": "2026-11-16T09:42:49Z",
+          "completed_at": "2026-11-16T09:42:59Z"
+        },
+        {
+          "name": "Actual frozen Windows NLP, survival and graph-learning oracles",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 28,
+          "started_at": "2026-11-16T09:42:59Z",
+          "completed_at": "2026-11-16T09:45:11Z"
+        },
+        {
+          "name": "Vulnerability audit (pip-audit)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 29,
+          "started_at": "2026-11-16T09:45:11Z",
+          "completed_at": "2026-11-16T09:45:11Z"
+        },
+        {
+          "name": "Generate CycloneDX SBOM",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 30,
+          "started_at": "2026-11-16T09:45:11Z",
+          "completed_at": "2026-11-16T09:45:11Z"
+        },
+        {
+          "name": "Publish native evidence receipts in the check log",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 31,
+          "started_at": "2026-11-16T09:45:11Z",
+          "completed_at": "2026-11-16T09:45:12Z"
+        },
+        {
+          "name": "Upload SBOM, coverage, and Phase 1 evidence artifacts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 32,
+          "started_at": "2026-11-16T09:45:12Z",
+          "completed_at": "2026-11-16T09:45:14Z"
+        },
+        {
+          "name": "Post Set up Python 3.12 (latest supported patch for each runner)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 63,
+          "started_at": "2026-11-16T09:45:14Z",
+          "completed_at": "2026-11-16T09:45:14Z"
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 64,
+          "started_at": "2026-11-16T09:45:14Z",
+          "completed_at": "2026-11-16T09:45:17Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 65,
+          "started_at": "2026-11-16T09:45:17Z",
+          "completed_at": "2026-11-16T09:45:17Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/hajianamir/EnergyBaseline/check-runs/133178464791",
+      "labels": [
+        "windows-latest"
+      ],
+      "runner_id": 1000000673,
+      "runner_name": "GitHub Actions 1000000673",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 133178465332,
+      "run_id": 43831742426,
+      "workflow_name": "CI",
+      "head_branch": "arena/bcc82031-energybaseline",
+      "run_url": "https://api.github.com/repos/hajianamir/EnergyBaseline/actions/runs/43831742426",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVsPsvs8AAAAfAg4cNA",
+      "head_sha": "76159f41e93fd7cec299b1a6f65cbc75a3dba4ee",
+      "url": "https://api.github.com/repos/hajianamir/EnergyBaseline/actions/jobs/133178465332",
+      "html_url": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43831742426/job/133178465332",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-16T08:30:18Z",
+      "started_at": "2026-11-16T08:30:22Z",
+      "completed_at": "2026-11-16T09:19:26Z",
+      "name": "Phase 8 Gate G8 (ubuntu-latest)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-16T08:30:23Z",
+          "completed_at": "2026-11-16T08:30:26Z"
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-16T08:30:26Z",
+          "completed_at": "2026-11-16T08:30:28Z"
+        },
+        {
+          "name": "Install Linux headless Qt runtime libraries",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-16T08:30:28Z",
+          "completed_at": "2026-11-16T08:30:48Z"
+        },
+        {
+          "name": "Set up Python 3.12 (latest supported patch for each runner)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-16T08:30:48Z",
+          "completed_at": "2026-11-16T08:31:26Z"
+        },
+        {
+          "name": "Install hashed lockfile dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-16T08:31:26Z",
+          "completed_at": "2026-11-16T08:33:13Z"
+        },
+        {
+          "name": "Verify active Python and installed dependency contracts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-16T08:33:13Z",
+          "completed_at": "2026-11-16T08:33:14Z"
+        },
+        {
+          "name": "Actual Windows DPAPI process-restart and tamper evidence",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 7,
+          "started_at": "2026-11-16T08:33:14Z",
+          "completed_at": "2026-11-16T08:33:14Z"
+        },
+        {
+          "name": "Actual Linux Secret Service and outage evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-16T08:33:14Z",
+          "completed_at": "2026-11-16T08:33:15Z"
+        },
+        {
+          "name": "Actual Linux SQLite ODBC adapter evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-16T08:33:15Z",
+          "completed_at": "2026-11-16T08:33:16Z"
+        },
+        {
+          "name": "Ruff lint and format check",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-16T08:33:16Z",
+          "completed_at": "2026-11-16T08:33:17Z"
+        },
+        {
+          "name": "Pyflakes check",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-16T08:33:17Z",
+          "completed_at": "2026-11-16T08:33:18Z"
+        },
+        {
+          "name": "Gate G1 architecture, integrity, and traceability checks",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-16T08:33:18Z",
+          "completed_at": "2026-11-16T08:33:22Z"
+        },
+        {
+          "name": "Gate G1 Alembic reversible migration cycle",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-16T08:33:22Z",
+          "completed_at": "2026-11-16T08:33:24Z"
+        },
+        {
+          "name": "Gate G1 unit tests (gates + DB config)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-11-16T08:33:24Z",
+          "completed_at": "2026-11-16T08:38:40Z"
+        },
+        {
+          "name": "Gate G4 independent sub-gates (G4a, G4b, G4c) and R reference staleness gate",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-11-16T08:38:40Z",
+          "completed_at": "2026-11-16T08:40:42Z"
+        },
+        {
+          "name": "Gate G5 F1..F10 models, clustering isolation, and 1M-row benchmark",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-11-16T08:40:42Z",
+          "completed_at": "2026-11-16T08:40:58Z"
+        },
+        {
+          "name": "Gate G6 validation, portfolio, 13-criteria scoring, Top-5, and baseline lock",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-11-16T08:40:58Z",
+          "completed_at": "2026-11-16T08:41:14Z"
+        },
+        {
+          "name": "Gate G7 UQ, drift, reporting, causal M&V and monitoring integrity",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-11-16T08:41:14Z",
+          "completed_at": "2026-11-16T08:47:11Z"
+        },
+        {
+          "name": "Gate G8 shared reports, renderer agreement and audit verification",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-11-16T08:47:11Z",
+          "completed_at": "2026-11-16T08:50:11Z"
+        },
+        {
+          "name": "Actual external engines and offline pretrained OCR (no mocked backends)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20,
+          "started_at": "2026-11-16T08:50:11Z",
+          "completed_at": "2026-11-16T08:50:22Z"
+        },
+        {
+          "name": "Actual NLP, survival and graph-learning semantic oracles",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21,
+          "started_at": "2026-11-16T08:50:22Z",
+          "completed_at": "2026-11-16T08:50:41Z"
+        },
+        {
+          "name": "Full test suite and coverage gate (S5 >= 60%, Core + TestsCatalog + Mining + Models + Validation + Scoring + Lock >= 80%)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 22,
+          "started_at": "2026-11-16T08:50:41Z",
+          "completed_at": "2026-11-16T09:16:43Z"
+        },
+        {
+          "name": "Emit pytest failure annotations on error",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 23,
+          "started_at": "2026-11-16T09:16:43Z",
+          "completed_at": "2026-11-16T09:16:43Z"
+        },
+        {
+          "name": "GUI smoke, Phase 1..5 shell, schema, VSG/TCP & 1M table tests (GUI >= 56%)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24,
+          "started_at": "2026-11-16T09:16:43Z",
+          "completed_at": "2026-11-16T09:18:42Z"
+        },
+        {
+          "name": "Phase 1 Windows packaging & runtime evidence (CI, non-normative per D2)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 25,
+          "started_at": "2026-11-16T09:18:42Z",
+          "completed_at": "2026-11-16T09:18:42Z"
+        },
+        {
+          "name": "Self-signed Authenticode signing smoke test (D1=B, Windows)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 26,
+          "started_at": "2026-11-16T09:18:42Z",
+          "completed_at": "2026-11-16T09:18:42Z"
+        },
+        {
+          "name": "Actual frozen Windows external engines and pretrained OCR",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 27,
+          "started_at": "2026-11-16T09:18:42Z",
+          "completed_at": "2026-11-16T09:18:42Z"
+        },
+        {
+          "name": "Actual frozen Windows NLP, survival and graph-learning oracles",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 28,
+          "started_at": "2026-11-16T09:18:42Z",
+          "completed_at": "2026-11-16T09:18:42Z"
+        },
+        {
+          "name": "Vulnerability audit (pip-audit)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 29,
+          "started_at": "2026-11-16T09:18:42Z",
+          "completed_at": "2026-11-16T09:19:15Z"
+        },
+        {
+          "name": "Generate CycloneDX SBOM",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 30,
+          "started_at": "2026-11-16T09:19:15Z",
+          "completed_at": "2026-11-16T09:19:19Z"
+        },
+        {
+          "name": "Publish native evidence receipts in the check log",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 31,
+          "started_at": "2026-11-16T09:19:19Z",
+          "completed_at": "2026-11-16T09:19:19Z"
+        },
+        {
+          "name": "Upload SBOM, coverage, and Phase 1 evidence artifacts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 32,
+          "started_at": "2026-11-16T09:19:19Z",
+          "completed_at": "2026-11-16T09:19:23Z"
+        },
+        {
+          "name": "Post Set up Python 3.12 (latest supported patch for each runner)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 63,
+          "started_at": "2026-11-16T09:19:23Z",
+          "completed_at": "2026-11-16T09:19:23Z"
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 64,
+          "started_at": "2026-11-16T09:19:23Z",
+          "completed_at": "2026-11-16T09:19:23Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 65,
+          "started_at": "2026-11-16T09:19:23Z",
+          "completed_at": "2026-11-16T09:19:23Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/hajianamir/EnergyBaseline/check-runs/133178465332",
+      "labels": [
+        "ubuntu-26.04"
+      ],
+      "runner_id": 1000000674,
+      "runner_name": "GitHub Actions 1000000674",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}

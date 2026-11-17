@@ -1,0 +1,25 @@
+{
+ "total_count": 1,
+ "artifacts": [
+  {
+   "id": 14277509933,
+   "node_id": "MDg6QXJ0aWZhY3QxNDI3NzUwOTkzMw==",
+   "name": "external-backend-console-diagnostics",
+   "size_in_bytes": 37161,
+   "url": "https://api.github.com/repos/hajianamir/EnergyBaseline/actions/artifacts/14277509933",
+   "archive_download_url": "https://api.github.com/repos/hajianamir/EnergyBaseline/actions/artifacts/14277509933/zip",
+   "expired": false,
+   "digest": "sha256:f03180731285bc254a5d29b83387d9a88840077262b47bf85cc88ab595077de8",
+   "created_at": "2026-11-16T22:35:14Z",
+   "updated_at": "2026-11-16T22:35:14Z",
+   "expires_at": "2027-02-14T22:23:58Z",
+   "workflow_run": {
+    "id": 43969676419,
+    "repository_id": 1455680702,
+    "head_repository_id": 1455680702,
+    "head_branch": "arena/bcc82031-energybaseline",
+    "head_sha": "05845c6ac2d2af28ae5ba3b3174392fc543232ff"
+   }
+  }
+ ]
+}

@@ -1,0 +1,483 @@
+{
+  "schema_version": 1,
+  "platform": "linux",
+  "runtime_kind": "python_cli",
+  "executable_sha256": null,
+  "engines": {
+    "tpot": {
+      "distribution": "tpot",
+      "engine": "tpot",
+      "license": "LGPL-3.0",
+      "lock_sha256": "33d7dc5e74fe70dfd11bd33c9310ccd1166da9d86027bebcaca3faccd70fb9ba",
+      "note": "Genetic-programming pipeline search on a Dask local cluster.",
+      "platforms": [
+        "linux",
+        "win32"
+      ],
+      "python": "3.12",
+      "state": "installed",
+      "version": "1.1.0"
+    },
+    "h2o": {
+      "distribution": "h2o",
+      "engine": "h2o",
+      "license": "Apache-2.0",
+      "lock_sha256": "ccc7d08ab65d6c2b4837236c44fb77a710a21374c9bc3d9c7cbdc8cbbd2de135",
+      "note": "H2O AutoML in a loopback-only authenticated JVM from the locked jdk4py Java 17 runtime.",
+      "platforms": [
+        "linux",
+        "win32"
+      ],
+      "python": "3.12",
+      "state": "installed",
+      "version": "3.46.0.12"
+    },
+    "autogluon": {
+      "distribution": "autogluon.tabular",
+      "engine": "autogluon",
+      "license": "Apache-2.0",
+      "lock_sha256": "ecaa4c54720a774dad473b545c8d63a901ccf54c3935f1812a8f1c589c67d00e",
+      "note": "AutoGluon Tabular with gradient-boosting and forest models.",
+      "platforms": [
+        "linux",
+        "win32"
+      ],
+      "python": "3.12",
+      "state": "installed",
+      "version": "1.6.3"
+    },
+    "autosklearn": {
+      "distribution": "auto-sklearn",
+      "engine": "autosklearn",
+      "license": "BSD-3-Clause",
+      "lock_sha256": "114acb87542a7d67047b9068c6b18707f270218cdc9623df332a1e605952b026",
+      "note": "Final upstream release: POSIX only, Python 3.9, scikit-learn 0.24. No Windows support exists upstream.",
+      "platforms": [
+        "linux"
+      ],
+      "python": "3.9",
+      "state": "installed",
+      "version": "0.15.0"
+    },
+    "chronos": {
+      "distribution": "chronos-forecasting",
+      "engine": "chronos",
+      "license": "Apache-2.0",
+      "lock_sha256": "275d25dee0de63a36426fe1f62cba5970ecf3c7fe565b6e8b3746b9b741eafa3",
+      "note": "Chronos-Bolt zero-shot forecasting from separately provisioned pretrained weights.",
+      "platforms": [
+        "linux",
+        "win32"
+      ],
+      "python": "3.12",
+      "state": "installed",
+      "version": "2.3.2"
+    }
+  },
+  "assets": {
+    "chronos-bolt-tiny": {
+      "asset": "chronos-bolt-tiny",
+      "files": [
+        {
+          "bytes": 1120,
+          "name": "config.json",
+          "sha256": "278f0086733031635fb1c861cb01c1bad6477420c7fcb19381a2993e335785e0",
+          "source": "https://huggingface.co/amazon/chronos-bolt-tiny/resolve/a0e552de83495b5c28c14c71c374f3e33280b340/config.json"
+        },
+        {
+          "bytes": 34622352,
+          "name": "model.safetensors",
+          "sha256": "75068728d376d2bec670379eeef4bfb4d24c0cfe24d957451f8d19b447030a32",
+          "source": "https://huggingface.co/amazon/chronos-bolt-tiny/resolve/a0e552de83495b5c28c14c71c374f3e33280b340/model.safetensors"
+        }
+      ],
+      "license": "Apache-2.0",
+      "origin": "amazon/chronos-bolt-tiny at revision a0e552de83495b5c28c14c71c374f3e33280b340: zero-shot forecasting weights, about 9 million parameters.",
+      "state": "installed"
+    },
+    "ghostnet-imagenet": {
+      "asset": "ghostnet-imagenet",
+      "files": [
+        {
+          "bytes": 20923722,
+          "name": "state_dict_73.98.pth",
+          "sha256": "965143b0cfbb704283890f95f0037be632d8fa095047e3a2c9e63ed0a9a1df14",
+          "source": "https://raw.githubusercontent.com/huawei-noah/Efficient-AI-Backbones/f90e129b645c3b1684fe07cd361cd557d0ad71f7/ghostnet_pytorch/models/state_dict_73.98.pth"
+        },
+        {
+          "bytes": 10472,
+          "name": "imagenet_classes.txt",
+          "sha256": "1f386e0d1cb6e28b9c2dac651c3dea6801e98ad1b41a14ce6bb1a093d72069f5",
+          "source": "https://raw.githubusercontent.com/pytorch/hub/c3beaae7d32fca2a23fec30aa7938ef5c9b6e5d5/imagenet_classes.txt"
+        }
+      ],
+      "license": "Apache-2.0 for the weights (trained on ImageNet-1k; observe the ImageNet terms of access). The class-name list comes from pytorch/hub, which publishes no licence file.",
+      "origin": "Huawei Noah's Ark Lab GhostNet 1.0x, published ImageNet-1k top-1 accuracy 73.98%.",
+      "state": "installed"
+    }
+  },
+  "input_data_scope": "Repository synthetic series and two public-domain photographs only.",
+  "mocked": false,
+  "jobs": [
+    {
+      "request": "automl-tpot.json",
+      "engine": "tpot",
+      "asset": null,
+      "outcome": "executed twice with identical results",
+      "exit": 0,
+      "last_elapsed_seconds": 14.018117055999028,
+      "output": {
+        "input_sha256": "d41412ff82a516addaf13f7d5fb9bf9e46d08f66d3ef84e93e8bb48c99db505c",
+        "library_versions": {
+          "numpy": "2.5.4",
+          "pandas": "3.1.1",
+          "scikit-learn": "1.9.1",
+          "scipy": "1.18.1",
+          "statsmodels": "0.15.0"
+        },
+        "operation": "external-automl",
+        "reference_sha256": null,
+        "result": {
+          "baseline_changed": false,
+          "candidates_evaluated": 16,
+          "candidates_failed": 5,
+          "engine": "tpot",
+          "engine_license": "LGPL-3.0",
+          "engine_reported_validation_note": "Negated scorer value of the selected pipeline on the inner validation rows.",
+          "engine_reported_validation_rmse": 0.8566087999079743,
+          "engine_version": "1.1.0",
+          "final_fit_rows": 238,
+          "fit_mean_reference_test_rmse": 2.7643413228410734,
+          "fit_scope": "The engine selects on one chronological inner split. Its selection is refit on fitting plus validation rows; purged rows and outer holdout targets never enter the engine process.",
+          "holdout_targets_sent_to_engine": false,
+          "lock_sha256": "33d7dc5e74fe70dfd11bd33c9310ccd1166da9d86027bebcaca3faccd70fb9ba",
+          "model_persisted": false,
+          "models_requested": 4,
+          "prediction_sha256": "aa284a23e3e11f3e9cc69c001508c5236e31c08e3eeaac78a88c66ae756573f3",
+          "purge_gap": 2,
+          "runtime": "isolated virtual environment and process",
+          "runtime_python": "3.12.16",
+          "search_fit_rows": 190,
+          "search_method": "TPOT genetic programming, linear pipeline search space",
+          "selected_model": "ExtraTreesRegressor",
+          "test_mae": 0.7809042556249999,
+          "test_rmse": 1.2647380555703365,
+          "test_rows": 48,
+          "train_rows": 240,
+          "validation_rows": 48
+        },
+        "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+        "spec_sha256": "91bd3ac5f3e3aa2b68cc079229601a8dd67b21bad5c5e3410db88a20668b699a",
+        "version": 1
+      }
+    },
+    {
+      "request": "automl-h2o.json",
+      "engine": "h2o",
+      "asset": null,
+      "outcome": "executed twice with identical results",
+      "exit": 0,
+      "last_elapsed_seconds": 13.003179276998708,
+      "output": {
+        "input_sha256": "d41412ff82a516addaf13f7d5fb9bf9e46d08f66d3ef84e93e8bb48c99db505c",
+        "library_versions": {
+          "numpy": "2.5.4",
+          "pandas": "3.1.1",
+          "scikit-learn": "1.9.1",
+          "scipy": "1.18.1",
+          "statsmodels": "0.15.0"
+        },
+        "operation": "external-automl",
+        "reference_sha256": null,
+        "result": {
+          "baseline_changed": false,
+          "candidates_evaluated": 5,
+          "candidates_failed": 1,
+          "engine": "h2o",
+          "engine_license": "Apache-2.0",
+          "engine_reported_validation_note": "Leader RMSE on the validation frame, which H2O also uses for early stopping, so it is optimistic.",
+          "engine_reported_validation_rmse": 0.9004714199644547,
+          "engine_version": "3.46.0.12",
+          "final_fit_rows": 190,
+          "fit_mean_reference_test_rmse": 2.7643413228410734,
+          "fit_scope": "The engine selects on one chronological inner split. The engine offers no refit, so the selected model stays trained on fitting rows; purged rows and outer holdout targets never enter the engine process.",
+          "holdout_targets_sent_to_engine": false,
+          "lock_sha256": "ccc7d08ab65d6c2b4837236c44fb77a710a21374c9bc3d9c7cbdc8cbbd2de135",
+          "model_persisted": false,
+          "models_requested": 4,
+          "prediction_sha256": "82754e8efccc2b9899c686bbd323dc1c6089174ab958e8b02e863729f5e3da8d",
+          "purge_gap": 2,
+          "runtime": "isolated virtual environment and process",
+          "runtime_python": "3.12.16",
+          "search_fit_rows": 190,
+          "search_method": "H2O AutoML leaderboard on the chronological validation frame",
+          "selected_model": "xgboost",
+          "test_mae": 0.5875225244487424,
+          "test_rmse": 0.9447873540643388,
+          "test_rows": 48,
+          "train_rows": 240,
+          "validation_rows": 48
+        },
+        "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+        "spec_sha256": "be0a61b9a4055666ff1f1dbf551b112ffde548263f7c2cd58b61881cd2a68e0c",
+        "version": 1
+      }
+    },
+    {
+      "request": "automl-autogluon.json",
+      "engine": "autogluon",
+      "asset": null,
+      "outcome": "executed twice with identical results",
+      "exit": 0,
+      "last_elapsed_seconds": 6.795017153002846,
+      "output": {
+        "input_sha256": "d41412ff82a516addaf13f7d5fb9bf9e46d08f66d3ef84e93e8bb48c99db505c",
+        "library_versions": {
+          "numpy": "2.5.4",
+          "pandas": "3.1.1",
+          "scikit-learn": "1.9.1",
+          "scipy": "1.18.1",
+          "statsmodels": "0.15.0"
+        },
+        "operation": "external-automl",
+        "reference_sha256": null,
+        "result": {
+          "baseline_changed": false,
+          "candidates_evaluated": 5,
+          "candidates_failed": 0,
+          "engine": "autogluon",
+          "engine_license": "Apache-2.0",
+          "engine_reported_validation_note": "A weighted ensemble fits its weights on the validation rows, so its score is optimistic.",
+          "engine_reported_validation_rmse": 0.5132425472271471,
+          "engine_version": "1.6.3",
+          "final_fit_rows": 238,
+          "fit_mean_reference_test_rmse": 2.7643413228410734,
+          "fit_scope": "The engine selects on one chronological inner split. Its selection is refit on fitting plus validation rows; purged rows and outer holdout targets never enter the engine process.",
+          "holdout_targets_sent_to_engine": false,
+          "lock_sha256": "ecaa4c54720a774dad473b545c8d63a901ccf54c3935f1812a8f1c589c67d00e",
+          "model_persisted": false,
+          "models_requested": 4,
+          "prediction_sha256": "aad8ecb880f8bdb3185aff75ebebd7a6f78573b0ca82b0299a14689246a33543",
+          "purge_gap": 2,
+          "runtime": "isolated virtual environment and process",
+          "runtime_python": "3.12.16",
+          "search_fit_rows": 190,
+          "search_method": "AutoGluon Tabular model portfolio with a validation-weighted ensemble",
+          "selected_model": "WeightedEnsemble_L2",
+          "test_mae": 0.42160892166858915,
+          "test_rmse": 0.6635158048640515,
+          "test_rows": 48,
+          "train_rows": 240,
+          "validation_rows": 48
+        },
+        "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+        "spec_sha256": "4bc105d3b5a6e83f3ee5c9a2a7bc8455d002d56471a1612709f2f186c675210e",
+        "version": 1
+      }
+    },
+    {
+      "request": "automl-autosklearn.json",
+      "engine": "autosklearn",
+      "asset": null,
+      "outcome": "executed twice with identical results",
+      "exit": 0,
+      "last_elapsed_seconds": 19.136036780000723,
+      "output": {
+        "input_sha256": "d41412ff82a516addaf13f7d5fb9bf9e46d08f66d3ef84e93e8bb48c99db505c",
+        "library_versions": {
+          "numpy": "2.5.4",
+          "pandas": "3.1.1",
+          "scikit-learn": "1.9.1",
+          "scipy": "1.18.1",
+          "statsmodels": "0.15.0"
+        },
+        "operation": "external-automl",
+        "reference_sha256": null,
+        "result": {
+          "baseline_changed": false,
+          "candidates_evaluated": 4,
+          "candidates_failed": 0,
+          "engine": "autosklearn",
+          "engine_license": "BSD-3-Clause",
+          "engine_reported_validation_note": "Recomputed from the selected model on the inner validation rows; equals the engine's holdout cost.",
+          "engine_reported_validation_rmse": 0.5633226263603957,
+          "engine_version": "0.15.0",
+          "final_fit_rows": 238,
+          "fit_mean_reference_test_rmse": 2.7643413228410734,
+          "fit_scope": "The engine selects on one chronological inner split. Its selection is refit on fitting plus validation rows; purged rows and outer holdout targets never enter the engine process.",
+          "holdout_targets_sent_to_engine": false,
+          "lock_sha256": "114acb87542a7d67047b9068c6b18707f270218cdc9623df332a1e605952b026",
+          "model_persisted": false,
+          "models_requested": 4,
+          "prediction_sha256": "805a0e0d52357232aa8ac66db66c7918ac7006a917b2ff8f0f1ce5b5d451eed5",
+          "purge_gap": 2,
+          "runtime": "isolated virtual environment and process",
+          "runtime_python": "3.9.25",
+          "search_fit_rows": 190,
+          "search_method": "auto-sklearn SMAC Bayesian optimisation without meta-learning warm start",
+          "selected_model": "random_forest",
+          "test_mae": 0.4878888112420241,
+          "test_rmse": 0.7101116434776192,
+          "test_rows": 48,
+          "train_rows": 240,
+          "validation_rows": 48
+        },
+        "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+        "spec_sha256": "0b715c8f7b051b43b6ff32b11aa1f44c935a76ea485d3b919de259660bdf29fe",
+        "version": 1
+      }
+    },
+    {
+      "request": "chronos-bolt.json",
+      "engine": "chronos",
+      "asset": "chronos-bolt-tiny",
+      "outcome": "executed twice with identical results",
+      "exit": 0,
+      "last_elapsed_seconds": 9.583068947002175,
+      "output": {
+        "input_sha256": "d41412ff82a516addaf13f7d5fb9bf9e46d08f66d3ef84e93e8bb48c99db505c",
+        "library_versions": {
+          "numpy": "2.5.4",
+          "pandas": "3.1.1",
+          "scikit-learn": "1.9.1",
+          "scipy": "1.18.1",
+          "statsmodels": "0.15.0"
+        },
+        "operation": "foundation-forecast",
+        "reference_sha256": null,
+        "result": {
+          "baseline_changed": false,
+          "context_rows": 240,
+          "engine": "chronos",
+          "engine_version": "2.3.2",
+          "forecast_sha256": "5f250161238efbfd4ec88b6e02d147cb5dd0b7098b6bf2fba3fc298d5533a1de",
+          "horizon": 48,
+          "last_value_mae": 5.895332604166666,
+          "lock_sha256": "275d25dee0de63a36426fe1f62cba5970ecf3c7fe565b6e8b3746b9b741eafa3",
+          "mae_ratio_to_last_value": 0.12150729018480455,
+          "mean_pinball_loss": 0.22629556641133633,
+          "median_mae": 0.7163258894704185,
+          "median_rmse": 0.9000280002979874,
+          "model": "amazon/chronos-bolt-tiny",
+          "model_license": "Apache-2.0",
+          "model_parameters": 8652672,
+          "model_persisted": false,
+          "model_sha256": {
+            "config.json": "278f0086733031635fb1c861cb01c1bad6477420c7fcb19381a2993e335785e0",
+            "model.safetensors": "75068728d376d2bec670379eeef4bfb4d24c0cfe24d957451f8d19b447030a32"
+          },
+          "observations_inside_10_90": 39,
+          "pretrained_weights_used": true,
+          "quantile_crossings": 0,
+          "quantile_levels": [
+            0.1,
+            0.5,
+            0.9
+          ],
+          "runtime": "isolated virtual environment and process",
+          "runtime_downloads": false,
+          "runtime_python": "3.12.16",
+          "scope": "Zero-shot univariate forecast from fixed pretrained weights; holdout values never enter the model process. Quantiles are uncalibrated model outputs with no coverage guarantee.",
+          "train_rows": 240,
+          "training_performed": false
+        },
+        "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+        "spec_sha256": "3733b9af640c196d48668d885635e6ee7ca305e19e85d6217a3f91b06c0bfabc",
+        "version": 1
+      }
+    },
+    {
+      "request": "ghostnet.json",
+      "engine": null,
+      "asset": "ghostnet-imagenet",
+      "outcome": "executed twice with identical results",
+      "exit": 0,
+      "last_elapsed_seconds": 4.050099366999348,
+      "output": {
+        "input_sha256": null,
+        "library_versions": {
+          "numpy": "2.5.4",
+          "pandas": "3.1.1",
+          "scikit-learn": "1.9.1",
+          "scipy": "1.18.1",
+          "statsmodels": "0.15.0"
+        },
+        "operation": "pretrained-image-classification",
+        "reference_sha256": null,
+        "result": {
+          "baseline_changed": false,
+          "engine": "torch",
+          "engine_version": "2.15.0",
+          "images": [
+            {
+              "decoded_bgr_sha256": "3ee7a038e6d001e52f7f2ae6f7c8679a8f94438c5f06dc55cbc6947a33147627",
+              "height": 300,
+              "source_sha256": "4d0169c5aee1e7aa69698d7465766522f455c85a521f484bb29876453e8b3b1a",
+              "top": [
+                {
+                  "class_index": 285,
+                  "label": "Egyptian cat",
+                  "probability": 0.49143069982528687
+                },
+                {
+                  "class_index": 281,
+                  "label": "tabby",
+                  "probability": 0.23153404891490936
+                },
+                {
+                  "class_index": 282,
+                  "label": "tiger cat",
+                  "probability": 0.207343190908432
+                }
+              ],
+              "width": 451
+            },
+            {
+              "decoded_bgr_sha256": "11fd0746e129ba376065adbb693781c48343e6dc9adcfa65ee1457716d38bf95",
+              "height": 400,
+              "source_sha256": "52daa39473f2bb8817f03f5ccafa7bb874cf2b200ef74dc1cdf513fd1c06d594",
+              "top": [
+                {
+                  "class_index": 967,
+                  "label": "espresso",
+                  "probability": 0.9146237373352051
+                },
+                {
+                  "class_index": 968,
+                  "label": "cup",
+                  "probability": 0.023842746391892433
+                },
+                {
+                  "class_index": 925,
+                  "label": "consomme",
+                  "probability": 0.016698556020855904
+                }
+              ],
+              "width": 600
+            }
+          ],
+          "model": "GhostNet 1.0x (Huawei Noah's Ark Lab), ImageNet-1k",
+          "model_definition_sha256": "31568e1265af1fa92f40b4fd4a415afdab81b3c80f6186c3ef393b9394808cec",
+          "model_definition_upstream_sha256": "cfd6fe7e4705406b68111680dc5ab6904512f9f4a314c6f29052d94b0a74be5b",
+          "model_parameters": 5182508,
+          "model_sha256": {
+            "imagenet_classes.txt": "1f386e0d1cb6e28b9c2dac651c3dea6801e98ad1b41a14ce6bb1a093d72069f5",
+            "state_dict_73.98.pth": "965143b0cfbb704283890f95f0037be632d8fa095047e3a2c9e63ed0a9a1df14"
+          },
+          "pixels_exported": false,
+          "preprocessing": "EXIF transpose, RGB, shorter side 256 bilinear, centre crop 224, ImageNet mean/std",
+          "pretrained_weights_used": true,
+          "published_top1_accuracy": 0.7398,
+          "runtime_downloads": false,
+          "scope": "Closed-vocabulary ImageNet-1k classification. Probabilities are softmax scores, not calibrated accuracy; objects outside the 1000 classes still receive one of those labels.",
+          "top_k": 3,
+          "training_performed": false
+        },
+        "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+        "spec_sha256": "bea5a0cead8655200db253142c7a1695795be1abcd25d9af5b56a1641ae9ad8b",
+        "version": 1
+      }
+    }
+  ],
+  "passed": true
+}

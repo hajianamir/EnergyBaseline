@@ -1,0 +1,103 @@
+[
+  {
+    "distribution": "xgboost",
+    "version": "3.4.1",
+    "real_native_libraries": [
+      {
+        "filename": "libxgboost.so",
+        "destination": "xgboost/lib",
+        "bytes": 86355369,
+        "sha256": "462aa6331ecb178df8d10f16612c865ae70f571c248138e50c8a9eb4bc007dd4"
+      }
+    ],
+    "real_data_resources": [
+      {
+        "filename": "py.typed",
+        "destination": "xgboost"
+      },
+      {
+        "filename": "VERSION",
+        "destination": "xgboost"
+      }
+    ],
+    "scope": "Actual local Linux collection oracle; not a claim of successful frozen Windows execution"
+  },
+  {
+    "distribution": "lightgbm",
+    "version": "4.7.0",
+    "real_native_libraries": [
+      {
+        "filename": "lib_lightgbm.so",
+        "destination": "lightgbm/lib",
+        "bytes": 9247120,
+        "sha256": "573d57e8a2c6290c2271b99b87afa7a802e796eafc9e8d66aefa0913cbc1616a"
+      }
+    ],
+    "real_data_resources": [
+      {
+        "filename": "py.typed",
+        "destination": "lightgbm"
+      },
+      {
+        "filename": "VERSION.txt",
+        "destination": "lightgbm"
+      }
+    ],
+    "scope": "Actual local Linux collection oracle; not a claim of successful frozen Windows execution"
+  },
+  {
+    "distribution": "onnxruntime",
+    "version": "1.32.0",
+    "real_native_libraries": [
+      {
+        "filename": "libonnxruntime_providers_shared.so",
+        "destination": "onnxruntime/capi",
+        "bytes": 14632,
+        "sha256": "8ef51f6bf2c621fc129f625b22241fa6f9a5870bc08eaf2fdd279169ec40d09a"
+      }
+    ],
+    "real_data_resources": [
+      {
+        "filename": "Privacy.md",
+        "destination": "onnxruntime"
+      },
+      {
+        "filename": "mul_1.onnx",
+        "destination": "onnxruntime/datasets"
+      },
+      {
+        "filename": "sigmoid.onnx",
+        "destination": "onnxruntime/datasets"
+      },
+      {
+        "filename": "logreg_iris.onnx",
+        "destination": "onnxruntime/datasets"
+      },
+      {
+        "filename": "ThirdPartyNotices.txt",
+        "destination": "onnxruntime"
+      },
+      {
+        "filename": "coreml_supported_neuralnetwork_ops.md",
+        "destination": "onnxruntime/tools/mobile_helpers"
+      },
+      {
+        "filename": "libonnxruntime.so.1.32.0",
+        "destination": "onnxruntime/capi"
+      },
+      {
+        "filename": "LICENSE",
+        "destination": "onnxruntime"
+      },
+      {
+        "filename": "coreml_supported_mlprogram_ops.md",
+        "destination": "onnxruntime/tools/mobile_helpers"
+      },
+      {
+        "filename": "nnapi_supported_ops.md",
+        "destination": "onnxruntime/tools/mobile_helpers"
+      }
+    ],
+    "scope": "Actual local Linux collection oracle; not a claim of successful frozen Windows execution"
+  }
+]

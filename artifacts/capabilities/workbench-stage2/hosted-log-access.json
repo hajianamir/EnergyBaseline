@@ -1,0 +1,5 @@
+{
+  "status": "unavailable",
+  "raw_hosted_logs_retrieved": false,
+  "reason": "GitHub job-log downloads redirect to an artifact storage host outside this sandbox network allowlist. The redirect download failed. No signed redirect URL is stored. Actual run/job API receipts remain available; raw local logs and JUnit are preserved."
+}

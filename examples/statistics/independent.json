@@ -1,0 +1,182 @@
+{
+  "version": 1,
+  "time": "time",
+  "targets": [
+    "x",
+    "y",
+    "z",
+    "y2",
+    "a",
+    "b",
+    "c"
+  ],
+  "metadata": [
+    "group",
+    "factor",
+    "subject",
+    "condition"
+  ],
+  "sampling": "independent",
+  "assumption_justification": "Synthetic independent normal observations and independent subjects; explicit demonstration only, not a real-data assumption certificate.",
+  "correction": "tcp",
+  "tests": [
+    {
+      "id": "H1ks-fixed-normal",
+      "method": "ks_fixed_normal",
+      "columns": [
+        "x"
+      ],
+      "parameters": {
+        "location": 0,
+        "scale": 1
+      }
+    },
+    {
+      "id": "H1lilliefors",
+      "method": "lilliefors",
+      "columns": [
+        "x"
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "H1one-sample-t",
+      "method": "one_sample_t",
+      "columns": [
+        "y"
+      ],
+      "parameters": {
+        "null": 0
+      }
+    },
+    {
+      "id": "H2pooled-t",
+      "method": "pooled_t",
+      "columns": [
+        "y",
+        "group"
+      ],
+      "parameters": {
+        "levels": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "id": "H2welch-t",
+      "method": "welch_t",
+      "columns": [
+        "y",
+        "group"
+      ],
+      "parameters": {
+        "levels": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "id": "H2pearson",
+      "method": "pearson",
+      "columns": [
+        "x",
+        "y"
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "H2spearman",
+      "method": "spearman",
+      "columns": [
+        "x",
+        "y"
+      ],
+      "parameters": {
+        "bootstrap_replicates": 199,
+        "seed": 12
+      }
+    },
+    {
+      "id": "H2kendall",
+      "method": "kendall",
+      "columns": [
+        "x",
+        "y"
+      ],
+      "parameters": {
+        "bootstrap_replicates": 199,
+        "seed": 12
+      }
+    },
+    {
+      "id": "H2chi-square",
+      "method": "chi_square",
+      "columns": [
+        "a",
+        "b"
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "H2fisher-exact",
+      "method": "fisher_exact",
+      "columns": [
+        "a",
+        "b"
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "H3factorial-anova",
+      "method": "factorial_anova",
+      "columns": [
+        "y",
+        "group",
+        "factor"
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "H3ancova",
+      "method": "ancova",
+      "columns": [
+        "y",
+        "group",
+        "x"
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "H3manova",
+      "method": "manova",
+      "columns": [
+        "y",
+        "y2",
+        "group"
+      ],
+      "parameters": {
+        "dependent_count": 2
+      }
+    },
+    {
+      "id": "H2tukey-hsd",
+      "method": "tukey_hsd",
+      "columns": [
+        "y",
+        "group"
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "H2dunn",
+      "method": "dunn",
+      "columns": [
+        "y",
+        "group"
+      ],
+      "parameters": {}
+    }
+  ]
+}

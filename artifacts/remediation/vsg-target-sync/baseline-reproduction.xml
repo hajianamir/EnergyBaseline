@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="6.252" timestamp="2026-11-15T12:15:19.193186+00:00" hostname="e2b.local"><testcase classname="tests.gui.test_vsg_target_sync" name="test_checklist_immediately_refreshes_vsg_and_clears_stale_authorization" time="0.835"><failure message="AssertionError: assert ['output_a'] == ['output_a', 'output_b']&#10;  &#10;  Right contains one more item: 'output_b'&#10;  Use -v to get more diff">setup_page = &lt;energybaseline.gui.pages_setup.SetupPage(0x55a42ddbe460) at 0x7f4c054c5880&gt;
+
+    def test_checklist_immediately_refreshes_vsg_and_clears_stale_authorization(setup_page):
+        page = setup_page
+        old_vsg = page.state.vsg
+        page.accept_and_lock_tcp()
+        assert old_vsg.is_accepted() and page.state.tcp.is_locked
+        old_runner = page.state.compliance_runner
+        calls = old_runner.engine_call_count
+        check_target(page, "output_b", True)
+&gt;       assert_current_targets(page, ["output_a", "output_b"])
+
+tests/gui/test_vsg_target_sync.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+page = &lt;energybaseline.gui.pages_setup.SetupPage(0x55a42ddbe460) at 0x7f4c054c5880&gt;
+expected = ['output_a', 'output_b']
+
+    def assert_current_targets(page, expected):
+&gt;       assert page.state.targets == expected
+E       AssertionError: assert ['output_a'] == ['output_a', 'output_b']
+E         
+E         Right contains one more item: 'output_b'
+E         Use -v to get more diff
+
+tests/gui/test_vsg_target_sync.py:55: AssertionError</failure></testcase></testsuite></testsuites>

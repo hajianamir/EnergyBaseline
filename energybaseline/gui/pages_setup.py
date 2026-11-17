@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections import deque
 from collections.abc import Sequence
 import hashlib
+import json
 import logging
 from pathlib import Path
 from typing import Any
@@ -42,6 +43,7 @@ from PySide6.QtWidgets import (
 
 from ..core import ingest, store
 from ..core.domain import resolve_domain
+from ..core.quality_audit import audit_quality, dimension_table
 from ..core.auto import AutoLog
 from ..core.cache import CachedComplianceRunner
 from ..core.integrity import IntegrityViolationError
@@ -300,6 +302,9 @@ class SetupPage(QWidget):
         vbar = QHBoxLayout()
         vbar.addWidget(QLabel("Target:"))
         self.vsg_target_combo = QComboBox()
+        self.vsg_target_combo.setToolTip(
+            "View a selected TARGET. Change TARGET checkboxes or Column Metadata roles to change this list."
+        )
         self.vsg_target_combo.currentTextChanged.connect(self._render_vsg_tab)
         vbar.addWidget(self.vsg_target_combo)
         self.vsg_preset_combo = self._combo(sorted(VALID_PRESETS))
@@ -422,6 +427,38 @@ class SetupPage(QWidget):
         tl.addWidget(self.tcp_results_tbl, 1)
         tcp_scroll.setWidget(tcp_tab)
         self.left_tabs.addTab(tcp_scroll, "Test Control Panel (TCP)")
+
+        quality_tab = QWidget()
+        ql = QVBoxLayout(quality_tab)
+        qb = QHBoxLayout()
+        self._quality_policy = {}
+        self._quality_references = {}
+        for text, callback in (
+            ("Load Quality Policy JSON…", lambda: self.load_quality_policy()),
+            ("Add Reference Dataset…", lambda: self.load_quality_reference()),
+            ("Run Read-Only Audit", self.refresh_quality_audit),
+        ):
+            button = QPushButton(text)
+            button.clicked.connect(callback)
+            qb.addWidget(button)
+        ql.addLayout(qb)
+        self.quality_as_of = QLineEdit()
+        self.quality_as_of.setPlaceholderText("Explicit as-of, e.g. 2026-01-01T00:00:00Z (required for freshness)")
+        ql.addWidget(self.quality_as_of)
+        self.quality_status = QLabel("Load a dataset. Unconfigured dimensions are not assessed, never scored as perfect.")
+        self.quality_status.setWordWrap(True)
+        ql.addWidget(self.quality_status)
+        self.quality_table = make_table(False, accessible_name="Six-dimensional read-only data quality audit")
+        ql.addWidget(self.quality_table)
+        self.left_tabs.addTab(quality_tab, "Data Quality (Six Dimensions)")
+
+        from .workbench import WorkbenchPanel
+        self.workbench_panel = WorkbenchPanel(self.state)
+        self.left_tabs.addTab(self.workbench_panel, "Exploratory Workbench")
+
+        from .statistics import StatisticalPlanPanel
+        self.statistics_panel = StatisticalPlanPanel(self.state)
+        self.left_tabs.addTab(self.statistics_panel, "Preregistered Statistics")
 
         split.addWidget(self.left_tabs)
 
@@ -626,21 +663,120 @@ class SetupPage(QWidget):
             + dd.round(3).to_html(index=False, border=0)
         )
         self.report.setHtml(html)
+        self._quality_policy = {}
+        self._quality_references = {}
+        self.quality_as_of.clear()
+        self.refresh_quality_audit()
         self.info.setText(f"{name}: {len(df)} rows, {df.shape[1]} columns (raw copy retained under data/uploads)")
         self.rebuild_compliance_models()
         s.data_changed.emit()
         self.main.log_msg(f"Dataset loaded: {name}")
 
+    def refresh_quality_audit(self, *_):
+        """Descriptive audit only: does not accept gates, preprocess data or refit models."""
+        self.state.quality_audit = None
+        fill_table(self.quality_table, pd.DataFrame())
+        if self.state.df is None:
+            self.quality_status.setText("Load a dataset before auditing quality.")
+            return False
+        try:
+            result = audit_quality(
+                self.state.df, self._quality_policy, references=self._quality_references,
+                as_of=self.quality_as_of.text().strip() or None,
+            )
+        except (ValueError, TypeError) as exc:
+            self.quality_status.setText(f"Quality audit blocked: {exc}")
+            return False
+        self.state.quality_audit = result
+        fill_table(self.quality_table, dimension_table(result))
+        overall = result["overall_score"]
+        score = "not available" if overall is None else f"{overall:.1%}"
+        self.quality_status.setText(
+            f"{result['fully_assessed_dimensions']}/6 dimensions fully assessed; overall score: {score}. "
+            "Unconfigured dimensions remain unassessed. Raw data and baseline are unchanged."
+        )
+        return True
+
+    def load_quality_policy(self, picked_path=None, *, allowed_roots=None):
+        raw = picked_path
+        if raw is None:
+            raw, _ = QFileDialog.getOpenFileName(self, "Load Quality Policy", "", "JSON (*.json)")
+        if not raw:
+            return False
+        try:
+            path = resolve_picked_path(raw, allowed_roots=allowed_roots, must_exist=True)
+            self._quality_policy = json.loads(path.read_text(encoding="utf-8"))
+            return self.refresh_quality_audit()
+        except (PathGuardError, ValueError, OSError):
+            self.state.quality_audit = None
+            fill_table(self.quality_table, pd.DataFrame())
+            self.quality_status.setText("Quality policy could not be loaded. Choose a valid, permitted JSON file.")
+            return False
+
+    def load_quality_reference(self, picked_path=None, *, name=None, allowed_roots=None):
+        raw = picked_path
+        if raw is None:
+            raw, _ = QFileDialog.getOpenFileName(self, "Load Explicit Quality Reference", "", "Data (*.csv *.parquet *.xlsx)")
+        if not raw:
+            return False
+        if name is None:
+            name, accepted = QInputDialog.getText(self, "Reference Name", "Name used by the quality policy:")
+            if not accepted:
+                return False
+        if not name or not name.strip():
+            return False
+        try:
+            path = resolve_picked_path(raw, allowed_roots=allowed_roots, must_exist=True)
+            self._quality_references[name.strip()] = ingest.load_file(path)
+            return self.refresh_quality_audit()
+        except (PathGuardError, ValueError, OSError):
+            self.state.quality_audit = None
+            fill_table(self.quality_table, pd.DataFrame())
+            self.quality_status.setText("Quality reference could not be loaded. Choose a permitted dataset file.")
+            return False
+
     # ------------------------------------------------------------ VSG & TCP compliance UI
+    def _clear_compliance_models(self) -> None:
+        """Discard stale authorization, not historical runs or locked baseline artifacts."""
+        s = self.state
+        s.vsg = s.tcp = s.compliance_runner = None
+        s.vsg_id = s.tcp_id = None
+        self.vsg_target_combo.blockSignals(True)
+        self.vsg_target_combo.clear()
+        self.vsg_target_combo.blockSignals(False)
+        for table in (self.vsg_tbl, self.integrity_tbl, self.tcp_results_tbl):
+            fill_table(table, pd.DataFrame())
+        for checkbox in self.tc_checks.values():
+            checkbox.setChecked(False)
+        self.impact_preview.refresh_from_models(None)
+        self.vsg_status.setText("VSG pending: select TARGET columns and provide a valid schema.")
+        self.tcp_status.setText("TCP pending: rebuild and accept the current VSG, then lock TCP again.")
+        self._refresh_limitations_banner()
+
+    def _refresh_compliance_after_schema_edit(self) -> None:
+        """Synchronize actual edits immediately; old gate acceptance never authorizes a new target."""
+        if self._syncing_schema or self.state.df is None:
+            return
+        previous_target = self.vsg_target_combo.currentText()
+        self._clear_compliance_models()
+        try:
+            self.collect()
+            self.rebuild_compliance_models()
+            if self.vsg_target_combo.findText(previous_target) >= 0:
+                self.vsg_target_combo.setCurrentText(previous_target)
+        except (SchemaValidationError, VSGValidationError, TCPValidationError) as exc:
+            # A transient invalid edit must fail closed, not retain an accepted old gate.
+            self._clear_compliance_models()
+            self.vsg_status.setText(f"VSG pending: {exc}")
+
     def rebuild_compliance_models(self) -> None:
-        """Initialize or refresh ``state.vsg``, ``state.tcp``, and ``ImpactPreviewPanel`` from active dataset."""
+        """Build pending VSG/TCP for the current selections; never transfer prior acceptance."""
         s = self.state
         if s.df is None or not s.targets:
-            s.vsg = None
-            s.tcp = None
-            s.compliance_runner = None
-            self.impact_preview.refresh_from_models(None)
+            self._clear_compliance_models()
             return
+        previous_target = self.vsg_target_combo.currentText()
+        self._clear_compliance_models()
 
         vsg = VariableSelectionGate(
             self.apply_units(s.df),
@@ -658,9 +794,12 @@ class SetupPage(QWidget):
         self.vsg_target_combo.blockSignals(True)
         self.vsg_target_combo.clear()
         self.vsg_target_combo.addItems(list(vsg.targets))
+        if previous_target in vsg.targets:
+            self.vsg_target_combo.setCurrentText(previous_target)
         self.vsg_target_combo.blockSignals(False)
 
         self._sync_tcp_widgets_from_model()
+        self.tcp_status.setText("TCP pending: accept the current VSG, then accept and lock TCP.")
         self._render_vsg_tab()
         self._refresh_limitations_banner()
         if self.main is not None and hasattr(self.main, "auto_panel"):
@@ -958,6 +1097,7 @@ class SetupPage(QWidget):
                 self._sync_schema_to_legacy_controls_unlocked()
         finally:
             self._syncing_schema = False
+        self._refresh_compliance_after_schema_edit()
 
     def _on_schema_item_changed(self, item: QTableWidgetItem) -> None:
         if self._syncing_schema:
@@ -984,6 +1124,7 @@ class SetupPage(QWidget):
                     cb_qt.setCurrentText(QuantityType.QUALITY.value)
         finally:
             self._syncing_schema = False
+        self._refresh_compliance_after_schema_edit()
 
     def _on_legacy_units_edited(self) -> None:
         if self._syncing_schema or self.schema_tbl.rowCount() == 0:
@@ -997,6 +1138,7 @@ class SetupPage(QWidget):
                     self.schema_tbl.item(r, 4).setText(units[nm])
         finally:
             self._syncing_schema = False
+        self._refresh_compliance_after_schema_edit()
 
     def _sync_schema_to_legacy_controls_unlocked(self) -> None:
         time_col: str | None = None
@@ -1090,6 +1232,7 @@ class SetupPage(QWidget):
             self._sync_schema_to_legacy_controls_unlocked()
         finally:
             self._syncing_schema = False
+        self._refresh_compliance_after_schema_edit()
 
     def build_schema_from_ui(self) -> DatasetSchema:
         """Construct and validate a ``DatasetSchema`` from ``self.schema_tbl`` (DAT-7)."""
@@ -1229,6 +1372,7 @@ class SetupPage(QWidget):
             sid = store.save_dataset_schema(schema, dataset_id=self.state.dataset_id)
             self.state.schema_id = sid
             self.schema_status.setText(f"Schema #{sid} (SHA {schema.compute_sha256()[:10]}…)")
+            self._refresh_compliance_after_schema_edit()
             return True
         except (PathGuardError, SchemaIntegrityError, SchemaValidationError, OSError) as exc:
             self.schema_status.setText(f"Load failed: {exc}")
@@ -1275,6 +1419,7 @@ class SetupPage(QWidget):
                         cb_qt.setCurrentText(QuantityType.QUALITY.value)
         finally:
             self._syncing_schema = False
+        self._refresh_compliance_after_schema_edit()
 
     def checked_targets(self) -> list[str]:
         return [

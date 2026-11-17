@@ -1,0 +1,24 @@
+{
+  "input_sha256": "d6884b1b5c583141af7b13a4292a272f66680a8b1e520565ecc3039f1a3cde69",
+  "library_versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  },
+  "operation": "target-encoding",
+  "reference_sha256": null,
+  "result": {
+    "heldout_encoding_sha256": "39311992d57fbc4065647d1c57b536f0d00c731029f1fa7446273d0b26ab5ec8",
+    "heldout_labels_used_for_encoding": false,
+    "own_or_future_training_labels_used": false,
+    "prior_contract": "Caller-supplied external constant, never full-training target mean.",
+    "test_rows": 40,
+    "train_rows": 120,
+    "training_encoding_sha256": "f53a5a1f00eda217b09ba5889d77c7764b28f5503ba928dd9b92d2ac59348047"
+  },
+  "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+  "spec_sha256": "22fc89de6b4b2ca4e1dc4e4e0b6c3c9badbf8a69f856a82ca85a452738ee1f7f",
+  "version": 1
+}

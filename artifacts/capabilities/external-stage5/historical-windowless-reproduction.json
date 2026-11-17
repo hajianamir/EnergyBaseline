@@ -1,0 +1,10 @@
+{
+  "source_reproduced": "7429afdf1435bc41fa29308107f9110fbc0d2bd6",
+  "actual_engine_used": "FLAML",
+  "standard_output_and_error": null,
+  "output_file_produced_before_failure": true,
+  "failure": "AttributeError from unconditional sys.stdout.write after output file write",
+  "hosted_failure": "Windows frozen external-engine step timeout at 120 seconds; an unhandled exception in a windowed PyInstaller process can leave its error dialog open",
+  "acceptance": false,
+  "fix": "Honor explicit output file without stdout; fail closed without destination; avoid secondary stderr=None failure; actual subprocess regression cases for all three engines added"
+}

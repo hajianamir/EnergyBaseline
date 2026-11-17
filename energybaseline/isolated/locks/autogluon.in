@@ -1,0 +1,2 @@
+# AutoGluon Tabular with its gradient-boosting backends. Neural/tabular-foundation extras are not installed.
+autogluon.tabular[lightgbm,xgboost,catboost]==1.6.3

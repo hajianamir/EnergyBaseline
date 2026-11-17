@@ -1,0 +1,29 @@
+.........................................                                [100%]
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.16-final-0 _______________
+
+Name                                      Stmts   Miss  Cover
+-------------------------------------------------------------
+energybaseline/gui/advanced.py              144     82    43%
+energybaseline/gui/app.py                   137    137     0%
+energybaseline/gui/artifact_approval.py      20      4    80%
+energybaseline/gui/commands.py               34      4    88%
+energybaseline/gui/main_window.py           224     32    86%
+energybaseline/gui/page_monitor.py          488    197    60%
+energybaseline/gui/page_status.py           173     12    93%
+energybaseline/gui/pages_results.py         485     74    85%
+energybaseline/gui/pages_setup.py          1264    259    80%
+energybaseline/gui/report_preview.py         82      4    95%
+energybaseline/gui/single_instance.py        81     23    72%
+energybaseline/gui/sql_dialog.py            150    133    11%
+energybaseline/gui/state.py                  47      1    98%
+energybaseline/gui/statistics.py             66      3    95%
+energybaseline/gui/table_model.py           257     30    88%
+energybaseline/gui/theme.py                  42     35    17%
+energybaseline/gui/widgets.py               190     82    57%
+energybaseline/gui/workbench.py             152     14    91%
+-------------------------------------------------------------
+TOTAL                                      4036   1126    72%
+Coverage XML written to file artifacts/capabilities/advanced-stage4/gui-coverage.xml
+Required test coverage of 56% reached. Total coverage: 72.10%
+41 passed in 223.18s (0:03:43)

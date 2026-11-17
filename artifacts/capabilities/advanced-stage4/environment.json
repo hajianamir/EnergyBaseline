@@ -1,0 +1,19 @@
+{
+  "python": "3.12.16 (main, Nov 15 2026, 18:28:21) [GCC 12.2.0]",
+  "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+  "packages": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1",
+    "torch": "2.15.0",
+    "optuna": "5.0.0",
+    "pillow": "13.0.0",
+    "PySide6-Essentials": "6.12.0",
+    "pytest": "9.2.0",
+    "ruff": "0.17.5"
+  },
+  "native_environment": "Actual offscreen Qt and unixODBC with both genuinely built native prefixes in final regression environment",
+  "dependencies": "Unchanged requirements.lock installed with --require-hashes; no added dependency",
+  "scope": "Local synthetic test execution, not physical device/production certification"
+}

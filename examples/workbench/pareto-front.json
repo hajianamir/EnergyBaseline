@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "operation": "pareto-front",
+  "parameters": {
+    "objectives": [
+      "cost",
+      "quality"
+    ],
+    "directions": [
+      "min",
+      "max"
+    ]
+  }
+}

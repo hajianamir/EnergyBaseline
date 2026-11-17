@@ -1,0 +1,17 @@
+{
+  "scope": "Diagnostic reproduction of a local test-environment configuration failure, not a passing run",
+  "returncode": 1,
+  "failures": [
+    "tests/gates/test_stepwise_review_regressions.py::test_tls_requires_certificate_and_hostname_verification[SQL Server]",
+    "tests/gates/test_stepwise_review_regressions.py::test_generated_odbc_credentials_cannot_add_connection_attributes",
+    "tests/gates/test_stepwise_review_regressions.py::test_odbc_fallback_braces_sensitive_attributes",
+    "tests/gates/test_stepwise_review_regressions.py::test_sqlserver_custom_ca_is_not_silently_ignored",
+    "tests/gates/test_stepwise_review_regressions.py::test_generic_odbc_never_silently_ignores_profile_tls_policy[kwargs0]",
+    "tests/gates/test_stepwise_review_regressions.py::test_generic_odbc_never_silently_ignores_profile_tls_policy[kwargs1]"
+  ],
+  "exception_lines": [
+    "E           ImportError: libodbc.so.2: cannot open shared object file: No such file or directory",
+    "E       ImportError: libodbc.so.2: cannot open shared object file: No such file or directory"
+  ],
+  "privacy": "Test tracebacks containing source-level synthetic credential fixtures are not exported; only test identifiers and actual ImportError lines are retained. No real credential or observation is included."
+}

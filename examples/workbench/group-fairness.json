@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "operation": "group-fairness",
+  "parameters": {
+    "group": "group",
+    "outcome": "outcome",
+    "prediction": "prediction",
+    "minimum_group_size": 2
+  }
+}

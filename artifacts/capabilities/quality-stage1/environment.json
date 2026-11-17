@@ -1,0 +1,21 @@
+{
+  "python": "3.12.16 (main, Nov 15 2026, 12:13:13) [GCC 12.2.0]",
+  "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+  "qt_platform": "offscreen",
+  "odbc_drivers": [
+    "SQLite3"
+  ],
+  "source_commit": "ef78c2b6bd0e2a8b81ef7220007950337b3d73cf",
+  "packages": {
+    "pandas": "3.1.1",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "PySide6_Essentials": "6.12.0",
+    "PySide6_Addons": "6.12.0",
+    "pytest": "9.2.0",
+    "pytest-qt": "4.5.0",
+    "ruff": "0.17.5"
+  },
+  "dependency_changes": false,
+  "runtime": "Genuine Python 3.12.16/hash-locked environment and real native Qt/ODBC adapters; no mocked native runtime."
+}

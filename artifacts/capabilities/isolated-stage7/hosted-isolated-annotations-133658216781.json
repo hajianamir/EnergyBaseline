@@ -1,0 +1,26 @@
+[
+ {
+  "path": ".github",
+  "blob_href": "https://github.com/hajianamir/EnergyBaseline/blob/05845c6ac2d2af28ae5ba3b3174392fc543232ff/.github",
+  "start_line": 2,
+  "start_column": null,
+  "end_line": 2,
+  "end_column": null,
+  "annotation_level": "warning",
+  "title": "",
+  "message": "Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+  "raw_details": ""
+ },
+ {
+  "path": ".github",
+  "blob_href": "https://github.com/hajianamir/EnergyBaseline/blob/05845c6ac2d2af28ae5ba3b3174392fc543232ff/.github",
+  "start_line": 23,
+  "start_column": null,
+  "end_line": 23,
+  "end_column": null,
+  "annotation_level": "notice",
+  "title": "isolated engine receipt (python_cli",
+  "message": "python_cli on linux; executable None\nautoml-tpot.json: ExtraTreesRegressor; evaluated 16, failed 5; validation RMSE 0.8566; test RMSE 1.2647; final fit rows 238; python 3.12.16; predictions aa284a23e3e11f3e\nautoml-h2o.json: xgboost; evaluated 5, failed 1; validation RMSE 0.9005; test RMSE 0.9448; final fit rows 190; python 3.12.16; predictions 82754e8efccc2b98\nautoml-autogluon.json: WeightedEnsemble_L2; evaluated 5, failed 0; validation RMSE 0.5132; test RMSE 0.6635; final fit rows 238; python 3.12.16; predictions aad8ecb880f8bdb3\nautoml-autosklearn.json: random_forest; evaluated 4, failed 0; validation RMSE 0.5633; test RMSE 0.7101; final fit rows 238; python 3.9.25; predictions 805a0e0d52357232\nchronos-bolt.json: median MAE 0.7163; last-value MAE 5.8953; inside 10-90 39; python 3.12.16; forecast 5f250161238efbfd\nghostnet.json: Egyptian cat 0.491; espresso 0.915; torch 2.15.0",
+  "raw_details": ""
+ }
+]

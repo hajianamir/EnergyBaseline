@@ -1,0 +1,92 @@
+[
+  {
+    "repository": "yuqinie98/PatchTST",
+    "path": "PatchTST_supervised/layers/PatchTST_backbone.py",
+    "url": "https://github.com/yuqinie98/PatchTST/blob/main/PatchTST_supervised/layers/PatchTST_backbone.py",
+    "git_blob_sha": "55f79561f33aa16e40a9080347c7bbce6dfd0b52",
+    "sha256": "df67173153787c2356bdfb6491159cd754332ef7382986efe879e1fbea8ebf26",
+    "bytes_retrieved": 17968,
+    "scope": "Primary design research, not an external package or pretrained-model integration claim."
+  },
+  {
+    "repository": "zhouhaoyi/Informer2020",
+    "path": "models/attn.py",
+    "url": "https://github.com/zhouhaoyi/Informer2020/blob/main/models/attn.py",
+    "git_blob_sha": "9411e637c1f37ad0a8209978f820efc333734b0d",
+    "sha256": "d9a294d829371759f1984f9f8fee12408774dda1a3de662313151d86e8513528",
+    "bytes_retrieved": 6179,
+    "scope": "Primary design research, not an external package or pretrained-model integration claim."
+  },
+  {
+    "repository": "sktime/pytorch-forecasting",
+    "path": "pytorch_forecasting/models/temporal_fusion_transformer/_tft.py",
+    "url": "https://github.com/sktime/pytorch-forecasting/blob/main/pytorch_forecasting/models/temporal_fusion_transformer/_tft.py",
+    "git_blob_sha": "ee263034c1f99f5157b974ce80a4b0972c58fdb5",
+    "sha256": "391708b5cacaf66c5b7ee9620995be9d370a18bd02468992bf4f49edf0f9807c",
+    "bytes_retrieved": 44906,
+    "scope": "Primary design research, not an external package or pretrained-model integration claim."
+  },
+  {
+    "repository": "Nixtla/neuralforecast",
+    "path": "neuralforecast/models/nhits.py",
+    "url": "https://github.com/Nixtla/neuralforecast/blob/main/neuralforecast/models/nhits.py",
+    "git_blob_sha": "bdc73f93f7cb2493181f0b3c882fa67d17c08e82",
+    "sha256": "2998184e8166eb6cae51a009e1ce94ebd16be2ded546db3c913ef7c23a707ec7",
+    "bytes_retrieved": 19076,
+    "scope": "Primary design research, not an external package or pretrained-model integration claim."
+  },
+  {
+    "repository": "Nixtla/neuralforecast",
+    "path": "neuralforecast/models/tide.py",
+    "url": "https://github.com/Nixtla/neuralforecast/blob/main/neuralforecast/models/tide.py",
+    "git_blob_sha": "e9c3149c8f331d81b0f3a213fff331661ab8f986",
+    "sha256": "439d59e0d41b0618cea2b0da031ef88872263d4fc2e417e1fa858c4ffc9f52d6",
+    "bytes_retrieved": 14772,
+    "scope": "Primary design research, not an external package or pretrained-model integration claim."
+  },
+  {
+    "repository": "optuna/optuna",
+    "path": "optuna/samplers/_tpe/sampler.py",
+    "url": "https://github.com/optuna/optuna/blob/master/optuna/samplers/_tpe/sampler.py",
+    "git_blob_sha": "8519ddf410154588e64948d265d2bfcea17775ef",
+    "sha256": "000f87729c52c802d7920180084c429468c855cc6161bbe3c447669606d1c0cc",
+    "bytes_retrieved": 38716,
+    "scope": "Primary design research, not an external package or pretrained-model integration claim."
+  },
+  {
+    "repository": "anyoptimization/pymoo",
+    "path": "pymoo/algorithms/moo/nsga2.py",
+    "url": "https://github.com/the-dual-space/pymoo/blob/main/pymoo/algorithms/moo/nsga2.py",
+    "git_blob_sha": "53b0b5b5e28ff4b556c2411951859aa7c8ba2c8c",
+    "sha256": "d507e408459389bc99e9ce1c0d6380472d2aef99f58d0751c5ecf44ebf18ff6c",
+    "bytes_retrieved": 4524,
+    "scope": "Primary design research, not an external package or pretrained-model integration claim."
+  },
+  {
+    "repository": "scipy/scipy",
+    "path": "scipy/integrate/_ivp/ivp.py",
+    "url": "https://github.com/scipy/scipy/blob/main/scipy/integrate/_ivp/ivp.py",
+    "git_blob_sha": "fee56ef5eca8e395946e29ad74de57514f47349f",
+    "sha256": "b952d024de4bfe1aefd4702e934b773a27679772ce3c27b60b2917aaf8b39f1e",
+    "bytes_retrieved": 32015,
+    "scope": "Primary design research, not an external package or pretrained-model integration claim."
+  },
+  {
+    "repository": "pytorch/vision",
+    "path": "torchvision/models/segmentation/fcn.py",
+    "url": "https://github.com/pytorch/vision/blob/main/torchvision/models/segmentation/fcn.py",
+    "git_blob_sha": "fb2e242adac0e7430bab6155ae0347770e29fee9",
+    "sha256": "23516a6996553dcdc56e0ffb1362f9aa9ba69eea7105873b298b16d37106fc2b",
+    "bytes_retrieved": 8973,
+    "scope": "Primary design research, not an external package or pretrained-model integration claim."
+  },
+  {
+    "repository": "awslabs/gluonts",
+    "path": "src/gluonts/torch/model/deepar/module.py",
+    "url": "https://github.com/awslabs/gluonts/blob/dev/src/gluonts/torch/model/deepar/module.py",
+    "git_blob_sha": "138cd06c1fbe971ee0cf6acab190d85cafeb0ced",
+    "sha256": "f45fba41eccce5047eea8376c1026ec2e6dcd83ffff6133582658bd7b353273c",
+    "bytes_retrieved": 21098,
+    "scope": "Primary algorithm research only; no GluonTS/pretrained integration claim."
+  }
+]

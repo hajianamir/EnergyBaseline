@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "unique_by": ["id"],
+  "validity": [
+    {"kind": "range", "column": "measured", "min": 0, "max": 100},
+    {"kind": "allowed", "column": "category", "values": ["A", "B"]}
+  ],
+  "consistency": [
+    {"kind": "compare", "left": "measured", "op": "le", "right": "limit"},
+    {"kind": "foreign_key", "columns": ["id"], "reference": "truth", "reference_columns": ["id"]}
+  ],
+  "accuracy": {"reference": "truth", "keys": ["id"], "columns": ["measured"], "atol": 0.05, "rtol": 0},
+  "timeliness": {"column": "timestamp", "max_age_seconds": 14400, "future_tolerance_seconds": 0}
+}

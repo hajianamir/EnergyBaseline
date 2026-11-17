@@ -1,0 +1,9 @@
+# Final auto-sklearn release: POSIX-only, scikit-learn 0.24 and NumPy 1.x, Python 3.9.
+auto-sklearn==0.15.0
+numpy==1.23.5
+scipy==1.9.3
+pandas==1.5.3
+dask==2022.10.0
+distributed==2022.10.0
+# pkg_resources is imported by auto-sklearn and SMAC.
+setuptools==65.7.0

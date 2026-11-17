@@ -1,0 +1,65 @@
+{
+  "input_sha256": null,
+  "library_versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  },
+  "operation": "image-classification",
+  "reference_sha256": null,
+  "result": {
+    "accuracy": 0.5,
+    "all_image_values_sha256": "f710fa4a4a8e42ac61c0824f22f8d8ca317a0aa326c2e441245375b08b8429fb",
+    "architecture": "Conv2d classifier",
+    "backend": "torch",
+    "baseline_changed": false,
+    "confusion_matrix": [
+      [
+        2,
+        0
+      ],
+      [
+        2,
+        0
+      ]
+    ],
+    "f1_by_class_position": [
+      0.6666666666666666,
+      0.0
+    ],
+    "first_training_loss": 0.6984896659851074,
+    "last_training_loss": 0.6949489712715149,
+    "parameters": 1086,
+    "preprocessing_scope": "Training images only; caller-ordered split, no holdout tuning",
+    "pretrained_weights_used": false,
+    "raw_pixels_or_text_exported": false,
+    "source_file_sha256": [
+      "2486cefe7f83f61a19576ff0e248ebad65d1414cad3eaaa3c366502fea96879a",
+      "f0276be84fab5089f87b225c7a3b5d490bbfe533bd2e2bc6b52ac28ca16d0496",
+      "e867cd0e1f8fc63be28a39ef81323758cfee75a5116f59dd3162ee2fc159ab24",
+      "693638759a8e0eb0ab02be2a5c8e0aedf612c657f20284e42e30d1ab0dfae3db",
+      "7cb81860ebd0f5fbf367f10f14a56c90861f18330140cd1f87f1a772f0d0ddb6",
+      "cf75fe5738850c7c967bc58de85e9a9ce42e8ae4a91155430be4caeaeb5aaa38",
+      "36cd1301490456f6364767091ba0f7b084517ef09c99254485af7cc1934cd89c",
+      "91b90251226ccb80c4d1cf81db8b90b953ccae2962bb51e7ed29cc6be63faa9c",
+      "9b03cdde6f9e260eadb94b801ace9517d94269956c2ccf47235ec1493463e248",
+      "7bc7df04e579de4f339a9f7f139e45fe09d647134b58d9105c150948c507e03d",
+      "62c078707ad75e7bbf1b6c950071bda25c3fb0b2cdcc7d7f9a621db98f29c325",
+      "08d572cf168d97e3321e529b939ee648795c70481ea7efe4c1b47daaf6659464",
+      "84ee221aca348cf22d584c108103d2696fbc987d9b62b36d2a9409a43f238018",
+      "aa210fd3f5b61ccb12666a488c6f3c52946dcde527cd6ea65d2ccbdec90fd340",
+      "812cef01ebfe3e813f57b62ed8e16e8828c6312171a24beba429cd741e813ac3",
+      "fe0b329e8bdc6a157d59232b06d2a49239041d7264d601059a54cef6aa76c358"
+    ],
+    "task": "classification",
+    "test_images": 4,
+    "train_image_sha256": "475ccb736708db3cbecf878a933bb81091ac97a62102520bdcba267c8309eeab",
+    "train_images": 12,
+    "trained_weight_sha256": "2dbb0f7bbc838d8f4371e9e1f56c5a1d107abc29dba3a0ff7049fccda1f319ae"
+  },
+  "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+  "spec_sha256": "a08c11c79ca544a43fd1925535f4cb24f68bb767365bbd887aa547f1e8717d48",
+  "version": 1
+}

@@ -1,0 +1,129 @@
+{
+ "total_count": 1,
+ "jobs": [
+  {
+   "id": 133658216741,
+   "run_id": 43969676419,
+   "workflow_name": "Native external backend diagnostics",
+   "head_branch": "arena/bcc82031-energybaseline",
+   "run_url": "https://api.github.com/repos/hajianamir/EnergyBaseline/actions/runs/43969676419",
+   "run_attempt": 1,
+   "node_id": "CR_kwDOVsPsvs8AAAAfHqaJJQ",
+   "head_sha": "05845c6ac2d2af28ae5ba3b3174392fc543232ff",
+   "url": "https://api.github.com/repos/hajianamir/EnergyBaseline/actions/jobs/133658216741",
+   "html_url": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43969676419/job/133658216741",
+   "status": "completed",
+   "conclusion": "success",
+   "created_at": "2026-11-16T22:23:59Z",
+   "started_at": "2026-11-16T22:24:02Z",
+   "completed_at": "2026-11-16T22:35:19Z",
+   "name": "Real console-bundle backend diagnostics (Windows)",
+   "steps": [
+    {
+     "name": "Set up job",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 1,
+     "started_at": "2026-11-16T22:24:04Z",
+     "completed_at": "2026-11-16T22:24:06Z"
+    },
+    {
+     "name": "Run actions/checkout@v5",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 2,
+     "started_at": "2026-11-16T22:24:06Z",
+     "completed_at": "2026-11-16T22:24:12Z"
+    },
+    {
+     "name": "Run actions/setup-python@v6",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 3,
+     "started_at": "2026-11-16T22:24:12Z",
+     "completed_at": "2026-11-16T22:24:27Z"
+    },
+    {
+     "name": "Install the unchanged hash-locked runtime",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 4,
+     "started_at": "2026-11-16T22:24:27Z",
+     "completed_at": "2026-11-16T22:27:08Z"
+    },
+    {
+     "name": "Diagnose actual catalog operations on fixed public synthetic fixtures",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 5,
+     "started_at": "2026-11-16T22:27:08Z",
+     "completed_at": "2026-11-16T22:27:18Z"
+    },
+    {
+     "name": "Build the actual full bundle with a diagnostic console bootloader",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 6,
+     "started_at": "2026-11-16T22:27:18Z",
+     "completed_at": "2026-11-16T22:34:29Z"
+    },
+    {
+     "name": "Execute actual frozen NLP, survival and graph-learning diagnostics",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 7,
+     "started_at": "2026-11-16T22:34:29Z",
+     "completed_at": "2026-11-16T22:34:57Z"
+    },
+    {
+     "name": "Execute actual external and pretrained backends on synthetic fixtures",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 8,
+     "started_at": "2026-11-16T22:34:57Z",
+     "completed_at": "2026-11-16T22:35:13Z"
+    },
+    {
+     "name": "Publish diagnostics without substituting for windowed acceptance",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 9,
+     "started_at": "2026-11-16T22:35:13Z",
+     "completed_at": "2026-11-16T22:35:14Z"
+    },
+    {
+     "name": "Post Run actions/setup-python@v6",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 17,
+     "started_at": "2026-11-16T22:35:14Z",
+     "completed_at": "2026-11-16T22:35:15Z"
+    },
+    {
+     "name": "Post Run actions/checkout@v5",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 18,
+     "started_at": "2026-11-16T22:35:15Z",
+     "completed_at": "2026-11-16T22:35:17Z"
+    },
+    {
+     "name": "Complete job",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 19,
+     "started_at": "2026-11-16T22:35:17Z",
+     "completed_at": "2026-11-16T22:35:17Z"
+    }
+   ],
+   "check_run_url": "https://api.github.com/repos/hajianamir/EnergyBaseline/check-runs/133658216741",
+   "labels": [
+    "windows-latest"
+   ],
+   "runner_id": 1000000776,
+   "runner_name": "GitHub Actions 1000000776",
+   "runner_group_id": 0,
+   "runner_group_name": "GitHub Actions"
+  }
+ ]
+}

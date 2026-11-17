@@ -1,0 +1,143 @@
+........................................................................ [ 10%]
+........................................................................ [ 21%]
+........................................................................ [ 32%]
+........................................................................ [ 42%]
+........................................................................ [ 53%]
+........................................................................ [ 64%]
+........................................................................ [ 75%]
+........................................................................ [ 85%]
+........................................................................ [ 96%]
+........................                                                 [100%]
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.12-final-0 _______________
+
+Name                                                                 Stmts   Miss  Cover
+----------------------------------------------------------------------------------------
+energybaseline/causal/__init__.py                                        2      0   100%
+energybaseline/causal/mv.py                                             98     11    89%
+energybaseline/core/authorization.py                                    37      2    95%
+energybaseline/core/auto.py                                            164     12    93%
+energybaseline/core/cache.py                                           502     54    89%
+energybaseline/core/domain.py                                           25      0   100%
+energybaseline/core/eda.py                                             107     33    69%
+energybaseline/core/evaluation.py                                      189     13    93%
+energybaseline/core/features.py                                        294     32    89%
+energybaseline/core/ingest.py                                          375     67    82%
+energybaseline/core/integrity.py                                       231     16    93%
+energybaseline/core/mining.py                                          257     42    84%
+energybaseline/core/models.py                                          540     88    84%
+energybaseline/core/monitor.py                                         135     21    84%
+energybaseline/core/nn.py                                              248     28    89%
+energybaseline/core/pipeline.py                                        469     52    89%
+energybaseline/core/pool.py                                            672    226    66%
+energybaseline/core/provenance.py                                      151     10    93%
+energybaseline/core/quality.py                                         542    102    81%
+energybaseline/core/quality_audit.py                                   213     12    94%
+energybaseline/core/report.py                                           82     15    82%
+energybaseline/core/report_adapter.py                                  157     10    94%
+energybaseline/core/report_template.py                                   2      2     0%
+energybaseline/core/schema.py                                          471     69    85%
+energybaseline/core/scoring.py                                         246     15    94%
+energybaseline/core/secrets.py                                         137     35    74%
+energybaseline/core/sqlsource.py                                       323     40    88%
+energybaseline/core/store.py                                           401     39    90%
+energybaseline/core/tcp.py                                             665     58    91%
+energybaseline/core/telemetry.py                                        41      1    98%
+energybaseline/core/temporal.py                                        518     97    81%
+energybaseline/core/vsg.py                                             497     44    91%
+energybaseline/lock/__init__.py                                          2      0   100%
+energybaseline/lock/baseline_lock.py                                   370     20    95%
+energybaseline/mining/__init__.py                                        5      0   100%
+energybaseline/mining/clustering.py                                    193      9    95%
+energybaseline/mining/downsample.py                                    122     11    91%
+energybaseline/mining/eda_attach.py                                     98      8    92%
+energybaseline/models/__init__.py                                      109      9    92%
+energybaseline/models/base.py                                          140     24    83%
+energybaseline/models/ensemble.py                                      174     21    88%
+energybaseline/models/f1_baseline.py                                   108     11    90%
+energybaseline/models/f2_ashrae.py                                     181      9    95%
+energybaseline/models/f3_regularized.py                                 90      5    94%
+energybaseline/models/f4_basis.py                                      117      8    93%
+energybaseline/models/f5_ensemble.py                                    74      2    97%
+energybaseline/models/f6_neural.py                                     157      5    97%
+energybaseline/models/f7_timeseries.py                                 108     18    83%
+energybaseline/models/f8_regime.py                                     183     21    89%
+energybaseline/models/f9_decomposition.py                              101      3    97%
+energybaseline/models/f10_stacking.py                                  115      5    96%
+energybaseline/models/portfolio.py                                     692     64    91%
+energybaseline/models/top5.py                                          196     18    91%
+energybaseline/monitoring/__init__.py                                    4      0   100%
+energybaseline/monitoring/adjustments.py                                24      2    92%
+energybaseline/monitoring/drift.py                                      63      4    94%
+energybaseline/monitoring/prediction.py                                177     11    94%
+energybaseline/monitoring/safety.py                                     33      4    88%
+energybaseline/report/__init__.py                                        6      0   100%
+energybaseline/report/agreement.py                                      37      4    89%
+energybaseline/report/archive.py                                        76      7    91%
+energybaseline/report/banner.py                                          3      0   100%
+energybaseline/report/charts.py                                         85      5    94%
+energybaseline/report/depth.py                                          16      0   100%
+energybaseline/report/diff.py                                            8      0   100%
+energybaseline/report/excel.py                                          81      0   100%
+energybaseline/report/html.py                                           40      0   100%
+energybaseline/report/model.py                                          88     10    89%
+energybaseline/report/narrative.py                                      33      3    91%
+energybaseline/report/pdf.py                                            82      2    98%
+energybaseline/report/provenance.py                                     38      4    89%
+energybaseline/report/safety.py                                         20      0   100%
+energybaseline/report/sections.py                                       12      0   100%
+energybaseline/report/template.py                                        9      3    67%
+energybaseline/scoring/__init__.py                                       6      0   100%
+energybaseline/scoring/composite.py                                    190     10    95%
+energybaseline/scoring/envelope.py                                     121     10    92%
+energybaseline/scoring/override.py                                      44      5    89%
+energybaseline/scoring/registers.py                                    118      7    94%
+energybaseline/scoring/tiebreak.py                                      50     11    78%
+energybaseline/tests_catalog/__init__.py                               126      9    93%
+energybaseline/tests_catalog/ci_method.py                              166     13    92%
+energybaseline/tests_catalog/monte_carlo.py                            224      5    98%
+energybaseline/tests_catalog/r_reference_validator.py                  149     22    85%
+energybaseline/tests_catalog/t1_stationarity.py                         79      6    92%
+energybaseline/tests_catalog/t2_seasonality.py                         121      5    96%
+energybaseline/tests_catalog/t3_autocorrelation.py                      67      4    94%
+energybaseline/tests_catalog/t4_normality.py                            75     12    84%
+energybaseline/tests_catalog/t5_heteroskedasticity.py                  113     13    88%
+energybaseline/tests_catalog/t6_multicollinearity.py                    83      8    90%
+energybaseline/tests_catalog/t7_structural_break_chow.py               131     11    92%
+energybaseline/tests_catalog/t8_structural_break_quandt_andrews.py     122      6    95%
+energybaseline/tests_catalog/t9_pettitt.py                              85      3    96%
+energybaseline/tests_catalog/t10_diebold_mariano.py                    163     27    83%
+energybaseline/tests_catalog/t11_nemenyi.py                            111     15    86%
+energybaseline/tests_catalog/t12_little_mcar.py                        175     15    91%
+energybaseline/tests_catalog/t13_outlier_influence.py                  153      5    97%
+energybaseline/tests_catalog/t14_causal_group.py                       170     28    84%
+energybaseline/tests_catalog/tc_assumptions.py                         227     29    87%
+energybaseline/uq/__init__.py                                           27      2    93%
+energybaseline/uq/calibration.py                                        34      2    94%
+energybaseline/uq/conformal.py                                          55      7    87%
+energybaseline/uq/fsu.py                                                 7      0   100%
+energybaseline/uq/parametric.py                                         31      0   100%
+energybaseline/uq/savings_uncertainty.py                                26      1    96%
+energybaseline/validation/__init__.py                                    8      0   100%
+energybaseline/validation/ashrae14_metrics.py                           68      2    97%
+energybaseline/validation/leakage_canary.py                             57      7    88%
+energybaseline/validation/nested_hpo.py                                 66      4    94%
+energybaseline/validation/preprocessing.py                             178     21    88%
+energybaseline/validation/purge.py                                      29      0   100%
+energybaseline/validation/splitting.py                                  93     33    65%
+energybaseline/validation/walkforward.py                                71     11    85%
+energybaseline/workbench/__init__.py                                    63      5    92%
+energybaseline/workbench/analytics.py                                   68      6    91%
+energybaseline/workbench/common.py                                      64      5    92%
+energybaseline/workbench/domains.py                                    126     10    92%
+energybaseline/workbench/entities.py                                    34      4    88%
+energybaseline/workbench/forecasting.py                                 74     12    84%
+energybaseline/workbench/operations.py                                  70      8    89%
+energybaseline/workbench/prediction.py                                  79     10    87%
+energybaseline/workbench/preparation.py                                133     13    90%
+energybaseline/workbench/regression.py                                 124     17    86%
+----------------------------------------------------------------------------------------
+TOTAL                                                                17715   2035    89%
+Coverage XML written to file artifacts/capabilities/workbench-stage2/coverage.xml
+Required test coverage of 60% reached. Total coverage: 88.51%
+672 passed in 2527.26s (0:42:07)

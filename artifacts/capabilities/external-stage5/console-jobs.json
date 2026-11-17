@@ -1,0 +1,113 @@
+{
+  "total_count": 1,
+  "jobs": [
+    {
+      "id": 133014016446,
+      "run_id": 43779750245,
+      "workflow_name": "Native external backend diagnostics",
+      "head_branch": "arena/bcc82031-energybaseline",
+      "run_url": "https://api.github.com/repos/hajianamir/EnergyBaseline/actions/runs/43779750245",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVsPsvs8AAAAe-EDRvg",
+      "head_sha": "cc6be9991d88b999325f921bd9e6b4a799fd6178",
+      "url": "https://api.github.com/repos/hajianamir/EnergyBaseline/actions/jobs/133014016446",
+      "html_url": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43779750245/job/133014016446",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-16T00:20:08Z",
+      "started_at": "2026-11-16T00:20:12Z",
+      "completed_at": "2026-11-16T00:27:52Z",
+      "name": "Real console-bundle backend diagnostics (Windows)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-16T00:20:13Z",
+          "completed_at": "2026-11-16T00:20:13Z"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-16T00:20:13Z",
+          "completed_at": "2026-11-16T00:20:20Z"
+        },
+        {
+          "name": "Run actions/setup-python@v6",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-16T00:20:20Z",
+          "completed_at": "2026-11-16T00:20:33Z"
+        },
+        {
+          "name": "Install the unchanged hash-locked runtime",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-16T00:20:33Z",
+          "completed_at": "2026-11-16T00:22:54Z"
+        },
+        {
+          "name": "Build the actual lite bundle with a diagnostic console bootloader",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-16T00:22:54Z",
+          "completed_at": "2026-11-16T00:27:33Z"
+        },
+        {
+          "name": "Execute actual external and pretrained backends on synthetic fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-16T00:27:33Z",
+          "completed_at": "2026-11-16T00:27:43Z"
+        },
+        {
+          "name": "Publish diagnostics without substituting for windowed acceptance",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-16T00:27:43Z",
+          "completed_at": "2026-11-16T00:27:44Z"
+        },
+        {
+          "name": "Post Run actions/setup-python@v6",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-16T00:27:44Z",
+          "completed_at": "2026-11-16T00:27:49Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-11-16T00:27:49Z",
+          "completed_at": "2026-11-16T00:27:51Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-11-16T00:27:51Z",
+          "completed_at": "2026-11-16T00:27:51Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/hajianamir/EnergyBaseline/check-runs/133014016446",
+      "labels": [
+        "windows-latest"
+      ],
+      "runner_id": 1000000660,
+      "runner_name": "GitHub Actions 1000000660",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}

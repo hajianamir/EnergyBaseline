@@ -1,0 +1,29 @@
+........................................................................ [ 37%]
+........................................................................ [ 75%]
+................................................                         [100%]
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.16-final-0 _______________
+
+Name                                      Stmts   Miss  Cover
+-------------------------------------------------------------
+energybaseline/workbench/__init__.py         73      4    95%
+energybaseline/workbench/analytics.py        68      6    91%
+energybaseline/workbench/automl.py           74      4    95%
+energybaseline/workbench/business.py        153     64    58%
+energybaseline/workbench/common.py           64      4    94%
+energybaseline/workbench/deep.py            217      9    96%
+energybaseline/workbench/domains.py         126     10    92%
+energybaseline/workbench/entities.py         34      4    88%
+energybaseline/workbench/forecasting.py      74     12    84%
+energybaseline/workbench/operations.py       70      8    89%
+energybaseline/workbench/planning.py        271     20    93%
+energybaseline/workbench/prediction.py       79     10    87%
+energybaseline/workbench/preparation.py     133     13    90%
+energybaseline/workbench/regression.py      124     17    86%
+energybaseline/workbench/simulation.py      123     15    88%
+energybaseline/workbench/vision.py          241     20    92%
+-------------------------------------------------------------
+TOTAL                                      1924    220    89%
+Coverage XML written to file artifacts/capabilities/advanced-stage4/capability-coverage.xml
+Required test coverage of 80% reached. Total coverage: 88.57%
+192 passed in 100.03s (0:01:40)

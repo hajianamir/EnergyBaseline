@@ -1,0 +1,30 @@
+{
+  "input_sha256": "a81a7c5839a46b154ee27fc567721eb13c3b3f283164530f8d7379479b1863eb",
+  "library_versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  },
+  "operation": "forecast-holdout",
+  "reference_sha256": null,
+  "result": {
+    "baseline_changed": false,
+    "forecast_origin": "Last training row; all holdout predictions are multi-step with no holdout updates.",
+    "mae": [
+      7.663701996006492
+    ],
+    "method": "seasonal_naive",
+    "p_values_or_intervals_computed": false,
+    "rmse": [
+      8.178304789026463
+    ],
+    "target_count": 1,
+    "test_rows": 20,
+    "train_rows": 80
+  },
+  "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+  "spec_sha256": "381b6741ee9ad7be921cccee88a8c9387ddad48488bb19b16b9c2a73897ac3e6",
+  "version": 1
+}

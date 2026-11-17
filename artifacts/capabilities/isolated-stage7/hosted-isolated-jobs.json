@@ -1,0 +1,405 @@
+{
+ "total_count": 2,
+ "jobs": [
+  {
+   "id": 133658216538,
+   "run_id": 43969676343,
+   "workflow_name": "Isolated engines and pretrained models",
+   "head_branch": "arena/bcc82031-energybaseline",
+   "run_url": "https://api.github.com/repos/hajianamir/EnergyBaseline/actions/runs/43969676343",
+   "run_attempt": 1,
+   "node_id": "CR_kwDOVsPsvs8AAAAfHqaIWg",
+   "head_sha": "05845c6ac2d2af28ae5ba3b3174392fc543232ff",
+   "url": "https://api.github.com/repos/hajianamir/EnergyBaseline/actions/jobs/133658216538",
+   "html_url": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43969676343/job/133658216538",
+   "status": "completed",
+   "conclusion": "success",
+   "created_at": "2026-11-16T22:23:59Z",
+   "started_at": "2026-11-16T22:24:01Z",
+   "completed_at": "2026-11-16T22:47:26Z",
+   "name": "Provision and execute real engines (windows-latest)",
+   "steps": [
+    {
+     "name": "Set up job",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 1,
+     "started_at": "2026-11-16T22:24:02Z",
+     "completed_at": "2026-11-16T22:24:03Z"
+    },
+    {
+     "name": "Run actions/checkout@v5",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 2,
+     "started_at": "2026-11-16T22:24:03Z",
+     "completed_at": "2026-11-16T22:24:09Z"
+    },
+    {
+     "name": "Free runner disk space for two PyTorch environments",
+     "status": "completed",
+     "conclusion": "skipped",
+     "number": 3,
+     "started_at": "2026-11-16T22:24:09Z",
+     "completed_at": "2026-11-16T22:24:09Z"
+    },
+    {
+     "name": "Install Linux headless Qt runtime libraries",
+     "status": "completed",
+     "conclusion": "skipped",
+     "number": 4,
+     "started_at": "2026-11-16T22:24:09Z",
+     "completed_at": "2026-11-16T22:24:09Z"
+    },
+    {
+     "name": "Set up the CPython 3.9 base interpreter for the auto-sklearn runtime",
+     "status": "completed",
+     "conclusion": "skipped",
+     "number": 5,
+     "started_at": "2026-11-16T22:24:09Z",
+     "completed_at": "2026-11-16T22:24:09Z"
+    },
+    {
+     "name": "Set up the application interpreter",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 6,
+     "started_at": "2026-11-16T22:24:09Z",
+     "completed_at": "2026-11-16T22:24:19Z"
+    },
+    {
+     "name": "Install the unchanged hash-locked application runtime",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 7,
+     "started_at": "2026-11-16T22:24:19Z",
+     "completed_at": "2026-11-16T22:27:32Z"
+    },
+    {
+     "name": "Choose the application home that receives runtimes and model assets",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 8,
+     "started_at": "2026-11-16T22:27:32Z",
+     "completed_at": "2026-11-16T22:27:32Z"
+    },
+    {
+     "name": "Provision TPOT, H2O, AutoGluon and Chronos from their hash locks",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 9,
+     "started_at": "2026-11-16T22:27:32Z",
+     "completed_at": "2026-11-16T22:32:04Z"
+    },
+    {
+     "name": "Provision auto-sklearn on CPython 3.9 (POSIX only upstream)",
+     "status": "completed",
+     "conclusion": "skipped",
+     "number": 10,
+     "started_at": "2026-11-16T22:32:04Z",
+     "completed_at": "2026-11-16T22:32:04Z"
+    },
+    {
+     "name": "Provision pretrained weights from their fixed origins with hash verification",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 11,
+     "started_at": "2026-11-16T22:32:04Z",
+     "completed_at": "2026-11-16T22:32:24Z"
+    },
+    {
+     "name": "Real execution, leakage, determinism, tamper, timeout and parent-death tests",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 12,
+     "started_at": "2026-11-16T22:32:24Z",
+     "completed_at": "2026-11-16T22:35:44Z"
+    },
+    {
+     "name": "Real command-line executions with semantic oracles",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 13,
+     "started_at": "2026-11-16T22:35:44Z",
+     "completed_at": "2026-11-16T22:37:46Z"
+    },
+    {
+     "name": "Build the full windowed Windows bundle",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 14,
+     "started_at": "2026-11-16T22:37:46Z",
+     "completed_at": "2026-11-16T22:45:04Z"
+    },
+    {
+     "name": "Real frozen Windows executions through the provisioned runtimes",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 15,
+     "started_at": "2026-11-16T22:45:04Z",
+     "completed_at": "2026-11-16T22:47:14Z"
+    },
+    {
+     "name": "Emit pytest failure annotations on error",
+     "status": "completed",
+     "conclusion": "skipped",
+     "number": 16,
+     "started_at": "2026-11-16T22:47:14Z",
+     "completed_at": "2026-11-16T22:47:14Z"
+    },
+    {
+     "name": "Engine diagnostics for the repository's synthetic example (on failure)",
+     "status": "completed",
+     "conclusion": "skipped",
+     "number": 17,
+     "started_at": "2026-11-16T22:47:14Z",
+     "completed_at": "2026-11-16T22:47:14Z"
+    },
+    {
+     "name": "Publish receipts",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 18,
+     "started_at": "2026-11-16T22:47:14Z",
+     "completed_at": "2026-11-16T22:47:15Z"
+    },
+    {
+     "name": "Post Set up the application interpreter",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 35,
+     "started_at": "2026-11-16T22:47:15Z",
+     "completed_at": "2026-11-16T22:47:15Z"
+    },
+    {
+     "name": "Post Run actions/checkout@v5",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 36,
+     "started_at": "2026-11-16T22:47:15Z",
+     "completed_at": "2026-11-16T22:47:17Z"
+    },
+    {
+     "name": "Complete job",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 37,
+     "started_at": "2026-11-16T22:47:17Z",
+     "completed_at": "2026-11-16T22:47:18Z"
+    }
+   ],
+   "check_run_url": "https://api.github.com/repos/hajianamir/EnergyBaseline/check-runs/133658216538",
+   "labels": [
+    "windows-latest"
+   ],
+   "runner_id": 1000000775,
+   "runner_name": "GitHub Actions 1000000775",
+   "runner_group_id": 0,
+   "runner_group_name": "GitHub Actions"
+  },
+  {
+   "id": 133658216781,
+   "run_id": 43969676343,
+   "workflow_name": "Isolated engines and pretrained models",
+   "head_branch": "arena/bcc82031-energybaseline",
+   "run_url": "https://api.github.com/repos/hajianamir/EnergyBaseline/actions/runs/43969676343",
+   "run_attempt": 1,
+   "node_id": "CR_kwDOVsPsvs8AAAAfHqaJTQ",
+   "head_sha": "05845c6ac2d2af28ae5ba3b3174392fc543232ff",
+   "url": "https://api.github.com/repos/hajianamir/EnergyBaseline/actions/jobs/133658216781",
+   "html_url": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43969676343/job/133658216781",
+   "status": "completed",
+   "conclusion": "success",
+   "created_at": "2026-11-16T22:23:59Z",
+   "started_at": "2026-11-16T22:24:01Z",
+   "completed_at": "2026-11-16T22:37:13Z",
+   "name": "Provision and execute real engines (ubuntu-24.04)",
+   "steps": [
+    {
+     "name": "Set up job",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 1,
+     "started_at": "2026-11-16T22:24:02Z",
+     "completed_at": "2026-11-16T22:24:03Z"
+    },
+    {
+     "name": "Run actions/checkout@v5",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 2,
+     "started_at": "2026-11-16T22:24:03Z",
+     "completed_at": "2026-11-16T22:24:04Z"
+    },
+    {
+     "name": "Free runner disk space for two PyTorch environments",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 3,
+     "started_at": "2026-11-16T22:24:04Z",
+     "completed_at": "2026-11-16T22:25:18Z"
+    },
+    {
+     "name": "Install Linux headless Qt runtime libraries",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 4,
+     "started_at": "2026-11-16T22:25:18Z",
+     "completed_at": "2026-11-16T22:25:29Z"
+    },
+    {
+     "name": "Set up the CPython 3.9 base interpreter for the auto-sklearn runtime",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 5,
+     "started_at": "2026-11-16T22:25:29Z",
+     "completed_at": "2026-11-16T22:25:37Z"
+    },
+    {
+     "name": "Set up the application interpreter",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 6,
+     "started_at": "2026-11-16T22:25:37Z",
+     "completed_at": "2026-11-16T22:26:15Z"
+    },
+    {
+     "name": "Install the unchanged hash-locked application runtime",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 7,
+     "started_at": "2026-11-16T22:26:15Z",
+     "completed_at": "2026-11-16T22:28:01Z"
+    },
+    {
+     "name": "Choose the application home that receives runtimes and model assets",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 8,
+     "started_at": "2026-11-16T22:28:01Z",
+     "completed_at": "2026-11-16T22:28:01Z"
+    },
+    {
+     "name": "Provision TPOT, H2O, AutoGluon and Chronos from their hash locks",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 9,
+     "started_at": "2026-11-16T22:28:01Z",
+     "completed_at": "2026-11-16T22:30:43Z"
+    },
+    {
+     "name": "Provision auto-sklearn on CPython 3.9 (POSIX only upstream)",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 10,
+     "started_at": "2026-11-16T22:30:43Z",
+     "completed_at": "2026-11-16T22:31:12Z"
+    },
+    {
+     "name": "Provision pretrained weights from their fixed origins with hash verification",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 11,
+     "started_at": "2026-11-16T22:31:12Z",
+     "completed_at": "2026-11-16T22:31:26Z"
+    },
+    {
+     "name": "Real execution, leakage, determinism, tamper, timeout and parent-death tests",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 12,
+     "started_at": "2026-11-16T22:31:26Z",
+     "completed_at": "2026-11-16T22:35:06Z"
+    },
+    {
+     "name": "Real command-line executions with semantic oracles",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 13,
+     "started_at": "2026-11-16T22:35:06Z",
+     "completed_at": "2026-11-16T22:37:04Z"
+    },
+    {
+     "name": "Build the full windowed Windows bundle",
+     "status": "completed",
+     "conclusion": "skipped",
+     "number": 14,
+     "started_at": "2026-11-16T22:37:04Z",
+     "completed_at": "2026-11-16T22:37:04Z"
+    },
+    {
+     "name": "Real frozen Windows executions through the provisioned runtimes",
+     "status": "completed",
+     "conclusion": "skipped",
+     "number": 15,
+     "started_at": "2026-11-16T22:37:04Z",
+     "completed_at": "2026-11-16T22:37:04Z"
+    },
+    {
+     "name": "Emit pytest failure annotations on error",
+     "status": "completed",
+     "conclusion": "skipped",
+     "number": 16,
+     "started_at": "2026-11-16T22:37:04Z",
+     "completed_at": "2026-11-16T22:37:04Z"
+    },
+    {
+     "name": "Engine diagnostics for the repository's synthetic example (on failure)",
+     "status": "completed",
+     "conclusion": "skipped",
+     "number": 17,
+     "started_at": "2026-11-16T22:37:04Z",
+     "completed_at": "2026-11-16T22:37:04Z"
+    },
+    {
+     "name": "Publish receipts",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 18,
+     "started_at": "2026-11-16T22:37:04Z",
+     "completed_at": "2026-11-16T22:37:05Z"
+    },
+    {
+     "name": "Post Set up the application interpreter",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 34,
+     "started_at": "2026-11-16T22:37:05Z",
+     "completed_at": "2026-11-16T22:37:05Z"
+    },
+    {
+     "name": "Post Set up the CPython 3.9 base interpreter for the auto-sklearn runtime",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 35,
+     "started_at": "2026-11-16T22:37:05Z",
+     "completed_at": "2026-11-16T22:37:05Z"
+    },
+    {
+     "name": "Post Run actions/checkout@v5",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 36,
+     "started_at": "2026-11-16T22:37:05Z",
+     "completed_at": "2026-11-16T22:37:06Z"
+    },
+    {
+     "name": "Complete job",
+     "status": "completed",
+     "conclusion": "success",
+     "number": 37,
+     "started_at": "2026-11-16T22:37:06Z",
+     "completed_at": "2026-11-16T22:37:06Z"
+    }
+   ],
+   "check_run_url": "https://api.github.com/repos/hajianamir/EnergyBaseline/check-runs/133658216781",
+   "labels": [
+    "ubuntu-24.04"
+   ],
+   "runner_id": 1000000777,
+   "runner_name": "GitHub Actions 1000000777",
+   "runner_group_id": 0,
+   "runner_group_name": "GitHub Actions"
+  }
+ ]
+}

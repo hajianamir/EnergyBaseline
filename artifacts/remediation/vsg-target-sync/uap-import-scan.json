@@ -1,0 +1,5 @@
+{
+  "scope": "Production Python imports only; equivalent capabilities require the manual call-path audit.",
+  "files_scanned": 146,
+  "uap_imports": []
+}

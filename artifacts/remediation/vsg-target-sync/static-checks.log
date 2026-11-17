@@ -1,0 +1,6 @@
+Python 3.12.16
+No broken requirements found.
+All checks passed!
+115 files already formatted
+OK [guard_tests_integrity] verified 4 baseline test files
+OK [guard_web_free] clean (/home/user/EnergyBaseline)

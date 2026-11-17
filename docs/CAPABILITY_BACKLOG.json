@@ -1,0 +1,590 @@
+{
+  "scope": "Every partial/not-found/not-implemented row in the original audit. Existing library/CLI capabilities are not falsely relabeled as missing.",
+  "items": [
+    {
+      "id": "C001",
+      "capability": "Six-dimensional data quality framework",
+      "baseline_finding": "Partial",
+      "baseline_evidence": "`core/quality.py::quality_score` exposes completeness, validity, uniqueness, regularity. The weighted score is 40/20/10/30 percent respectively. No six-axis accuracy/consistency/timeliness framework is established by this score.",
+      "current_status": "stage1_verified_gui_cli"
+    },
+    {
+      "id": "C002",
+      "capability": "Accuracy against an external source of truth",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Range checks, outliers, and plausibility scores do not establish measurement accuracy against a verified reference.",
+      "current_status": "stage1_verified_gui_cli"
+    },
+    {
+      "id": "C003",
+      "capability": "General cross-column / cross-table consistency rules",
+      "baseline_finding": "Partial",
+      "baseline_evidence": "`core/schema.py`, `core/integrity.py`, temporal quantity semantics and leakage rules; no general-purpose rule DSL found.",
+      "current_status": "stage3_bounded_scope_verified_cli_gui",
+      "stage3_implemented_scope": "Composable typed cross-column arithmetic, boolean implication and composite reference-membership assertions.",
+      "remaining_scope": "Custom bounded JSON DSL; not arbitrary user code or an external validation framework."
+    },
+    {
+      "id": "C004",
+      "capability": "Freshness / SLA timeliness scoring",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Gap/regularity detection is present; that is not a wall-clock freshness SLA engine.",
+      "current_status": "stage1_verified_gui_cli"
+    },
+    {
+      "id": "C005",
+      "capability": "Arbitrary business validation suite / Pandera or Great Expectations execution",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Product schema/integrity validation is custom and narrower. Dependency presence would not establish execution.",
+      "current_status": "stage5_bounded_scope_verified_cli_gui_frozen_windows",
+      "stage3_implemented_scope": "Read-only business-validation operation with typed bounded expression trees, three-valued truth, reference hashes, exact integer comparisons and privacy-bounded failures.",
+      "remaining_scope": "Great Expectations, arbitrary Pandera user extensions and unrestricted arbitrary business Python execution remain unimplemented.",
+      "stage5_implemented_scope": "Actual Pandera DataFrameSchema execution through API/CLI/native workers with bounded typed/null/unique/range rules, coercion disabled and private positional failures; verified on final source through API/CLI/native workers and the actual frozen Windows executable."
+    },
+    {
+      "id": "C006",
+      "capability": "Mean/mode/general categorical imputation APIs",
+      "baseline_finding": "Not found as a general catalog",
+      "baseline_evidence": "The predictor-specific policies above are not a complete arbitrary tabular imputation framework.",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
+      "stage2_implemented_scope": "Mean/median/mode numeric imputation and mode categorical imputation, train-only API and job.",
+      "remaining_scope": "Arbitrary target imputation is deliberately forbidden."
+    },
+    {
+      "id": "C007",
+      "capability": "Learned string normalization, fuzzy deduplication, entity resolution",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "File ingestion and column-name handling are not these capabilities.",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
+      "stage2_implemented_scope": "Reference-fitted character TF-IDF fuzzy entity candidate retrieval with explicit normalization.",
+      "remaining_scope": "Automatic merging, probabilistic entity identity and learned normalization are not implemented."
+    },
+    {
+      "id": "C008",
+      "capability": "One-sample KS / Lilliefors normality",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "KS drift is not a substitute for these normality tests.",
+      "current_status": "stage3_bounded_scope_verified_cli_gui",
+      "stage3_implemented_scope": "Preregistered external-parameter normal KS and fitted-parameter Lilliefors with accepted input-bound gates.",
+      "remaining_scope": "Non-normal KS families and autocorrelation-robust calibration are not implemented."
+    },
+    {
+      "id": "C009",
+      "capability": "Ordinary pooled two-sample t, one-sample t, paired t, Wilcoxon signed-rank, sign test",
+      "baseline_finding": "Not found as dedicated general tests",
+      "baseline_evidence": "A t-based confidence interval is not evidence of these separate test APIs.",
+      "current_status": "stage3_bounded_scope_verified_cli_gui",
+      "stage3_implemented_scope": "One-sample, pooled, Welch and paired t; Wilcoxon signed-rank and exact sign test with explicit direction and paired assumptions.",
+      "remaining_scope": "Wilcoxon Hodges-Lehmann intervals and general dependent-series calibration are not implemented."
+    },
+    {
+      "id": "C010",
+      "capability": "Repeated-measures ANOVA, two-way/factorial ANOVA, ANCOVA, MANOVA, Tukey HSD, Dunn",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Do not equate Nemenyi with every post-hoc procedure.",
+      "current_status": "stage3_bounded_scope_verified_cli_gui",
+      "stage3_implemented_scope": "Two-way Type II factorial, balanced one-way repeated ANOVA, fixed-slope ANCOVA, Wilks MANOVA, Tukey simultaneous comparisons and tie-corrected Dunn.",
+      "remaining_scope": "Mixed effects, incomplete repeated designs, sphericity corrections and arbitrary higher-order factorial designs remain outside this bounded implementation."
+    },
+    {
+      "id": "C011",
+      "capability": "Pearson / Spearman / Kendall associations",
+      "baseline_finding": "Partial",
+      "baseline_evidence": "Descriptive coefficients and MI in `core/eda.py`, Kendall inference is gated, Pearson p-values in `core/cache.py`; not one uniform correlation API with all alternatives and CIs.",
+      "current_status": "stage3_bounded_scope_verified_cli_gui",
+      "stage3_implemented_scope": "Uniform gated Pearson/Spearman/Kendall rows, complete-plan multiplicity, Fisher or paired-percentile intervals and explicit undefined-resample handling.",
+      "remaining_scope": "Rank intervals support two-sided independent pairs only; no block-bootstrap/dependent-series guarantee."
+    },
+    {
+      "id": "C012",
+      "capability": "Chi-square contingency, Fisher exact, McNemar, Cochran Q",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "A chi-square distribution used for Mahalanobis thresholds or another diagnostic does not implement contingency testing.",
+      "current_status": "stage3_bounded_scope_verified_cli_gui",
+      "stage3_implemented_scope": "Contingency chi-square with expected-count guard, binary Fisher exact, exact McNemar and matched Cochran Q.",
+      "remaining_scope": "General RxC exact tests and small-sample exact Cochran Q are not implemented."
+    },
+    {
+      "id": "C013",
+      "capability": "Sidak, Holm-Sidak, Hochberg, Hommel, two-stage FDR",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Not implied by using statsmodels elsewhere.",
+      "current_status": "stage3_bounded_scope_verified_cli_gui",
+      "stage2_implemented_scope": "Sidak, Holm-Sidak, Hochberg and Hommel are added to the actual TCP/CLI/GUI correction registry.",
+      "remaining_scope": "Two-stage FDR is deliberately separate from legacy alpha-independent what-if caches; no unrestricted iterated FDR mode.",
+      "stage3_implemented_scope": "Alpha-bound two-stage BH/BKY FDR applied to the complete preregistered expanded family, in addition to the four Stage 2 integrated corrections."
+    },
+    {
+      "id": "C014",
+      "capability": "General power/sample-size design workbench",
+      "baseline_finding": "Partial at most",
+      "baseline_evidence": "Assumption/sample-size gates exist; no general prospective power-analysis interface established. Retrospective observed power is explicitly rejected by test contracts.",
+      "current_status": "stage3_bounded_scope_verified_cli_gui",
+      "stage3_implemented_scope": "Prospective power and checked integer sample sizes for one-sample t, independent t/z and balanced ANOVA using externally specified standardized effects.",
+      "remaining_scope": "Other design families, cluster/sequential designs and general decision-theoretic design remain pending; observed power is forbidden."
+    },
+    {
+      "id": "C015",
+      "capability": "Bayesian posterior inference, MCMC, variational inference, Bayesian model averaging",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Bayesian Ridge and Gaussian process candidates exist, but do not establish a general MCMC/variational-inference/model-averaging workbench.",
+      "current_status": "stage3_bounded_scope_verified_cli_gui",
+      "stage3_implemented_scope": "Conjugate beta-binomial/known-noise normal posteriors, genuine multichain linear Metropolis, optimized mean-field Gaussian VI and evidence-weighted normal-prior-model BMA.",
+      "remaining_scope": "General probabilistic programs, unknown-noise/hierarchical models, modern rank-normalized diagnostics and named PyMC/Stan/NumPyro backend integration remain pending."
+    },
+    {
+      "id": "C016",
+      "capability": "Financial VaR, CVaR / expected shortfall, drawdown, portfolio risk",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Savings uncertainty and deviation alerts are not financial risk analytics.",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
+      "stage2_implemented_scope": "Empirical portfolio VaR, fractional-tail expected shortfall, covariance, volatility and initial-wealth drawdown.",
+      "remaining_scope": "No forward-loss guarantee, currency conversion or production financial certification."
+    },
+    {
+      "id": "C017",
+      "capability": "Jensen-Shannon/KL divergence, categorical chi-square drift, ADWIN, DDM, EDDM",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Not established by the numeric drift implementation.",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
+      "stage2_implemented_scope": "Categorical KL and Jensen-Shannon divergence with explicit support/smoothing and infinite-KL semantics.",
+      "remaining_scope": "Chi-square inferential drift, ADWIN, DDM and EDDM remain pending."
+    },
+    {
+      "id": "C018",
+      "capability": "Demographic parity, equalized odds, disparate impact, subgroup fairness mitigation",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Causal group covariate balance is not algorithmic fairness.",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
+      "stage2_implemented_scope": "Descriptive demographic parity, disparate impact, equalized odds, small-group suppression; optional classification holdout audit.",
+      "remaining_scope": "Fairness mitigation, uncertainty and causal/legal fairness conclusions remain pending."
+    },
+    {
+      "id": "C019",
+      "capability": "General adversarial robustness / stress-testing suite",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Leakage canaries, validity-domain checks, plausibility and sensitivity diagnostics are narrower safeguards.",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
+      "stage2_implemented_scope": "Fixed additive predictor-shock scenarios against a frozen exploratory regression model.",
+      "remaining_scope": "Worst-case adversarial search/certification and general stress scenario families remain pending."
+    },
+    {
+      "id": "C020",
+      "capability": "RFE / RFECV, Boruta, sequential forward/backward selection, genetic selection",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Ranking or an AUTO heuristic does not implement these algorithms.",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
+      "stage2_implemented_scope": "Training-only RFE and sequential forward/backward selection with inner temporal fold-local preprocessing.",
+      "remaining_scope": "RFECV, Boruta and genetic selection remain pending."
+    },
+    {
+      "id": "C021",
+      "capability": "Multi-target feature consensus",
+      "baseline_finding": "Partial",
+      "baseline_evidence": "`models/f8_regime.py` has Kendall-W feature consensus; this is not evidence of a general multi-output consensus selector.",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
+      "stage2_implemented_scope": "Training-only multi-target absolute-association Borda consensus selection.",
+      "remaining_scope": "Nonlinear consensus/model-family consensus remains out of scope."
+    },
+    {
+      "id": "C022",
+      "capability": "General RobustScaler / MinMax / power transforms / learned categorical encoding / target encoding",
+      "baseline_finding": "Not found as a general feature pipeline",
+      "baseline_evidence": "Not implied by sklearn being installed.",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
+      "stage2_implemented_scope": "Train-only RobustScaler, MinMax, power/standard transforms, one-hot categoricals, strictly past-only target encoding API/jobs.",
+      "remaining_scope": "Not silently inserted into accepted baseline preprocessing."
+    },
+    {
+      "id": "C023",
+      "capability": "Feature hashing / text TF-IDF / language embeddings / image embeddings",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Numeric dimensionality reduction is not NLP/CV embedding support.",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
+      "stage2_implemented_scope": "Offline corpus/reference-trained TF-IDF retrieval and entity candidate representations.",
+      "remaining_scope": "Feature hashing, learned language/image embeddings remain pending."
+    },
+    {
+      "id": "C024",
+      "capability": "Median / last-value / seasonal-naive / random-walk baseline catalog",
+      "baseline_finding": "Not found as dedicated main candidates",
+      "baseline_evidence": "ETS or seasonal decomposition does not establish these separate benchmark models.",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
+      "stage2_implemented_scope": "Median, last/no-drift random walk, seasonal-naive and random-walk-with-drift holdout benchmarks.",
+      "remaining_scope": "Exploratory workbench only, not added as dedicated main baseline candidates."
+    },
+    {
+      "id": "C025",
+      "capability": "Huber/RANSAC robust regression, kNN regression and arbitrary standalone decision-tree regression",
+      "baseline_finding": "Not found as dedicated main candidates",
+      "baseline_evidence": "kNN classification in mining and trees inside ensembles are different capabilities.",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
+      "stage2_implemented_scope": "Huber, RANSAC, kNN and standalone decision-tree chronological holdout regression.",
+      "remaining_scope": "Exploratory workbench only, not accepted/locked main candidate lifecycle."
+    },
+    {
+      "id": "C026",
+      "capability": "Auto-sklearn, TPOT, H2O, FLAML, AutoGluon, NAS",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Optuna-backed tuning does not mean these AutoML engines are integrated.",
+      "current_status": "stage7_bounded_scope_verified_cli_gui_frozen_full_windows",
+      "stage4_implemented_scope": "Actual Optuna TPE model-family/hyperparameter search with nested temporal preprocessing and untouched holdout; genuine scratch-trained neural architecture/width search.",
+      "remaining_scope": "Regression search only: classification, time-series AutoML modes, GPU/distributed search, H2O stacked ensembles and deep learning, AutoGluon bagging/stacking and auto-sklearn meta-learning are not exposed. auto-sklearn has no Windows release (POSIX, CPython 3.9), so the Windows application refuses it. H2O AutoML has no refit. No selected model is persisted or promoted to a baseline. FLAML scope stays bounded regression. The process boundary is dependency isolation with a time budget and tree termination, not an operating-system sandbox.",
+      "stage5_implemented_scope": "Actual FLAML CFO regression search with inner chronological validation/purge, bounded real forest estimators and fresh outer training refit; verified on final source through API/CLI/native workers and the actual frozen Windows executable.",
+      "stage7_implemented_scope": "Actual TPOT 1.1.0, H2O AutoML 3.46.0.12, AutoGluon Tabular 1.6.3 and auto-sklearn 0.15.0 regression search in separately provisioned hash-locked runtimes and processes, with chronological validation, purge gap, holdout targets kept in the application and metrics computed there. See docs/ISOLATED_ENGINES.md."
+    },
+    {
+      "id": "C027",
+      "capability": "TFT, PatchTST, Informer / general Transformer forecasting",
+      "baseline_finding": "Not implemented in main candidate registry",
+      "baseline_evidence": "`core/models.py` explicitly records TFT and PatchTST/Informer as unavailable architectures.",
+      "current_status": "stage4_bounded_scope_verified_cli_gui",
+      "stage4_implemented_scope": "Separate fixed-origin reference PatchTST-style patch transformer, Informer-style sparse-query/distilled encoder-decoder and historical-only TFT-style gated-fusion jobs with real gradient training and native worker/CLI routing.",
+      "remaining_scope": "Reduced reference variants, not complete research-package feature parity or the main accepted candidate registry; static/known-future TFT features and full ProbSparse complexity remain unimplemented."
+    },
+    {
+      "id": "C028",
+      "capability": "VAR / VECM, TBATS / BATS, Croston intermittent demand, hierarchical reconciliation",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Not implied by statsmodels or decomposition capabilities.",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
+      "stage2_implemented_scope": "Fixed-order VAR, declared-rank VECM and Croston-SBA holdout forecasting.",
+      "remaining_scope": "TBATS/BATS and hierarchical reconciliation remain pending."
+    },
+    {
+      "id": "C029",
+      "capability": "DeepAR, N-HiTS, TiDE, foundation forecasting models",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "N-BEATS is implemented; do not extrapolate that to every deep forecasting architecture.",
+      "current_status": "stage7_bounded_scope_verified_cli_gui_frozen_full_windows",
+      "stage4_implemented_scope": "Scratch-trained Gaussian autoregressive DeepAR, hierarchical residual/interpolated N-HiTS and residual dense TiDE reference forecasting, plus genuine architecture selection.",
+      "remaining_scope": "One foundation model (Chronos-Bolt tiny), univariate, horizon at most 64, no covariates, fine-tuning or panel input; other foundation models are not integrated. Quantiles are uncalibrated model outputs: no calibrated forecast intervals are claimed. Global panel training and full research-package features of the scratch-trained models remain pending.",
+      "stage7_implemented_scope": "Zero-shot quantile forecasting with the actual pretrained Chronos-Bolt tiny weights through chronos-forecasting 2.3.2 in a separately provisioned runtime; weights provisioned explicitly and verified by SHA-256 before and after use; holdout scored in the application against a last-value reference."
+    },
+    {
+      "id": "C030",
+      "capability": "General supervised classification product",
+      "baseline_finding": "Partial, descriptive mining only",
+      "baseline_evidence": "`core/mining.py` has logistic/RF/ExtraTrees/GB/SVM/kNN/NB/MLP and optional boosting regime classifiers. This does not provide arbitrary classification targets, classification lifecycle, or a fairness workbench in the main regression product.",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
+      "stage2_implemented_scope": "Chronological binary logistic/RF/kNN classification with probabilities, heldout metrics and optional subgroup audit.",
+      "remaining_scope": "Multiclass, persistent model lifecycle and accepted baseline integration remain pending."
+    },
+    {
+      "id": "C031",
+      "capability": "General anomaly detection",
+      "baseline_finding": "Partial / integrated numeric methods",
+      "baseline_evidence": "See outlier methods above and descriptive `core/mining.py`; no comprehensive anomaly model zoo.",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
+      "stage2_implemented_scope": "Explicit chronological IsolationForest, novelty LOF and OneClassSVM train/holdout operations.",
+      "remaining_scope": "Not a comprehensive anomaly zoo or distribution-free sequential alarm guarantee."
+    },
+    {
+      "id": "C032",
+      "capability": "Survival / Cox / AFT / Kaplan-Meier / competing risks",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "No production survival workflow identified.",
+      "current_status": "stage6_bounded_scope_verified_cli_gui_frozen_full_windows",
+      "stage2_implemented_scope": "Empirical right-censored Kaplan-Meier and Aalen-Johansen competing-risk incidence with explicit event schemas.",
+      "remaining_scope": "Survival inferential tests/intervals, stratified/time-varying Cox, flexible hazard families, causal survival and persistent accepted-model lifecycle remain unimplemented.",
+      "stage6_implemented_scope": "Predictive Cox/Breslow and Weibull AFT with right censoring, delayed entry, train-only chronological fitting and holdout concordance/conditional survival; no inferential output.",
+      "stage6_status": "verified_bounded_scope_not_program_completion"
+    },
+    {
+      "id": "C033",
+      "capability": "Graph analytics / GNN / node classification / link prediction",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "A pipeline dependency DAG is not graph machine learning.",
+      "current_status": "stage6_bounded_scope_verified_cli_gui_frozen_full_windows",
+      "stage2_implemented_scope": "Directed weighted PageRank, weak components and explicit-source shortest paths.",
+      "remaining_scope": "Link prediction, inductive/temporal graph learning, heterogeneous graph models and paper benchmark parity remain unimplemented.",
+      "stage6_implemented_scope": "Actual two-layer CPU GCN for static transductive node classification, symmetric normalization, train-label-only loss and privacy-bound evaluation.",
+      "stage6_status": "verified_bounded_scope_not_program_completion"
+    },
+    {
+      "id": "C034",
+      "capability": "NLP classification / NER / sentiment / translation / summarization / topic modeling / LLM or RAG",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Numeric report narratives are not a general NLP subsystem.",
+      "current_status": "stage6_bounded_scope_verified_cli_gui_frozen_full_windows",
+      "stage6_implemented_scope": "Actual TF-IDF logistic multiclass/binary text classification and train-only NMF topic modeling through API/CLI/native worker contracts.",
+      "remaining_scope": "NER, translation, summarization, task-specific pretrained sentiment/language models, LLM/RAG and full-paper pretrained model parity remain unimplemented.",
+      "stage6_status": "verified_bounded_scope_not_program_completion"
+    },
+    {
+      "id": "C035",
+      "capability": "Image classification / detection / segmentation / OCR / vision models",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Plotting and a 1D numeric CNN are not computer vision.",
+      "current_status": "stage7_bounded_scope_verified_cli_gui_frozen_full_windows",
+      "stage4_implemented_scope": "Actual PNG/JPEG/BMP loading, Conv2d classification, binary U-Net segmentation, learned-mask component detection and explicitly supplied printed-template OCR; native worker/CLI and privacy-bound output.",
+      "remaining_scope": "Pretrained detection and segmentation, image embeddings, plaintext OCR export, arbitrary-resolution/language/handwriting coverage and a general model zoo remain unimplemented. YOLO is not integrated (weights never obtained; AGPL/commercial licensing undecided). The lite profile excludes PyTorch, so classification needs the full profile.",
+      "stage5_implemented_scope": "Actual pretrained PP-OCRv4 detection/recognition and mobile orientation via RapidOCR/ONNX Runtime; fixed approved weight hashes, offline CPU inference and privacy-preserving OCR audit; verified on final source through API/CLI/native workers and the actual frozen Windows executable.",
+      "stage7_implemented_scope": "Pretrained ImageNet-1k classification with the published GhostNet 1.0x weights (Apache-2.0) on the application's PyTorch, authors' preprocessing, weights loaded with weights_only=True and strict key matching, and verified by SHA-256 before and after use; real photographs classified correctly through API, command line and native worker."
+    },
+    {
+      "id": "C036",
+      "capability": "Recommenders / collaborative filtering / matrix factorization / ranking",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Model leaderboard ranking is not recommendation-system learning-to-rank.",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
+      "stage2_implemented_scope": "Explicit-rating, training-prefix truncated-SVD recommendations, seen-item exclusion and cold-start-aware holdout RMSE.",
+      "remaining_scope": "Implicit feedback, ranking validation, collaborative model zoo and persistent lifecycle remain pending."
+    },
+    {
+      "id": "C037",
+      "capability": "Causal forests / generalized CATE model zoo / IV / RD / synthetic control / causal discovery",
+      "baseline_finding": "Not found as complete workflows",
+      "baseline_evidence": "The optional LinearDML adapter is not evidence for these separate algorithms.",
+      "current_status": "pending"
+    },
+    {
+      "id": "C038",
+      "capability": "General LP/MILP, scheduling, routing, multi-objective / Pareto / evolutionary optimization",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Task-specific numerical minimization is not a general operations-research platform.",
+      "current_status": "stage4_bounded_scope_verified_cli_gui",
+      "stage2_implemented_scope": "Finite-bound LP/MILP through actual HiGHS, independent feasibility checks and exact supplied-alternative Pareto filtering.",
+      "remaining_scope": "Time windows, pickup-delivery, calendars/preemption, general objective callbacks and global Pareto optimality certification are outside the bounded implementation.",
+      "stage4_implemented_scope": "Actual CVRP and job-shop MILP generators with independently checked routes/schedules; constrained NSGA-II with generated offspring and cached parent fitness, in addition to existing LP/MILP/Pareto operations."
+    },
+    {
+      "id": "C039",
+      "capability": "General discrete-event, agent-based, system-dynamics simulation / digital twins",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "Bootstrap and Monte Carlo test calibration are not these simulators.",
+      "current_status": "stage4_bounded_scope_verified_cli_gui",
+      "stage2_implemented_scope": "Deterministic multi-server FCFS discrete-event queue with an event-release heap and drain/queue metrics.",
+      "remaining_scope": "Not an unrestricted nonlinear or user-programmed simulation framework, Mesa/SimPy adapter, calibrated epidemiology or physically certified universal digital-twin platform.",
+      "stage4_implemented_scope": "Linear stock-flow DOP853 integration with conservation checks, synchronous individual graph SIR with interventions and frozen affine state-space twin calibration/holdout rollout, in addition to FCFS simulation."
+    },
+    {
+      "id": "C040",
+      "capability": "LIME, ALE, counterfactual explanations, recourse, causal explanations",
+      "baseline_finding": "Not found",
+      "baseline_evidence": "PDP/ICE or a surrogate does not establish these distinct explanation techniques.",
+      "current_status": "stage2_bounded_scope_verified_cli_gui",
+      "stage2_implemented_scope": "First-order training-quantile ALE and fixed additive model-sensitivity scenarios.",
+      "remaining_scope": "LIME, counterfactual search, recourse and causal explanations remain pending."
+    }
+  ],
+  "program_complete": false,
+  "stage1_verification": {
+    "tested_source_commit": "ef78c2b6bd0e2a8b81ef7220007950337b3d73cf",
+    "workflow": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43724721792",
+    "conclusion": "success",
+    "operating_systems": [
+      "Windows",
+      "Linux"
+    ],
+    "scope": "Six-axis read-only quality audit only; all other pending/partial items remain explicitly tracked."
+  },
+  "stage2_verification": {
+    "status": "verified_bounded_scope",
+    "operations": 19,
+    "example_jobs": 25,
+    "documentation": "docs/EXPLORATORY_WORKBENCH.md",
+    "tests": [
+      "tests/test_workbench.py",
+      "tests/gui/test_workbench_gui.py"
+    ],
+    "program_complete": false,
+    "tested_source_commit": "5e571cc96404cd3e9b4a70a59fab66b11fa393ad",
+    "workflow": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43737625559",
+    "conclusion": "success",
+    "operating_systems": [
+      "Windows",
+      "Linux"
+    ],
+    "local_focused_tests": 120,
+    "local_full_suite_tests": 672,
+    "local_complete_gui_tests": 28,
+    "expanded_coverage_percent": 88.51,
+    "remaining_scope": "Per-row remaining_scope fields are still pending; pending rows are not implemented. No full-program completion claim."
+  },
+  "stage3": {
+    "status": "verified_bounded_scope_not_program_completion",
+    "documentation": "docs/PREREGISTERED_STATISTICS.md",
+    "evidence": "artifacts/capabilities/statistics-stage3/README.md",
+    "statistical_method_identifiers": 27,
+    "new_descriptive_operation": "business-validation",
+    "program_complete": false,
+    "tests": [
+      "tests/test_statistical_plans.py",
+      "tests/test_business_validation.py",
+      "tests/gui/test_statistics_gui.py"
+    ],
+    "remaining_scope": "All per-row remaining_scope exclusions and other pending rows remain incomplete. No full-program completion claim.",
+    "tested_source_commit": "9dc70d5ef939dfc54dd0fd5dcace8479b9744460",
+    "workflow": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43749525830",
+    "conclusion": "success",
+    "operating_systems": [
+      "Windows",
+      "Linux"
+    ],
+    "local_focused_tests": 202,
+    "local_full_suite_tests": 754,
+    "local_complete_gui_tests": 32,
+    "capability_package_coverage_percent": 89.51,
+    "gui_coverage_percent": 72.09,
+    "local_full_suite_coverage_instrumentation": false,
+    "hosted_full_suite_expanded_coverage_gates": "Passed on Windows and Linux; unchanged 60/80 percent thresholds"
+  },
+  "stage4": {
+    "status": "verified_bounded_scope_not_program_completion",
+    "documentation": "docs/ADVANCED_WORKBENCH.md",
+    "evidence": "artifacts/capabilities/advanced-stage4/README.md",
+    "new_operations": 12,
+    "total_workbench_operations": 32,
+    "example_jobs": 19,
+    "tests": [
+      "tests/test_advanced_workbench.py",
+      "tests/gui/test_advanced_workbench_gui.py"
+    ],
+    "program_complete": false,
+    "remaining_scope": "All per-row exclusions and untouched pending catalog families remain incomplete; no branded backend, pretrained model or full-program completion substitution.",
+    "tested_source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+    "workflow": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43757468182",
+    "conclusion": "success",
+    "operating_systems": [
+      "Windows",
+      "Linux"
+    ],
+    "local_focused_tests": 192,
+    "local_full_suite_tests": 825,
+    "local_complete_gui_tests": 41,
+    "capability_package_coverage_percent": 88.57,
+    "gui_coverage_percent": 72.1,
+    "local_full_suite_coverage_instrumentation": false,
+    "hosted_full_suite_expanded_coverage_gates": "Passed on Windows and Linux; unchanged 60/80 percent thresholds"
+  },
+  "stage5": {
+    "status": "verified_bounded_scope_not_program_completion",
+    "documentation": "docs/EXTERNAL_ENGINES.md",
+    "model_notices": "docs/THIRD_PARTY_MODELS.md",
+    "evidence": "artifacts/capabilities/external-stage5/README.md",
+    "new_operations": 3,
+    "total_workbench_operations": 35,
+    "example_jobs": 3,
+    "actual_external_engines": [
+      "FLAML",
+      "Pandera",
+      "RapidOCR with bundled pretrained ONNX models"
+    ],
+    "program_complete": false,
+    "tests": [
+      "tests/test_external_workbench.py",
+      "tests/gui/test_external_workbench_gui.py"
+    ],
+    "remaining_scope": "All per-row remaining_scope fields, incompatible/unimplemented external backends, foundation weights and full-paper parity remain open. No installed-only completion claims.",
+    "tested_source_commit": "cc6be9991d88b999325f921bd9e6b4a799fd6178",
+    "workflow": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43779750271",
+    "conclusion": "success",
+    "operating_systems": [
+      "Windows",
+      "Linux"
+    ],
+    "local_focused_tests": 244,
+    "local_full_suite_tests": 877,
+    "local_complete_gui_tests": 44,
+    "capability_package_coverage_percent": 88.95,
+    "gui_coverage_percent": 72.1,
+    "local_full_suite_coverage_instrumentation": false,
+    "hosted_full_suite_expanded_coverage_gates": "Passed on Windows and Linux; unchanged 60/80 percent thresholds",
+    "actual_frozen_windows_external_engines": "All three operations passed through the windowed executable; same 120-second subprocess budget",
+    "console_diagnostic_workflow": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43779750245",
+    "console_diagnostic_conclusion": "success",
+    "source_binding_files": 422
+  },
+  "stage6": {
+    "status": "verified_bounded_scope_not_program_completion",
+    "documentation": "docs/CATALOG_EXPANSION.md",
+    "evidence": "artifacts/capabilities/catalog-stage6/README.md",
+    "new_operations": 4,
+    "total_workbench_operations": 39,
+    "example_jobs": 5,
+    "tests": [
+      "tests/test_catalog_expansion.py",
+      "tests/gui/test_catalog_expansion_gui.py"
+    ],
+    "program_complete": false,
+    "remaining_scope": "All per-row remaining_scope fields and untouched catalog families remain open. This stage does not replace the full user request with a bounded subset.",
+    "tested_source_commit": "742ab337f30681054f2ec102fe16e08c3d9b3df8",
+    "workflow": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43834852648",
+    "local_focused_tests": 322,
+    "local_full_suite_tests": 975,
+    "local_complete_gui_tests": 49,
+    "capability_package_coverage_percent": 89.25,
+    "gui_coverage_percent": 72.1,
+    "local_full_suite_coverage_instrumentation": false,
+    "source_binding_files": 438,
+    "local_tested_source_commit": "76159f41e93fd7cec299b1a6f65cbc75a3dba4ee",
+    "conclusion": "success",
+    "operating_systems": [
+      "Windows",
+      "Linux"
+    ],
+    "actual_frozen_full_windows": "All five semantic jobs passed through the full windowed executable; previous lite installer/runtime/external-engine checks preserved and passed",
+    "console_workflow": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43834852664",
+    "console_conclusion": "success",
+    "source_equivalence": "436 identical product/test/fixture/dependency/script Git blobs between local and hosted sources; only two CI workflows changed",
+    "hosted_full_suite_expanded_coverage_gates": "Passed on Windows and Linux; unchanged 60/80 percent thresholds"
+  },
+  "stage7": {
+    "status": "verified_bounded_scope_not_program_completion",
+    "documentation": "docs/ISOLATED_ENGINES.md",
+    "evidence": "artifacts/capabilities/isolated-stage7/README.md",
+    "new_operations": 3,
+    "total_workbench_operations": 42,
+    "specification_only_operations": 12,
+    "example_jobs": 6,
+    "tests": [
+      "tests/test_isolated_engines.py",
+      "tests/gui/test_isolated_gui.py",
+      "provisioned_tests/"
+    ],
+    "program_complete": false,
+    "remaining_scope": "All per-row remaining_scope fields and untouched catalog families remain open. This stage does not replace the full user request with a bounded subset.",
+    "tested_source_commit": "14900def3dbcde425a292e2f0f47c9d0ca8c0d95",
+    "local_tested_source_commit": "14900def3dbcde425a292e2f0f47c9d0ca8c0d95",
+    "engine_workflow": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43969676343",
+    "engine_workflow_conclusion": "success",
+    "workflow": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43982762989",
+    "conclusion": "success",
+    "native_diagnostics_workflow": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43969676419",
+    "native_diagnostics_conclusion": "success",
+    "operating_systems": [
+      "Windows",
+      "Linux"
+    ],
+    "local_non_gui_suite_tests": 952,
+    "local_complete_gui_tests": 52,
+    "local_provisioned_execution_tests": 17,
+    "local_focused_tests": 348,
+    "gui_coverage_percent": 72.14,
+    "combined_capability_coverage_measured": false,
+    "actual_frozen_full_windows": "TPOT, H2O, AutoGluon, Chronos-Bolt and GhostNet executed through the full windowed executable against provisioned runtimes; auto-sklearn is refused on Windows as unsupported",
+    "engines_executed": {
+      "linux": [
+        "tpot",
+        "h2o",
+        "autogluon",
+        "autosklearn",
+        "chronos"
+      ],
+      "windows": [
+        "tpot",
+        "h2o",
+        "autogluon",
+        "chronos"
+      ]
+    },
+    "application_dependency_lock_changed": false,
+    "cross_platform_results_identical": false,
+    "known_upstream_defect_worked_around": "auto-sklearn 0.15.0 log-server lock starvation; see docs/ISOLATED_ENGINES.md",
+    "untouched_row": "C023 (learned language and image embeddings) is not addressed by this stage",
+    "engine_workflow_source_commit": "05845c6ac2d2af28ae5ba3b3174392fc543232ff",
+    "source_equivalence": "The engine workflow ran on the parent commit; the only differing file is tests/test_isolated_engines.py, which that workflow does not read",
+    "hosted_full_suite_expanded_coverage_gates": "Passed on Windows and Linux; unchanged 60/80 percent thresholds"
+  }
+}

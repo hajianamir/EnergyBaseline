@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "operation": "pretrained-image-classification",
+  "parameters": {
+    "image_root": "examples/isolated/images",
+    "image_files": [
+      "cat.jpg",
+      "espresso.jpg"
+    ],
+    "top_k": 3
+  }
+}

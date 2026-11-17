@@ -1,0 +1,14 @@
+{
+  "source_commit": "76159f41e93fd7cec299b1a6f65cbc75a3dba4ee",
+  "command": [
+    "/home/user/EnergyBaseline/.venv/test/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "--junitxml=/home/user/EnergyBaseline/artifacts/capabilities/catalog-stage6/full-direct.xml"
+  ],
+  "pytest_returncode_after_interpreter_teardown": 0,
+  "elapsed_seconds": 829.5005631899985,
+  "coverage_instrumentation": false,
+  "native_environment": "Both genuine source-built Qt and unixODBC library prefixes supplied; no test modifications/skips"
+}

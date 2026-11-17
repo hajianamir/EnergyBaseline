@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "operation": "external-automl",
+  "parameters": {
+    "engine": "h2o",
+    "time": "time",
+    "target": "y",
+    "features": [
+      "x1",
+      "x2",
+      "x3"
+    ],
+    "train_rows": 240,
+    "validation_rows": 48,
+    "gap": 2,
+    "seed": 12,
+    "models": 4
+  }
+}

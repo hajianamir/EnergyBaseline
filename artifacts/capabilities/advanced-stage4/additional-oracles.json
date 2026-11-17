@@ -1,0 +1,70 @@
+{
+  "source_commit": "8475dd232b00c1af73d4bafe318d26edf19cbe49",
+  "scope": "Supplementary actual RGB Conv2d execution and historical-covariate gradient flow, not replacements for final pytest/two-OS CI",
+  "rgb_classification_result": {
+    "version": 1,
+    "operation": "image-classification",
+    "spec_sha256": "fd88ff0cfe148173a0011f9ca0c640563f5c8aa57d4ae28f6cb7ab9a56ca5f21",
+    "input_sha256": null,
+    "reference_sha256": null,
+    "library_versions": {
+      "numpy": "2.5.4",
+      "pandas": "3.1.1",
+      "scipy": "1.18.1",
+      "scikit-learn": "1.9.1",
+      "statsmodels": "0.15.0"
+    },
+    "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+    "result": {
+      "task": "classification",
+      "architecture": "Conv2d classifier",
+      "backend": "torch",
+      "train_images": 8,
+      "test_images": 4,
+      "train_image_sha256": "c16e690900c831a46cbb13416476336248b7905e73760323f97c5a3882bd3b79",
+      "all_image_values_sha256": "e316a605f0e68c9002421dea27cf35ef32270562965f7b7754cd94dd3edf0867",
+      "source_file_sha256": null,
+      "trained_weight_sha256": "9bc9bc9f07d366a868a420f377d0e36cbabe466061ed89385cd6e8613aa3512e",
+      "parameters": 1158,
+      "first_training_loss": 0.6936060190200806,
+      "last_training_loss": 0.6874179840087891,
+      "preprocessing_scope": "Training images only; caller-ordered split, no holdout tuning",
+      "raw_pixels_or_text_exported": false,
+      "pretrained_weights_used": false,
+      "baseline_changed": false,
+      "accuracy": 0.5,
+      "confusion_matrix": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "f1_by_class_position": [
+        0.0,
+        0.6666666666666666
+      ]
+    }
+  },
+  "covariate_gradient_checks": [
+    {
+      "architecture": "informer",
+      "historical_covariate_gradient_absolute_sum": 4.345823764801025,
+      "passed": true
+    },
+    {
+      "architecture": "tft",
+      "historical_covariate_gradient_absolute_sum": 1.9125289916992188,
+      "passed": true
+    },
+    {
+      "architecture": "tide",
+      "historical_covariate_gradient_absolute_sum": 5.784045219421387,
+      "passed": true
+    }
+  ],
+  "passed": true
+}

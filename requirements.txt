@@ -163,3 +163,15 @@ urllib3==2.8.0
 webcolors==25.10.0
 wrapt==2.5.2
 xgboost==3.4.1
+flaml==2.8.0
+flatbuffers==25.12.19
+mypy-extensions==1.2.0
+onnxruntime==1.32.0
+opencv-python==5.0.0.93
+pandera==0.36.0
+protobuf==7.36.2
+pyclipper==1.4.0
+rapidocr-onnxruntime==1.4.4
+shapely==2.2.0
+typeguard==4.6.0
+typing-inspect==0.9.0

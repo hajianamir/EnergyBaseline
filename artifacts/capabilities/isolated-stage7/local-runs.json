@@ -1,0 +1,84 @@
+{
+  "note": "Log copies have trailing whitespace removed so the repository whitespace check accepts them; JUnit files are byte-exact inside gzip.",
+  "clone_clean_before": true,
+  "clone_status_after": [],
+  "runs": [
+    {
+      "execution": "complete non-GUI regression",
+      "source_commit": "14900def3dbcde425a292e2f0f47c9d0ca8c0d95",
+      "working_tree": "fresh git clone at that commit",
+      "command": "python -m pytest -q -p no:cacheprovider --ignore=tests/gui --junitxml=full.xml",
+      "exit_after_interpreter_teardown": 0,
+      "summary": "952 passed in 633.49s (0:10:33)",
+      "log": "local-full.log",
+      "junit": "local-full.xml.gz",
+      "junit_sha256_uncompressed": "7cf992c231a3842e86f5144318875448a0e4352ab4ab1bb6de6a0a3536dd7922",
+      "junit_counts": {
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "tests": 952
+      }
+    },
+    {
+      "execution": "complete GUI regression",
+      "source_commit": "14900def3dbcde425a292e2f0f47c9d0ca8c0d95",
+      "working_tree": "fresh git clone at that commit",
+      "command": "python -m pytest -q -p no:cacheprovider tests/gui --cov=energybaseline/gui --cov-report=term --cov-report=xml:gui-coverage.xml --cov-fail-under=56 --junitxml=gui.xml",
+      "exit_after_interpreter_teardown": 0,
+      "summary": "52 passed in 157.60s (0:02:37)",
+      "log": "local-gui.log",
+      "junit": "local-gui.xml.gz",
+      "junit_sha256_uncompressed": "8aaf4574a59e01a69eb8d47b649984cfd307d93945635ee8abbf5613c319e267",
+      "junit_counts": {
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "tests": 52
+      }
+    },
+    {
+      "execution": "provisioned execution tests",
+      "source_commit": "14900def3dbcde425a292e2f0f47c9d0ca8c0d95",
+      "working_tree": "fresh git clone at that commit",
+      "command": "EB_PROVISIONED_HOME=<home> python -m pytest -q -p no:cacheprovider provisioned_tests --durations=20 --junitxml=provisioned.xml --cov=energybaseline/isolated --cov-report=term",
+      "exit_after_interpreter_teardown": 0,
+      "summary": "17 passed in 276.40s (0:04:36)",
+      "log": "local-provisioned.log",
+      "junit": "local-provisioned.xml.gz",
+      "junit_sha256_uncompressed": "9275ecbaba0eee2d61b817285f67c22e4f6a300b264446467b16edd02bacb914",
+      "junit_counts": {
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "tests": 17
+      }
+    },
+    {
+      "execution": "command-line receipts",
+      "source_commit": "14900def3dbcde425a292e2f0f47c9d0ca8c0d95",
+      "working_tree": "fresh git clone at that commit",
+      "command": "EB_HOME=<home> python scripts/evidence/isolated_engines.py --out local-python-engines.json",
+      "exit_after_interpreter_teardown": 0,
+      "summary": "ghostnet.json: Egyptian cat 0.491; espresso 0.915; torch 2.15.0",
+      "log": "local-evidence.log"
+    },
+    {
+      "execution": "focused capability tests",
+      "source_commit": "14900def3dbcde425a292e2f0f47c9d0ca8c0d95",
+      "working_tree": "fresh git clone at that commit",
+      "command": "python -m pytest -q -p no:cacheprovider tests/test_workbench.py tests/test_advanced_workbench.py tests/test_external_workbench.py tests/test_catalog_expansion.py tests/test_isolated_engines.py --cov=energybaseline/workbench --cov=energybaseline/isolated --cov-report=term --cov-report=xml:capability-coverage.xml --junitxml=focused.xml",
+      "exit_after_interpreter_teardown": 0,
+      "summary": "348 passed in 96.79s (0:01:36)",
+      "log": "local-focused.log",
+      "junit": "local-focused.xml.gz",
+      "junit_sha256_uncompressed": "a5691628a56bc82148658dcd63359e39a816461a004fab3e7ac94ba19ae3d84e",
+      "junit_counts": {
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "tests": 348
+      }
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "input_sha256": "33755a1e249515343920589f0673c88d4fe8a4f4cdfe27bccd1d4c3534c7e94e",
+  "library_versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  },
+  "operation": "business-validation",
+  "reference_sha256": null,
+  "result": {
+    "all_passed": false,
+    "automatic_repairs": false,
+    "engine": "bounded typed declarative business assertions; not Pandera/Great Expectations",
+    "raw_values_exported": false,
+    "rules": [
+      {
+        "evaluated_rows": 160,
+        "failed_rows": 85,
+        "failure_list_truncated": true,
+        "first_failed_positions": [
+          0,
+          2,
+          3,
+          5,
+          13,
+          14,
+          16,
+          17,
+          20,
+          23,
+          25,
+          32,
+          34,
+          35,
+          36,
+          38,
+          39,
+          41,
+          42,
+          45
+        ],
+        "id": "positive",
+        "passed_rows": 75,
+        "unknown_rows": 0
+      },
+      {
+        "evaluated_rows": 160,
+        "failed_rows": 0,
+        "failure_list_truncated": false,
+        "first_failed_positions": [],
+        "id": "bounded",
+        "passed_rows": 160,
+        "unknown_rows": 0
+      }
+    ],
+    "unknown_truth_fails": true
+  },
+  "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+  "spec_sha256": "5234871a373b3d99c0e7426f6f25326f1d730575aff399416a87fafa6eac6ad1",
+  "version": 1
+}

@@ -1,0 +1,48 @@
+{
+  "input_sha256": "d6884b1b5c583141af7b13a4292a272f66680a8b1e520565ecc3039f1a3cde69",
+  "library_versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  },
+  "operation": "multi-target-consensus",
+  "reference_sha256": null,
+  "result": {
+    "inference": "Descriptive ranking only, no association p-values or causal interpretation.",
+    "mean_ranks": [
+      1.0,
+      4.0,
+      3.0,
+      2.0
+    ],
+    "method": "Equal-target Borda consensus of absolute training Pearson association ranks",
+    "per_target_ranks": [
+      [
+        1.0,
+        1.0
+      ],
+      [
+        4.0,
+        4.0
+      ],
+      [
+        3.0,
+        3.0
+      ],
+      [
+        2.0,
+        2.0
+      ]
+    ],
+    "selected_feature_positions": [
+      0
+    ],
+    "test_rows": 40,
+    "train_rows": 120
+  },
+  "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+  "spec_sha256": "60af88c068f9a81ed31ea5cb57ea1be82552c365fbc6a673184aa52c1e092a03",
+  "version": 1
+}

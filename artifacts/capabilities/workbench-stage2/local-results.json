@@ -1,0 +1,57 @@
+{
+  "source_commit": "5e571cc96404cd3e9b4a70a59fab66b11fa393ad",
+  "runs": {
+    "focused": {
+      "tests": 120,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "duration_seconds": 13.323,
+      "wrapper_exit_code": 0
+    },
+    "gui": {
+      "tests": 28,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "duration_seconds": 116.703,
+      "wrapper_exit_code": 0
+    },
+    "gui-and-gates": {
+      "tests": 39,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "duration_seconds": 142.849,
+      "wrapper_exit_code": 0
+    },
+    "full-suite": {
+      "tests": 672,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "duration_seconds": 2527.325,
+      "wrapper_exit_code": 0
+    },
+    "full-direct": {
+      "tests": 672,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "duration_seconds": 695.415,
+      "pytest_process_exit_code": 0
+    }
+  },
+  "coverage": {
+    "version": "7.17.3",
+    "timestamp": "1794763894832",
+    "lines-valid": "17715",
+    "lines-covered": "15680",
+    "line-rate": "0.8851",
+    "branches-covered": "0",
+    "branches-valid": "0",
+    "branch-rate": "0",
+    "complexity": "0"
+  },
+  "direct_pytest_teardown_receipt": "full-direct-exit.json is recorded by a separate direct subprocess execution, not inferred from a later coverage command."
+}

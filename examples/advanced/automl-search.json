@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "operation": "automl-search",
+  "parameters": {
+    "time": "time",
+    "target": "y",
+    "features": [
+      "x"
+    ],
+    "train_rows": 72,
+    "seed": 1,
+    "trials": 4
+  }
+}

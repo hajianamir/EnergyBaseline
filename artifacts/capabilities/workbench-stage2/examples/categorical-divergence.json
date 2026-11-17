@@ -1,0 +1,27 @@
+{
+  "input_sha256": "53f843e4a5000fbe37d6debc691be77f625f6b419c3339cd8e45a08e39c0f945",
+  "library_versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  },
+  "operation": "categorical-divergence",
+  "reference_sha256": "f644ae56b1748e31845ad8b02b52798c5caef9d21444c011851498fc09cca879",
+  "result": {
+    "action": "Review and revalidate if appropriate; never mutate or refit a baseline.",
+    "category_count": 3,
+    "current_rows": 4,
+    "jensen_shannon_divergence": 0.017255183415122333,
+    "kl_direction": "current || reference",
+    "kl_divergence": 0.07474973482350683,
+    "kl_is_infinite": false,
+    "log_base": "e",
+    "pseudocount": 1.0,
+    "reference_rows": 4
+  },
+  "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+  "spec_sha256": "8c3b3301f034b910a62fb425d43893e405d3fcd09eeaa6329dc8a0b95fb3181b",
+  "version": 1
+}

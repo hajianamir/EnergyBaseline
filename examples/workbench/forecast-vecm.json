@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "operation": "forecast-holdout",
+  "parameters": {
+    "target": [
+      "a",
+      "b"
+    ],
+    "time": "time",
+    "train_rows": 80,
+    "method": "vecm",
+    "lags": 1,
+    "rank": 1
+  }
+}

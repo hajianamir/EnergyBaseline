@@ -1,0 +1,38 @@
+[
+  {
+    "path": ".github",
+    "blob_href": "https://github.com/hajianamir/EnergyBaseline/blob/6a3dc5fbd4a3ea2ef6d4699a080cf30fc532afbb/.github",
+    "start_line": 2,
+    "start_column": null,
+    "end_line": 2,
+    "end_column": null,
+    "annotation_level": "warning",
+    "title": "",
+    "message": "Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+    "raw_details": ""
+  },
+  {
+    "path": ".github",
+    "blob_href": "https://github.com/hajianamir/EnergyBaseline/blob/6a3dc5fbd4a3ea2ef6d4699a080cf30fc532afbb/.github",
+    "start_line": 87,
+    "start_column": null,
+    "end_line": 87,
+    "end_column": null,
+    "annotation_level": "failure",
+    "title": "",
+    "message": "Process completed with exit code 1.",
+    "raw_details": ""
+  },
+  {
+    "path": ".github",
+    "blob_href": "https://github.com/hajianamir/EnergyBaseline/blob/6a3dc5fbd4a3ea2ef6d4699a080cf30fc532afbb/.github",
+    "start_line": 11,
+    "start_column": null,
+    "end_line": 11,
+    "end_column": null,
+    "annotation_level": "failure",
+    "title": "ExternalEngineExecutionFailure",
+    "message": "flaml-search: Subprocess exit 1; output file present: False.\nTraceback (most recent call last):\n  File \"launcher.py\", line 95, in <module>\n  File \"launcher.py\", line 73, in main\n  File \"energybaseline\\cli.py\", line 1257, in main\n    return handler(args)\n           ^^^^^^^^^^^^^\n  File \"energybaseline\\cli.py\", line 964, in _cmd_workbench\n    result = run_workbench(request, frame, reference=reference)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"energybaseline\\workbench\\__init__.py\", line 134, in run_workbench\n    result = OPERATIONS[operation](frame, request[\"parameters\"])\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"energybaseline\\workbench\\external.py\", line 49, in flaml_holdout\n    from flaml import AutoML, tune\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"pyimod02_importers.py\", line 457, in exec_module\n  File \"flaml\\__init__.py\", line 5, in <module>\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"pyimod02_importers.py\", line 457, in exec_module\n  File \"flaml\\automl\\__init__.py\", line 4, in <module>\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"pyimod02_importers.py\", line 457, in exec_module\n  File \"flaml\\automl\\automl.py\", line 22, in <module>\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"pyimod02_importers.py\", line 457, in exec_module\n  File \"flaml\\automl\\ml.py\", line 12, in <module>\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"pyimod02_importers.py\", line 457, in exec_module\n  File \"flaml\\automl\\model.py\", line 27, in <module>\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"pyimod02_importers.py\", line 457, in exec_module\n  File \"xgboost\\__init__.py\", line 6, in <module>\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"pyimod02_importers.py\", line 457, in exec_module\n  File \"xgboost\\collective.py\", line 14, in <module>\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"pyimod02_importers.py\", line 457, in exec_module\n  File \"xgboost\\core.py\", line 42, in <module>\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"pyimod02_importers.py\", line 457, in exec_module\n  File \"xgboost\\_c_api.py\", line 184, in <module>\n  File \"xgboost\\_c_api.py\", line 120, in _load_lib\n  File \"xgboost\\libpath.py\", line 77, in find_lib_path\nxgboost.libpath.XGBoostLibraryNotFound: Cannot find XGBoost Library in the candidate path.  List of candidates:\n- D:\\a\\EnergyBaseline\\EnergyBaseline\\dist\\diagnostic\\EnergyBaseline\\_internal\\xgboost\\lib\\xgboost.dll\n- D:\\a\\EnergyBaseline\\EnergyBaseline\\dist\\diagnostic\\EnergyBaseline\\_internal\\xgboost\\..\\",
+    "raw_details": ""
+  }
+]

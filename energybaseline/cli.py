@@ -96,7 +96,12 @@ def _write_or_print(payload: Mapping[str, Any], out_path: str | None) -> None:
         p = Path(out_path)
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_text(rendered, encoding="utf-8")
-    sys.stdout.write(rendered)
+    if sys.stdout is not None:
+        sys.stdout.write(rendered)
+    elif not out_path:
+        # PyInstaller's windowed Windows executable has no standard streams.
+        # An explicit output file is required instead of silently losing evidence.
+        raise ValueError("Windowed CLI execution requires an explicit --out path.")
 
 
 def _cmd_schema_suggest(args: argparse.Namespace) -> int:
@@ -923,9 +928,124 @@ def _cmd_analyze(args):
 
 
 
+def _cmd_quality_audit(args):
+    from .core.quality_audit import audit_quality
+
+    try:
+        frame = ingest.load_file(args.dataset)
+        policy = json.loads(Path(args.policy).read_text(encoding="utf-8")) if args.policy else {}
+        references = {}
+        for binding in args.reference:
+            name, separator, path = binding.partition("=")
+            if not separator or not name or not path or name in references:
+                raise ValueError("References require unique name=path bindings.")
+            references[name] = ingest.load_file(path)
+    except OSError as exc:
+        raise ValueError("Quality audit input could not be loaded.") from exc
+    result = audit_quality(frame, policy, references=references, as_of=args.as_of)
+    if args.fail_under is not None and not 0 <= args.fail_under <= 1:
+        raise ValueError("Quality threshold must be between zero and one.")
+    _write_or_print(result, args.out)
+    if args.fail_under is not None:
+        return int(result["overall_score"] is None or result["overall_score"] < args.fail_under)
+    return 0
+
+
+def _cmd_engines(args):
+    """Inspect, provision or remove an isolated engine runtime. Provisioning needs package-index access."""
+    from . import isolated
+
+    names = [args.engine] if args.engine else list(isolated.ENGINES)
+    if args.action == "status":
+        payload = {"engines": [isolated.engine_status(name) for name in names]}
+    elif not args.engine:
+        raise ValueError("Name exactly one engine to install or remove.")
+    elif args.action == "install":
+        manifest = isolated.install_engine(args.engine, args.python)
+        payload = {"installed": {k: manifest[k] for k in ("engine", "version", "lock_sha256", "python", "platform")},
+                   "distribution_count": len(manifest["distributions"])}
+    else:
+        payload = {"removed": isolated.remove_engine(args.engine)}
+    _write_or_print(payload, args.out)
+    return 0
+
+
+def _cmd_assets(args):
+    """Inspect, provision or remove hash-pinned pretrained model files."""
+    from . import assets
+
+    names = [args.asset] if args.asset else list(assets.ASSETS)
+    if args.action == "status":
+        payload = {"assets": [assets.asset_status(name) for name in names]}
+    elif not args.asset:
+        raise ValueError("Name exactly one asset to install or remove.")
+    elif args.action == "install":
+        payload = {"installed": assets.install_asset(args.asset, args.source)}
+    else:
+        payload = {"removed": assets.remove_asset(args.asset)}
+    _write_or_print(payload, args.out)
+    return 0
+
+
+def _cmd_workbench(args):
+    from .isolated import ProvisioningRequired
+    from .workbench import run_workbench
+
+    try:
+        path = Path(args.request)
+        if path.stat().st_size > 1_000_000:
+            raise ValueError("Request is too large.")
+        request = json.loads(path.read_text(encoding="utf-8"))
+        frame = ingest.load_file(args.dataset) if args.dataset else None
+        reference = ingest.load_file(args.reference) if args.reference else None
+        result = run_workbench(request, frame, reference=reference)
+    except ProvisioningRequired:
+        raise
+    except (OSError, UnicodeError, ValueError, TypeError, ingest.IngestError) as exc:
+        raise ValueError("Workbench request failed. Check the versioned schema, permitted input files, "
+                         "numeric types and operation-specific sample/resource limits; no raw values are exported.") from exc
+    _write_or_print(result, args.out)
+    return 0
+
+
+def _cmd_statistical_plan(args):
+    from .statistics import run_statistical_plan, validate_plan
+
+    try:
+        path = Path(args.request)
+        if path.stat().st_size > 200_000:
+            raise ValueError("Plan is too large.")
+        plan = json.loads(path.read_text(encoding="utf-8"))
+        validate_plan(plan)
+        frame = ingest.load_file(args.dataset)
+    except (OSError, UnicodeError, ValueError, TypeError, ingest.IngestError):
+        raise ValueError("Statistical plan/input could not be loaded or validated; no raw values are exported.") from None
+    if not args.accept_and_lock:
+        raise ComplianceGateError("Execution requires explicit --accept-and-lock for this exact input and preregistered plan.")
+    schema = suggest_dataset_schema(frame, time_col=plan["time"], targets=plan["targets"],
+                                    dataset_sha256=ingest.sha256_file(args.dataset))
+    for column in plan["metadata"]:
+        schema = schema.with_column(ColumnSpec(name=column, role=ColumnRole.GROUP,
+                                               inclusion=Inclusion.OBSERVED_ONLY, suggested_by_heuristic=False))
+    vsg = VariableSelectionGate(frame, targets=plan["targets"], time_col=plan["time"], schema=schema,
+                               dataset_sha256=ingest.sha256_file(args.dataset))
+    vsg.accept()
+    tcp = TestConfigPanel(vsg, config={"tcp_alpha": args.alpha, "tcp_correction": args.correction})
+    tcp.register_extension_plan(plan)
+    tcp.lock_preregistration()
+    result = run_statistical_plan(plan, frame, vsg=vsg, tcp=tcp)
+    _write_or_print(result, args.out)
+    return 0
+
+
 CLI_COMMAND_HANDLERS: Mapping[str, Callable[[argparse.Namespace], int]] = MappingProxyType(
     {
         "analyze": _cmd_analyze,
+        "quality-audit": _cmd_quality_audit,
+        "workbench": _cmd_workbench,
+        "engines": _cmd_engines,
+        "assets": _cmd_assets,
+        "statistical-plan": _cmd_statistical_plan,
         "schema-suggest": _cmd_schema_suggest,
         "schema-edit": _cmd_schema_edit,
         "schema-validate": _cmd_schema_validate,
@@ -967,6 +1087,40 @@ def build_parser() -> argparse.ArgumentParser:
     p_analysis.add_argument("--config", help="Path to a JSON configuration object.")
     p_analysis.add_argument("--inference", action="store_true", help="Explicitly accept VSG and lock TCP for these exact input values before inference.")
     p_analysis.add_argument("--out")
+
+    p_quality = sub.add_parser("quality-audit", help="Read-only six-dimensional quality audit with explicit reference evidence.")
+    p_quality.add_argument("dataset")
+    p_quality.add_argument("--policy", help="Version-1 quality policy JSON; never executable expressions.")
+    p_quality.add_argument("--reference", action="append", default=[], help="Explicit name=dataset-path reference binding; repeatable.")
+    p_quality.add_argument("--as-of", help="Timezone-aware freshness evaluation time; required for timeliness.")
+    p_quality.add_argument("--fail-under", type=float, help="Exit 1 below this [0,1] overall score, or if any dimension is unassessed.")
+    p_quality.add_argument("--out")
+
+    p_workbench = sub.add_parser("workbench", help="Run a bounded offline exploratory job; never modify a locked baseline.")
+    p_workbench.add_argument("request", help="Version-1 JSON: operation, parameters; no executable expressions or model pickles.")
+    p_workbench.add_argument("--dataset", help="Explicit input CSV/TSV/Excel/Parquet binding; omitted for linear-optimize.")
+    p_workbench.add_argument("--reference", help="Explicit reference dataset for categorical-divergence only.")
+    p_workbench.add_argument("--out")
+
+    p_engines = sub.add_parser("engines", help="Inspect or provision isolated AutoML/forecasting engine runtimes from their hash locks.")
+    p_engines.add_argument("action", choices=("status", "install", "remove"))
+    p_engines.add_argument("engine", nargs="?", choices=("tpot", "h2o", "autogluon", "autosklearn", "chronos"))
+    p_engines.add_argument("--python", help="Base CPython interpreter of the version the engine lock requires.")
+    p_engines.add_argument("--out")
+
+    p_assets = sub.add_parser("assets", help="Inspect or provision hash-pinned pretrained model files.")
+    p_assets.add_argument("action", choices=("status", "install", "remove"))
+    p_assets.add_argument("asset", nargs="?", choices=("chronos-bolt-tiny", "ghostnet-imagenet"))
+    p_assets.add_argument("--source", help="Local directory holding the asset files; omit to fetch the fixed HTTPS origins.")
+    p_assets.add_argument("--out")
+
+    p_stat = sub.add_parser("statistical-plan", help="Execute an exact preregistered inferential plan only with explicit gate acceptance.")
+    p_stat.add_argument("request", help="Version-1 statistical plan JSON; never executable formulas.")
+    p_stat.add_argument("dataset")
+    p_stat.add_argument("--accept-and-lock", action="store_true", help="Explicitly accept the input-bound VSG, register this plan and lock its TCP before execution.")
+    p_stat.add_argument("--alpha", type=float, default=0.05)
+    p_stat.add_argument("--correction", choices=[c.value for c in MultipleTestingCorrection], default="holm")
+    p_stat.add_argument("--out")
 
     p_sug = sub.add_parser("schema-suggest", help="Inspect a dataset and emit a suggested DatasetSchema JSON envelope.")
     p_sug.add_argument("dataset", help="Path to CSV / TSV / Excel / Parquet dataset.")
@@ -1149,7 +1303,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(list(argv) if argv is not None else None)
     handler = CLI_COMMAND_HANDLERS.get(args.subcommand)
     if handler is None:
-        sys.stderr.write(f"ERROR: Unknown subcommand '{args.subcommand}'.\n")
+        if sys.stderr is not None:
+            sys.stderr.write(f"ERROR: Unknown subcommand '{args.subcommand}'.\n")
         return 2
     try:
         return handler(args)
@@ -1166,7 +1321,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         ValueError,
     ) as exc:
         err_payload = {"valid": False, "error_type": type(exc).__name__, "error": str(exc)}
-        sys.stderr.write(json.dumps(err_payload) + "\n")
+        if sys.stderr is not None:
+            sys.stderr.write(json.dumps(err_payload) + "\n")
         return 2
 
 

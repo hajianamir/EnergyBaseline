@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "operation": "text-topics",
+  "parameters": {
+    "text": "text",
+    "time": "time",
+    "train_rows": 90,
+    "gap": 3,
+    "max_features": 100,
+    "topics": 3
+  }
+}

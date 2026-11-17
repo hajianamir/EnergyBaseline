@@ -1,0 +1,44 @@
+{
+  "input_sha256": "0cd1c4534e0c8856d8cd24e83fd8156c97e9778a93e289df04c721fa76be4a53",
+  "library_versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  },
+  "operation": "group-fairness",
+  "reference_sha256": null,
+  "result": {
+    "causal_or_legal_fairness_claim": false,
+    "demographic_parity_difference": 0.5,
+    "disparate_impact_ratio": 0.3333333333333333,
+    "equalized_odds_difference": 0.5,
+    "group_labels_exported": false,
+    "groups": [
+      {
+        "accuracy": 0.75,
+        "false_positive_rate": 0.5,
+        "group_position": 0,
+        "n": 4,
+        "selection_rate": 0.75,
+        "status": "assessed",
+        "true_positive_rate": 1.0
+      },
+      {
+        "accuracy": 0.75,
+        "false_positive_rate": 0.0,
+        "group_position": 1,
+        "n": 4,
+        "selection_rate": 0.25,
+        "status": "assessed",
+        "true_positive_rate": 0.5
+      }
+    ],
+    "mitigation_applied": false,
+    "scope": "Eligible groups only; suppressed groups preclude an all-population conclusion."
+  },
+  "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+  "spec_sha256": "34749113629189d4d07ccf54f0a2389d97889d720559c3dade15191251f3b9fe",
+  "version": 1
+}

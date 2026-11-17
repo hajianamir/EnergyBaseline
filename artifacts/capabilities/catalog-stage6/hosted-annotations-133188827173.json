@@ -1,0 +1,74 @@
+[
+  {
+    "path": ".github",
+    "blob_href": "https://github.com/hajianamir/EnergyBaseline/blob/742ab337f30681054f2ec102fe16e08c3d9b3df8/.github",
+    "start_line": 2,
+    "start_column": null,
+    "end_line": 2,
+    "end_column": null,
+    "annotation_level": "warning",
+    "title": "",
+    "message": "Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+    "raw_details": ""
+  },
+  {
+    "path": ".github/workflows/ci.yml",
+    "blob_href": "https://github.com/hajianamir/EnergyBaseline/blob/742ab337f30681054f2ec102fe16e08c3d9b3df8/.github/workflows/ci.yml",
+    "start_line": 1,
+    "start_column": null,
+    "end_line": 1,
+    "end_column": null,
+    "annotation_level": "notice",
+    "title": "NativeEvidence-windows-credentials.json",
+    "message": "sha256=e7b9deb123b3b8db7e742fff0a668d9b21e9fcbe5da46c5461239d8f38cb9c04 {\"evidence_schema_version\":1,\"platform\":\"win32\",\"native\":true,\"mocked\":false,\"backend\":{\"name\":\"windows-dpapi\",\"persistent\":true,\"secure_store\":true},\"checks\":{\"actual_secure_os_backend\":true,\"fresh_process_recovers_same_plaintext\":true,\"tampered_ciphertext_is_rejected\":true,\"no_plaintext_keyfile_created\":true},\"service_failure\":{\"executed\":false,\"reason\":\"Native DPAPI tamper rejection is exercised above; service outage is Linux-only.\"},\"passed\":true,\"scope\":\"Actual OS backend, process restart and ciphertext tamper; not reboot or physical desktop evidence.\"}",
+    "raw_details": ""
+  },
+  {
+    "path": ".github",
+    "blob_href": "https://github.com/hajianamir/EnergyBaseline/blob/742ab337f30681054f2ec102fe16e08c3d9b3df8/.github",
+    "start_line": 1408,
+    "start_column": null,
+    "end_line": 1408,
+    "end_column": null,
+    "annotation_level": "notice",
+    "title": "startup_time.json (sha256=4c7f21f37558db3c3049caa1111bf8116b37b96314e8dd1d453654cc483f0ff7)",
+    "message": "{\"schema_version\":\"1.0\",\"script\":\"scripts/evidence/startup_time.ps1\",\"timestamp_utc\":\"2026-11-16T09:57:24.0350534Z\",\"target_kind\":\"pyinstaller_onedir_exe\",\"target_executable\":\"D:\\\\a\\\\EnergyBaseline\\\\EnergyBaseline\\\\dist\\\\EnergyBaseline\\\\EnergyBaseline.exe\",\"hardware\":{\"environment_label\":\"CI, non-normative\",\"is_ci\":true,\"normative_per_d2\":false,\"d2_note\":\"Measured on GitHub Actions virtual runner; non-normative per Decision D2 (reference: 8-core, 16 GB, NVMe, Win11 23H2).\",\"os_caption\":\"Microsoft Windows Server 2025 Datacenter\",\"cpu_name\":\"INTEL(R) XEON(R) PLATINUM 8573C\",\"logical_processors\":4,\"ram_gb\":15.99},\"cold_iterations\":5,\"warm_iterations\":5,\"cold_median_ms\":3977.97,\"cold_p95_ms\":3985.43,\"warm_median_ms\":3834.79,\"warm_p95_ms\":3845.97,\"cold_first_paint_ms\":3977.97,\"warm_first_paint_median_ms\":3834.79,\"cold_stats\":{\"count\":5,\"min_ms\":3924.15,\"median_ms\":3977.97,\"p95_ms\":3985.43,\"max_ms\":3985.79},\"warm_stats\":{\"count\":5,\"min_ms\":3805.52,\"median_ms\":3834.79,\"p95_ms\":3845.97,\"max_ms\":3846.18},\"normative_budgets_ms\":{\"cold_max_ms_on_d2_ref_hw\":4000.0,\"warm_max_ms_on_d2_ref_hw\":1500.0},\"cold_runs\":[{\"label\":\"cold_1\",\"exit_code\":0,\"first_paint_ms\":3966.79,\"total_process_ms\":4970.93,\"db_ok\":true,\"db_rung\":\"eb_home\"},{\"label\":\"cold_2\",\"exit_code\":0,\"first_paint_ms\":3977.97,\"total_process_ms\":4955.92,\"db_ok\":true,\"db_rung\":\"eb_home\"},{\"label\":\"cold_3\",\"exit_code\":0,\"first_paint_ms\":3985.79,\"total_process_ms\":4993.53,\"db_ok\":true,\"db_rung\":\"eb_home\"},{\"label\":\"cold_4\",\"exit_code\":0,\"first_paint_ms\":3924.15,\"total_process_ms\":4914.29,\"db_ok\":true,\"db_rung\":\"eb_home\"},{\"label\":\"cold_5\",\"exit_code\":0,\"first_paint_ms\":3984.0,\"total_process_ms\":5008.47,\"db_ok\":true,\"db_rung\":\"eb_home\"}],\"warm_runs\":[{\"label\":\"warm_1\",\"exit_code\":0,\"first_paint_ms\":3845.12,\"total_process_ms\":4838.77,\"db_ok\":true,\"db_rung\":\"eb_home\"},{\"label\":\"warm_2\",\"exit_code\":0,\"first_paint_ms\":3846.18,\"total_process_ms\":4844.42,\"db_ok\":true,\"db_rung\":\"eb_home\"},{\"label\":\"warm_3\",\"exit_code\":0,\"first_paint_ms\":3805.52,\"total_process_ms\":4776.14,\"db_ok\":true,\"db_rung\":\"eb_home\"},{\"label\":\"warm_4\",\"exit_code\":0,\"first_paint_ms\":3812.99,\"total_process_ms\":4782.09,\"db_ok\":true,\"db_rung\":\"eb_home\"},{\"label\":\"warm_5\",\"exit_code\":0,\"first_paint_ms\":3834.79,\"total_process_ms\":4842.73,\"db_ok\":true,\"db_rung\":\"eb_home\"}],\"pass\":true}",
+    "raw_details": ""
+  },
+  {
+    "path": ".github",
+    "blob_href": "https://github.com/hajianamir/EnergyBaseline/blob/742ab337f30681054f2ec102fe16e08c3d9b3df8/.github",
+    "start_line": 1407,
+    "start_column": null,
+    "end_line": 1407,
+    "end_column": null,
+    "annotation_level": "notice",
+    "title": "lif_orphans.json (sha256=694fdb1e069ff1d9fb8bb51f6366e7bafbaf325b2f9deff0d0d7361452a882c7)",
+    "message": "{\"schema_version\":\"1.0\",\"script\":\"scripts/evidence/lif_orphans.ps1\",\"timestamp_utc\":\"2026-11-16T09:56:33.29326Z\",\"target_kind\":\"pyinstaller_exe\",\"target_executable\":\"D:\\\\a\\\\EnergyBaseline\\\\EnergyBaseline\\\\dist\\\\EnergyBaseline\\\\EnergyBaseline.exe\",\"hardware\":{\"environment_label\":\"CI, non-normative\",\"is_ci\":true,\"normative_per_d2\":false,\"os_caption\":\"Microsoft Windows Server 2025 Datacenter\",\"os_build\":\"26100\",\"cpu_name\":\"INTEL(R) XEON(R) PLATINUM 8573C\",\"logical_processors\":4,\"ram_gb\":15.99},\"clean_quit_scenario\":{\"parent_exit_code\":0,\"spawned_worker_pids\":[1632],\"cleanup_elapsed_seconds\":0.0554,\"surviving_orphan_pids\":[],\"wal_checkpointed\":true},\"abrupt_kill_scenario\":{\"job_object_active\":true,\"job_object_assigned_pids\":[3652],\"tracked_child_pids\":[3652],\"cleanup_elapsed_seconds\":0.0737,\"surviving_orphan_pids\":[]},\"orphan_count\":0,\"max_allowed_seconds\":5.0,\"pass\":true}",
+    "raw_details": ""
+  },
+  {
+    "path": ".github",
+    "blob_href": "https://github.com/hajianamir/EnergyBaseline/blob/742ab337f30681054f2ec102fe16e08c3d9b3df8/.github",
+    "start_line": 1406,
+    "start_column": null,
+    "end_line": 1406,
+    "end_column": null,
+    "annotation_level": "notice",
+    "title": "installer_smoke.json (sha256=03d7040304715e2ceffa6790dcb8e83cccb174bb2efd87a081759ccaa57f5e8b)",
+    "message": "{\"schema_version\":\"1.0\",\"script\":\"scripts/evidence/installer_smoke.ps1\",\"timestamp_utc\":\"2026-11-16T09:56:20.6778253Z\",\"environment_label\":\"CI, non-normative\",\"profile\":\"lite\",\"layout\":\"onedir\",\"installer_engine\":\"inno_setup\",\"artifacts\":{\"onedir_exe\":\"D:\\\\a\\\\EnergyBaseline\\\\EnergyBaseline\\\\dist\\\\EnergyBaseline\\\\EnergyBaseline.exe\",\"onedir_exe_sha256\":\"9d670db1cd05861fbd56f68b93f11cab2d86b83c9723aaf1147189600950702c\",\"shortcut_lnk\":\"D:\\\\a\\\\EnergyBaseline\\\\EnergyBaseline\\\\dist\\\\EnergyBaseline\\\\EnergyBaseline.lnk\",\"shortcut_sha256\":\"0ce2f0f9b0b1c93fdf3a84901a811f61833f1e8424321092cdae84118349ca63\",\"sbom_path\":\"D:\\\\a\\\\EnergyBaseline\\\\EnergyBaseline\\\\dist\\\\EnergyBaseline\\\\sbom.cdx.json\",\"sbom_sha256\":\"8f3890dc98d5d4cd42313712f8eadbdcf8cfe28b4e7c6166ab1c7f60b6ea7b5e\",\"sbom_component_count\":158,\"installer_exe\":\"D:\\\\a\\\\EnergyBaseline\\\\EnergyBaseline\\\\dist\\\\EnergyBaseline-Setup-lite.exe\",\"installer_sha256\":\"6d54af9771787d4fcd07a68de00651878fd2c169ae23f787396a477bff3ce8fa\"},\"install_smoke\":{\"install_exit_code\":0,\"installed_exe_verified\":true,\"launch_exit_code\":0,\"launch_db_ok\":true,\"first_paint_ms\":4377.06,\"uninstall_exit_code\":0,\"uninstalled_cleanly\":true},\"pass\":true}",
+    "raw_details": ""
+  },
+  {
+    "path": ".github",
+    "blob_href": "https://github.com/hajianamir/EnergyBaseline/blob/742ab337f30681054f2ec102fe16e08c3d9b3df8/.github",
+    "start_line": 1405,
+    "start_column": null,
+    "end_line": 1405,
+    "end_column": null,
+    "annotation_level": "notice",
+    "title": "dpi_matrix.json (sha256=72fee300a46a1ee173628b2f1c868d9a5b15a8fb3354593988df33f19b1a46b9)",
+    "message": "{\"schema_version\":\"1.0\",\"script\":\"scripts/evidence/dpi_matrix.ps1\",\"timestamp_utc\":\"2026-11-16T09:57:45.166597Z\",\"environment_label\":\"CI, non-normative\",\"d2_note\":\"Synthetic QT_SCALE_FACTOR sweep on GitHub Actions virtual display; non-normative per Decision D2 (physical 1920x1080 Windows 11 display scaling remains required for human visual sign-off).\",\"target_kind\":\"pyinstaller_onedir_exe\",\"target_executable\":\"D:\\\\a\\\\EnergyBaseline\\\\EnergyBaseline\\\\dist\\\\EnergyBaseline\\\\EnergyBaseline.exe\",\"scales\":[{\"requested_scale_percent\":100,\"requested_qt_scale_factor\":1.0,\"reported_device_pixel_ratio\":1.0,\"exit_code\":0,\"first_paint_ms\":3992.89,\"window_geometry\":{\"width\":1000,\"height\":672,\"frame_width\":1000,\"frame_height\":703,\"screen_width\":1024,\"screen_height\":720,\"fits_width\":true,\"fits_height\":true},\"pass\":true},{\"requested_scale_percent\":125,\"requested_qt_scale_factor\":1.25,\"reported_device_pixel_ratio\":1.25,\"exit_code\":0,\"first_paint_ms\":3853.78,\"window_geometry\":{\"width\":795,\"height\":528,\"frame_width\":795,\"frame_height\":553,\"screen_width\":819,\"screen_height\":576,\"fits_width\":true,\"fits_height\":true},\"pass\":true},{\"requested_scale_percent\":150,\"requested_qt_scale_factor\":1.5,\"reported_device_pixel_ratio\":1.5,\"exit_code\":0,\"first_paint_ms\":3806.08,\"window_geometry\":{\"width\":659,\"height\":432,\"frame_width\":659,\"frame_height\":453,\"screen_width\":683,\"screen_height\":480,\"fits_width\":true,\"fits_height\":true},\"pass\":true},{\"requested_scale_percent\":175,\"requested_qt_scale_factor\":1.75,\"reported_device_pixel_ratio\":1.75,\"exit_code\":0,\"first_paint_ms\":3807.06,\"window_geometry\":{\"width\":561,\"height\":363,\"frame_width\":561,\"frame_height\":381,\"screen_width\":585,\"screen_height\":411,\"fits_width\":true,\"fits_height\":true},\"pass\":true}],\"pass\":true}",
+    "raw_details": ""
+  }
+]

@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "operation": "business-validation",
+  "parameters": {
+    "rules": [
+      {
+        "id": "positive",
+        "assert": {
+          "op": "ge",
+          "args": [
+            {
+              "column": "y"
+            },
+            {
+              "literal": 0
+            }
+          ]
+        }
+      },
+      {
+        "id": "bounded",
+        "assert": {
+          "op": "le",
+          "args": [
+            {
+              "op": "absolute",
+              "args": [
+                {
+                  "column": "y"
+                }
+              ]
+            },
+            {
+              "literal": 1000000
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

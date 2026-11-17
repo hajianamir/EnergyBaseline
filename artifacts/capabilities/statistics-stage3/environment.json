@@ -1,0 +1,19 @@
+{
+  "python": "3.12.16 (main, Nov 15 2026, 18:28:21) [GCC 12.2.0]",
+  "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+  "packages": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0",
+    "PySide6-Essentials": "6.12.0",
+    "pytest": "9.2.0",
+    "ruff": "0.17.5",
+    "sqlglot": "30.31.0"
+  },
+  "native_qt": "Actual offscreen Qt with locally source-built native runtime libraries",
+  "python_build": "Genuine CPython 3.12.16 source build; no Python 3.11 fallback",
+  "dependencies": "Unchanged requirements.lock installed with --require-hashes",
+  "scope": "Local synthetic test environment, not physical device/native production certification",
+  "native_odbc": "Actual built unixODBC prefix included in final full-suite LD_LIBRARY_PATH, alongside Qt prefix"
+}

@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "operation": "foundation-forecast",
+  "parameters": {
+    "time": "time",
+    "target": "load",
+    "train_rows": 240,
+    "horizon": 48
+  }
+}

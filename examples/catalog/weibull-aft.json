@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "operation": "survival-regression",
+  "parameters": {
+    "duration": "duration",
+    "event": "event",
+    "features": [
+      "x"
+    ],
+    "time": "time",
+    "train_rows": 260,
+    "gap": 3,
+    "method": "weibull_aft",
+    "horizons": [
+      1.0,
+      3.0,
+      6.0
+    ]
+  }
+}

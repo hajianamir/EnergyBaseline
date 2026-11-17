@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "time": "time",
+  "targets": [
+    "x",
+    "y",
+    "z",
+    "y2",
+    "a",
+    "b",
+    "c"
+  ],
+  "metadata": [
+    "group",
+    "factor",
+    "subject",
+    "condition"
+  ],
+  "sampling": "independent",
+  "assumption_justification": "Synthetic independent normal observations and independent subjects; explicit demonstration only, not a real-data assumption certificate.",
+  "correction": "tcp",
+  "tests": [
+    {
+      "id": "P0",
+      "method": "prospective_power",
+      "columns": [],
+      "parameters": {
+        "design": "one_sample_t",
+        "effect_size": 0.5,
+        "mode": "solve_n",
+        "power": 0.8
+      }
+    },
+    {
+      "id": "P1",
+      "method": "prospective_power",
+      "columns": [],
+      "parameters": {
+        "design": "independent_t",
+        "effect_size": 0.5,
+        "mode": "solve_n",
+        "power": 0.8
+      }
+    },
+    {
+      "id": "P2",
+      "method": "prospective_power",
+      "columns": [],
+      "parameters": {
+        "design": "independent_z",
+        "effect_size": 0.5,
+        "mode": "solve_n",
+        "power": 0.8
+      }
+    },
+    {
+      "id": "P3",
+      "method": "prospective_power",
+      "columns": [],
+      "parameters": {
+        "design": "balanced_anova",
+        "effect_size": 0.5,
+        "mode": "solve_n",
+        "power": 0.8
+      }
+    }
+  ]
+}

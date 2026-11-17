@@ -1,0 +1,304 @@
+{
+  "product_code_source_commit": "742ab337f30681054f2ec102fe16e08c3d9b3df8",
+  "mocked_models": false,
+  "not_a_substitute_for_native_windowed_execution": true,
+  "synthetic_input_only": true,
+  "jobs": [
+    {
+      "fixture": "text-classification.json",
+      "actual_fresh_process": true,
+      "python_stdout_stderr_none": true,
+      "exit_code": 0,
+      "authoritative_output_file_present": true,
+      "native_os_stderr_bytes": 0,
+      "elapsed_seconds": 5.299242111999774,
+      "output": {
+        "input_sha256": "8f624c8f9b30503def9ec475f12fedf7ac48ceebae72fece5da13bdd6161ad49",
+        "library_versions": {
+          "numpy": "2.5.4",
+          "pandas": "3.1.1",
+          "scikit-learn": "1.9.1",
+          "scipy": "1.18.1",
+          "statsmodels": "0.15.0"
+        },
+        "operation": "text-classification",
+        "reference_sha256": null,
+        "result": {
+          "accuracy": 1.0,
+          "baseline_changed": false,
+          "class_count": 3,
+          "class_order": "First occurrence in training; positions only, no class labels exported.",
+          "confusion_matrix_true_rows_predicted_columns": [
+            [
+              10,
+              0,
+              0
+            ],
+            [
+              0,
+              10,
+              0
+            ],
+            [
+              0,
+              0,
+              10
+            ]
+          ],
+          "fit_scope": "Vocabulary, IDF and model fitted on the training prefix only; gap and holdout excluded.",
+          "log_loss": 0.07690885126517788,
+          "macro_f1": 1.0,
+          "method": "TF-IDF with multinomial logistic regression",
+          "model_persisted": false,
+          "model_sha256": "562f30688f0739cfc4e1a39a3bd68561ae816f6ecbc372c5047f6d3fda5788ce",
+          "p_values_or_confidence_intervals_computed": false,
+          "plaintext_or_tokens_exported": false,
+          "pretrained_weights_used": false,
+          "purged_rows": 3,
+          "test_documents_without_known_tokens": 0,
+          "test_rows": 30,
+          "train_rows": 87,
+          "training_sha256": "27929ed5856828320ca5724e7ec2ad4ee2c5cf2a5dc218a6f30bdcfc875f40b1",
+          "vocabulary_sha256": "0f8fbd49faaffacdf30cb30b428eab178d37aeb9c88df9de26c3983c8b1362dd",
+          "vocabulary_size": 12
+        },
+        "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+        "spec_sha256": "db687272ae7aeae9db33e848ee770c315d6bdcdfa304811067b6168137c266c2",
+        "version": 1
+      }
+    },
+    {
+      "fixture": "text-topics.json",
+      "actual_fresh_process": true,
+      "python_stdout_stderr_none": true,
+      "exit_code": 0,
+      "authoritative_output_file_present": true,
+      "native_os_stderr_bytes": 0,
+      "elapsed_seconds": 5.576754165002058,
+      "output": {
+        "input_sha256": "8f624c8f9b30503def9ec475f12fedf7ac48ceebae72fece5da13bdd6161ad49",
+        "library_versions": {
+          "numpy": "2.5.4",
+          "pandas": "3.1.1",
+          "scikit-learn": "1.9.1",
+          "scipy": "1.18.1",
+          "statsmodels": "0.15.0"
+        },
+        "operation": "text-topics",
+        "reference_sha256": null,
+        "result": {
+          "baseline_changed": false,
+          "components_sha256": "e9b38da63a06a0212d15559c8aeda1d048d127130f00ecb8dc07964f34eaacaa",
+          "fit_scope": "Vocabulary, IDF and model fitted on the training prefix only; gap and holdout excluded.",
+          "iterations": 2,
+          "mean_test_topic_weights": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "method": "TF-IDF nonnegative matrix factorization",
+          "model_persisted": false,
+          "p_values_or_confidence_intervals_computed": false,
+          "plaintext_or_tokens_exported": false,
+          "pretrained_weights_used": false,
+          "purged_rows": 3,
+          "test_documents_without_known_tokens": 0,
+          "test_documents_without_topic_weight": 0,
+          "test_reconstruction_frobenius": 7.021666937153402e-16,
+          "test_rows": 30,
+          "topic_count": 3,
+          "topic_semantics": "Unsupervised corpus-specific components, not human labels or pretrained semantic topics.",
+          "train_rows": 87,
+          "training_reconstruction_error": 3.2138991082076025e-15,
+          "training_sha256": "27929ed5856828320ca5724e7ec2ad4ee2c5cf2a5dc218a6f30bdcfc875f40b1",
+          "training_topic_mass": [
+            9.213751071452204,
+            11.914661736209839,
+            12.234830200337269
+          ],
+          "vocabulary_sha256": "0f8fbd49faaffacdf30cb30b428eab178d37aeb9c88df9de26c3983c8b1362dd",
+          "vocabulary_size": 12
+        },
+        "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+        "spec_sha256": "d0e43e6ddfbcb06f70aa9cadd18af7df9c2e0777479063663349980ba0d1fd15",
+        "version": 1
+      }
+    },
+    {
+      "fixture": "cox-breslow.json",
+      "actual_fresh_process": true,
+      "python_stdout_stderr_none": true,
+      "exit_code": 0,
+      "authoritative_output_file_present": true,
+      "native_os_stderr_bytes": 0,
+      "elapsed_seconds": 4.758963735999714,
+      "output": {
+        "input_sha256": "a2f233d6f97975c42aca6fa054f145a3c7d589ca3f9ea20d04bb8c6c7d85cb00",
+        "library_versions": {
+          "numpy": "2.5.4",
+          "pandas": "3.1.1",
+          "scikit-learn": "1.9.1",
+          "scipy": "1.18.1",
+          "statsmodels": "0.15.0"
+        },
+        "operation": "survival-regression",
+        "reference_sha256": null,
+        "result": {
+          "assumptions": "Independent noninformative right censoring/left truncation; Cox proportional hazards or Weibull AFT specification. No competing risks.",
+          "baseline_changed": false,
+          "baseline_hazard_sha256": "c549ae7f95e08270632a4324c8f42a7662af358ed0c03e5ca27edebe72ccf036",
+          "delayed_entry": false,
+          "holdout_comparable_pairs": 4338,
+          "holdout_harrell_concordance": 0.7538035961272476,
+          "horizons": [
+            1.0,
+            3.0,
+            6.0
+          ],
+          "inference": "Likelihood optimization only; no covariance estimates, hypothesis tests or confidence intervals.",
+          "mean_test_conditional_survival": [
+            0.9098866366170797,
+            0.7151306893941141,
+            0.4850588645400996
+          ],
+          "method": "cox_breslow",
+          "model_persisted": false,
+          "optimizer_converged": true,
+          "optimizer_iterations": 6,
+          "p_values_or_confidence_intervals_computed": false,
+          "parameters_sha256": "915cb1443760a63b4710f59d15572cd98c91c529cfd0358af3b1743572e8b0cb",
+          "prediction_semantics": "Survival conditional on survival to entry; not IPCW-calibrated or causal.",
+          "predictions_sha256": "99dc86bf6e699519629b3ef0e9cfb2b62b21c5b1abce36dcc26fd7b00b6d6ca6",
+          "purged_rows": 3,
+          "test_events": 80,
+          "test_rows": 100,
+          "train_rows": 257,
+          "training_events": 209,
+          "training_negative_log_likelihood": 904.9644971853191,
+          "training_sha256": "4cdd1dd11e691bfc490453db0a3ea7d7a851b13d3944d1a6d67a6c09c3764f50",
+          "weibull_shape": null
+        },
+        "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+        "spec_sha256": "25db5d709c3f42a87a866156e8fbcfa5870f578d57a50dd802592002abec9cb2",
+        "version": 1
+      }
+    },
+    {
+      "fixture": "weibull-aft.json",
+      "actual_fresh_process": true,
+      "python_stdout_stderr_none": true,
+      "exit_code": 0,
+      "authoritative_output_file_present": true,
+      "native_os_stderr_bytes": 0,
+      "elapsed_seconds": 4.460971251999581,
+      "output": {
+        "input_sha256": "a2f233d6f97975c42aca6fa054f145a3c7d589ca3f9ea20d04bb8c6c7d85cb00",
+        "library_versions": {
+          "numpy": "2.5.4",
+          "pandas": "3.1.1",
+          "scikit-learn": "1.9.1",
+          "scipy": "1.18.1",
+          "statsmodels": "0.15.0"
+        },
+        "operation": "survival-regression",
+        "reference_sha256": null,
+        "result": {
+          "assumptions": "Independent noninformative right censoring/left truncation; Cox proportional hazards or Weibull AFT specification. No competing risks.",
+          "baseline_changed": false,
+          "baseline_hazard_sha256": null,
+          "delayed_entry": false,
+          "holdout_comparable_pairs": 4338,
+          "holdout_harrell_concordance": 0.7538035961272476,
+          "horizons": [
+            1.0,
+            3.0,
+            6.0
+          ],
+          "inference": "Likelihood optimization only; no covariance estimates, hypothesis tests or confidence intervals.",
+          "mean_test_conditional_survival": [
+            0.9360329056734875,
+            0.72125335877976,
+            0.46873229420125606
+          ],
+          "method": "weibull_aft",
+          "model_persisted": false,
+          "optimizer_converged": true,
+          "optimizer_iterations": 10,
+          "p_values_or_confidence_intervals_computed": false,
+          "parameters_sha256": "06fabdcd44bab2b4c3eaa3d1bd8d99eb3000886778bf7a92e09016985a8d7d5a",
+          "prediction_semantics": "Survival conditional on survival to entry; not IPCW-calibrated or causal.",
+          "predictions_sha256": "db2b42f13db5365314a772267eae02fe13d106c9564f602f151b8295b6d3d591",
+          "purged_rows": 3,
+          "test_events": 80,
+          "test_rows": 100,
+          "train_rows": 257,
+          "training_events": 209,
+          "training_negative_log_likelihood": 579.9283151165524,
+          "training_sha256": "4cdd1dd11e691bfc490453db0a3ea7d7a851b13d3944d1a6d67a6c09c3764f50",
+          "weibull_shape": 1.725875802563326
+        },
+        "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+        "spec_sha256": "7de785b423a6e0da241138c29f9e966dcf38574063a58f31073c0c9eb78257fe",
+        "version": 1
+      }
+    },
+    {
+      "fixture": "graph-node-classification.json",
+      "actual_fresh_process": true,
+      "python_stdout_stderr_none": true,
+      "exit_code": 0,
+      "authoritative_output_file_present": true,
+      "native_os_stderr_bytes": 0,
+      "elapsed_seconds": 5.748077698000998,
+      "output": {
+        "input_sha256": "5f081153d987d58686214aabc3f187031166eaa86cd47f66369c113f5c13b70a",
+        "library_versions": {
+          "numpy": "2.5.4",
+          "pandas": "3.1.1",
+          "scikit-learn": "1.9.1",
+          "scipy": "1.18.1",
+          "statsmodels": "0.15.0"
+        },
+        "operation": "graph-node-classification",
+        "reference_sha256": null,
+        "result": {
+          "baseline_changed": false,
+          "classes": 2,
+          "confusion_matrix_true_rows_predicted_columns": [
+            [
+              10,
+              0
+            ],
+            [
+              0,
+              10
+            ]
+          ],
+          "epochs": 60,
+          "final_train_cross_entropy": 0.004044778179377317,
+          "graph_sha256": "4a93114237d3309f160348e6c30b9f9501f0688c3aa7d73015cb4954c30d8cc6",
+          "initial_train_cross_entropy": 0.5416246652603149,
+          "method": "Two-layer symmetric-normalized graph convolutional network",
+          "model_persisted": false,
+          "node_labels_exported": false,
+          "nodes": 80,
+          "p_values_or_confidence_intervals_computed": false,
+          "paper_benchmark_parity_claimed": false,
+          "predictions_sha256": "68db00fdfbf981852aaa655855bfc972568ffb97d60c2a9790c345fd4e1a18be",
+          "pretrained_weights_used": false,
+          "protocol": "Static transductive: all declared topology/features visible during training; holdout labels excluded from loss. Not a temporal or unseen-node evaluation.",
+          "test_accuracy": 1.0,
+          "test_macro_f1": 1.0,
+          "test_nodes": 20,
+          "train_nodes": 60,
+          "training_labels_sha256": "adcb5536e8090af8c07b24a3a515a647951661e0b1b51ee8a9fefb46c85dbc30",
+          "undirected_edges": 300,
+          "weights_sha256": "0074ef716efc5524dc6c2cc094e6b65f74bc1748415fc7a64a1486f252b60d19"
+        },
+        "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+        "spec_sha256": "15b043bde56cf8872e758db14deb9422d5807c0f5b54c7c9171bd47afeda6ef5",
+        "version": 1
+      }
+    }
+  ]
+}

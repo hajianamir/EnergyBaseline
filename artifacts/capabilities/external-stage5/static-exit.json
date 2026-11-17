@@ -1,0 +1,92 @@
+[
+  {
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "scripts/verify_runtime.py"
+    ],
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "pip",
+      "check"
+    ],
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "ruff",
+      "check",
+      "."
+    ],
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "ruff",
+      "format",
+      "--check",
+      "."
+    ],
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "pyflakes",
+      "energybaseline"
+    ],
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "scripts/gates/guard_web_free.py"
+    ],
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "scripts/gates/guard_env_readers.py"
+    ],
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "scripts/gates/guard_tests_integrity.py"
+    ],
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "scripts/gates/guard_no_qthread_compute.py"
+    ],
+    "returncode": 0
+  },
+  {
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "scripts/gen_matrix.py",
+      "--check"
+    ],
+    "returncode": 0
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "returncode": 0
+  }
+]

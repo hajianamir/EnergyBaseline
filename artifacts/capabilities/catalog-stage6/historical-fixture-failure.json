@@ -1,0 +1,11 @@
+{
+  "encoding": "gzip, exact original JUnit XML bytes retained; no whitespace/content normalization",
+  "archive": "historical-fixture-failure.xml.gz",
+  "uncompressed_sha256": "ceb7d1ef3b04e9a5c214816908cf920cb2d894b3f3081e410a021957a61b1e5c",
+  "archive_sha256": "ae12f1b59ac0a11a59d8b06034681e99dd89bddb57bc436d59c4c1e6e4cfb639",
+  "historical_development_run_only": true,
+  "tests": 55,
+  "passed": 54,
+  "failures": 1,
+  "included_in_acceptance": false
+}

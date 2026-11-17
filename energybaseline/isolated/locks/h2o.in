@@ -1,0 +1,4 @@
+h2o==3.46.0.12
+# H2O 3.46 accepts Java 8-17 only. This wheel carries a Temurin 17.0.9 runtime for Windows and Linux.
+jdk4py==17.0.9.2
+numpy==2.5.5

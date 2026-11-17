@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "operation": "competing-risks",
+  "parameters": {
+    "duration": "duration",
+    "event_code": "event"
+  }
+}

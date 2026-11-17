@@ -1,0 +1,47 @@
+{
+  "tested_source_commit": "76159f41e93fd7cec299b1a6f65cbc75a3dba4ee",
+  "process_audit_hook": "socket.connect and socket.getaddrinfo raise on any attempt",
+  "mocked": false,
+  "jobs": [
+    {
+      "request": "text-classification.json",
+      "operation": "text-classification",
+      "spec_sha256": "db687272ae7aeae9db33e848ee770c315d6bdcdfa304811067b6168137c266c2",
+      "executed": true,
+      "network_connections_permitted": false,
+      "dns_permitted": false
+    },
+    {
+      "request": "text-topics.json",
+      "operation": "text-topics",
+      "spec_sha256": "d0e43e6ddfbcb06f70aa9cadd18af7df9c2e0777479063663349980ba0d1fd15",
+      "executed": true,
+      "network_connections_permitted": false,
+      "dns_permitted": false
+    },
+    {
+      "request": "cox-breslow.json",
+      "operation": "survival-regression",
+      "spec_sha256": "25db5d709c3f42a87a866156e8fbcfa5870f578d57a50dd802592002abec9cb2",
+      "executed": true,
+      "network_connections_permitted": false,
+      "dns_permitted": false
+    },
+    {
+      "request": "weibull-aft.json",
+      "operation": "survival-regression",
+      "spec_sha256": "7de785b423a6e0da241138c29f9e966dcf38574063a58f31073c0c9eb78257fe",
+      "executed": true,
+      "network_connections_permitted": false,
+      "dns_permitted": false
+    },
+    {
+      "request": "graph-node-classification.json",
+      "operation": "graph-node-classification",
+      "spec_sha256": "15b043bde56cf8872e758db14deb9422d5807c0f5b54c7c9171bd47afeda6ef5",
+      "executed": true,
+      "network_connections_permitted": false,
+      "dns_permitted": false
+    }
+  ]
+}

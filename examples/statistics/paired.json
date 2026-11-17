@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "time": "time",
+  "targets": [
+    "x",
+    "y",
+    "z",
+    "y2",
+    "a",
+    "b",
+    "c"
+  ],
+  "metadata": [
+    "group",
+    "factor",
+    "subject",
+    "condition"
+  ],
+  "sampling": "independent_subjects",
+  "assumption_justification": "Synthetic independent normal observations and independent subjects; explicit demonstration only, not a real-data assumption certificate.",
+  "correction": "tcp",
+  "tests": [
+    {
+      "id": "H2paired-t",
+      "method": "paired_t",
+      "columns": [
+        "y",
+        "z"
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "H2wilcoxon",
+      "method": "wilcoxon",
+      "columns": [
+        "y",
+        "z"
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "H2sign-test",
+      "method": "sign_test",
+      "columns": [
+        "y",
+        "z"
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "H2mcnemar",
+      "method": "mcnemar",
+      "columns": [
+        "a",
+        "b"
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "H3cochran-q",
+      "method": "cochran_q",
+      "columns": [
+        "a",
+        "b",
+        "c"
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "H3repeated-anova",
+      "method": "repeated_anova",
+      "columns": [
+        "y",
+        "subject",
+        "condition"
+      ],
+      "parameters": {}
+    }
+  ]
+}

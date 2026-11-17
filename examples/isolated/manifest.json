@@ -1,0 +1,35 @@
+[
+  {
+    "request": "automl-tpot.json",
+    "dataset": "series.csv",
+    "engine": "tpot"
+  },
+  {
+    "request": "automl-h2o.json",
+    "dataset": "series.csv",
+    "engine": "h2o"
+  },
+  {
+    "request": "automl-autogluon.json",
+    "dataset": "series.csv",
+    "engine": "autogluon"
+  },
+  {
+    "request": "automl-autosklearn.json",
+    "dataset": "series.csv",
+    "engine": "autosklearn",
+    "platforms": [
+      "linux"
+    ]
+  },
+  {
+    "request": "chronos-bolt.json",
+    "dataset": "series.csv",
+    "engine": "chronos",
+    "asset": "chronos-bolt-tiny"
+  },
+  {
+    "request": "ghostnet.json",
+    "asset": "ghostnet-imagenet"
+  }
+]

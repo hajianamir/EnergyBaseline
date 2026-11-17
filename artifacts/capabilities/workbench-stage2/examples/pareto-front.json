@@ -1,0 +1,24 @@
+{
+  "input_sha256": "df1d79624e0772130ccb9643dd48c1f1156d9bfb4e6210533bfe1d2e505e3953",
+  "library_versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  },
+  "operation": "pareto-front",
+  "reference_sha256": null,
+  "result": {
+    "duplicate_objectives_retained": true,
+    "nondominated_positions": [
+      0,
+      2,
+      3
+    ],
+    "rows": 4
+  },
+  "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+  "spec_sha256": "0872d61b96bbc0d93ceea8eef88c2ad29fe8c29f968bc446e91697fa077de782",
+  "version": 1
+}

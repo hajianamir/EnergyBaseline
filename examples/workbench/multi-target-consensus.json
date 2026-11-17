@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "operation": "multi-target-consensus",
+  "parameters": {
+    "features": [
+      "x0",
+      "x1",
+      "x2",
+      "x3"
+    ],
+    "targets": [
+      "y",
+      "y2"
+    ],
+    "time": "time",
+    "train_rows": 120,
+    "feature_count": 1
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "tested_source_commit": "14900def3dbcde425a292e2f0f47c9d0ca8c0d95",
+  "python": "3.12.16 (main, Nov 16 2026, 18:16:41) [GCC 12.2.0]",
+  "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+  "versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1",
+    "statsmodels": "0.15.0",
+    "torch": "2.15.0",
+    "PySide6-Essentials": "6.12.0",
+    "pyodbc": "5.5.0"
+  },
+  "native_libraries": "Source-built Qt/native GL and unixODBC prefixes; QT_QPA_PLATFORM=offscreen",
+  "application_lock_changed": false,
+  "isolated_runtimes": {
+    "tpot": {
+      "state": "installed",
+      "version": "1.1.0",
+      "runtime_python": "3.12.16",
+      "lock_sha256": "33d7dc5e74fe70dfd11bd33c9310ccd1166da9d86027bebcaca3faccd70fb9ba",
+      "installed_distributions": 58
+    },
+    "h2o": {
+      "state": "installed",
+      "version": "3.46.0.12",
+      "runtime_python": "3.12.16",
+      "lock_sha256": "ccc7d08ab65d6c2b4837236c44fb77a710a21374c9bc3d9c7cbdc8cbbd2de135",
+      "installed_distributions": 10
+    },
+    "autogluon": {
+      "state": "installed",
+      "version": "1.6.3",
+      "runtime_python": "3.12.16",
+      "lock_sha256": "ecaa4c54720a774dad473b545c8d63a901ccf54c3935f1812a8f1c589c67d00e",
+      "installed_distributions": 45
+    },
+    "autosklearn": {
+      "state": "installed",
+      "version": "0.15.0",
+      "runtime_python": "3.9.25",
+      "lock_sha256": "114acb87542a7d67047b9068c6b18707f270218cdc9623df332a1e605952b026",
+      "installed_distributions": 42
+    },
+    "chronos": {
+      "state": "installed",
+      "version": "2.3.2",
+      "runtime_python": "3.12.16",
+      "lock_sha256": "275d25dee0de63a36426fe1f62cba5970ecf3c7fe565b6e8b3746b9b741eafa3",
+      "installed_distributions": 65
+    }
+  },
+  "model_assets": {
+    "chronos-bolt-tiny": "installed",
+    "ghostnet-imagenet": "installed"
+  },
+  "local_asset_provisioning": "assets install --source <directory>: the fixed HTTPS origins are unreachable from the development sandbox; the hosted workflow fetches them from the origins",
+  "auto_sklearn_base_interpreter": "CPython 3.9.25 built from source in the sandbox",
+  "input_data": "repository synthetic series and two CC0 photographs"
+}

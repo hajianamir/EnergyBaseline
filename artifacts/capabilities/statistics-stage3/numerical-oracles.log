@@ -1,0 +1,100 @@
+{
+  "passed": true,
+  "comparisons": [
+    {
+      "oracle": "Balanced factorial F from cell means",
+      "actual": [
+        40.57577991687056,
+        21.357123297425087,
+        7.310467970777475
+      ],
+      "expected": [
+        40.575779916870566,
+        21.357123297425105,
+        7.3104679707774824
+      ],
+      "passed": true
+    },
+    {
+      "oracle": "Balanced factorial F survival probabilities",
+      "actual": [
+        2.021590449503051e-09,
+        7.937384411512315e-06,
+        0.007616188732299982
+      ],
+      "expected": [
+        2.021590449503051e-09,
+        7.937384411512242e-06,
+        0.0076161887322999545
+      ],
+      "passed": true
+    },
+    {
+      "oracle": "Balanced factorial partial eta squared",
+      "actual": [
+        0.20641291584359758,
+        0.12041875116349024,
+        0.044764233803344426
+      ],
+      "expected": [
+        0.2064129158435976,
+        0.12041875116349034,
+        0.04476423380334448
+      ],
+      "passed": true
+    },
+    {
+      "oracle": "Repeated-measures F from balanced subject residuals",
+      "actual": [
+        3.91050492903965,
+        0.02551761727910134
+      ],
+      "expected": [
+        3.910504929039647,
+        0.02551761727910142
+      ],
+      "passed": true
+    },
+    {
+      "oracle": "ANCOVA group partial F from reduced/full QR-equivalent least squares",
+      "actual": [
+        34.58223045977608,
+        2.380446228932046e-08
+      ],
+      "expected": [
+        34.582230459776035,
+        2.380446228932098e-08
+      ],
+      "passed": true
+    },
+    {
+      "oracle": "Two-group MANOVA via Hotelling T2 and determinant ratio",
+      "actual": [
+        14.976810551431054,
+        1.1143279476202957e-06,
+        0.8397804710806773
+      ],
+      "expected": [
+        14.976810551431052,
+        1.1143279476202976e-06,
+        0.8397804710806769
+      ],
+      "passed": true
+    },
+    {
+      "oracle": "Dunn tied-rank variance via pooled sample rank variance",
+      "actual": [
+        -1.5121728296285006,
+        -3.24037034920393,
+        -1.7281975195754293
+      ],
+      "expected": [
+        -1.5121728296285006,
+        -3.24037034920393,
+        -1.7281975195754293
+      ],
+      "passed": true
+    }
+  ],
+  "scope": "Supplementary genuine design oracles, not full-suite or two-OS substitutes"
+}

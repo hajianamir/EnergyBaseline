@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "operation": "text-classification",
+  "parameters": {
+    "text": "text",
+    "target": "label",
+    "time": "time",
+    "train_rows": 90,
+    "gap": 3,
+    "max_features": 100
+  }
+}

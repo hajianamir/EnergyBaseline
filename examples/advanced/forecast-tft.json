@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "operation": "deep-forecast",
+  "parameters": {
+    "time": "time",
+    "target": "y",
+    "train_rows": 88,
+    "architecture": "tft",
+    "seed": 7,
+    "context": 8,
+    "width": 8,
+    "epochs": 3
+  }
+}

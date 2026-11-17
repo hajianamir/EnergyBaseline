@@ -1,0 +1,38 @@
+{
+  "input_sha256": "a7f499ed6bc6182a24b5b538ef69e1737d9e70ab8e536a59fc9bf532f6f61c11",
+  "library_versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  },
+  "operation": "portfolio-risk",
+  "reference_sha256": null,
+  "result": {
+    "annualized": false,
+    "confidence": 0.95,
+    "covariance": [
+      [
+        0.018958333333333337,
+        0.008166666666666666
+      ],
+      [
+        0.008166666666666666,
+        0.003666666666666667
+      ]
+    ],
+    "expected_shortfall": 0.14,
+    "guarantee": "Empirical description, not a future-loss bound.",
+    "loss_definition": "negative simple portfolio return",
+    "maximum_drawdown": 0.18988000000000005,
+    "mean_return": -0.027000000000000003,
+    "rows": 4,
+    "sample_volatility": 0.09095786570348567,
+    "terminal_wealth_per_unit": 0.88437883968,
+    "var": 0.14
+  },
+  "scope": "Exploratory decision support; no baseline acceptance, mutation or inferential tests.",
+  "spec_sha256": "308b3d1a0183ab4ace3f222d8b484a1a61126f8c631c587748a79cf3b3188f04",
+  "version": 1
+}

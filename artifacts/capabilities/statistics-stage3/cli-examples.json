@@ -1,0 +1,110 @@
+[
+  {
+    "source_commit": "9dc70d5ef939dfc54dd0fd5dcace8479b9744460",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "statistical-plan",
+      "examples/statistics/bayesian.json",
+      "examples/statistics/input.csv",
+      "--accept-and-lock",
+      "--out",
+      "artifacts/capabilities/statistics-stage3/examples/bayesian.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 9.41610949599999,
+    "output_sha256": "ad1b85003165538f63a96bc6de6b7e193bc1693f3a076ff8a4403b5fa68452d8"
+  },
+  {
+    "source_commit": "9dc70d5ef939dfc54dd0fd5dcace8479b9744460",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "statistical-plan",
+      "examples/statistics/independent.json",
+      "examples/statistics/input.csv",
+      "--accept-and-lock",
+      "--out",
+      "artifacts/capabilities/statistics-stage3/examples/independent.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 10.80755889399984,
+    "output_sha256": "a078ff71c2ab40003b3d6fcaa8b5774020a97228c444ce5143775eb7cf3fda86"
+  },
+  {
+    "source_commit": "9dc70d5ef939dfc54dd0fd5dcace8479b9744460",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "statistical-plan",
+      "examples/statistics/paired.json",
+      "examples/statistics/input.csv",
+      "--accept-and-lock",
+      "--out",
+      "artifacts/capabilities/statistics-stage3/examples/paired.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 11.362209001999872,
+    "output_sha256": "d25f4ed3f3329c9b05bbe207d656de0a7a5d28d7a53f44fc2f0f6030f7a3ea2e"
+  },
+  {
+    "source_commit": "9dc70d5ef939dfc54dd0fd5dcace8479b9744460",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "statistical-plan",
+      "examples/statistics/prospective.json",
+      "examples/statistics/input.csv",
+      "--accept-and-lock",
+      "--out",
+      "artifacts/capabilities/statistics-stage3/examples/prospective.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 11.339320731000043,
+    "output_sha256": "72858695d795a96b55d85357dce034753caebd3b3d36546a788090d98429906b"
+  },
+  {
+    "source_commit": "9dc70d5ef939dfc54dd0fd5dcace8479b9744460",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "statistical-plan",
+      "examples/statistics/two-stage-fdr.json",
+      "examples/statistics/input.csv",
+      "--accept-and-lock",
+      "--out",
+      "artifacts/capabilities/statistics-stage3/examples/two-stage-fdr.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 10.31943679899996,
+    "output_sha256": "f3e887e2e8adda59fff30812567977fdbb81517ef123b6e0a756f32359f4dd14"
+  },
+  {
+    "source_commit": "9dc70d5ef939dfc54dd0fd5dcace8479b9744460",
+    "command": [
+      "/home/user/EnergyBaseline/.venv/test/bin/python",
+      "-m",
+      "energybaseline.cli",
+      "workbench",
+      "examples/workbench/business-validation.json",
+      "--dataset",
+      "examples/workbench/prediction.csv",
+      "--out",
+      "artifacts/capabilities/statistics-stage3/examples/business-validation.json"
+    ],
+    "returncode": 0,
+    "stdout_equals_file": true,
+    "elapsed_seconds": 11.051505183000017,
+    "output_sha256": "f9e111f2eb691ee73bb1826fa20323a316878ce631a7db38f6fd4cb99533dad9"
+  }
+]

@@ -1,0 +1,94 @@
+[
+  {
+    "repository": "scipy/scipy",
+    "path": "scipy/stats/_stats_py.py",
+    "url": "https://github.com/scipy/scipy/blob/main/scipy/stats/_stats_py.py",
+    "git_blob_sha": "cede56db8ec3b04d6efe8179f8e5cb1b19faa7b7",
+    "sha256": "630ab5cf87fea8e8a46df50e40c97ebee6917b48121875ab89f1b6cb67b56973",
+    "bytes_retrieved": 445041,
+    "integration": "Primary API/algorithm research, not additional dependency integration."
+  },
+  {
+    "repository": "statsmodels/statsmodels",
+    "path": "statsmodels/stats/diagnostic.py",
+    "url": "https://github.com/statsmodels/statsmodels/blob/main/statsmodels/stats/diagnostic.py",
+    "git_blob_sha": "ff10216d637d2a2406bb11c95e64edca7e299fc6",
+    "sha256": "af139fc0107a63660ad9772a5918aeb6a378fbe7c5b11d5c51c3afcdb39f8f1d",
+    "bytes_retrieved": 92710,
+    "integration": "Primary API/algorithm research, not additional dependency integration."
+  },
+  {
+    "repository": "statsmodels/statsmodels",
+    "path": "statsmodels/stats/anova.py",
+    "url": "https://github.com/statsmodels/statsmodels/blob/main/statsmodels/stats/anova.py",
+    "git_blob_sha": "b6f35ff7b9ef7b6331eab91340fa4a0f8c304cbf",
+    "sha256": "aaf7ae763556bd2bb7df5925f4ca9ef818f6d8a90ecde21482192e56bbec0627",
+    "bytes_retrieved": 28767,
+    "integration": "Primary API/algorithm research, not additional dependency integration."
+  },
+  {
+    "repository": "statsmodels/statsmodels",
+    "path": "statsmodels/stats/contingency_tables.py",
+    "url": "https://github.com/statsmodels/statsmodels/blob/main/statsmodels/stats/contingency_tables.py",
+    "git_blob_sha": "7645cf8baf53d553d5bedaf9cab4e0f931a18b32",
+    "sha256": "12879514bfc8bbd41e8a90ea8935867257c8af9ad95cb9a9c7a53f841898d25d",
+    "bytes_retrieved": 55582,
+    "integration": "Primary API/algorithm research, not additional dependency integration."
+  },
+  {
+    "repository": "statsmodels/statsmodels",
+    "path": "statsmodels/stats/multitest.py",
+    "url": "https://github.com/statsmodels/statsmodels/blob/main/statsmodels/stats/multitest.py",
+    "git_blob_sha": "2e29795deaf12466c35abbbb3739e2d70a14c2b9",
+    "sha256": "86e4ea61e8cf7bfcc43b19d320e4c859335d22ab0712d471d92e97b528c473d0",
+    "bytes_retrieved": 38008,
+    "integration": "Primary API/algorithm research, not additional dependency integration."
+  },
+  {
+    "repository": "statsmodels/statsmodels",
+    "path": "statsmodels/stats/power.py",
+    "url": "https://github.com/statsmodels/statsmodels/blob/main/statsmodels/stats/power.py",
+    "git_blob_sha": "6451229ee9dd3119c1589b417a73d0517f78a68a",
+    "sha256": "788eb0ecbf0a1426aa6d4915f779644b2383e051b79673efd90d99cc1169c4c6",
+    "bytes_retrieved": 81806,
+    "integration": "Primary API/algorithm research, not additional dependency integration."
+  },
+  {
+    "repository": "statsmodels/statsmodels",
+    "path": "statsmodels/multivariate/manova.py",
+    "url": "https://github.com/statsmodels/statsmodels/blob/main/statsmodels/multivariate/manova.py",
+    "git_blob_sha": "1a155722f0dbbc28f46d1694e925d14644804097",
+    "sha256": "95a59ae52f49eac92247cd475368a2b710b89bc4f93c33c0c91401e79b416090",
+    "bytes_retrieved": 5095,
+    "integration": "Primary API/algorithm research, not additional dependency integration."
+  },
+  {
+    "repository": "maximtrp/scikit-posthocs",
+    "path": "scikit_posthocs/_posthocs.py",
+    "url": "https://github.com/maximtrp/scikit-posthocs/blob/master/scikit_posthocs/_posthocs.py",
+    "git_blob_sha": "1151658ff99100baaeeccba0caa7b1f9c4996133",
+    "sha256": "0e90a4ab73efb641d1d0e0cc85c221e603a5286b7f1e699d6da670daa62b8d69",
+    "bytes_retrieved": 137517,
+    "integration": "Primary API/algorithm research, not additional dependency integration."
+  },
+  {
+    "repository": "arviz-devs/arviz",
+    "path": "arviz/stats/diagnostics.py",
+    "ref": "v0.22.0",
+    "url": "https://github.com/arviz-devs/arviz/blob/v0.22.0/arviz/stats/diagnostics.py",
+    "git_blob_sha": "e7dba32bab1bb24653c341e4de96bc245e9928ef",
+    "sha256": "08e4f2d9ce513808ab0802bf50da3b9109e080def599a0513f0cb9e1975a6ca1",
+    "bytes_retrieved": 32656,
+    "integration": "Primary algorithm research only; no ArviZ/PyMC/backend integration claim."
+  },
+  {
+    "repository": "scipy/scipy",
+    "path": "scipy/stats/_multivariate.py",
+    "ref": "main",
+    "url": "https://github.com/scipy/scipy/blob/main/scipy/stats/_multivariate.py",
+    "git_blob_sha": "44eaa1b03bb8854a5da92b299709250dbf6defda",
+    "sha256": "1e4974e555a9bcf1412f66679a6f218b3fbb03427058e43d7ebf8f9dad40004b",
+    "bytes_retrieved": 273536,
+    "integration": "Primary algorithm research only; no ArviZ/PyMC/backend integration claim."
+  }
+]
