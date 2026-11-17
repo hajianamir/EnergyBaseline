@@ -1,0 +1,28 @@
+{
+ "final_source_commit": "14900def3dbcde425a292e2f0f47c9d0ca8c0d95",
+ "note": "The engine and native-diagnostics workflows are triggered by product paths only, so the final commit, which changes one helper in tests/test_isolated_engines.py, did not rerun them, and manual dispatch is refused for this integration (HTTP 403). Neither workflow reads the tests/ directory: the engine workflow runs provisioned_tests and scripts/evidence/isolated_engines.py.",
+ "workflows": [
+  {
+   "workflow": "Isolated engines and pretrained models",
+   "run": 43969676343,
+   "head_sha": "05845c6ac2d2af28ae5ba3b3174392fc543232ff",
+   "files_differing_from_final_source": [
+    [
+     "M",
+     "tests/test_isolated_engines.py"
+    ]
+   ]
+  },
+  {
+   "workflow": "Native external backend diagnostics",
+   "run": 43969676419,
+   "head_sha": "05845c6ac2d2af28ae5ba3b3174392fc543232ff",
+   "files_differing_from_final_source": [
+    [
+     "M",
+     "tests/test_isolated_engines.py"
+    ]
+   ]
+  }
+ ]
+}

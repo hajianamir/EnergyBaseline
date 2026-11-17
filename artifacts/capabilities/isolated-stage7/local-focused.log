@@ -1,0 +1,39 @@
+........................................................................ [ 20%]
+........................................................................ [ 41%]
+........................................................................ [ 62%]
+........................................................................ [ 82%]
+............................................................             [100%]
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.16-final-0 _______________
+
+Name                                          Stmts   Miss  Cover
+-----------------------------------------------------------------
+energybaseline/isolated/__init__.py             295    112    62%
+energybaseline/workbench/__init__.py             81      4    95%
+energybaseline/workbench/analytics.py            68      6    91%
+energybaseline/workbench/automl.py               74      4    95%
+energybaseline/workbench/business.py            153     64    58%
+energybaseline/workbench/common.py               64      2    97%
+energybaseline/workbench/deep.py                217      9    96%
+energybaseline/workbench/domains.py             126     10    92%
+energybaseline/workbench/entities.py             34      4    88%
+energybaseline/workbench/external.py            175     13    93%
+energybaseline/workbench/forecasting.py          74     12    84%
+energybaseline/workbench/graph_learning.py       89     10    89%
+energybaseline/workbench/language.py             83      8    90%
+energybaseline/workbench/operations.py           70      8    89%
+energybaseline/workbench/planning.py            271     20    93%
+energybaseline/workbench/prediction.py           79     10    87%
+energybaseline/workbench/preparation.py         133     13    90%
+energybaseline/workbench/pretrained.py          133     61    54%
+energybaseline/workbench/regression.py          124     17    86%
+energybaseline/workbench/simulation.py          123     15    88%
+energybaseline/workbench/survival.py            106      7    93%
+energybaseline/workbench/vendor/__init__.py       0      0   100%
+energybaseline/workbench/vendor/ghostnet.py     135      8    94%
+energybaseline/workbench/vision.py              241     20    92%
+-----------------------------------------------------------------
+TOTAL                                          2948    437    85%
+Coverage XML written to file /home/user/EnergyBaseline/.cache/final2/capability-coverage.xml
+348 passed in 96.79s (0:01:36)
+EXIT=0

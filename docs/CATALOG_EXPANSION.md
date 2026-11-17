@@ -6,6 +6,8 @@ Four new executable operations extend the existing API, CLI and isolated native 
 
 This is another implementation increment toward the requested complete catalog, **not a redefinition of that request as four operations**. External backend conflicts, pretrained foundation/vision assets, full-paper reproduction and every unimplemented per-row scope remain open. In particular this stage is not an LLM, translator, pretrained language model, causal inference engine or a survival inference authorization bypass.
 
+A later stage added separately provisioned AutoML engines, one pretrained forecasting model and one pretrained image classifier; see [ISOLATED_ENGINES.md](ISOLATED_ENGINES.md). The statement above describes Stage 6 as accepted.
+
 All jobs have `version: 1`, `operation` and `parameters`. Tabular inputs must have unique named columns. No job persists models, accepts/changes/refits a baseline, emits p-values/intervals, imports user code, deserializes external models or downloads weights. Report renderers are unchanged.
 
 ## `text-classification`

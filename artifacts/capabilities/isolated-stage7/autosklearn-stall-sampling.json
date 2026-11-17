@@ -1,5 +1,5 @@
 {
- "purpose": "Hosted Linux machines sampled while investigating the auto-sklearn start-up stall, before the worker's workaround. Each sample ran the two auto-sklearn execution tests three times.",
+ "purpose": "Hosted Linux machines sampled while investigating the auto-sklearn start-up stall. Each sample ran the auto-sklearn execution tests three times. The first two runs are before the worker's workaround, the third is with it (and includes the deterministic lock probe).",
  "runs": [
   {
    "run": 43952268138,
@@ -87,7 +87,8 @@
       "conclusion": "success"
      }
     }
-   ]
+   ],
+   "source": "before workaround"
   },
   {
    "run": 43954380228,
@@ -261,6 +262,184 @@
       "conclusion": "failure"
      },
      "machine": "cpu=AMD EPYC 7763 64-Core Processor; cores=4; kernel=7.0.0-1017-azure; image=20261111.370.1; avx512=0"
+    }
+   ],
+   "source": "before workaround"
+  },
+  {
+   "run": 43959447882,
+   "url": "https://github.com/hajianamir/EnergyBaseline/actions/runs/43959447882",
+   "head_sha": "29abb26acd900131cd227540fdfa590de5aa83d9",
+   "conclusion": "success",
+   "source": "with workaround",
+   "samples": [
+    {
+     "job": 133622602811,
+     "name": "Sample 1",
+     "conclusion": "success",
+     "searches_step": {
+      "started": "2026-11-16T21:33:29Z",
+      "completed": "2026-11-16T21:37:08Z",
+      "conclusion": "success"
+     },
+     "duration": "three rounds took 219 s",
+     "machine": "cpu=Intel(R) Xeon(R) 6975P-C; cores=4; kernel=7.0.0-1014-aws; image=20261111.127.1; avx512=1"
+    },
+    {
+     "job": 133622602368,
+     "name": "Sample 2",
+     "conclusion": "success",
+     "searches_step": {
+      "started": "2026-11-16T21:26:02Z",
+      "completed": "2026-11-16T21:30:01Z",
+      "conclusion": "success"
+     },
+     "duration": "three rounds took 239 s",
+     "machine": "cpu=AMD EPYC 9V74 80-Core Processor; cores=4; kernel=7.0.0-1017-azure; image=20261111.370.1; avx512=1"
+    },
+    {
+     "job": 133622602482,
+     "name": "Sample 3",
+     "conclusion": "success",
+     "searches_step": {
+      "started": "2026-11-16T21:26:09Z",
+      "completed": "2026-11-16T21:31:00Z",
+      "conclusion": "success"
+     },
+     "duration": "three rounds took 291 s",
+     "machine": "cpu=AMD EPYC 7763 64-Core Processor; cores=4; kernel=7.0.0-1017-azure; image=20261111.370.1; avx512=0"
+    },
+    {
+     "job": 133622601899,
+     "name": "Sample 4",
+     "conclusion": "success",
+     "searches_step": {
+      "started": "2026-11-16T21:25:44Z",
+      "completed": "2026-11-16T21:29:25Z",
+      "conclusion": "success"
+     },
+     "duration": "three rounds took 221 s",
+     "machine": "cpu=Intel(R) Xeon(R) 6975P-C; cores=4; kernel=7.0.0-1014-aws; image=20261111.127.1; avx512=1"
+    },
+    {
+     "job": 133622602276,
+     "name": "Sample 5",
+     "conclusion": "success",
+     "searches_step": {
+      "started": "2026-11-16T21:26:19Z",
+      "completed": "2026-11-16T21:30:00Z",
+      "conclusion": "success"
+     },
+     "duration": "three rounds took 221 s",
+     "machine": "cpu=Intel(R) Xeon(R) 6975P-C; cores=4; kernel=7.0.0-1014-aws; image=20261111.127.1; avx512=1"
+    },
+    {
+     "job": 133622602262,
+     "name": "Sample 6",
+     "conclusion": "success",
+     "searches_step": {
+      "started": "2026-11-16T21:25:51Z",
+      "completed": "2026-11-16T21:29:53Z",
+      "conclusion": "success"
+     },
+     "duration": "three rounds took 242 s",
+     "machine": "cpu=AMD EPYC 9V74 80-Core Processor; cores=4; kernel=7.0.0-1017-azure; image=20261111.370.1; avx512=1"
+    },
+    {
+     "job": 133622602426,
+     "name": "Sample 7",
+     "conclusion": "success",
+     "searches_step": {
+      "started": "2026-11-16T21:26:33Z",
+      "completed": "2026-11-16T21:30:14Z",
+      "conclusion": "success"
+     },
+     "duration": "three rounds took 221 s",
+     "machine": "cpu=Intel(R) Xeon(R) 6975P-C; cores=4; kernel=7.0.0-1014-aws; image=20261111.127.1; avx512=1"
+    },
+    {
+     "job": 133622602420,
+     "name": "Sample 8",
+     "conclusion": "success",
+     "searches_step": {
+      "started": "2026-11-16T21:25:48Z",
+      "completed": "2026-11-16T21:30:29Z",
+      "conclusion": "success"
+     },
+     "duration": "three rounds took 281 s",
+     "machine": "cpu=AMD EPYC 7763 64-Core Processor; cores=4; kernel=7.0.0-1017-azure; image=20261111.370.1; avx512=0"
+    },
+    {
+     "job": 133622602388,
+     "name": "Sample 9",
+     "conclusion": "success",
+     "searches_step": {
+      "started": "2026-11-16T21:26:26Z",
+      "completed": "2026-11-16T21:30:07Z",
+      "conclusion": "success"
+     },
+     "duration": "three rounds took 221 s",
+     "machine": "cpu=Intel(R) Xeon(R) 6975P-C; cores=4; kernel=7.0.0-1014-aws; image=20261111.127.1; avx512=1"
+    },
+    {
+     "job": 133622602181,
+     "name": "Sample 10",
+     "conclusion": "success",
+     "searches_step": {
+      "started": "2026-11-16T21:26:13Z",
+      "completed": "2026-11-16T21:30:17Z",
+      "conclusion": "success"
+     },
+     "duration": "three rounds took 244 s",
+     "machine": "cpu=AMD EPYC 9V74 80-Core Processor; cores=4; kernel=7.0.0-1017-azure; image=20261111.370.1; avx512=1"
+    },
+    {
+     "job": 133622602409,
+     "name": "Sample 11",
+     "conclusion": "success",
+     "searches_step": {
+      "started": "2026-11-16T21:25:59Z",
+      "completed": "2026-11-16T21:30:01Z",
+      "conclusion": "success"
+     },
+     "duration": "three rounds took 242 s",
+     "machine": "cpu=AMD EPYC 9V74 80-Core Processor; cores=4; kernel=7.0.0-1017-azure; image=20261111.370.1; avx512=1"
+    },
+    {
+     "job": 133622602687,
+     "name": "Sample 12",
+     "conclusion": "success",
+     "searches_step": {
+      "started": "2026-11-16T21:25:57Z",
+      "completed": "2026-11-16T21:29:58Z",
+      "conclusion": "success"
+     },
+     "duration": "three rounds took 241 s",
+     "machine": "cpu=AMD EPYC 9V74 80-Core Processor; cores=4; kernel=7.0.0-1017-azure; image=20261111.370.1; avx512=1"
+    },
+    {
+     "job": 133622602553,
+     "name": "Sample 13",
+     "conclusion": "success",
+     "searches_step": {
+      "started": "2026-11-16T21:25:42Z",
+      "completed": "2026-11-16T21:29:24Z",
+      "conclusion": "success"
+     },
+     "duration": "three rounds took 222 s",
+     "machine": "cpu=Intel(R) Xeon(R) 6975P-C; cores=4; kernel=7.0.0-1014-aws; image=20261111.127.1; avx512=1"
+    },
+    {
+     "job": 133622602331,
+     "name": "Sample 14",
+     "conclusion": "success",
+     "searches_step": {
+      "started": "2026-11-16T21:26:34Z",
+      "completed": "2026-11-16T21:30:15Z",
+      "conclusion": "success"
+     },
+     "duration": "three rounds took 221 s",
+     "machine": "cpu=Intel(R) Xeon(R) 6975P-C; cores=4; kernel=7.0.0-1014-aws; image=20261111.127.1; avx512=1"
     }
    ]
   }

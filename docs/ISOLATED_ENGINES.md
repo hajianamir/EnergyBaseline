@@ -55,13 +55,13 @@ python -m energybaseline.cli assets install ghostnet-imagenet
 python -m energybaseline.cli assets install ghostnet-imagenet --source /media/offline/ghostnet-imagenet
 ```
 
-`engines install` creates the virtual environment from a base CPython of the version the lock was resolved for (`--python`; the running interpreter is used when it matches and the application is not frozen, so the frozen executable always needs `--python`). It then runs `pip install --require-hashes -r <lock>` with no cache, and records `energybaseline-engine.json` only after the installed closure equals the lock. A failed installation removes the partial runtime. Source distributions in a lock (auto-sklearn and three of its dependencies) run their own build back ends during installation and need a C/C++ compiler.
+`engines install` creates the virtual environment from a base CPython of the version the lock was resolved for (`--python`; the running interpreter is used when it matches and the application is not frozen, so the frozen executable always needs `--python`). It then runs `pip install --require-hashes -r <lock>` with no cache, and records `energybaseline-engine.json` only after the installed closure equals the lock. A failed installation removes the partial runtime. During provisioning only, the installer process sees the operator's `PATH` so that build tools can be found; engine runs never inherit it. Seven locked distributions are published only as source archives: auto-sklearn, liac-arff, pynisher and smac; TPOT's func-timeout and stopit; and H2O itself. pip verifies each archive against its hash and then runs the project's own build code. In the inspected Linux runtimes all seven installed as pure Python, so no compiler was used.
 
 Engine states are `installed`, `stale` (the manifest was written for a different lock), `not-installed` and `unsupported-platform`.
 
 `assets install` either fetches the fixed HTTPS origins or copies the files from a local directory (`--source`) for machines without network access. Both paths stage the files privately and accept them only when byte count and SHA-256 match; a mismatch installs nothing. Asset states are `installed`, `invalid` and `not-installed`.
 
-Disk use measured on Linux: TPOT 0.9 GB, H2O 0.4 GB, AutoGluon 1.1 GB, auto-sklearn 0.6 GB, Chronos 5.5 GB (its lock pins the same PyTorch and CUDA wheels as the application; on Windows the PyTorch wheel is CPU-only and much smaller).
+Disk use measured on Linux: TPOT 865 MB, H2O 413 MB, AutoGluon 1.1 GB, auto-sklearn 474 MB, Chronos 5.7 GB. The Chronos lock pins PyTorch 2.15.0 with 19 GPU-related distributions (15 NVIDIA libraries, three CUDA helper packages and Triton) that are marked Linux-only, so the Windows runtime installs none of them; its size was not measured.
 
 ## Execution boundary
 
@@ -83,7 +83,7 @@ Third-party logs are never exported, because they can echo data values. For supp
 
 ### H2O and the web-free policy
 
-H2O is a Java server with an HTTP interface; its Python package is only a client. The application remains web-free: it starts no server of its own and embeds no browser. The H2O worker starts one private JVM from the locked `jdk4py` Java 17 runtime, bound to `127.0.0.1` on an ephemeral port, with `-hash_login` and a random one-time user and password that exist only in the private directory. Before use the worker confirms that an unauthenticated request receives HTTP 401. The JVM is shut down after the request and is inside the process tree that the budget and the parent-death watch terminate. Tests kill the application mid-run and after a budget expiry and require that no JVM survives.
+H2O is a Java server with an HTTP interface; its Python package is only a client. The application remains web-free: it starts no server of its own and embeds no browser. The H2O worker starts one private JVM from the locked `jdk4py` Java 17 runtime, bound to `127.0.0.1` on an ephemeral port, with `-hash_login` and a random one-time user and password that exist only in the private directory. The worker picks a free loopback port and then starts the JVM on it; if another process takes the port first, the JVM cannot answer with the one-time credentials and the worker retries, up to three times. Before use the worker confirms that an unauthenticated request receives HTTP 401. The JVM is shut down after the request and is inside the process tree that the budget and the parent-death watch terminate. Tests kill the application mid-run and after a budget expiry and require that no JVM survives.
 
 ### TPOT and Dask
 
@@ -104,7 +104,7 @@ With `b = train_rows - validation_rows`, the engine process receives fitting row
 
 The result states `search_fit_rows`, `purge_gap`, `validation_rows`, `final_fit_rows` and a `fit_scope` sentence, so the H2O difference is visible in every result. `candidates_evaluated` and `candidates_failed` are read from each engine's own records (TPOT evaluation errors, the H2O event log against its leaderboard, AutoGluon's leaderboard against the requested families, auto-sklearn run statuses). `engine_reported_validation_rmse` carries a note where it is optimistic: H2O also uses the validation frame for early stopping, and AutoGluon fits ensemble weights on it. `fit_mean_reference_test_rmse` is the holdout error of predicting the fitting-row mean.
 
-auto-sklearn 0.15.0 has a start-up defect that the worker works around. It waits for its log-server process to publish a port in a loop that sleeps while holding the shared lock the server needs, so on some machines the server never obtains the lock and the search waits until the wall-clock budget. This was observed on hosted Linux machines (three stalled jobs; thread stacks and the sampled machines are in the stage evidence). The worker replaces only the server's publishing step so that it stores the port without that lock; auto-sklearn's code is otherwise unchanged and the installed distribution is not modified. An execution test holds the lock for the whole wait and requires that upstream's server stays unpublished while the replacement publishes.
+auto-sklearn 0.15.0 has a start-up defect that the worker works around. It waits for its log-server process to publish a port in a loop that sleeps while holding the shared lock the server needs, so on some machines the server never obtains the lock and the search waits until the wall-clock budget. This was observed on hosted Linux machines. One sampling job recorded three stalled searches with the main thread in that loop and the server process waiting for the lock; an earlier job failed the same way before stack recording existed. Before the workaround 1 of 22 sampled machines stalled; with it, 14 of 14 passed (three rounds each), and so did both operating systems in the engine workflow. The sampled machines and stacks are in the stage evidence. The worker replaces only the server's publishing step so that it stores the port without that lock; auto-sklearn's code is otherwise unchanged and the installed distribution is not modified. An execution test holds the lock for the whole wait and requires that upstream's server stays unpublished while the replacement publishes.
 
 When no auto-sklearn configuration beats its built-in mean predictor on the validation rows, auto-sklearn selects that predictor; the result then reports `selected_model: dummy_mean` instead of failing.
 
@@ -140,12 +140,28 @@ The lite build profile excludes PyTorch by design, so this operation needs the f
 python -m energybaseline.cli workbench examples/isolated/ghostnet.json --out classes.json
 ```
 
+## Reproducibility
+
+Repeating a request on the same machine with the same runtime returns the same predictions; tests and receipts compare the prediction digest of two executions. Results are not promised to be identical across operating systems or processors:
+
+| Example | Local Linux and hosted Linux | Hosted Windows (Python and frozen executable agree) |
+| --- | --- | --- |
+| TPOT | identical digest; ExtraTreesRegressor, test RMSE 1.2647 | same pipeline family, test RMSE 1.2692 |
+| H2O | identical digest; XGBoost leader, test RMSE 0.9448 | GBM leader, test RMSE 0.9815: the H2O 3.46.0.12 jar carries XGBoost native libraries for Linux and macOS only |
+| AutoGluon | identical digest; test RMSE 0.6635 | identical digest to Linux |
+| auto-sklearn | identical digest; random forest, test RMSE 0.7101 | refused, unsupported platform |
+| Chronos-Bolt | same metrics to four decimals; the forecast digest equalled the local one in one hosted run and differed in another | same metrics to four decimals, digest differs |
+| GhostNet | Egyptian cat 0.491, espresso 0.915 | same |
+
+The fit-mean reference test RMSE for the AutoML example is 2.7643, and the last-value reference MAE for the forecasting example is 5.8953 against a median-forecast MAE of 0.7163.
+
 ## Verification layers
 
 - `tests/test_isolated_engines.py` and `tests/gui/test_isolated_gui.py` run in the mandatory suite on both operating systems and need no provisioned runtime. They use real files, interpreters and child processes: lock structure for both platforms, fail-closed refusal of an absent, stale or lock-divergent runtime, the audit hook, the result envelope, budget expiry and parent death with real process trees, the rebuilt environment, workspace sweeping, asset hash refusal, the vendored model's provenance hashes, GhostNet's published parameter count and the preprocessing geometry.
 - `provisioned_tests/` executes every engine supported on the platform against provisioned runtimes and assets named by `EB_PROVISIONED_HOME`. The session fails at start when that home is missing; no test is skipped. It checks search/refit contracts, semantic accuracy against a reference, identical results on repetition, that changing holdout targets and purged rows cannot change a prediction while changing fitting targets does, asset tampering, budget expiry with a live JVM, killing the application mid-run, the command line and the native worker panel.
 - `scripts/evidence/isolated_engines.py` runs every example twice through the real command line, or through the frozen executable with `--executable`, and writes a receipt.
-- The workflow `Isolated engines and pretrained models` provisions everything from the package index and the fixed asset origins on Ubuntu 24.04 and Windows, runs the execution tests and receipts, and on Windows repeats the receipts through the full windowed executable. Ubuntu 24.04 is used because the runner images provide CPython 3.9 only up to that release.
+- The workflow `Isolated engines and pretrained models` provisions everything from the package index and the fixed asset origins on Ubuntu 24.04 and Windows, runs the execution tests and receipts, and on Windows repeats the receipts through the full windowed executable. Ubuntu 24.04 is used because the hosted CPython 3.9.25 build exists for Ubuntu 22.04 and 24.04 only. Each receipt's key facts are also emitted as a workflow annotation.
+- `scripts/evidence/isolated_diagnose.py` is a support script, not a test. After a workflow failure it runs each provisioned AutoML engine once on the synthetic example with `EB_ENGINE_DIAGNOSTICS` set and prints the exception and the retained log. It always exits 0.
 
 ## Limits that remain
 

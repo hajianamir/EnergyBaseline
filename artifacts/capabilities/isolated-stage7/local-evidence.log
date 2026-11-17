@@ -1,0 +1,9 @@
+Isolated engine evidence passed: 6 jobs executed, 0 refused.
+python_cli on linux; executable None
+automl-tpot.json: ExtraTreesRegressor; evaluated 16, failed 5; validation RMSE 0.8566; test RMSE 1.2647; final fit rows 238; python 3.12.16; predictions aa284a23e3e11f3e
+automl-h2o.json: xgboost; evaluated 5, failed 1; validation RMSE 0.9005; test RMSE 0.9448; final fit rows 190; python 3.12.16; predictions 82754e8efccc2b98
+automl-autogluon.json: WeightedEnsemble_L2; evaluated 5, failed 0; validation RMSE 0.5132; test RMSE 0.6635; final fit rows 238; python 3.12.16; predictions aad8ecb880f8bdb3
+automl-autosklearn.json: random_forest; evaluated 4, failed 0; validation RMSE 0.5633; test RMSE 0.7101; final fit rows 238; python 3.9.25; predictions 805a0e0d52357232
+chronos-bolt.json: median MAE 0.7163; last-value MAE 5.8953; inside 10-90 39; python 3.12.16; forecast 5f250161238efbfd
+ghostnet.json: Egyptian cat 0.491; espresso 0.915; torch 2.15.0
+EXIT=0
